@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import android.os.Build
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -186,7 +187,7 @@ fun LocalModelSection(
         // you speak, but only if real-time transcription is switched on. The catalog already orders the
         // one-shot models first, so the header simply goes in front of the first streaming entry.
         var liveHeaderShown = false
-        LocalModelCatalog.all.forEach { spec ->
+        LocalModelCatalog.availableForAbis(Build.SUPPORTED_ABIS.toList()).forEach { spec ->
             if (spec.isStreaming && !liveHeaderShown) {
                 liveHeaderShown = true
                 HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 12.dp))

@@ -300,3 +300,30 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
   <a href="https://github.com/nichu42"><img src="https://github.com/nichu42.png" width="72" alt="nichu42" title="nichu42"></a>
 </p>
 <!-- SPONSORS:END -->
+
+
+### Qwen3-ASR-1.7B Q4_K (local build)
+
+This build adds **Qwen3-ASR 1.7B (Q4_K)** under **Settings → AI providers → On-device (offline)** on ARM64 devices, including OPPO Find N6. Download and select it there. The approximately 1.49 GB download is separate from the APK; after installation, speech recognition runs on the phone without a network connection. Qwen detects the language automatically and returns text after recording stops.
+
+The decoder uses Q4_K weights; the audio encoder retains Q8_0 weights for accuracy. This is mixed-precision GGUF, not FP4. Existing streaming models remain available; Qwen is a batch model. Working RAM exceeds the download size. Phone latency and memory usage must be measured on the device.
+
+The [model artifact](https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF/tree/674df5d44b50a63e7102a18895ed20e3f91de301) and native runtime revisions are pinned. The downloader verifies file size and SHA-256 before installation. No recording is sent to a server by this provider. Disable any separately configured cloud rewording if you want the entire dictation workflow to remain offline.
+
+Build prerequisites: JDK 21 (standard OpenJDK; the local GraalVM jlink failed the Android SDK image transform), Android SDK/build-tools 36, NDK 27.0.12077973 for the standalone native build, CMake 3.22+, C/C++ compiler, Git and Python 3. Gradle uses the existing project NDK declaration independently; the Qwen library is prebuilt using the pinned NDK below.
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
+# Set JAVA_HOME to a standard installed JDK 21.
+tools/fetch-sherpa-onnx.sh
+tools/build-qwen-native.sh android
+./gradlew :app:testDebugUnitTest :app:assembleDebug --no-configuration-cache --max-workers=2 \
+  -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process
+```
+
+`tools/build-qwen-native.sh` downloads the pinned CrispASR source into ignored `build/qwen-native/source`, builds only the Qwen decoder and its CPU dependencies, and copies the ARM64 library into the existing `jniLibs` directory. `CRISPASR_SOURCE` may point to a clean checkout of the exact pinned revision. The library statically links ggml and the C++ runtime and uses 16 KB ELF alignment. Build fails clearly if it is missing. Other ABIs retain the existing engines and do not offer Qwen.
+
+Native host regression tests: `tools/test-qwen-native.sh`. With a downloaded model and little-endian float32 mono 16 kHz fixture: `tools/test-qwen-native.sh MODEL.gguf AUDIO.f32`. This executes two transcriptions with the same loaded model; the JFK smoke test was validated on the build host. The Android ARM64 library is cross-compiled, but physical-device inference is a separate acceptance check.
+
+The installable debug output is `app/build/outputs/apk/debug/app-debug.apk`, package `net.devemperor.dictate.debug`. It updates an existing debug installation only when the signing certificate matches; it installs alongside the release package. Runtime/model attribution and licenses are in [NOTICE](NOTICE) and the APK's `assets/licenses/qwen-native.txt`.

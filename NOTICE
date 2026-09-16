@@ -74,3 +74,15 @@ tools/pinyin-dict/generate.py; see tools/pinyin-dict/ATTRIBUTION.md.
     P. Lison & J. Tiedemann (2016), "OpenSubtitles2016: Extracting Large Parallel
     Corpora from Movie and TV Subtitles", LREC 2016. Only aggregate word counts
     are used; no source text is redistributed.
+
+Qwen3-ASR-1.7B Q4_K on-device transcription
+-----------------------------------------
+Model: Qwen/Qwen3-ASR-1.7B, Qwen Team / Alibaba Cloud, Apache License 2.0.
+GGUF conversion: cstr/qwen3-asr-1.7b-GGUF (CrispStrobe), Apache License 2.0.
+https://huggingface.co/Qwen/Qwen3-ASR-1.7B
+https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF
+Weights are downloaded separately; decoder Q4_K, audio encoder Q8_0.
+Native runtime: CrispASR and ggml, MIT License, Copyright (c) 2023-2026 The ggml authors.
+https://github.com/CrispStrobe/CrispASR
+https://github.com/CrispStrobe/ggml
+The bundled license text is app/src/main/assets/licenses/qwen-native.txt.

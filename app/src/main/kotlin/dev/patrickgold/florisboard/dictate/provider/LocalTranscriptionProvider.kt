@@ -24,6 +24,11 @@ import com.k2fsa.sherpa.onnx.Vad
 import com.k2fsa.sherpa.onnx.VadModelConfig
 import dev.patrickgold.florisboard.dictate.TranscriptJoin
 import dev.patrickgold.florisboard.dictate.audio.AudioDecode
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -32,7 +37,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
 /**
- * On-device speech-to-text (issue #104), powered by a bundled Whisper model running through sherpa-onnx.
+ * On-device speech-to-text using sherpa-onnx models or the native Qwen GGUF runtime.
  * No audio ever leaves the device. This is the offline counterpart to [OpenAiCompatibleClient] and plugs
  * into the same [TranscriptionProvider] seam the dictation flow already uses.
  *
@@ -47,7 +52,7 @@ import java.util.concurrent.TimeUnit
  * transducer adds `joiner.onnx`, and SenseVoice has neither encoder nor decoder but a single
  * `model.onnx`. See [requiredFiles].
  *
- * The native [OfflineRecognizer] is expensive to construct (it loads the model into memory), so it is
+ * The native recognizer is expensive to construct (it loads the model into memory), so it is
  * cached process-wide in [RecognizerCache] and reused across transcriptions; switching models releases
  * the previous one. Decoding is CPU-bound and runs on [Dispatchers.Default].
  */
@@ -79,6 +84,7 @@ class LocalTranscriptionProvider(
 
     /** When the current decode started, as a [System.nanoTime] stamp. Set once per [transcribe] call. */
     private var startedNanos: Long = 0L
+    private var decodeContext: CoroutineContext = EmptyCoroutineContext
 
     /**
      * Throws once the budget is spent. Called between decode passes — never inside one, because a native
@@ -89,6 +95,7 @@ class LocalTranscriptionProvider(
      * adding to it is the one form of this that can overflow.
      */
     private fun checkDeadline() {
+        decodeContext.ensureActive()
         if (timeoutMillis <= 0L) return
         if (System.nanoTime() - startedNanos < timeoutMillis * 1_000_000L) return
         throw DictateApiException(
@@ -99,67 +106,78 @@ class LocalTranscriptionProvider(
 
     override suspend fun transcribe(request: TranscriptionRequest): TranscriptionResult =
         withContext(Dispatchers.Default) {
-            startedNanos = System.nanoTime()
-            // What "installed" means depends on the model: Whisper wants an encoder/decoder pair, a
-            // transducer adds a joiner, SenseVoice has a single model file. The catalog entry says which.
-            val missing = requiredFiles(modelDir.name).filterNot { File(modelDir, it).exists() }
-            if (missing.isNotEmpty()) {
-                throw DictateApiException(
-                    DictateApiException.Kind.UNKNOWN,
-                    "On-device model '${modelDir.name}' is not installed (missing ${missing.joinToString()})",
-                )
+            LocalBatchExecution.run {
+                transcribeLocked(request, currentCoroutineContext())
             }
-            // A streaming model (#233) is normally driven live by [LocalRealtimeSession], but it must
-            // also work in plain batch mode — real-time turned off, long-form, the floating button, the
-            // offline fallback. Otherwise picking one would silently break every non-live path.
-            val streaming = LocalModelCatalog.isStreaming(modelDir.name)
-
-            val samples = try {
-                AudioDecode.decodeToMono16k(request.audioFile)
-            } catch (t: Throwable) {
-                throw DictateApiException(
-                    DictateApiException.Kind.FORMAT_NOT_SUPPORTED,
-                    "Could not decode the recorded audio for on-device transcription",
-                    t,
-                )
-            }
-
-            // Honor the user's chosen input language like the cloud providers do; null/blank → Whisper
-            // auto-detect. Whisper expects the base ISO code (e.g. "de"), so drop any region suffix.
-            val language = request.language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
-
-            if (streaming) {
-                return@withContext TranscriptionResult(transcribeStreaming(samples).trim())
-            }
-
-            val text = try {
-                val recognizer = RecognizerCache.acquire(modelDir, numThreads, language)
-                // Return the recognizer to the cache when done so a memory-pressure / idle unload can free
-                // it safely (never mid-decode) — see [RecognizerCache].
-                try {
-                    val vadFile = File(modelDir, VAD)
-                    // Whisper handles ~30 s per pass; segment longer audio at speech pauses (VAD) so the
-                    // tail isn't dropped. Short clips take the simple single-pass path (no VAD overhead).
-                    if (vadFile.exists() && samples.size > VAD_MIN_SAMPLES) {
-                        transcribeSegmented(recognizer, vadFile, samples)
-                    } else {
-                        decodeOnce(recognizer, samples)
-                    }
-                } finally {
-                    RecognizerCache.endUse()
-                }
-            } catch (e: DictateApiException) {
-                throw e
-            } catch (t: Throwable) {
-                throw DictateApiException(
-                    DictateApiException.Kind.UNKNOWN,
-                    "On-device transcription failed",
-                    t,
-                )
-            }
-
-            TranscriptionResult(text.trim())
         }
+
+    private fun transcribeLocked(request: TranscriptionRequest, context: CoroutineContext): TranscriptionResult {
+        decodeContext = context
+        startedNanos = System.nanoTime()
+        // What "installed" means depends on the model: Whisper wants an encoder/decoder pair, a
+        // transducer adds a joiner, SenseVoice has a single model file. The catalog entry says which.
+        val missing = requiredFiles(modelDir.name).filterNot { File(modelDir, it).exists() }
+        if (missing.isNotEmpty()) {
+            throw DictateApiException(
+                DictateApiException.Kind.UNKNOWN,
+                "On-device model '${modelDir.name}' is not installed (missing ${missing.joinToString()})",
+            )
+        }
+        // A streaming model (#233) is normally driven live by [LocalRealtimeSession], but it must
+        // also work in plain batch mode — real-time turned off, long-form, the floating button, the
+        // offline fallback. Otherwise picking one would silently break every non-live path.
+        val streaming = LocalModelCatalog.isStreaming(modelDir.name)
+
+        val samples = try {
+            AudioDecode.decodeToMono16k(request.audioFile)
+        } catch (t: Throwable) {
+            throw DictateApiException(
+                DictateApiException.Kind.FORMAT_NOT_SUPPORTED,
+                "Could not decode the recorded audio for on-device transcription",
+                t,
+            )
+        }
+
+        // Honor the user's chosen input language like the cloud providers do; null/blank → Whisper
+        // auto-detect. Whisper expects the base ISO code (e.g. "de"), so drop any region suffix.
+        val language = request.language?.substringBefore('-')?.takeIf { it.isNotBlank() }.orEmpty()
+
+        if (streaming) {
+            return TranscriptionResult(transcribeStreaming(samples).trim())
+        }
+
+        val text = try {
+            val recognizer = RecognizerCache.acquire(modelDir, numThreads, language)
+            // Return the recognizer to the cache when done so a memory-pressure / idle unload can free
+            // it safely (never mid-decode) — see [RecognizerCache].
+            try {
+                val vadFile = File(modelDir, VAD)
+                // Whisper handles ~30 s per pass; segment longer audio at speech pauses (VAD) so the
+                // tail isn't dropped. Short clips take the simple single-pass path (no VAD overhead).
+                if (vadFile.exists() && samples.size > VAD_MIN_SAMPLES) {
+                    transcribeSegmented(recognizer, vadFile, samples)
+                } else {
+                    val parts = StringBuilder()
+                    appendDecoded(recognizer, samples, parts)
+                    parts.toString()
+                }
+            } finally {
+                RecognizerCache.endUse()
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: DictateApiException) {
+            throw e
+        } catch (t: Throwable) {
+            throw DictateApiException(
+                DictateApiException.Kind.UNKNOWN,
+                "On-device transcription failed",
+                t,
+            )
+        }
+
+        return TranscriptionResult(text.trim())
+    }
 
     /**
      * Batch decode with a *streaming* model (#233): the whole recording is pushed through the online
@@ -203,16 +221,12 @@ class LocalTranscriptionProvider(
         }
     }
 
-    /** Single whole-buffer Whisper pass (fine for clips up to ~30 s). */
-    private fun decodeOnce(recognizer: OfflineRecognizer, samples: FloatArray): String {
-        val stream = recognizer.createStream()
-        return try {
-            stream.acceptWaveform(samples, AudioDecode.TARGET_SAMPLE_RATE)
-            recognizer.decode(stream)
-            recognizer.getResult(stream).text
-        } finally {
-            stream.release()
-        }
+    /** One bounded native pass; cancellation/timeout is observed at native call boundaries. */
+    private fun decodeOnce(recognizer: LocalBatchRecognizer, samples: FloatArray): String {
+        checkDeadline()
+        val text = recognizer.decode(samples)
+        checkDeadline()
+        return text
     }
 
     /**
@@ -221,7 +235,7 @@ class LocalTranscriptionProvider(
      * to a single pass if the VAD detects no speech at all.
      */
     private fun transcribeSegmented(
-        recognizer: OfflineRecognizer,
+        recognizer: LocalBatchRecognizer,
         vadFile: File,
         samples: FloatArray,
     ): String {
@@ -261,10 +275,14 @@ class LocalTranscriptionProvider(
         } finally {
             vad.release()
         }
-        return parts.toString().trim().ifBlank { decodeOnce(recognizer, samples) }
+        return parts.toString().trim().ifBlank {
+            val fallback = StringBuilder()
+            appendDecoded(recognizer, samples, fallback)
+            fallback.toString()
+        }
     }
 
-    private fun drainSegments(vad: Vad, recognizer: OfflineRecognizer, out: StringBuilder) {
+    private fun drainSegments(vad: Vad, recognizer: LocalBatchRecognizer, out: StringBuilder) {
         while (!vad.empty()) {
             appendDecoded(recognizer, vad.front().samples, out)
             vad.pop()
@@ -276,7 +294,7 @@ class LocalTranscriptionProvider(
      * short, but on gap-less continuous speech a segment can still exceed 30 s — without this cap Whisper
      * would silently drop everything past 30 s (the original bug).
      */
-    private fun appendDecoded(recognizer: OfflineRecognizer, samples: FloatArray, out: StringBuilder) {
+    private fun appendDecoded(recognizer: LocalBatchRecognizer, samples: FloatArray, out: StringBuilder) {
         var offset = 0
         while (offset < samples.size) {
             checkDeadline()
@@ -314,8 +332,8 @@ class LocalTranscriptionProvider(
         const val MODEL = "model.onnx"
 
         /**
-         * Optional joiner for transducer models (e.g. NeMo Parakeet, issue #154). Its presence in a model
-         * directory is what makes [RecognizerCache] build a transducer recognizer instead of a Whisper one.
+         * Joiner for transducer models (e.g. NeMo Parakeet, issue #154).
+         * The catalog kind selects the recognizer configuration.
          */
         const val JOINER = "joiner.onnx"
 
@@ -350,7 +368,7 @@ class LocalTranscriptionProvider(
         }
 
         /**
-         * Frees the cached on-device recognizer from RAM now (models range from ~100 MB up to ~700 MB, so
+         * Frees the cached on-device recognizer from RAM now (model weights range from ~100 MB to ~1.5 GB, so
          * keeping one loaded while the user isn't dictating is wasteful). Called on Android memory-pressure
          * signals (`onTrimMemory`). Safe anytime: if a transcription is in flight it frees right after it
          * finishes, never mid-decode. The next on-device transcription rebuilds the recognizer (~1 s).
@@ -372,13 +390,13 @@ class LocalTranscriptionProvider(
 }
 
 /**
- * Process-wide cache of the single most-recently-used [OfflineRecognizer]. Building one loads the model
+ * Process-wide cache of the single most-recently-used [LocalBatchRecognizer]. Building one loads the model
  * into native memory (~1s+ for Whisper tiny), so we keep it alive between transcriptions and only rebuild
  * when the model directory changes. Access is serialized; the app transcribes one clip at a time.
  */
 private object RecognizerCache {
     private var key: String? = null
-    private var recognizer: OfflineRecognizer? = null
+    private var recognizer: LocalBatchRecognizer? = null
 
     // A borrowed recognizer must never be freed mid-decode: [acquire]/[endUse] track active users, and an
     // [unload] request while in use is deferred until the last user returns.
@@ -394,7 +412,7 @@ private object RecognizerCache {
     private var idleFuture: ScheduledFuture<*>? = null
 
     @Synchronized
-    fun acquire(modelDir: File, numThreads: Int, language: String): OfflineRecognizer {
+    fun acquire(modelDir: File, numThreads: Int, language: String): LocalBatchRecognizer {
         // In use again → cancel any pending idle unload.
         idleFuture?.cancel(false)
         idleFuture = null
@@ -412,7 +430,7 @@ private object RecognizerCache {
         // key (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
         // as-is and ignores the language, so it stays out of the key for those.
         val cacheKey = modelDir.absolutePath + "|" +
-            (if (kind == LocalModelKind.NEMO_TRANSDUCER) "" else language)
+            (if (kind == LocalModelKind.NEMO_TRANSDUCER || kind == LocalModelKind.QWEN_GGUF) "" else language) + "|" + numThreads
         val existing = recognizer
         val rec = if (existing != null && cacheKey == key) {
             existing
@@ -478,8 +496,15 @@ private object RecognizerCache {
         kind: LocalModelKind,
         numThreads: Int,
         language: String,
-    ): OfflineRecognizer {
+    ): LocalBatchRecognizer {
+        if (kind == LocalModelKind.QWEN_GGUF) {
+            check(android.os.Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
+                "Qwen3-ASR Q4_K requires an ARM64 device"
+            }
+            return QwenGgufRecognizer(File(encoder.parentFile, "model.gguf"), numThreads)
+        }
         val modelConfig = when (kind) {
+            LocalModelKind.QWEN_GGUF -> error("Qwen GGUF is handled by its native runtime")
             // NeMo Parakeet TDT (issue #154) and GigaAM (#255): encoder/decoder/joiner transducer.
             LocalModelKind.NEMO_TRANSDUCER -> OfflineModelConfig(
                 transducer = OfflineTransducerModelConfig(
@@ -544,7 +569,7 @@ private object RecognizerCache {
             modelConfig = modelConfig,
         )
         // assetManager defaults to null → the model is read from the absolute file paths above.
-        return OfflineRecognizer(config = config)
+        return SherpaBatchRecognizer(OfflineRecognizer(config = config))
     }
 
     /**

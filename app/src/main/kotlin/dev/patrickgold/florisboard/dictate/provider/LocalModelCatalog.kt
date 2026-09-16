@@ -42,6 +42,9 @@ enum class LocalModelKind {
      * encoder/decoder pair at all — just one model file next to the tokens.
      */
     SENSE_VOICE,
+
+    /** Qwen3-ASR GGUF: Q4_K decoder and Q8 audio encoder, native ARM64 CPU runtime. */
+    QWEN_GGUF,
 }
 
 /**
@@ -65,14 +68,15 @@ data class LocalModelSpec(
      * streaming transducer and an offline NeMo transducer both ship a joiner.
      */
     val isStreaming: Boolean = false,
+    /** Empty means every ABI supported by the app. */
+    val supportedAbis: Set<String> = emptySet(),
 ) {
     val totalBytes: Long get() = files.sumOf { it.sizeBytes }
 }
 
 /**
  * The fixed catalog of on-device models offered for download: one-shot recognizers (Whisper, NeMo
- * Parakeet) plus the streaming ones that transcribe live (Kroko, issue #233). All int8-quantised
- * sherpa-onnx builds.
+ * Parakeet) plus the streaming ones that transcribe live (Kroko, issue #233). ONNX models use sherpa-onnx; the Qwen GGUF model uses a separate native runtime.
  *
  * **Attribution / licensing:** every model here comes from an upstream project under a license that
  * permits redistribution (see each entry, and NOTICE). The files are mirrored on the project's own
@@ -433,6 +437,27 @@ object LocalModelCatalog {
         ),
     )
 
+    /** Mixed precision export: Q4_K decoder, Q8_0 audio encoder; embedded tokenizer. */
+    val QWEN3_ASR_Q4 = LocalModelSpec(
+        id = "qwen3-asr-1.7b-q4-k",
+        displayName = "Qwen3-ASR 1.7B (Q4_K)",
+        description = "Multilingual · Auto language · Q4_K + Q8 audio · ~1.49 GB · ARM64",
+        kind = LocalModelKind.QWEN_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF/resolve/674df5d44b50a63e7102a18895ed20e3f91de301/qwen3-asr-1.7b-q4_k.gguf",
+                "model.gguf", 1_490_915_200L,
+                "ec197cef7ccc589fdcae1becc3f4a3de119d0a41e790b898b519b1a048dad8d4",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /** Catalog availability follows the ABIs with a packaged runtime for each model. */
+    fun availableForAbis(abis: List<String>): List<LocalModelSpec> =
+        all.filter { it.supportedAbis.isEmpty() || abis.any(it.supportedAbis::contains) }
+
     /** Install-dir id of the on-device Smart Turn v3 classifier (issue #191). */
     const val SMART_TURN_ID = "smart-turn-v3"
 
@@ -462,6 +487,7 @@ object LocalModelCatalog {
      * order to know where that heading goes.
      */
     val all: List<LocalModelSpec> = listOf(
+        QWEN3_ASR_Q4,
         PARAKEET_TDT_V3,
         CANARY_180M_FLASH,
         PARAKEET_PRIMELINE_DE,
