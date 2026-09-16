@@ -326,7 +326,15 @@ val verifySherpaOnnxLibs by tasks.registering {
         }
     }
 }
-tasks.named("preBuild").configure { dependsOn(verifySherpaOnnxLibs) }
+val verifyQwenNativeLib by tasks.registering {
+    val library = layout.projectDirectory.file("src/main/jniLibs/arm64-v8a/libdictate-qwen.so").asFile
+    doLast {
+        if (!library.isFile) throw GradleException(
+            "Missing Qwen GGUF native runtime. Run: tools/build-qwen-native.sh android",
+        )
+    }
+}
+tasks.named("preBuild").configure { dependsOn(verifySherpaOnnxLibs, verifyQwenNativeLib) }
 
 fun getGitCommitHash(short: Boolean = false): Provider<String> {
     if (!File(".git").exists()) {

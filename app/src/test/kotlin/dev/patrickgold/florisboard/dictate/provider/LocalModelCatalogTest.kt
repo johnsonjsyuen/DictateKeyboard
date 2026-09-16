@@ -34,7 +34,7 @@ class LocalModelCatalogTest {
     private fun names(spec: LocalModelSpec) = spec.files.map { it.destName }
 
     @Test
-    fun `every model declares its tokens and nothing twice`() {
+    fun `every model declares its tokenizer and nothing twice`() {
         for (spec in LocalModelCatalog.all + LocalModelCatalog.SMART_TURN) {
             val destNames = names(spec)
             assertEquals(
@@ -43,7 +43,8 @@ class LocalModelCatalogTest {
             )
         }
         for (spec in LocalModelCatalog.all) {
-            assertTrue(tokens in names(spec), "${spec.id} has no tokens file")
+            val tokenizer = if (spec.kind == LocalModelKind.QWEN_GGUF) "model.gguf" else tokens
+            assertTrue(tokenizer in names(spec), "${spec.id} has no tokenizer")
         }
     }
 
@@ -61,6 +62,10 @@ class LocalModelCatalogTest {
         for (spec in LocalModelCatalog.all) {
             val files = names(spec)
             when (spec.kind) {
+                LocalModelKind.QWEN_GGUF -> {
+                    assertTrue("model.gguf" in files, "${spec.id} needs embedded model and tokenizer")
+                    assertTrue(tokens !in files && encoder !in files && decoder !in files)
+                }
                 LocalModelKind.WHISPER, LocalModelKind.CANARY -> {
                     assertTrue(encoder in files && decoder in files, "${spec.id} needs an encoder and a decoder")
                     assertTrue(model !in files, "${spec.id} is not a single-file model")

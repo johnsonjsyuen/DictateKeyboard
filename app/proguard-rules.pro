@@ -40,3 +40,6 @@
 # optional providers) so release builds behave like debug.
 -keep class ai.onnxruntime.** { *; }
 -dontwarn ai.onnxruntime.**
+
+# Qwen GGUF JNI methods are resolved by their stable class and method names.
+-keep class dev.patrickgold.florisboard.dictate.provider.QwenNative { *; }
