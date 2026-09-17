@@ -308,8 +308,10 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
 Each successful push to `main` publishes a separate prerelease with
 `DictateKeyboard-debug.apk` and its SHA-256 checksum. Open the newest main debug
 build and download the APK directly from its assets. A push containing several
-commits builds the tip commit. Feature branches do not publish.
-Pull requests targeting `main` run the same build checks without publishing a release.
+commits builds the tip commit. Pull requests targeting `main` build their head commit.
+PRs from this repository also create a **draft prerelease** and download its APK
+to verify the release assets before merging. Drafts are visible to maintainers;
+fork PRs are build-only. Public release publication remains limited to `main`.
 
 These are debuggable development builds, signed with a fixed public CI-only key;
 no signing secrets are needed. They install as `net.devemperor.dictate.debug`

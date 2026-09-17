@@ -5,10 +5,12 @@
 Every push to `main` builds the pushed tip and publishes a downloadable debug APK
 as a commit-specific GitHub prerelease. A multi-commit push builds its tip, as
 standard push workflows do. No path filters or cancellation of older builds.
-Feature branches and pull requests do not publish. This uses the existing Android
+Only main publishes public releases. This uses the existing Android
 build and native preparation scripts; Play publishing and Wear APKs are excluded.
-Pull requests targeting main build and upload workflow artifacts for validation;
-the release job explicitly requires a push to refs/heads/main.
+Pull requests targeting main build their exact head commit. Same-repository PRs
+also create draft prereleases tagged `pr-<number>-<head SHA>` for end-to-end
+publication validation; fork PRs cannot run the release job. Main tags remain
+`main-<SHA>`. Draft releases remain available to maintainers for inspection.
 
 Use Ubuntu 24.04, JDK 21, SDK 36/build-tools 36.0.0, Qwen NDK
 27.0.12077973, and the Gradle-declared NDK 29.0.14206865.
@@ -37,13 +39,15 @@ Releases remain prereleases and do not replace the latest stable release.
 
 ## Validation
 
-Static checks: actionlint passes; main-only publication; read-only build job;
+Static checks: actionlint passes; main-only public publication; read-only build job;
 commit-specific release target; no cancellation or path filters.
 Integration checks: assembleDebug produces an APK; signing verification passes;
 native Qwen library and sherpa libraries are packaged. On GitHub, check a main
 push publishes both assets, a rerun reuses its release, and a feature push does
-not publish. Hosted build checks run on pull requests targeting main;
-publication checks require this workflow to be pushed to main.
+not publish publicly. Same-repository PRs must create a draft prerelease; fork
+PRs must skip release creation. Every release job downloads its APK and checksum,
+compares the downloaded checksum file to the built one, and verifies the APK
+digest. This exercises asset upload and download before merging.
 
 ## Error handling
 
