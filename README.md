@@ -304,6 +304,20 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
 
 ### Qwen3-ASR-1.7B Q4_K (local build)
 
+**Download an APK:** [main debug builds](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
+Each successful push to `main` publishes a separate prerelease with
+`DictateKeyboard-debug.apk` and its SHA-256 checksum. Open the newest main debug
+build and download the APK directly from its assets. A push containing several
+commits builds the tip commit. Feature branches do not publish.
+
+These are debuggable development builds, signed with a fixed public CI-only key;
+no signing secrets are needed. They install as `net.devemperor.dictate.debug`
+alongside the regular app and can update earlier CI builds. If you already have
+a locally signed debug build, uninstall it first (this deletes its app data).
+The [workflow](.github/workflows/android-apk.yml) runs automatically once it is on
+`main` and GitHub Actions is enabled; repository policy must allow its release job
+`contents: write` permission.
+
 This build adds **Qwen3-ASR 1.7B (Q4_K)** under **Settings → AI providers → On-device (offline)** on ARM64 devices, including OPPO Find N6. Download and select it there. The approximately 1.49 GB download is separate from the APK; after installation, speech recognition runs on the phone without a network connection. Qwen detects the language automatically and returns text after recording stops.
 
 The decoder uses Q4_K weights; the audio encoder retains Q8_0 weights for accuracy. This is mixed-precision GGUF, not FP4. Existing streaming models remain available; Qwen is a batch model. Working RAM exceeds the download size. Phone latency and memory usage must be measured on the device.
