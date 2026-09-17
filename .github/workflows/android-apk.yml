@@ -101,7 +101,6 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
             tag="pr-${PR_NUMBER}-${RELEASE_SHA}"
             title="PR #${PR_NUMBER} debug build (${RELEASE_SHA:0:7})"
-            release_flags+=(--draft)
           fi
           cat > "$RUNNER_TEMP/release-notes.md" <<EOF
           Automated debug build from commit ${RELEASE_SHA}.
