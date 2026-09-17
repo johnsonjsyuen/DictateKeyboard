@@ -5,12 +5,18 @@
 Every push to `main` builds the pushed tip and publishes a downloadable debug APK
 as a commit-specific GitHub prerelease. A multi-commit push builds its tip, as
 standard push workflows do. No path filters or cancellation of older builds.
-Feature branches and pull requests do not publish. This uses the existing Android
+Main and same-repository PRs publish separate prereleases. This uses the existing Android
 build and native preparation scripts; Play publishing and Wear APKs are excluded.
+Pull requests targeting main build their exact head commit. Same-repository PRs
+also create public PR prereleases tagged `pr-<number>-<head SHA>` for end-to-end
+publication validation; fork PRs cannot run the release job. Main tags remain
+`main-<SHA>`. PR releases remain available for inspection and never become latest stable.
 
 Use Ubuntu 24.04, JDK 21, SDK 36/build-tools 36.0.0, Qwen NDK
-27.0.12077973, and the Gradle-declared NDK 29.0.14206865. Build `:app:assembleDebug`
-with two workers and a 2 GiB in-process Kotlin/Gradle heap. Set versionCode to
+27.0.12077973, and the Gradle-declared NDK 29.0.14206865.
+Configure setup-android with `packages: platform-tools` to avoid its obsolete
+default `tools` package, which caused the first hosted run to fail during setup.
+Build `:app:assembleDebug` with two workers and a 2 GiB in-process Kotlin/Gradle heap. Set versionCode to
 1000000 + GitHub run number to permit successive updates.
 
 Use a newly generated, deliberately public CI-only debug key (standard Android
@@ -33,12 +39,15 @@ Releases remain prereleases and do not replace the latest stable release.
 
 ## Validation
 
-Static checks: actionlint passes; main-only trigger; read-only build job;
+Static checks: actionlint passes; publication gated to main or same-repository PRs; read-only build job;
 commit-specific release target; no cancellation or path filters.
 Integration checks: assembleDebug produces an APK; signing verification passes;
 native Qwen library and sherpa libraries are packaged. On GitHub, check a main
 push publishes both assets, a rerun reuses its release, and a feature push does
-not run. Hosted checks require this workflow to be pushed to main.
+not publish without a PR. Same-repository PRs must create a public PR prerelease; fork
+PRs must skip release creation. Every release job downloads its APK and checksum,
+compares the downloaded checksum file to the built one, and verifies the APK
+digest. This exercises asset upload and download before merging.
 
 ## Error handling
 

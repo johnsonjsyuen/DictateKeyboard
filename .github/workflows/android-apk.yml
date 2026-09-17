@@ -3,6 +3,8 @@ name: Main debug APK
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -15,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
 
       - uses: actions/setup-java@v5
@@ -23,6 +26,9 @@ jobs:
           java-version: '21'
 
       - uses: android-actions/setup-android@v3
+        with:
+          # The action defaults to "tools platform-tools"; SDK "tools" was removed.
+          packages: platform-tools
 
       - uses: gradle/actions/setup-gradle@v5
 
@@ -68,6 +74,9 @@ jobs:
           retention-days: 14
 
   release:
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -83,10 +92,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          RELEASE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          tag="main-${GITHUB_SHA}"
+          tag="main-${RELEASE_SHA}"
+          title="Main debug build #${GITHUB_RUN_NUMBER} (${RELEASE_SHA:0:7})"
+          release_flags=(--prerelease --latest=false)
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            tag="pr-${PR_NUMBER}-${RELEASE_SHA}"
+            title="PR #${PR_NUMBER} debug build (${RELEASE_SHA:0:7})"
+          fi
           cat > "$RUNNER_TEMP/release-notes.md" <<EOF
-          Automated debug build from main commit ${GITHUB_SHA}.
+          Automated debug build from commit ${RELEASE_SHA}.
 
           Download **DictateKeyboard-debug.apk** below and allow installation from your browser.
           Package: net.devemperor.dictate.debug (installs alongside the regular app).
@@ -102,9 +119,15 @@ jobs:
             gh release upload "$tag" dist/* --clobber
           else
             gh release create "$tag" dist/* \
-              --target "$GITHUB_SHA" \
-              --title "Main debug build #${GITHUB_RUN_NUMBER} (${GITHUB_SHA:0:7})" \
+              --target "$RELEASE_SHA" \
+              --title "$title" \
               --notes-file "$RUNNER_TEMP/release-notes.md" \
-              --prerelease --latest=false
+              "${release_flags[@]}"
           fi
-          echo "Release: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${tag}" >> "$GITHUB_STEP_SUMMARY"
+          # Exercise the release download path, not just workflow artifact storage.
+          gh release download "$tag" --dir "$RUNNER_TEMP/release-download" \
+            --pattern 'DictateKeyboard-debug.apk' --pattern 'DictateKeyboard-debug.apk.sha256'
+          cmp dist/DictateKeyboard-debug.apk.sha256 "$RUNNER_TEMP/release-download/DictateKeyboard-debug.apk.sha256"
+          (cd "$RUNNER_TEMP/release-download" && sha256sum --check DictateKeyboard-debug.apk.sha256)
+          release_url=$(gh release view "$tag" --json url --jq .url)
+          echo "Release: ${release_url}" >> "$GITHUB_STEP_SUMMARY"
