@@ -309,6 +309,7 @@ Each successful push to `main` publishes a separate prerelease with
 `DictateKeyboard-debug.apk` and its SHA-256 checksum. Open the newest main debug
 build and download the APK directly from its assets. A push containing several
 commits builds the tip commit. Feature branches do not publish.
+Pull requests targeting `main` run the same build checks without publishing a release.
 
 These are debuggable development builds, signed with a fixed public CI-only key;
 no signing secrets are needed. They install as `net.devemperor.dictate.debug`

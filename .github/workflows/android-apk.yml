@@ -3,6 +3,8 @@ name: Main debug APK
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -23,6 +25,9 @@ jobs:
           java-version: '21'
 
       - uses: android-actions/setup-android@v3
+        with:
+          # The action defaults to "tools platform-tools"; SDK "tools" was removed.
+          packages: platform-tools
 
       - uses: gradle/actions/setup-gradle@v5
 
@@ -68,6 +73,7 @@ jobs:
           retention-days: 14
 
   release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
