@@ -1,0 +1,110 @@
+name: Main debug APK
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Keep each pushed revision: newer pushes must not cancel older builds.
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Install Android build prerequisites
+        run: |
+          sdkmanager 'platforms;android-36' 'build-tools;36.0.0' \
+            'ndk;27.0.12077973' 'ndk;29.0.14206865'
+          cmake --version
+
+      - name: Prepare native speech runtimes
+        run: |
+          tools/fetch-sherpa-onnx.sh
+          export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
+          tools/build-qwen-native.sh android
+
+      - name: Install public CI debug signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          base64 --decode .github/ci/debug.keystore.base64 > "$HOME/.android/debug.keystore"
+          chmod 600 "$HOME/.android/debug.keystore"
+
+      - name: Build debug APK
+        run: |
+          ./gradlew :app:assembleDebug --no-daemon --no-configuration-cache --max-workers=2 \
+            -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process \
+            -PprojectVersionCode="$((1000000 + GITHUB_RUN_NUMBER))"
+
+      - name: Verify and package APK
+        run: |
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose \
+            app/build/outputs/apk/debug/app-debug.apk
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/app-debug.apk dist/DictateKeyboard-debug.apk
+          cd dist
+          sha256sum DictateKeyboard-debug.apk > DictateKeyboard-debug.apk.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: dist/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: debug-apk
+          path: dist
+
+      - name: Publish commit prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          tag="main-${GITHUB_SHA}"
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          Automated debug build from main commit ${GITHUB_SHA}.
+
+          Download **DictateKeyboard-debug.apk** below and allow installation from your browser.
+          Package: net.devemperor.dictate.debug (installs alongside the regular app).
+          CI builds use a fixed public debug key and can update earlier CI builds.
+          A local debug build signed with another key must be uninstalled first; this removes its app data.
+          This is a debuggable development build, not a production release.
+
+          Qwen requires an ARM64 device. Download its model separately inside the app.
+          A SHA-256 checksum is included alongside the APK.
+          Build: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          EOF
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/* --clobber
+          else
+            gh release create "$tag" dist/* \
+              --target "$GITHUB_SHA" \
+              --title "Main debug build #${GITHUB_RUN_NUMBER} (${GITHUB_SHA:0:7})" \
+              --notes-file "$RUNNER_TEMP/release-notes.md" \
+              --prerelease --latest=false
+          fi
+          echo "Release: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${tag}" >> "$GITHUB_STEP_SUMMARY"
