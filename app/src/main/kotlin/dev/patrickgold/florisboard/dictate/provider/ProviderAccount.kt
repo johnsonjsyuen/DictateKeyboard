@@ -71,15 +71,25 @@ data class ProviderAccount(
      */
     val customRealtime: Boolean = false,
     /**
-     * Wake-on-demand support (issue #189): send a throwaway `/models` request as soon as a rewording is
-     * known to be coming, so a machine that only wakes on network traffic has the dictation's length as a
-     * head start instead of the user waiting out its boot.
+     * Wake-on-demand support (issue #189): send a throwaway `/models` request as soon as this endpoint is
+     * known to be needed — when a recording starts, if it transcribes, and when a rewording is known to be
+     * coming, if it rewords — so a machine that only wakes on network traffic has the dictation's length
+     * as a head start instead of the user waiting out its boot.
      *
      * A common self-hosting shape is a small always-on box in front of a GPU machine that sleeps between
      * jobs. Only ever useful for an endpoint of the user's own, and nothing about a server says whether it
      * sleeps, so this is theirs to state. Additive field, defaults off.
      */
     val customWarmUp: Boolean = false,
+    /**
+     * Trust CA certificates the user installed, for this endpoint only (issue #137, scoped in #383).
+     *
+     * It was one switch for the whole app. Turned on for a server behind a private CA, it also let anything
+     * holding a certificate from that CA — typically a company's TLS-inspecting proxy — read the traffic to
+     * every cloud provider, keys included. Additive field, defaults off; accounts that existed while the old
+     * switch was on were moved over with it on.
+     */
+    val trustUserCerts: Boolean = false,
     /**
      * Dictate Cloud only — the credit account this device talks to. The wallet's bearer token is not
      * stored here but in [apiKey]: it is what the server authenticates, so putting it anywhere else
@@ -237,11 +247,13 @@ fun singleCallApplies(transcriptionViaChat: Boolean, preset: ProviderPreset, mod
  * fold leaves blank forever, so every rewording went to the preset default and no setting could change
  * it. So the merged field wins when it holds something ([sharedSingleCallModel]); otherwise the rewording
  * field's own value, and failing that the preset default — which is what an empty box has always meant.
+ * A preset without one (a server of the user's own) is asked for whatever OpenAI's default is: read from
+ * that preset rather than spelled out here, where a copy of `gpt-4o-mini` outlived its retirement notice.
  */
 fun chatModelFor(
     account: ProviderAccount,
     preset: ProviderPreset,
-    fallback: String = "gpt-4o-mini",
+    fallback: String = ProviderRegistry.OPENAI.defaultChatModel.orEmpty(),
 ): String {
     sharedSingleCallModel(account)?.let { return it }
     return account.chatModel.ifBlank { preset.defaultChatModel ?: fallback }

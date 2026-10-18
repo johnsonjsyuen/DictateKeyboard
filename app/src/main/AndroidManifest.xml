@@ -59,7 +59,7 @@
     <application
         android:name="dev.patrickgold.florisboard.FlorisApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/app_icon"
         android:label="@string/floris_app_name"
@@ -130,11 +130,26 @@
             </intent-filter>
         </service>
 
+        <!-- Keeps the process from being frozen while it transcribes for the watch (issue #363). A short
+             service needs no permission beyond FOREGROUND_SERVICE and no Play Console declaration. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.wear.WearTetherService"
+            android:foregroundServiceType="shortService"
+            android:exported="false"/>
+
         <!-- Keeps on-device model downloads running when the app is left (issue #207); shows an ongoing
              progress notification. Not exported: only started internally by LocalModelDownloads. -->
         <service
             android:name="dev.patrickgold.florisboard.dictate.provider.ModelDownloadService"
             android:foregroundServiceType="dataSync"
+            android:exported="false"/>
+
+        <!-- On-device translation (issue #424). Its own process, bound only while the translate bar is
+             open: the engine's 75–150 MB and any native crash stay out of the keyboard's process, and
+             the process ends when the bar closes. FlorisApplication skips its init there. -->
+        <service
+            android:name="dev.patrickgold.florisboard.dictate.translate.TranslationEngineService"
+            android:process=":translate"
             android:exported="false"/>
 
         <!-- System-wide voice input via the standard RecognitionService API (issue #67), like FUTO Voice
@@ -286,6 +301,25 @@
             android:excludeFromRecents="true"
             android:exported="false"/>
 
+        <!-- Scan text trampoline (issue #390): the keyboard cannot start an activity for a result, so
+             this one opens the system camera (or the photo picker) and leaves the image in the cache.
+             NB: no android:noHistory, for the same reason as the trampoline above – the camera coming
+             to the foreground would destroy it and its result would never arrive.
+             No CAMERA permission is declared anywhere in this manifest, and that is what makes the
+             feature possible: ACTION_IMAGE_CAPTURE is only gated on apps that declare it.
+             android:taskAffinity="" is load-bearing and was learned the hard way: without it this
+             activity joins the *settings app's* task, the camera stacks on top of that, and finishing
+             brings the settings app forward instead of the app the user was typing in. They never got
+             back to their field, and the scan was discarded for belonging to a different app. An empty
+             affinity gives it a throwaway task of its own, so finishing returns to whatever was in
+             front before. -->
+        <activity
+            android:name="dev.patrickgold.florisboard.dictate.scan.ScanCaptureActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:exported="false"/>
+
         <!-- "Share → Dictate" for a voice message (issue #301). The other half of the trampoline
              above: that one puts a file's text into the field you are typing in, this one answers
              the reverse — you are in Signal holding the audio and want to know what it says, with no
@@ -370,6 +404,15 @@
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
                 tools:node="remove"/>
         </provider>
+
+        <!-- ML Kit's text recognition (Scan text, #390) runs on the phone, but it brings Google's
+             datatransport along, and that sends usage metrics to firebaselogging.googleapis.com
+             (developers.google.com/ml-kit/terms; measured on the emulator: a FIREBASE_ML_SDK event per
+             scan and an upload job). The app promises no telemetry. Without this registry the
+             transport finds no backend and drops the events instead of sending them. -->
+        <service
+            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+            tools:node="remove"/>
 
     </application>
 

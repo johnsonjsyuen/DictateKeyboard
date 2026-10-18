@@ -18,6 +18,7 @@ import kotlinx.serialization.json.add
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -29,11 +30,12 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString.Companion.toByteString
+import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
 /**
- * Opens real-time transcription sessions (issue #128). Implements all seven [RealtimeApi] wire formats:
- * OpenAI and ElevenLabs/Gemini send audio as base64 in JSON; Deepgram/Soniox/AssemblyAI/Mistral stream
+ * Opens real-time transcription sessions (issue #128). Implements all eight [RealtimeApi] wire formats:
+ * OpenAI and ElevenLabs/Gemini send audio as base64 in JSON; Deepgram/Soniox/AssemblyAI/Mistral/xAI stream
  * raw binary PCM. Mistral is experimental (its raw protocol is SDK-only/unverified). On any error the
  * caller falls back to batch transcription.
  *
@@ -66,9 +68,12 @@ object RealtimeClient {
      * is fed PCM at [sampleRateFor] and finished/cancelled by the caller.
      */
     /**
-     * [baseUrl] redirects the OpenAI-shaped session at a server of the user's own (#249) — several
-     * self-hosted transcription servers expose exactly this protocol under `/v1/realtime`. Null, and every
-     * session goes to its vendor's fixed address as before.
+     * [baseUrl] is the address this session should use instead of its vendor's fixed one. Two things ask
+     * for that, and they hand over different shapes: a server of the user's own passes the HTTP base URL
+     * its batch requests already use and the OpenAI-shaped session derives `/realtime` from it (#249),
+     * while a provider that runs one streaming host per data-residency region passes that host's
+     * WebSocket address outright (Soniox, #403) — it is a sibling of the REST host, not a path under it,
+     * so there is nothing to derive. Null, and every session goes where it always went.
      *
      * [expectedLanguages] is read only by the three providers whose language field is a list (OpenAI's
      * gpt-transcribe generation, Soniox, Gemini), and only when no language is pinned: it turns
@@ -88,7 +93,7 @@ object RealtimeClient {
                 .also { it.connect() }
         RealtimeApi.DEEPGRAM -> DeepgramRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.SONIOX ->
-            SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
+            SonioxRealtimeSession(wsClient, apiKey, model, language, callbacks, baseUrl, expectedLanguages)
                 .also { it.connect() }
         RealtimeApi.ASSEMBLYAI -> AssemblyAiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
         RealtimeApi.ELEVENLABS -> ElevenLabsRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
@@ -96,6 +101,7 @@ object RealtimeClient {
             GeminiRealtimeSession(wsClient, apiKey, model, language, callbacks, expectedLanguages)
                 .also { it.connect() }
         RealtimeApi.MISTRAL_VOXTRAL -> MistralRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
+        RealtimeApi.XAI -> XaiRealtimeSession(wsClient, apiKey, model, language, callbacks).also { it.connect() }
     }
 }
 
@@ -291,6 +297,9 @@ private class OpenAiRealtimeSession(
  * frames. Each `tokens[]` message carries `is_final` tokens (permanent) plus a replaceable tail; the full
  * text (permanent + tail) is emitted as the partial, and the permanent text as the final on flush. An
  * empty frame flushes; the server replies `finished:true` and closes.
+ *
+ * [wsUrl] is the streaming host of the account's data-residency region (#403), taken as given: Soniox
+ * publishes it per region alongside the REST one, and a key is only a credential inside its own region.
  */
 private class SonioxRealtimeSession(
     private val client: OkHttpClient,
@@ -298,6 +307,7 @@ private class SonioxRealtimeSession(
     private val model: String,
     private val language: String?,
     private val callbacks: RealtimeCallbacks,
+    private val wsUrl: String? = null,
     expectedLanguages: List<String> = emptyList(),
 ) : RealtimeSession {
 
@@ -312,7 +322,8 @@ private class SonioxRealtimeSession(
     private companion object { const val URL = "wss://stt-rt.soniox.com/transcribe-websocket" }
 
     fun connect() {
-        ws = client.newWebSocket(Request.Builder().url(URL).build(), listener)
+        val url = wsUrl?.takeIf { it.isNotBlank() } ?: URL
+        ws = client.newWebSocket(Request.Builder().url(url).build(), listener)
     }
 
     private val listener = object : WebSocketListener() {
@@ -990,6 +1001,231 @@ private class DeepgramRealtimeSession(
         pending = ""
         runCatching { (webSocket ?: ws)?.close(1000, null) }
         callbacks.onClosed()
+    }
+}
+
+/**
+ * xAI Grok Voice Transcribe over `wss://api.x.ai/v1/stt` (issue #435). Everything is configured in the
+ * query and the Bearer header — there is no setup message — and 16 kHz mono PCM16 goes out as raw binary
+ * frames. The server announces `transcript.created` once its recogniser is up and asks for no audio before
+ * that, so the microphone's first frames wait in a [RealtimeAudioGate] until it does.
+ *
+ * What comes back looks like Deepgram's results and does not mean the same thing; that difference is all
+ * of [XaiTranscriptAssembler]. Stop sends `finalize` — xAI's documented push-to-talk release, which
+ * settles the utterance in progress at once instead of after the endpointing silence — and then
+ * `audio.done`, which the server answers with `transcript.done` before it closes.
+ *
+ * `language` is sent only where xAI formats numbers for it ([OpenAiCompatibleClient.xaiLanguage]); it
+ * never limits which language is recognised. Endpointing stays at xAI's 400 ms: an utterance final is a
+ * point where text settles, and the app decides for itself when the dictation ends.
+ */
+internal class XaiRealtimeSession(
+    private val client: OkHttpClient,
+    private val apiKey: String,
+    private val model: String,
+    private val language: String?,
+    private val callbacks: RealtimeCallbacks,
+    /** The socket address without its query — xAI's own, except in tests. */
+    private val endpoint: String = URL,
+) : RealtimeSession {
+
+    private val json = Json { ignoreUnknownKeys = true; isLenient = true }
+    private var ws: WebSocket? = null
+    private val audioGate = RealtimeAudioGate()
+    private val transcript = XaiTranscriptAssembler(callbacks)
+    @Volatile private var done = false
+
+    private companion object {
+        const val URL = "wss://api.x.ai/v1/stt"
+    }
+
+    /** The socket URL with the session's configuration in its query. */
+    internal fun url(): String = buildString {
+        append(endpoint).append("?sample_rate=16000&encoding=pcm&interim_results=true")
+        if (model.isNotBlank()) append("&model=").append(URLEncoder.encode(model, "UTF-8"))
+        OpenAiCompatibleClient.xaiLanguage(language)?.let { append("&language=").append(it) }
+    }
+
+    fun connect() {
+        val request = Request.Builder().url(url()).header("Authorization", "Bearer $apiKey").build()
+        ws = client.newWebSocket(request, listener)
+    }
+
+    private val listener = object : WebSocketListener() {
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
+            fun string(name: String) = (obj[name] as? JsonPrimitive)?.contentOrNull
+            fun flag(name: String) = (obj[name] as? JsonPrimitive)?.booleanOrNull == true
+            when (string("type")) {
+                "transcript.created" -> audioGate.markReady(
+                    send = { pcm16, len -> runCatching { webSocket.send(pcm16.toByteString(0, len)) } },
+                    finish = { sendEnd(webSocket) },
+                )
+                "transcript.partial" -> transcript.onPartial(
+                    text = string("text").orEmpty(),
+                    isFinal = flag("is_final"),
+                    speechFinal = flag("speech_final"),
+                )
+                "transcript.done" -> {
+                    transcript.onDone(string("text").orEmpty())
+                    finishClosed(webSocket)
+                }
+                // Almost every error closes the session on xAI's side anyway; the one that does not — a
+                // client message it could not parse — cannot come from the two fixed ones sent here.
+                "error" -> emitError(RuntimeException("xAI realtime error: ${string("message") ?: text}"))
+            }
+        }
+
+        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+            android.util.Log.w("DictateRT", "xai realtime WS failed (http=${response?.code}): ${t.message}")
+            emitError(t)
+        }
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) = finishClosed(webSocket)
+    }
+
+    override fun sendAudio(pcm16: ByteArray, len: Int) {
+        audioGate.sendAudio(pcm16, len) { audio, length ->
+            runCatching { ws?.send(audio.toByteString(0, length)) }
+        }
+    }
+
+    private fun sendEnd(socket: WebSocket) {
+        runCatching {
+            socket.send("""{"type":"finalize"}""")
+            socket.send("""{"type":"audio.done"}""")
+        }
+    }
+
+    override fun finish() {
+        audioGate.finish {
+            ws?.let { sendEnd(it) }
+        }
+    }
+
+    override fun cancel() {
+        audioGate.close()
+        done = true
+        runCatching { ws?.close(1000, null) }
+        callbacks.onClosed()
+    }
+
+    private fun emitError(t: Throwable) {
+        if (done) return
+        done = true
+        audioGate.close()
+        runCatching { ws?.cancel() }
+        callbacks.onError(t)
+        callbacks.onClosed()
+    }
+
+    private fun finishClosed(webSocket: WebSocket?) {
+        if (done) return
+        done = true
+        audioGate.close()
+        transcript.flush()
+        runCatching { (webSocket ?: ws)?.close(1000, null) }
+        callbacks.onClosed()
+    }
+}
+
+/**
+ * Turns xAI's streaming events into [RealtimeCallbacks] (issue #435) — the part of its protocol the
+ * documentation states loosely and two other projects had to measure.
+ *
+ * Every event is a `transcript.partial` with two flags, which between them mean three things:
+ *  - **interim** (`is_final` false): a guess at the audio *since the last lock*, not at the utterance.
+ *  - **chunk final** (`is_final` only): about three seconds of speech, locked.
+ *  - **utterance final** (both): the speaker paused, and the event restates the **whole utterance** —
+ *    every chunk final inside it again, re-punctuated.
+ *
+ * So a chunk final is never handed on as a final segment. Doing that and then appending the utterance
+ * final is how pipecat came to print every sentence twice (pipecat-ai/pipecat#5671: 76 % of its benchmark
+ * transcripts doubled). Chunks are held, shown in the preview with the interim that follows them, and
+ * replaced by the utterance final. Captured against the live endpoint by pipecat and by
+ * Project-N-E-K-O/N.E.K.O#3073, and the two agree:
+ *
+ *     interim       "my order"
+ *     chunk final   "my order number"
+ *     interim       "is four"
+ *     chunk final   "is four two one."
+ *     utterance     "my order number is four two one."
+ *
+ * N.E.K.O also found that noise produces empty events of the two other kinds — 34 in 25 seconds — and
+ * never an utterance final; they change nothing here. An utterance final that is itself empty falls back
+ * to its own chunks, so a blank restatement cannot swallow text the server had already locked.
+ *
+ * `transcript.done` is the one event nobody has pinned down: the reference calls its text the "final
+ * transcript", and its own example carries an empty one. So it is believed only where no reading of it
+ * could repeat anything — while nothing has been settled yet. Otherwise what is still open when the
+ * session ends is settled from what is here: its locked chunks, then the last guess, because a word heard
+ * and not confirmed is worth more than one dropped.
+ *
+ * Only ever driven from one socket's reader thread, so it keeps no locks.
+ */
+internal class XaiTranscriptAssembler(private val callbacks: RealtimeCallbacks) {
+
+    /** The chunk finals of the utterance in progress — locked text its utterance final will restate. */
+    private val locked = mutableListOf<String>()
+
+    /** The guess at the audio after the last lock. */
+    private var interim = ""
+
+    /** What the preview last showed, so a run of identical empty events does not repaint it each time. */
+    private var shown = ""
+
+    /** Whether any final segment has gone out, which is all [onDone] needs to know. */
+    private var settledAny = false
+
+    fun onPartial(text: String, isFinal: Boolean, speechFinal: Boolean) {
+        val piece = text.trim()
+        when {
+            isFinal && speechFinal -> {
+                val chunks = locked.toList()
+                locked.clear()
+                interim = ""
+                shown = ""
+                if (piece.isNotEmpty()) settle(piece) else chunks.forEach(::settle)
+            }
+            isFinal -> {
+                if (piece.isNotEmpty()) locked += piece
+                interim = ""
+                preview()
+            }
+            else -> {
+                interim = piece
+                preview()
+            }
+        }
+    }
+
+    fun onDone(text: String) {
+        val piece = text.trim()
+        if (!settledAny && piece.isNotEmpty()) {
+            locked.clear()
+            interim = ""
+            settle(piece)
+        }
+        flush()
+    }
+
+    /** Settles whatever the server never did — locked chunks first, then the last guess. */
+    fun flush() {
+        val open = locked + interim
+        locked.clear()
+        interim = ""
+        open.filter { it.isNotEmpty() }.forEach(::settle)
+    }
+
+    private fun preview() {
+        val text = (locked + interim).filter { it.isNotEmpty() }.joinToString(" ")
+        if (text == shown) return
+        shown = text
+        callbacks.onPartial(text)
+    }
+
+    private fun settle(piece: String) {
+        settledAny = true
+        callbacks.onFinalSegment(piece)
     }
 }
 

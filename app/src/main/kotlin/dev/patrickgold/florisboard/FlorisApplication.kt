@@ -27,6 +27,7 @@ import android.util.Log
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.PreferenceRecovery
 import dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator
 import dev.patrickgold.florisboard.dictate.wear.DictateWearPublisher
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
@@ -78,6 +79,10 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
+        // The translation engine's process (issue #424) runs one service and touches none of this: the
+        // preference store, the dictionaries, the Wear publisher would all be a second copy of the
+        // keyboard in memory, in the process that exists precisely to keep memory out of the keyboard.
+        if (isTranslationEngineProcess()) return
         try {
             Flog.install(
                 context = this,
@@ -103,6 +108,15 @@ class FlorisApplication : Application() {
         }
     }
 
+    private fun isTranslationEngineProcess(): Boolean {
+        val name = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            Application.getProcessName()
+        } else {
+            runCatching { java.io.File("/proc/self/cmdline").readText().trimEnd('\u0000') }.getOrNull()
+        }
+        return name?.endsWith(":translate") == true
+    }
+
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
         // Under memory pressure, free the on-device STT model from RAM (it can be ~100 MB up to ~700 MB).
@@ -115,11 +129,16 @@ class FlorisApplication : Application() {
     fun init() {
         cacheDir?.deleteContentsRecursively()
         scope.launch {
+            // A settings file that cannot be read is kept rather than written over (#383): the migrators
+            // below write at once, and a write replaces the whole file.
+            PreferenceRecovery.setAsideIfUnreadable(this@FlorisApplication)
             val result = FlorisPreferenceStore.initAndroid(
                 context = this@FlorisApplication,
                 datastoreName = FlorisPreferenceModel.NAME,
             )
             Log.i("PREFS", result.toString())
+            if (result.isFailure) PreferenceRecovery.setAsideAfterFailedLoad(this@FlorisApplication)
+            PreferenceRecovery.refresh(this@FlorisApplication)
             DictateLegacyMigrator.migrateIfNeeded(this@FlorisApplication)
             DictateLegacyMigrator.seedDeviceLanguageIfNeeded()
             DictateLegacyMigrator.migrateProviderKeyringIfNeeded()
@@ -127,6 +146,7 @@ class FlorisApplication : Application() {
             DictateLegacyMigrator.migratePromptsActionIfNeeded(this@FlorisApplication)
             DictateLegacyMigrator.migratePromptsLayoutToRowIfNeeded()
             DictateLegacyMigrator.migratePushToTalkDefaultIfNeeded()
+            DictateLegacyMigrator.migrateTrustUserCertsToAccountsIfNeeded()
             DictateLegacyMigrator.migrateWordLearningDefaultIfNeeded()
             DictateLegacyMigrator.migrateHindiDefaultsIfNeeded()
             DictateLegacyMigrator.migrateFrenchPunctuationRuleIfNeeded()

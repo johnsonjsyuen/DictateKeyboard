@@ -39,6 +39,8 @@ class BubbleVisibilityTest {
     private fun shown(
         state: DictateController.UiState = DictateController.UiState.Idle,
         focused: Boolean = false,
+        keyboardRequired: Boolean = false,
+        keyboardShown: Boolean = false,
         enabled: Boolean = true,
         hiddenByOwnKeyboard: Boolean = false,
         recognitionActive: Boolean = false,
@@ -47,6 +49,8 @@ class BubbleVisibilityTest {
     ) = BubbleVisibility.shouldShow(
         enabled = enabled,
         focused = focused,
+        keyboardRequired = keyboardRequired,
+        keyboardShown = keyboardShown,
         state = state,
         hiddenByOwnKeyboard = hiddenByOwnKeyboard,
         recognitionActive = recognitionActive,
@@ -110,5 +114,71 @@ class BubbleVisibilityTest {
         assertFalse(shown(state = recording, allowedInApp = false))
         assertFalse(shown(state = transcribing, allowedInApp = false))
         assertFalse(shown(focused = true, allowedInApp = false))
+    }
+
+    /**
+     * "Only while the keyboard is open" (#439): WhatsApp focuses its composer the moment a chat is opened,
+     * so the focused field that is enough by default is exactly what must not be enough here.
+     */
+    @Test
+    fun `with the keyboard required a focused field waits for the keyboard`() {
+        assertFalse(shown(focused = true, keyboardRequired = true))
+        assertTrue(shown(focused = true, keyboardRequired = true, keyboardShown = true))
+        // The default is untouched: a keyboard is not needed, and not having one changes nothing.
+        assertTrue(shown(focused = true))
+    }
+
+    /**
+     * It narrows the reason to appear, not what keeps the button up: closing the keyboard in the middle of
+     * a recording keeps the stop button.
+     */
+    @Test
+    fun `with the keyboard required work in flight still pins the button`() {
+        assertTrue(shown(state = recording, keyboardRequired = true))
+        assertTrue(shown(state = transcribing, keyboardRequired = true))
+        assertTrue(shown(state = rewording, keyboardRequired = true))
+        // A resting state is no work in flight, so it waits for the keyboard like anything else.
+        assertFalse(shown(state = failed, focused = true, keyboardRequired = true))
+    }
+
+    /** A keyboard on screen is a condition, not a reason: the suppressors still win over it. */
+    @Test
+    fun `a keyboard on screen does not beat the suppressors`() {
+        assertFalse(shown(focused = true, keyboardRequired = true, keyboardShown = true, hiddenByOwnKeyboard = true))
+        assertFalse(shown(focused = true, keyboardRequired = true, keyboardShown = true, allowedInApp = false))
+    }
+
+    private fun reports(
+        state: DictateController.UiState = failed,
+        previous: DictateController.UiState = transcribing,
+        startedHere: Boolean = false,
+        wasShown: Boolean = true,
+        keyboardShown: Boolean = false,
+    ) = BubbleVisibility.reportsEnd(state, previous, startedHere, wasShown, keyboardShown)
+
+    /**
+     * The case from #437: a dictation started in the keyboard, the user left for another app while it was
+     * sent, and the button showed the spinner. The failure used to end in silence, because only a dictation
+     * the button started itself was reported.
+     */
+    @Test
+    fun `a keyboard dictation left for another app is reported where it was watched`() {
+        assertTrue(reports())
+        assertTrue(reports(previous = rewording))
+        // Before #437 this was the only case.
+        assertTrue(reports(startedHere = true, wasShown = false, keyboardShown = true))
+    }
+
+    @Test
+    fun `a keyboard dictation is not reported twice or where nobody watched`() {
+        // The keyboard is on screen and says it with its own chip.
+        assertFalse(reports(keyboardShown = true))
+        // The button was not on screen while it ran, so there was no spinner to explain.
+        assertFalse(reports(wasShown = false))
+        // An error straight from a recording happens with the keyboard in front of the user.
+        assertFalse(reports(previous = recording))
+        // Only an ending is reported.
+        assertFalse(reports(state = DictateController.UiState.Idle))
+        assertFalse(reports(state = transcribing, previous = recording))
     }
 }

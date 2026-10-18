@@ -56,6 +56,8 @@ import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -69,7 +71,9 @@ import dev.patrickgold.florisboard.dictate.ui.DictateSmartbarUi
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
@@ -79,6 +83,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.horizontalTween
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.compose.verticalTween
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -101,8 +106,12 @@ private val NoExitTransition = ExitTransition.horizontalTween(0)
 private val AnimationTween = tween<Float>(AnimationDuration)
 private val NoAnimationTween = tween<Float>(0)
 
+/**
+ * @param showPromptRow false while one of the keyboard's own fields is open (issue #424): the field takes
+ *  the prompt row's place above the Smartbar.
+ */
 @Composable
-fun Smartbar() {
+fun Smartbar(showPromptRow: Boolean = true) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val smartbarEnabled by prefs.smartbar.enabled.collectAsState()
@@ -114,7 +123,7 @@ fun Smartbar() {
     val dictatePromptsLayout by prefs.dictate.promptsLayout.collectAsState()
     val dictateRewordingEnabled by prefs.dictate.rewordingEnabled.collectAsState()
     val dictatePrompts by DictateController.prompts.collectAsState()
-    val showDictatePromptRow = dictateRewordingEnabled && dictatePromptsLayout == DictatePromptsLayout.ROW
+    val showDictatePromptRow = showPromptRow && dictateRewordingEnabled && dictatePromptsLayout == DictatePromptsLayout.ROW
     LaunchedEffect(showDictatePromptRow) {
         if (showDictatePromptRow) DictateController.refreshPrompts(context)
     }
@@ -190,6 +199,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     // Drives the in-Smartbar dictation indicator (recording timer / transcribing spinner).
     val dictateState by DictateController.state.collectAsState()
+    val isDictating = dictateState !is DictateController.UiState.Idle
 
     // Contextual prompt chip strip: shown in place of the candidates while text is selected and
     // rewording is enabled (roadmap 4.3). The selection flag is derived as a distinct boolean so the
@@ -216,6 +226,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun SharedActionsToggle() {
+        val showActionsLabel = stringRes(R.string.smartbar__a11y_show_actions)
+        val showSuggestionsLabel = stringRes(R.string.smartbar__a11y_show_suggestions)
         SnyggIconButton(
             elementName = FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
@@ -226,7 +238,14 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
                 }
             },
-            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
+            // Named after what a tap does, like the Dictate mic (#159): an arrow says nothing to a
+            // screen reader, which read this as a bare "button".
+            modifier = Modifier
+                .sizeIn(maxHeight = FlorisImeSizing.smartbarHeight)
+                .aspectRatio(1f)
+                .semantics {
+                    contentDescription = if (sharedActionsExpanded) showSuggestionsLabel else showActionsLabel
+                },
         ) {
             val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
             val rotation by transition.animateFloat(
@@ -275,7 +294,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         ) {
             val enterTransition = if (shouldAnimate) HorizontalEnterTransition else NoEnterTransition
             val exitTransition = if (shouldAnimate) HorizontalExitTransition else NoExitTransition
-            val isDictating = dictateState !is DictateController.UiState.Idle
             this@CenterContent.AnimatedVisibility(
                 visible = !expanded && !isDictating && !showDictatePromptStrip,
                 enter = enterTransition,
@@ -316,6 +334,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun ExtendedActionsToggle() {
+        val showMoreActionsLabel = stringRes(R.string.smartbar__a11y_show_more_actions)
+        val hideMoreActionsLabel = stringRes(R.string.smartbar__a11y_hide_more_actions)
         SnyggIconButton(
             FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
@@ -326,7 +346,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
                 }
             },
-            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
+            modifier = Modifier
+                .sizeIn(maxHeight = FlorisImeSizing.smartbarHeight)
+                .aspectRatio(1f)
+                .semantics {
+                    contentDescription = if (extendedActionsExpanded) hideMoreActionsLabel else showMoreActionsLabel
+                },
         ) {
             val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
             val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
@@ -353,6 +378,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun StickyAction() {
         val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
+        val secondActions by prefs.smartbar.actionSecondActions.collectAsState()
         val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
         val action = when {
@@ -372,6 +398,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(horizontal = 4.dp),
                 action = action,
                 evaluator = evaluator,
+                // The sticky slot is not necessarily the mic — anything can be dragged into it, and
+                // it is the one button that is always visible, so it earns a second action too.
+                secondAction = secondActions.childOf(action.keyData().code),
             )
         } else {
             Spacer(
@@ -379,6 +408,40 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .padding(horizontal = 4.dp)
                     .aspectRatio(1f),
             )
+        }
+    }
+
+    /**
+     * A running dictation in the two layouts that have no centre part: its bar (bin, timer, level) with the
+     * mic that stops it on the left, where "Actions only" shows the mic anyway.
+     *
+     * The bar used to live only in [CenterContent], which just the two mixed layouts have. So with "Actions
+     * only" the actions row simply stayed during a dictation, and a failed recording had no bin to drop it
+     * in (reported by e-mail); "Suggestions only" kept its suggestions the same way. The mic is looked up
+     * wherever the user put it, because the bar has no stop of its own; "Suggestions only" shows it here
+     * too, the one time it is needed.
+     */
+    @Composable
+    fun RowScope.DictationRow() {
+        val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
+        val secondActions by prefs.smartbar.actionSecondActions.collectAsState()
+        val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
+        val mic = (listOfNotNull(actionArrangement.stickyAction) + actionArrangement.dynamicActions)
+            .firstOrNull { it.keyData().code == KeyCode.IME_UI_MODE_DICTATE }
+        if (mic != null) {
+            QuickActionButton(
+                modifier = Modifier.padding(horizontal = 4.dp),
+                action = mic,
+                evaluator = evaluator,
+                secondAction = secondActions.childOf(mic.keyData().code),
+            )
+        }
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+        ) {
+            DictateSmartbarUi(dictateState)
         }
     }
 
@@ -397,7 +460,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
-                if (showDictatePromptStrip) {
+                if (isDictating) {
+                    DictationRow()
+                } else if (showDictatePromptStrip) {
                     DictatePromptStrip(dictatePrompts, modifier = Modifier.fillMaxSize())
                 } else if (shouldShowInlineSuggestionsUi) {
                     InlineSuggestionsUi(inlineSuggestions)
@@ -407,7 +472,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             }
 
             SmartbarLayout.ACTIONS_ONLY -> {
-                if (shouldShowInlineSuggestionsUi) {
+                if (isDictating) {
+                    DictationRow()
+                } else if (shouldShowInlineSuggestionsUi) {
                     InlineSuggestionsUi(inlineSuggestions)
                 } else {
                     QuickActionsRow(FlorisImeUi.SmartbarSharedActionsRow.elementName)

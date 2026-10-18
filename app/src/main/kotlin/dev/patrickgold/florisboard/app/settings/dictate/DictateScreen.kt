@@ -44,7 +44,6 @@ import androidx.compose.material.icons.filled.FastForward
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.AudioFile
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Insights
@@ -171,19 +170,12 @@ fun DictateScreen() = FlorisScreen {
             onClick = { importPicker.launch(TranscribeShareActivity.MIME_TYPES) },
         )
 
-        // Dictation layout: its own category (issue #199) — the classic keyboard-less layout toggle
-        // today, with more layout options to follow. Kept out of Output (it changes the whole keyboard,
-        // not how text is inserted) and given top-level prominence here.
-        Preference(
-            icon = Icons.Default.Dialpad,
-            modifier = Modifier.settingsSearchAnchor("dictate__layout_title"),
-            title = stringRes(R.string.dictate__layout_title),
-            summary = stringRes(R.string.dictate__layout_menu_summary),
-            onClick = { navController.navigate(Routes.Settings.DictateLayout) },
-        )
-
         // Hub: each row opens a dedicated sub-screen (issue #153), keeping this landing page short and
         // scannable instead of one long list of every setting.
+        //
+        // Who dictates and in which language comes first: those two are what somebody sets up once and
+        // then changes when something is wrong, while the layout is a matter of taste that most people
+        // never touch.
         Preference(
             icon = Icons.Default.Cloud,
             modifier = Modifier.settingsSearchAnchor("dictate__providers_title"),
@@ -213,6 +205,17 @@ fun DictateScreen() = FlorisScreen {
             title = stringRes(R.string.dictate__languages_title),
             summary = languagesSummary,
             onClick = { navController.navigate(Routes.Settings.DictateLanguages) },
+        )
+
+        // Dictation layout: its own category (issue #199) — the classic keyboard-less layout toggle
+        // today, with more layout options to follow. Kept out of Output, because it changes the whole
+        // keyboard rather than how text is inserted.
+        Preference(
+            icon = Icons.Default.Dialpad,
+            modifier = Modifier.settingsSearchAnchor("dictate__layout_title"),
+            title = stringRes(R.string.dictate__layout_title),
+            summary = stringRes(R.string.dictate__layout_menu_summary),
+            onClick = { navController.navigate(Routes.Settings.DictateLayout) },
         )
 
         Preference(
@@ -289,7 +292,6 @@ fun DictateFormattingScreen() = FlorisScreen {
 
     content {
         val navController = LocalNavController.current
-        val styleSelection by prefs.dictate.stylePromptSelection.collectAsState()
         val activeLang by prefs.dictate.activeInputLanguage.collectAsState()
         PromptSelectionPreference(
             pref = prefs.dictate.stylePromptSelection,
@@ -302,16 +304,9 @@ fun DictateFormattingScreen() = FlorisScreen {
             // rather than an English one, and the info box should say so instead of showing nothing.
             infoPromptText = DictatePromptDefaults.punctuationPromptFor(activeLang)
                 ?: stringRes(R.string.dictate__style_prompt_info_none),
+            customPref = prefs.dictate.stylePromptCustom,
+            customPlaceholder = stringRes(R.string.dictate__style_prompt_custom_placeholder),
         )
-        if (styleSelection == DictatePromptDefaults.SELECTION_CUSTOM) {
-            TextInputPreference(
-                pref = prefs.dictate.stylePromptCustom,
-                icon = Icons.Default.Edit,
-                title = stringRes(R.string.dictate__style_prompt_custom_title),
-                placeholder = stringRes(R.string.dictate__style_prompt_custom_placeholder),
-                multiline = true,
-            )
-        }
         // The editor, what the list costs on every request, and the file import/export (issue #389).
         CustomWordsSection(prefs.dictate.customWords)
         Preference(
@@ -442,6 +437,11 @@ fun DictateRecordingScreen() = FlorisScreen {
                     key = DictateRecordingAnimation.LEVEL,
                     label = stringRes(R.string.dictate__recording_animation_level_label),
                     description = stringRes(R.string.dictate__recording_animation_level_description),
+                )
+                entry(
+                    key = DictateRecordingAnimation.WAVE,
+                    label = stringRes(R.string.dictate__recording_animation_wave_label),
+                    description = stringRes(R.string.dictate__recording_animation_wave_description),
                 )
             },
         )

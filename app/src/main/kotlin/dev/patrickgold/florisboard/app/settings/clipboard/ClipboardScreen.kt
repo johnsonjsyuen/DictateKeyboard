@@ -90,6 +90,12 @@ fun ClipboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__clipboard__suggestion_enabled__label),
                 summary = stringRes(R.string.pref__clipboard__suggestion_enabled__summary),
             )
+            SwitchPreference(
+                prefs.clipboard.suggestionShowExtracted,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__suggestion_show_extracted__label"),
+                title = stringRes(R.string.pref__clipboard__suggestion_show_extracted__label),
+                enabledIf = { prefs.clipboard.suggestionEnabled isEqualTo true },
+            )
             DialogSliderPreference(
                 prefs.clipboard.suggestionTimeout,
                 modifier = Modifier.settingsSearchAnchor("pref__clipboard__suggestion_timeout__label"),
@@ -126,6 +132,12 @@ fun ClipboardScreen() = FlorisScreen {
                 min = 0,
                 max = 10,
                 stepIncrement = 1,
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.clipboard.historyPinnedOnTop,
+                modifier = Modifier.settingsSearchAnchor("pref__clipboard__history_pinned_on_top__label"),
+                title = stringRes(R.string.pref__clipboard__history_pinned_on_top__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
             SwitchPreference(

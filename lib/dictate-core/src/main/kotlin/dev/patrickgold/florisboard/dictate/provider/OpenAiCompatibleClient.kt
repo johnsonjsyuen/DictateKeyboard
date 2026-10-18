@@ -24,6 +24,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Credentials
@@ -56,7 +57,9 @@ import javax.net.ssl.X509TrustManager
  * A single client implementation that talks to any OpenAI Chat Completions / Audio Transcriptions
  * compatible endpoint. This one class covers OpenAI, Groq, OpenRouter, Together, DeepInfra, Mistral,
  * xAI, DeepSeek, local Ollama and arbitrary custom servers – they only differ by base URL, key and
- * a few headers (see [ProviderRegistry] and [ProviderConfig]).
+ * a few headers (see [ProviderRegistry] and [ProviderConfig]). The dedicated speech-to-text services
+ * whose upload is shaped differently — Soniox, ElevenLabs, Deepgram, AssemblyAI, Azure, xAI's `stt` —
+ * each have a function of their own below, picked by [TranscriptionApi].
  *
  * Google Gemini is also handled here: chat/rewording goes through its OpenAI-compatible layer
  * unchanged, while transcription uses the native generateContent endpoint (see
@@ -81,23 +84,22 @@ class OpenAiCompatibleClient(
     }
 
     override suspend fun complete(request: ChatRequest): ChatResult {
-        // Skip reasoning_effort up-front for endpoint+model pairs already known to reject it, so we don't
-        // waste a doubled request on every rewording (#184/#186).
-        val key = "${config.normalizedBaseUrl}|${request.model}"
-        val effective = if (request.reasoningEffort != null && key in reasoningEffortUnsupported) {
-            request.copy(reasoningEffort = null)
-        } else {
-            request
-        }
+        // Send straight away what an earlier refusal from this endpoint and model taught us to send instead,
+        // so we don't waste a doubled request on every rewording (#184/#186).
+        val effective = request.copy(reasoningEffort = acceptedEffort(request.model, request.reasoningEffort))
+        // What the answer below was actually asked with, which the empty-answer retry has to judge by.
+        var sent = effective.reasoningEffort
         val first = try {
             completeOnce(effective)
         } catch (e: DictateApiException) {
             // Many models/endpoints reject `reasoning_effort`: it's an unknown option (#184), an
             // unsupported value such as "minimal" on Ollama (#186), or the model "does not support
-            // thinking" (#186). Rather than hard-fail the rewording, remember it and retry once without it.
-            if (effective.reasoningEffort != null && isReasoningEffortRejected(e)) {
-                reasoningEffortUnsupported.add(key)
-                completeOnce(effective.copy(reasoningEffort = null))
+            // thinking" (#186). Rather than hard-fail the rewording, remember it and retry once with what
+            // the provider said it takes, or without the field when it said nothing.
+            val rejected = effective.reasoningEffort
+            if (rejected != null && isReasoningEffortRejected(e)) {
+                sent = rememberRejection(effective.model, rejected, e)
+                completeOnce(effective.copy(reasoningEffort = sent))
             } else {
                 throw e
             }
@@ -110,13 +112,14 @@ class OpenAiCompatibleClient(
             // left to turn down — an answer that came back empty at "low" will not come back fuller at
             // "low" (issue #304).
             is Completion.Empty -> {
-                if (first.thoughtOnly && canLowerThinking(effective.reasoningEffort)) {
+                val floor = acceptedEffort(effective.model, THINKING_FLOOR)
+                if (first.thoughtOnly && canLowerThinking(sent) && floor != null) {
                     // Deliberately not runCatching: that also catches the CancellationException the stop
                     // button throws (#192), turning a cancelled dictation into a failed one.
                     val second = try {
-                        completeOnce(effective.copy(reasoningEffort = THINKING_FLOOR))
+                        completeOnce(effective.copy(reasoningEffort = floor))
                     } catch (e: DictateApiException) {
-                        if (isReasoningEffortRejected(e)) reasoningEffortUnsupported.add(key)
+                        if (isReasoningEffortRejected(e)) rememberRejection(effective.model, floor, e)
                         null
                     }
                     if (second is Completion.Answer) return second.result
@@ -148,6 +151,26 @@ class OpenAiCompatibleClient(
          * one distinction that decides whether asking again is worth anything.
          */
         data class Empty(val message: String, val thoughtOnly: Boolean) : Completion
+    }
+
+    private fun effortKey(model: String, effort: String) =
+        "${config.normalizedBaseUrl}|$model|${effort.trim().lowercase()}"
+
+    /**
+     * What to send for [effort] with [model]: the value itself, or whatever an earlier refusal of it by
+     * this endpoint put in its place — another value, or null for no field at all.
+     */
+    private fun acceptedEffort(model: String, effort: String?): String? {
+        effort ?: return null
+        val key = effortKey(model, effort)
+        return if (reasoningEffortSubstitutes.containsKey(key)) reasoningEffortSubstitutes[key] else effort
+    }
+
+    /** Records what replaces [rejected] from now on (see [nearestSupportedEffort]) and returns it. */
+    private fun rememberRejection(model: String, rejected: String, e: DictateApiException): String? {
+        val substitute = nearestSupportedEffort(rejected, e.message)
+        reasoningEffortSubstitutes[effortKey(model, rejected)] = substitute
+        return substitute
     }
 
     /** True when [e] looks like the provider rejecting the `reasoning_effort` field or its value. */
@@ -228,6 +251,7 @@ class OpenAiCompatibleClient(
         TranscriptionApi.DEEPGRAM -> transcribeDeepgram(request, onRetry)
         TranscriptionApi.ASSEMBLYAI_ASYNC -> transcribeAssemblyAi(request, onRetry)
         TranscriptionApi.AZURE_FAST_TRANSCRIPTION -> transcribeAzure(request, onRetry)
+        TranscriptionApi.XAI_STT -> transcribeXai(request, onRetry)
         // On-device transcription never uses this HTTP client; the dictation flow routes local providers
         // to LocalTranscriptionProvider before one is ever constructed.
         TranscriptionApi.LOCAL_ONDEVICE -> error("LOCAL_ONDEVICE is handled by LocalTranscriptionProvider")
@@ -744,6 +768,53 @@ class OpenAiCompatibleClient(
     }
 
     /**
+     * xAI Grok Voice Transcribe (issue #435): one multipart POST to `stt`, a Bearer key, `text` back.
+     *
+     * Three things differ from [transcribeMultipart], and each changes the request rather than its path:
+     *  - **The file goes last.** xAI streams the upload and says fields after the `file` part "may be
+     *    ignored" — so a language or a vocabulary placed where the other builders put them would be
+     *    dropped in silence, not refused.
+     *  - **`language` switches on formatting, not recognition.** The model transcribes any of its
+     *    languages whatever is sent; the code turns spoken numbers, currencies and units into their
+     *    written form, and only beside `format=true` — which without a language is a 400. So the two go
+     *    together or not at all, and auto-detect sends neither. [xaiLanguage] says which codes.
+     *  - **There is no prompt.** The style hint's terms go out as repeated `keyterm` fields instead — the
+     *    same reading of it that Google's and Azure's dedicated models get ([vocabularyFromPrompt]) —
+     *    within xAI's documented 50 characters a term.
+     *
+     * Filler words stay at xAI's default, which removes them: the choice this app makes wherever a
+     * provider offers one (Gemini's `smart`, Azure's `clean`).
+     */
+    private suspend fun transcribeXai(
+        request: TranscriptionRequest,
+        onRetry: (attempt: Int) -> Unit,
+    ): TranscriptionResult {
+        val multipart = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .apply {
+                // Omitted rather than sent empty: without the field xAI uses its default model, and what it
+                // makes of a model named "" is not documented.
+                if (request.model.isNotBlank()) addFormDataPart("model", request.model)
+                xaiLanguage(request.language)?.let { language ->
+                    addFormDataPart("language", language)
+                    addFormDataPart("format", "true")
+                }
+                vocabularyFromPrompt(request.prompt).orEmpty()
+                    .filter { it.length <= XAI_KEYTERM_MAX_CHARS }
+                    .forEach { addFormDataPart("keyterm", it) }
+            }
+            .addFormDataPart("file", audioUploadNameOf(request.audioFile), request.audioBody())
+            .build()
+        val httpRequest = Request.Builder()
+            .url(config.normalizedBaseUrl + "stt")
+            .headers(authHeaders())
+            .post(multipart)
+            .build()
+        val body = executeForBody(httpRequest, onRetry = onRetry)
+        return TranscriptionResult(decode(TranscriptionResponseDto.serializer(), body).text.trim())
+    }
+
+    /**
      * The transcribe URL for this account's own Azure resource — or a refusal that says what to do.
      *
      * Every other provider here has one address for everybody; an Azure Speech resource answers on a
@@ -926,13 +997,14 @@ class OpenAiCompatibleClient(
      * Hence [afterLastSentenceEnd]: a term never contains a full stop followed by a space, so cutting
      * there recovers `DevEmperor` and leaves anything that was already a plain term untouched. The one
      * thing it costs is the front of a term with a stop inside it — `"Dr. Meier"` biases towards
-     * `Meier` — which still biases towards the right name.
+     * `Meier` — which still biases towards the right name. With no glossary behind it, the sample's
+     * own last sentence is what is left, and [vocabularyTermOf] turns that away too.
      */
     private fun vocabularyFromPrompt(prompt: String?): List<String>? {
         val terms = prompt.orEmpty()
             .split(',', ';', '\n')
-            .map { afterLastSentenceEnd(it).trim() }
-            .filter { term -> term.isNotEmpty() && term.count { it == ' ' } < 4 }
+            .mapNotNull(::vocabularyTermOf)
+            .filter { term -> term.count { it == ' ' } < 4 }
             .distinct()
             .take(100)
         return terms.ifEmpty { null }
@@ -1189,6 +1261,8 @@ class OpenAiCompatibleClient(
         diagnosticLabel: String? = null,
     ): String {
         var attempt = 0
+        // From the first attempt on, so that the pauses between attempts count as the waiting they are.
+        val firstStartedNanos = System.nanoTime()
         while (true) {
             val startedNanos = System.nanoTime()
             diagnosticLabel?.let {
@@ -1219,7 +1293,13 @@ class OpenAiCompatibleClient(
                             "kind=${mapped.kind}",
                     )
                 }
-                if (mapped.kind.isRetryable && attempt < maxRetries) {
+                // Retries are for errors that come back fast: a refused connection, a reset, a 502, each
+                // costing seconds. A request that has already taken as long as one attempt may take has
+                // used up the wait the user agreed to, and another attempt only repeats it. A stalled
+                // connection used to cost four full timeouts that way, eight minutes at the default (#438).
+                // From here the resend chip is the retry, and the user decides whether to wait again.
+                val withinBudget = elapsedMillis(firstStartedNanos) < attemptBudgetMillis
+                if (mapped.isRetryable && attempt < maxRetries && withinBudget) {
                     attempt++
                     onRetry(attempt + 1) // report the upcoming attempt (2nd, 3rd, …)
                     delay(RETRY_DELAY_MS)
@@ -1291,12 +1371,31 @@ class OpenAiCompatibleClient(
 
     /**
      * Extracts the error detail from a non-2xx body. Tries the OpenAI-style `{ "error": { … } }` envelope
-     * first, then falls back to Soniox's flat `{ error_type, message, status_code }` shape; null if the body
-     * is neither (e.g. plain-text gateways).
+     * first, then xAI's flat one, where `error` is the sentence itself, then Soniox's flat
+     * `{ error_type, message, status_code }` shape — which also reads Scaleway's gateway errors, flat with
+     * a `message` of their own; null if the body is none of them (e.g. plain-text gateways).
      */
     private fun parseError(body: String): ErrorBodyDto? {
-        runCatching { json.decodeFromString(ErrorEnvelopeDto.serializer(), body).error }
-            .getOrNull()?.let { return it }
+        val root = runCatching { json.parseToJsonElement(body) as? JsonObject }.getOrNull()
+        // The envelope is read field by field rather than into a typed class. Scaleway's model server puts
+        // the HTTP status in `code` as a number (#423), and a String-typed field refused the whole envelope
+        // over it — so the user was shown the raw JSON instead of the provider's sentence, and the sentence
+        // that said "file size" never reached the classifier as one.
+        (root?.get("error") as? JsonObject)?.let { error ->
+            fun field(name: String) = (error[name] as? JsonPrimitive)?.contentOrNull
+            return ErrorBodyDto(message = field("message"), code = field("code"), type = field("type"))
+        }
+        // xAI (#435): `{"code":"invalid-argument","error":"Incorrect API key provided. …"}`, the same on
+        // `stt`, `models` and `chat/completions` (measured 2026-09-29). Unread, the user was shown that JSON
+        // as the detail; the classifier found "api key" in it all the same, which is the only reason a
+        // wrong key — a 400 here, not a 401 — was still reported as one. AssemblyAI answers in the same
+        // shape without the `code` and gains its sentence too. Scaleway's gateway has a string `error` as
+        // well, but it is a label ("FORBIDDEN") next to a `message` of its own, read further down.
+        (root?.get("error") as? JsonPrimitive)
+            ?.takeIf { it.isString && it.content.isNotBlank() && root["message"] == null }
+            ?.let { sentence ->
+                return ErrorBodyDto(message = sentence.content, code = (root["code"] as? JsonPrimitive)?.contentOrNull)
+            }
         return runCatching {
             val soniox = json.decodeFromString(SonioxErrorDto.serializer(), body)
             if (soniox.message.isNullOrBlank() && soniox.errorType.isNullOrBlank()) {
@@ -1309,12 +1408,20 @@ class OpenAiCompatibleClient(
 
     private fun extractErrorMessage(body: String): String? = parseError(body)?.message
 
+    /**
+     * The longest one attempt may take: the same whole-call budget [buildClient] gives OkHttp. It is the
+     * user's Request timeout for a dictation and the import's own, longer one for a shared file (#337).
+     * [executeForBody] starts no further attempt once a request has been going for this long (#438).
+     */
+    private val attemptBudgetMillis: Long
+        get() = TimeUnit.SECONDS.toMillis(config.callTimeoutSeconds ?: config.timeoutSeconds)
+
     internal fun buildClient(): OkHttpClient {
         val timeout = Duration.ofSeconds(config.timeoutSeconds)
         val builder = OkHttpClient.Builder()
             // The only budget that covers the whole journey, so the only one a long upload can exhaust
             // while everything is working perfectly (issue #337). Per-operation limits stay below.
-            .callTimeout(Duration.ofSeconds(config.callTimeoutSeconds ?: config.timeoutSeconds))
+            .callTimeout(Duration.ofMillis(attemptBudgetMillis))
             // Connection establishment needs a short budget per route. Uploading a long recording and
             // waiting for the model keep the full configured call/read/write timeout below.
             .connectTimeout(NETWORK_CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
@@ -1765,14 +1872,10 @@ class OpenAiCompatibleClient(
         val message: String? = null,
     )
 
-    @Serializable
-    private data class ErrorEnvelopeDto(val error: ErrorBodyDto? = null)
-
-    @Serializable
     private data class ErrorBodyDto(
         val message: String? = null,
         // OpenAI-style machine-readable hints (e.g. code = "invalid_api_key", type = "insufficient_quota").
-        // Decoded as strings; providers that send a non-string code simply fall back to status/keywords.
+        // Whatever primitive the provider sent, as text — Scaleway's `400` arrives here as "400".
         val code: String? = null,
         val type: String? = null,
     )
@@ -1808,11 +1911,40 @@ class OpenAiCompatibleClient(
             value.replace('\r', '_').replace('\n', '_').take(160)
 
         /**
-         * Endpoint+model pairs known to reject `reasoning_effort` (#184/#186). Remembered for the process
-         * lifetime so we omit the field up-front and don't waste a doubled request on every rewording.
+         * Endpoint+model+effort triples a provider refused (#184/#186), each with what goes out in its
+         * place — a value the provider named, or null for no field. Remembered for the process lifetime so
+         * the substitute goes out up-front and a rewording does not cost a doubled request every time.
          */
-        private val reasoningEffortUnsupported =
-            java.util.Collections.synchronizedSet(HashSet<String>())
+        private val reasoningEffortSubstitutes =
+            java.util.Collections.synchronizedMap(HashMap<String, String?>())
+
+        /** Every effort value this client knows of, least thinking first. */
+        private val EFFORT_SCALE = listOf("none", "minimal", "low", "medium", "high", "xhigh", "max")
+
+        /**
+         * The value to ask again with after [rejected] was refused: the one nearest to it among those the
+         * refusal names as supported, the lower one on a tie. Null when the refusal names none, or when
+         * [rejected] is a value of the user's own that sits nowhere on [EFFORT_SCALE] — then the field is
+         * left out, as it always was.
+         *
+         * The list is the provider's own answer, which is why it is read rather than assumed. Asked on
+         * 2026-10-16, OpenAI refused `minimal` on gpt-6-luna with "Supported values are: 'none', 'low',
+         * 'medium', 'high', and 'xhigh'.", and `none` as well as `minimal` on gpt-6.1-sol, whose list starts
+         * at 'low'. Leaving the field out instead had turned a request for the least thinking into the
+         * model's default, medium — the opposite of what was asked for.
+         */
+        internal fun nearestSupportedEffort(rejected: String, message: String?): String? {
+            val want = EFFORT_SCALE.indexOf(rejected.trim().lowercase())
+            // Only what follows the phrase: the refusal quotes the field and the rejected value first.
+            val at = message?.indexOf("supported values", ignoreCase = true) ?: -1
+            if (want < 0 || at < 0) return null
+            val supported = Regex("""'([A-Za-z]+)'""").findAll(message!!.substring(at))
+                .map { EFFORT_SCALE.indexOf(it.groupValues[1].lowercase()) }
+                .filter { it >= 0 && it != want }
+                .toList()
+            val nearest = supported.minWithOrNull(compareBy({ kotlin.math.abs(it - want) }, { it }))
+            return nearest?.let { EFFORT_SCALE[it] }
+        }
 
         /**
          * The effort a retry asks for after a model answered with nothing but thinking (#304).
@@ -1855,6 +1987,12 @@ class OpenAiCompatibleClient(
          */
         private val SENTENCE_END = Regex("[.!?。！？؟।…]+\\s+")
 
+        /** The marks of [SENTENCE_END] one by one, for asking how a piece of text closes. */
+        private const val SENTENCE_MARKS = ".!?。！？؟।…"
+
+        /** The full-width marks among them: CJK punctuation that ends a sentence and never sits in a name. */
+        private const val FULL_WIDTH_SENTENCE_MARKS = "。！？"
+
         /**
          * [text] from after the last sentence that ended inside it, or all of [text] when none did.
          *
@@ -1863,6 +2001,57 @@ class OpenAiCompatibleClient(
          */
         internal fun afterLastSentenceEnd(text: String): String =
             SENTENCE_END.findAll(text).lastOrNull()?.let { text.substring(it.range.last + 1) } ?: text
+
+        /**
+         * The bias term one comma-separated [piece] of a style hint holds, or null when it holds a
+         * sentence instead. See [vocabularyFromPrompt], the only caller.
+         *
+         * [afterLastSentenceEnd] finds a term *behind* a sentence, which is where the glossary sits. It
+         * cannot help when nothing is behind it: with no custom words the whole hint is the sample
+         * sentence, `"Hallo. Vielen Dank."`, and its last sentence came through as the two-word term
+         * `Vielen Dank.` — a bias phrase on every dictation with a pinned language and an empty glossary,
+         * for Azure and Google before xAI's `keyterm` (#435) would have made it three. So what is left is
+         * a sentence when it closes with a sentence mark and either followed one (the cut happened —
+         * Thai and Lao write their thanks as one "word") or runs to several words, and whenever it holds
+         * a full-width mark, which no name does. `Dr.` and `z.B.` stay terms; a name of several words
+         * ending in a stop — `Acme Inc.` — is the price, and the rest of the glossary is not.
+         */
+        internal fun vocabularyTermOf(piece: String): String? {
+            val whole = piece.trim()
+            val term = afterLastSentenceEnd(whole).trim()
+            if (term.isEmpty() || term.any { it in FULL_WIDTH_SENTENCE_MARKS }) return null
+            val closes = term.last() in SENTENCE_MARKS
+            val followedOne = term.length < whole.length
+            return term.takeUnless { closes && (followedOne || term.contains(' ')) }
+        }
+
+        /**
+         * The code to send xAI as `language`, or null to send none (issue #435).
+         *
+         * On xAI the field does not steer recognition — "the model transcribes speech in any of these
+         * languages regardless of the language parameter" — it switches on number formatting, for the
+         * 25 languages listed in [XAI_FORMATTING_LANGUAGES]. A code outside that list is not sent: nobody
+         * has measured whether it is refused or ignored, and the transcript is the same either way, so
+         * there is nothing to win by finding out on somebody's dictation. The region goes (`pt-BR` is
+         * `pt`), and the app's Tagalog, `tl` in Whisper's catalog, is the Filipino xAI calls `fil`.
+         */
+        internal fun xaiLanguage(language: String?): String? {
+            val base = language
+                ?.takeIf { it.isNotEmpty() && it != "detect" }
+                ?.substringBefore('-')
+                ?.lowercase()
+                ?: return null
+            return (if (base == "tl") "fil" else base).takeIf { it in XAI_FORMATTING_LANGUAGES }
+        }
+
+        /** xAI's formatting languages, from the speech-to-text guide's table (read 2026-09-29). */
+        private val XAI_FORMATTING_LANGUAGES = setOf(
+            "ar", "cs", "da", "nl", "en", "fil", "fr", "de", "hi", "id", "it", "ja", "ko",
+            "mk", "ms", "fa", "pl", "pt", "ro", "ru", "es", "sv", "th", "tr", "vi",
+        )
+
+        /** xAI's documented limit per `keyterm` (up to 100 of them, which [vocabularyFromPrompt] already caps). */
+        private const val XAI_KEYTERM_MAX_CHARS = 50
 
         /**
          * The single language to pin for Azure, or null to let MAI detect it.

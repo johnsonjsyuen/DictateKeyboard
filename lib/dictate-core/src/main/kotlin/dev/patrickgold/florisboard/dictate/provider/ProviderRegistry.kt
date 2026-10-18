@@ -11,6 +11,28 @@
 package dev.patrickgold.florisboard.dictate.provider
 
 /**
+ * One data-residency region of a provider (issue #403).
+ *
+ * A region is not a base URL the user thought up: it is a published address of the same service, and the
+ * provider decides which ones exist. That is why it is a list on the preset rather than a free text box —
+ * a typo in a residency host does not fail loudly, it silently sends the audio to the wrong continent.
+ *
+ * [realtimeUrl] is the point of the whole type. Soniox runs a second host for streaming that is nowhere
+ * derivable from the REST one the user picked, so a region that could only move the batch address would
+ * leave live dictation talking to the default region while everything else moved — which is exactly the
+ * failure this issue asked us not to build. Null where the provider has no streaming (OpenRouter).
+ *
+ * The region is stored as the account's own base URL, so nothing about persistence, the Wear bridge, the
+ * importer or the connection test needed a new field to learn about.
+ */
+data class ProviderRegion(
+    /** Stable key, mapped to a translated name in the settings UI. */
+    val id: String,
+    val baseUrl: String,
+    val realtimeUrl: String? = null,
+)
+
+/**
  * A selectable provider option shown to the user.
  *
  * Base URLs are stable facts. Default model ids are conservative starting points only – the source
@@ -25,8 +47,31 @@ data class ProviderPreset(
     val baseUrl: String,
     val capabilities: ProviderCapabilities,
     val supportsDynamicModels: Boolean,
+    /**
+     * The provider's own page for creating an API key — the deepest link that survives a sign-in, not
+     * the dashboard root, because the last step is exactly the one someone without a key cannot guess.
+     *
+     * **Null means "this provider has no key page", never "we did not look it up"** (#410). Both places
+     * that offer the page — the setup wizard's button and the key icon in the provider dialog's title
+     * row — key off null alone, so a missing URL silently removes the way out of a dialog whose key
+     * field is the thing being stared at. Null is right for Dictate Cloud, Ollama, the on-device
+     * provider and custom endpoints: there is nowhere to send anyone.
+     *
+     * Checked against the live host, with the date, like every other fact in here.
+     */
     val apiKeyUrl: String? = null,
     val defaultChatModel: String? = null,
+    /**
+     * The `reasoning_effort` [defaultChatModel] runs at while the user's own setting is Off — a fact
+     * about that one model, measured, never a guess about what models in general can take.
+     *
+     * Off omits the field and leaves the effort to the provider, and for a reasoning model the provider's
+     * default is rarely what a rewording wants: OpenAI's gpt-6-luna thinks at medium unless told
+     * otherwise, which made a one-sentence correction twice as slow and multiplied its output tokens.
+     * Applies only while that exact model is the one in use ([reasoningEffortWhenOff]); a model the user
+     * picked runs at whatever their setting says.
+     */
+    val defaultChatReasoningEffort: String? = null,
     val defaultTranscriptionModel: String? = null,
     val extraHeaders: Map<String, String> = emptyMap(),
     val isCustom: Boolean = false,
@@ -66,9 +111,32 @@ data class ProviderPreset(
      * True for a built-in provider whose base URL is user-editable (issue #136): the editor shows a base
      * URL field pre-filled with [baseUrl], so e.g. Ollama can point at a LAN server instead of localhost.
      * Distinct from [isCustom] (a fully user-defined endpoint with its own name).
+     *
+     * A preset that also lists [regions] keeps this on — the account still carries its own base URL, and
+     * every resolution site already reads it — but the editor offers the region list instead of a text
+     * box, because there the set of valid addresses is known and short (#403).
      */
     val allowsCustomBaseUrl: Boolean = false,
-)
+    /**
+     * The provider's data-residency regions (issue #403), the first being the one [baseUrl] points at.
+     * Empty for everyone who serves the world from one address.
+     */
+    val regions: List<ProviderRegion> = emptyList(),
+    /**
+     * True where the provider keeps the data in the EU **by default**, in its own published words, so
+     * the "EU" filter of the add-provider list can offer it. A provider that merely *offers* an EU
+     * region says so through [regions] instead and is found by [servesFromEu] all the same.
+     */
+    val hostedInEu: Boolean = false,
+) {
+    /** Whether the audio and text can stay in the EU with this provider — by default, or by region. */
+    val servesFromEu: Boolean
+        get() = hostedInEu || regions.any { it.id == "eu" }
+
+    /** The effort to send with [model] when the user's setting is Off; null leaves it to the provider. */
+    fun reasoningEffortWhenOff(model: String): String? =
+        defaultChatReasoningEffort?.takeIf { model == defaultChatModel }
+}
 
 /**
  * Catalog of built-in OpenAI-compatible providers plus a factory for user-defined custom endpoints.
@@ -86,18 +154,35 @@ object ProviderRegistry {
         capabilities = CHAT_AND_STT,
         supportsDynamicModels = true,
         apiKeyUrl = "https://platform.openai.com/api-keys",
-        defaultChatModel = "gpt-4o-mini",
+        // OpenAI announced on 2026-10-14 that gpt-4o, gpt-4o-mini, gpt-4.1 and gpt-4.1-mini leave the API
+        // on 2027-01-14, and gpt-4.1-nano goes sooner, on 2026-10-23; all five were this list, and the first
+        // was the default (deprecations page, read 2026-10-16). gpt-6-luna is the replacement OpenAI names
+        // for every one of them and also the cheapest model it sells ($0.10 in / $0.50 out per 1M tokens,
+        // against gpt-4o-mini's $0.15 / $0.60). Like the transcription default below, it reaches everyone
+        // who never chose a model; an explicit choice is stored verbatim and left alone.
+        defaultChatModel = "gpt-6-luna",
+        // Unlike gpt-4o-mini, Luna is a reasoning model, and with the field omitted it thinks at medium.
+        // Measured 2026-10-16 with the app's own requests, five runs each:
+        //     Fix Grammar, one sentence     omitted ~2.0 s, 85-145 reasoning tokens   none ~0.9 s, 0
+        //     auto-formatting, spoken cues  omitted 2.5-7.2 s, up to 620 tokens       none 1.0-1.5 s, 0
+        // At none it set list and paragraph cues as reliably as gpt-4o-mini, and like gpt-4o-mini (every
+        // run) it left a spelling cue standing ("Meyer with a y"), which medium resolved four times in
+        // five. Today's results at today's speed beat a slightly better guess at five times the wait, so
+        // the default runs at none; the emulator showed the same, 1.1-1.6 s against 3.3-4.8 s at medium.
+        // "minimal" is no option: Luna refuses it with a 400, and gpt-6.1-sol refuses none as well.
+        defaultChatReasoningEffort = "none",
         // gpt-transcribe (2026-07) is both cheaper than gpt-4o-transcribe ($0.0045 vs $0.006 per minute)
         // and markedly more accurate, so it is the default. This applies to everyone who never chose a
         // model — the account stores an empty string in that case and resolves through here on every
         // call, so existing installs move to it too. An explicit choice is stored verbatim and untouched.
         defaultTranscriptionModel = "gpt-transcribe",
-        curatedChatModels = listOf(
-            "gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1", "gpt-4.1-nano",
-        ),
-        curatedTranscriptionModels = listOf(
-            "gpt-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe", "whisper-1",
-        ),
+        // gpt-6-astra, the third of the current line, is left to the live catalog: at a hundred times
+        // Luna's price it buys nothing a correction or a rephrasing needs.
+        curatedChatModels = listOf("gpt-6-luna", "gpt-6.1-sol"),
+        // whisper-1, gpt-4o-transcribe and gpt-4o-mini-transcribe leave the API on 2027-02-26 (announced
+        // 2026-08-26). Until then they still come up in the live catalog for whoever wants them; they are
+        // just no longer offered as a starting point.
+        curatedTranscriptionModels = listOf("gpt-transcribe"),
         // The guide lists mp3, mp4, mpeg, mpga, m4a, wav, webm; the API reference adds flac and ogg.
         // Rather than pick a page, the endpoint was asked directly on 2026-09-04 with the same Ogg/Opus
         // bytes twice, same `audio/ogg` part type, only the file NAME differing:
@@ -118,9 +203,9 @@ object ProviderRegistry {
         supportsRealtime = true,
         realtimeApi = RealtimeApi.OPENAI,
         defaultRealtimeModel = "gpt-live-transcribe",
+        // The two gpt-4o transcribers went with the batch list above, for the same 2027-02-26 date.
         curatedRealtimeModels = listOf(
             "gpt-live-transcribe", "gpt-realtime-whisper", "gpt-transcribe",
-            "gpt-4o-transcribe", "gpt-4o-mini-transcribe",
         ),
     )
 
@@ -216,8 +301,13 @@ object ProviderRegistry {
         supportsDynamicModels = true,
         apiKeyUrl = "https://openrouter.ai/keys",
         // OpenRouter exposes hundreds of models (incl. Claude, Gemini, Llama …); users pick from the
-        // live catalog. This is just a safe default to start with and is fully user-overridable.
-        defaultChatModel = "openai/gpt-4o-mini",
+        // live catalog. This is just a safe default to start with and is fully user-overridable. It follows
+        // the OpenAI preset off gpt-4o-mini, whose only upstream is OpenAI and which leaves its API on
+        // 2027-01-14; openai/gpt-6-luna is in OpenRouter's public catalog at the same $0.10 / $0.50
+        // (read 2026-10-16). No [defaultChatReasoningEffort] here: OpenRouter documents its own nested
+        // `reasoning` object and maps efforts to the nearest supported level, and whether it reads the
+        // top-level field this client sends has not been measured.
+        defaultChatModel = "openai/gpt-6-luna",
         // gpt-transcribe is the same model the OpenAI preset defaults to, which is the point: one model
         // behaving one way across providers, already exercised by this app. It is also the only entry
         // below that OpenRouter does not route — OpenAI is its sole upstream, so nobody's dictation
@@ -257,6 +347,21 @@ object ProviderRegistry {
         extraHeaders = mapOf(
             "HTTP-Referer" to "https://github.com/DevEmperor/Dictate",
             "X-Title" to "Dictate",
+        ),
+        // Data residency (#403): the EU entry point decrypts in the EU and routes only to in-region
+        // provider endpoints, failing a request outright rather than letting it leave the region. Same
+        // key, same model slugs — unlike Soniox, nothing but the address changes. Verified 2026-09-18:
+        // GET https://eu.openrouter.ai/api/v1/models answers 200 with the full catalog. It is a Business
+        // plan feature, which is the account's business and not ours to check for.
+        //
+        // This is a region rather than the "add your own server" workaround because that path speaks plain
+        // OpenAI multipart: it would have cost the documented JSON fallback, the OpenRouter retry handling
+        // and every speech-to-text model in the picker (the catalog needs output_modalities=all, which is
+        // only asked for when the wire format is OPENROUTER_MULTIPART — a custom account never is).
+        allowsCustomBaseUrl = true,
+        regions = listOf(
+            ProviderRegion("global", "https://openrouter.ai/api/v1/"),
+            ProviderRegion("eu", "https://eu.openrouter.ai/api/v1/"),
         ),
     )
 
@@ -329,7 +434,8 @@ object ProviderRegistry {
         baseUrl = "https://api.anthropic.com/v1/",
         capabilities = CHAT_ONLY,
         supportsDynamicModels = true,
-        apiKeyUrl = "https://console.anthropic.com/settings/keys",
+        // The console moved hosts: console.anthropic.com/settings/keys 301s to this one (2026-09-21).
+        apiKeyUrl = "https://platform.claude.com/settings/keys",
         defaultChatModel = "claude-haiku-4-5-20251001",
         curatedChatModels = listOf(
             "claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-5",
@@ -371,6 +477,10 @@ object ProviderRegistry {
         realtimeApi = RealtimeApi.MISTRAL_VOXTRAL,
         defaultRealtimeModel = "voxtral-mini-transcribe-realtime-2602",
         curatedRealtimeModels = listOf("voxtral-mini-transcribe-realtime-2602"),
+        // "By default, your data is hosted in the European Union" (Mistral help centre, updated
+        // 2026-08-12). The same page names a separate US endpoint, which this base URL is not, and
+        // subprocessors outside the EU for some features.
+        hostedInEu = true,
     )
 
     val SONIOX = ProviderPreset(
@@ -383,7 +493,9 @@ object ProviderRegistry {
         transcriptionApi = TranscriptionApi.SONIOX_ASYNC,
         // /v1/models is supported and returns transcription_mode per model; the client filters to async.
         supportsDynamicModels = true,
-        apiKeyUrl = "https://console.soniox.com",
+        // Not the console root: /api-keys is a real route rather than a client-side guess — /apikeys
+        // answers 404, so the server itself distinguishes them (2026-09-21).
+        apiKeyUrl = "https://console.soniox.com/api-keys",
         defaultTranscriptionModel = "stt-async-v5",
         // Verified against Soniox's model catalog; the live picker adds any newer async models.
         curatedTranscriptionModels = listOf("stt-async-v5"),
@@ -392,6 +504,23 @@ object ProviderRegistry {
         realtimeApi = RealtimeApi.SONIOX,
         defaultRealtimeModel = "stt-rt-v5",
         curatedRealtimeModels = listOf("stt-rt-v5"),
+        // Data residency (#403). Soniox sets the region per *project*, and each regional project mints its
+        // own key that is valid against that region's hosts only — which is why the report reads as "the
+        // new key doesn't work" rather than as anything about a region. Hosts from Soniox's data-residency
+        // docs, read 2026-09-18, and the EU pair asked directly: GET https://api.eu.soniox.com/v1/models
+        // answers 401 unauthenticated with the same error body as the US host, and stt-rt.eu.soniox.com
+        // resolves. Same API, another address; nothing here is a port.
+        //
+        // Both hosts move together or neither does. The streaming host is a sibling of the REST one, not a
+        // path under it, so a base URL the user typed could never have carried it — a region that moved
+        // only the async flow would have gone on streaming to the US while claiming to be in the EU.
+        allowsCustomBaseUrl = true,
+        regions = listOf(
+            ProviderRegion("us", "https://api.soniox.com/v1/", "wss://stt-rt.soniox.com/transcribe-websocket"),
+            ProviderRegion("eu", "https://api.eu.soniox.com/v1/", "wss://stt-rt.eu.soniox.com/transcribe-websocket"),
+            ProviderRegion("jp", "https://api.jp.soniox.com/v1/", "wss://stt-rt.jp.soniox.com/transcribe-websocket"),
+            ProviderRegion("in", "https://api.in.soniox.com/v1/", "wss://stt-rt.in.soniox.com/transcribe-websocket"),
+        ),
     )
 
     /**
@@ -407,7 +536,8 @@ object ProviderRegistry {
         // /v1/models mixes TTS + STT models, so no clean STT filter — curated instead. scribe_v1 was
         // retired on 2026-07-09, leaving scribe_v2.
         supportsDynamicModels = false,
-        apiKeyUrl = "https://elevenlabs.io/app/settings/api-keys",
+        // The keys page left settings for the developers section; the old path redirects (2026-09-21).
+        apiKeyUrl = "https://elevenlabs.io/app/developers/api-keys",
         defaultTranscriptionModel = "scribe_v2",
         curatedTranscriptionModels = listOf("scribe_v2"),
         // Read 2026-09-04: aac, aiff, ogg, mpeg/mp3, opus, wav, webm, flac, mp4/m4a — the most generous
@@ -435,7 +565,11 @@ object ProviderRegistry {
         transcriptionApi = TranscriptionApi.DEEPGRAM,
         // GET /v1/models returns the live STT catalog (canonical_name); curated ids are the offline fallback.
         supportsDynamicModels = true,
-        apiKeyUrl = "https://console.deepgram.com/",
+        // Deepgram's console answers 200 for any path, so a status code proves nothing about a deep link
+        // and their own docs decide instead: `?jump=keys` is the parameter Deepgram publishes for landing
+        // on the keys page, and it survives the account step someone without a key has to take first
+        // (docs.deepgram.com, create-additional-api-keys, read 2026-09-21).
+        apiKeyUrl = "https://console.deepgram.com/signup?jump=keys",
         defaultTranscriptionModel = "nova-3",
         curatedTranscriptionModels = listOf("nova-3", "nova-2"),
         // Realtime (#128): wss /v1/listen?encoding=linear16&sample_rate=16000&interim_results=true.
@@ -458,7 +592,10 @@ object ProviderRegistry {
         capabilities = STT_ONLY,
         transcriptionApi = TranscriptionApi.ASSEMBLYAI_ASYNC,
         supportsDynamicModels = false,
-        apiKeyUrl = "https://www.assemblyai.com/app/api-keys",
+        // `/app/api-keys` was the old dashboard and now lands on a bare login. Same 200-for-anything
+        // problem as Deepgram, so again their own words: AssemblyAI's support article on getting a key
+        // names this URL (support.assemblyai.com, read 2026-09-21).
+        apiKeyUrl = "https://www.assemblyai.com/dashboard/api-keys",
         defaultTranscriptionModel = "universal-3-pro",
         curatedTranscriptionModels = listOf("universal-3-pro", "universal-2"),
         // Realtime (#128): Universal-Streaming wss streaming.assemblyai.com/v3/ws (~300ms). Model ids
@@ -532,13 +669,58 @@ object ProviderRegistry {
         supportsRealtime = false,
     )
 
+    /**
+     * xAI — Grok for rewording, and since issue #435 Grok Voice Transcribe for dictation as well.
+     *
+     * Asked for when grok-voice-transcribe-2.0 came out (2026-09-18): xAI reports it first for accuracy
+     * among 32 streaming models on Artificial Analysis, and it is cheap — $0.10 per hour of audio as a file and $0.20
+     * streamed (pricing page, read 2026-09-29), against $0.27 an hour for gpt-transcribe and $1.02 for
+     * OpenAI's streaming. The same key already served rewording, so for anyone with an xAI account this
+     * is dictation without a second one.
+     *
+     * Chat stays the plain OpenAI shape it always was. Transcription does not: `POST {baseUrl}stt` has
+     * fields of its own and no `prompt` ([TranscriptionApi.XAI_STT]), and streaming is a WebSocket on the
+     * same path with raw PCM in and Deepgram-like finality flags out ([RealtimeApi.XAI]).
+     *
+     * **No data-residency region, on purpose.** xAI has a US endpoint (`us.api.x.ai`), but it serves
+     * "none of the image generation, video generation, or voice APIs" (regional-endpoints page, read
+     * 2026-09-29), so offering it here would move rewording and break dictation.
+     *
+     * Errors come flat — `{"code":"invalid-argument","error":"Incorrect API key provided. …"}` — with the
+     * sentence in `error` as a string, and a wrong key is a **400**, not a 401. Both measured without a key
+     * of our own on 2026-09-29, against `stt`, `models` and `chat/completions` alike; the client's error
+     * parser reads the shape, and the sentence is what classifies it.
+     */
     val XAI = ProviderPreset(
         id = "xai",
         displayName = "xAI (Grok)",
         baseUrl = "https://api.x.ai/v1/",
-        capabilities = CHAT_ONLY,
+        capabilities = CHAT_AND_STT,
+        transcriptionApi = TranscriptionApi.XAI_STT,
+        // The live catalog is what the chat picker lives on. Whether it lists the transcription models too
+        // is not documented, so the id below is curated; the picker's name filter sorts one in if it does.
         supportsDynamicModels = true,
-        apiKeyUrl = "https://console.x.ai",
+        // Not the console root: the login carries `return_to`, so the deep link is still there once the
+        // sign-in is done, and `default` is the team slug xAI's own quickstart uses (2026-09-21).
+        apiKeyUrl = "https://console.x.ai/team/default/api-keys",
+        // Model ids from the speech-to-text guide, read 2026-09-29: 2.0 is "our best transcription model"
+        // and the default when none is sent. 1.0 is the original and is announced for deprecation, so it
+        // is not offered — the model field still takes it typed in, for anyone who pinned it.
+        defaultTranscriptionModel = "grok-voice-transcribe-2.0",
+        curatedTranscriptionModels = listOf("grok-voice-transcribe-2.0"),
+        // Documented, read 2026-09-29: wav, mp3, ogg, opus, flac, aac, mp4, m4a, and mkv with MP3, AAC or
+        // FLAC inside. WebM is Matroska too, but it carries Opus or Vorbis, which that clause leaves out,
+        // so it is transcoded rather than hoped for; AMR is not named at all. Unmeasured — the list to
+        // re-check first once there is a key to ask with (tools/probe-xai-stt.py).
+        acceptedAudioContainers = setOf(
+            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.OGG,
+            AudioContainer.FLAC, AudioContainer.AAC, AudioContainer.M4A,
+        ),
+        // Realtime: wss /v1/stt, the same model on the same key.
+        supportsRealtime = true,
+        realtimeApi = RealtimeApi.XAI,
+        defaultRealtimeModel = "grok-voice-transcribe-2.0",
+        curatedRealtimeModels = listOf("grok-voice-transcribe-2.0"),
     )
 
     val DEEPSEEK = ProviderPreset(
@@ -593,6 +775,142 @@ object ProviderRegistry {
     )
 
     /**
+     * Scaleway Generative APIs — a provider that is EU-hosted end to end (issue #423).
+     *
+     * Asked for as an everyday provider for someone who wants neither the audio nor the text to leave the
+     * EU. Scaleway processes both in Paris as a GDPR data processor with zero data retention by default,
+     * and says so in its own privacy terms rather than in marketing: it does not "collect, read, reuse, or
+     * analyze" inputs or outputs, trains nothing on them, and keeps a request's content only when that
+     * request breaks the service (a 500, say), for at most two weeks (data-privacy page, read 2026-09-25).
+     *
+     * Both halves are plain OpenAI on one host — multipart `audio/transcriptions` and `chat/completions` —
+     * so this entry needs no wire format of its own. OVHcloud's AI Endpoints would cost the same and were
+     * left for later on purpose: every preset is one more catalogue to re-check by hand.
+     *
+     * **A new account answers nothing until it has a payment method.** The key is valid from the start —
+     * `/models` answers 200 — but every chat and transcription request comes back 429 with
+     * `x-ratelimit-limit-requests: 0`, worded "You exceeded your current quota of requests per minute".
+     * Measured 2026-09-25 with a fresh key; Scaleway's rate-limit page says base limits begin with a
+     * validated payment method. So someone's first dictation reads as a rate limit rather than a missing
+     * setup step, and the key page link is the way back to the console.
+     *
+     * Errors come in two shapes, depending on who refuses. The gateway (key, quota) answers flat —
+     * `{"status":429,"error":"INSUFFICIENT QUOTA","message":"…"}` — and a wrong key is a plain 403. The
+     * model server behind it answers in OpenAI's envelope, but with the status as a *number* in `code`,
+     * which is what the client's error parser had to learn to read. Neither needs anything
+     * Scaleway-specific beyond that.
+     */
+    val SCALEWAY = ProviderPreset(
+        id = "scaleway",
+        displayName = "Scaleway",
+        baseUrl = "https://api.scaleway.ai/v1/",
+        capabilities = CHAT_AND_STT,
+        // The live list answers even without quota, and mixes chat, embedding and transcription models with
+        // nothing to tell them apart (2026-09-25: 16 ids, `whisper-large-v3` the only transcription one).
+        // The picker's name filter sorts them; `bge-multilingual-gemma2` is the embedding model it had to
+        // be taught.
+        supportsDynamicModels = true,
+        // Scaleway's own docs link exactly this page for creating a key. Their console answers 200 for any
+        // path at all, so a status code proves nothing here (2026-09-25).
+        apiKeyUrl = "https://console.scaleway.com/iam/api-keys",
+        // All three measured on 2026-09-25 with the app's own Fix Grammar prompt on a German sentence full
+        // of mistakes; each returned the corrected sentence alone. mistral-small-3.2 is the default: the
+        // fastest (0.6 s), the model Scaleway's own examples use and where it routes two retired models,
+        // so the one least likely to vanish, and it does not reason, so a rewording pays for no hidden
+        // thinking. llama-3.3-70b took 0.9 s; gpt-oss-120b 4.6 s, its thinking in a separate `reasoning`
+        // field rather than in the text. None is on the deprecation list (supported-models page, read the
+        // same day) — pixtral-12b answers today but retires on 2026-10-01, and is left to the live list.
+        defaultChatModel = "mistral-small-3.2-24b-instruct-2506",
+        curatedChatModels = listOf(
+            "mistral-small-3.2-24b-instruct-2506", "llama-3.3-70b-instruct", "gpt-oss-120b",
+        ),
+        // The only transcription model left: voxtral-small-24b retired on 2026-08-01, and Scaleway routes
+        // what was sent to it here. Ten seconds of German came back in 0.6 s, thirteen minutes in 34 s.
+        // It reads every field the client sends: `prompt` measurably steers the transcript (a lowercase,
+        // unpunctuated prompt turned the answer lowercase and unpunctuated), and `language` can be left
+        // out for auto-detect.
+        defaultTranscriptionModel = "whisper-large-v3",
+        curatedTranscriptionModels = listOf("whisper-large-v3"),
+        // The documented list for whisper-large-v3 — flac, m4a, mpeg, mp2, mp3, mp4, ogg, wav, webm — and
+        // this time the endpoint agrees with it exactly. Asked on 2026-09-25 with one German sample in
+        // every container the app knows: these six transcribed; aac and amr came back 400 "Invalid file
+        // format", and so did the Ogg file when it was named `.opus` — the name decides here as it does at
+        // OpenAI, which [audioUploadNameOf] already handles. Scaleway still calls the endpoint beta
+        // ("support of the full feature set will be incremental"), so this is the list to re-measure first.
+        acceptedAudioContainers = setOf(
+            AudioContainer.FLAC, AudioContainer.M4A, AudioContainer.MP3,
+            AudioContainer.OGG, AudioContainer.WAV, AudioContainer.WEBM,
+        ),
+        // Batch only: Scaleway has no streaming transcription.
+        supportsRealtime = false,
+        hostedInEu = true,
+    )
+
+    /**
+     * OVHcloud AI Endpoints — the second EU-hosted provider of issue #423, after [SCALEWAY].
+     *
+     * Served from Gravelines, France, and in OVHcloud's own words "data is not stored or shared during or
+     * after model use" (capabilities page, updated 2026-02-03). The reporter remembered one endpoint URL per
+     * model and expected a different editor for it; that is out of date. One OpenAI-compatible base URL now
+     * serves the whole catalog, chat and `audio/transcriptions` alike, so this is the same plain preset as
+     * Scaleway's.
+     *
+     * **Everything here was asked of the endpoint without a key.** OVHcloud serves anonymous requests at 2
+     * a minute per IP and per model, capped at 10 MB or 60 seconds of audio — far too little to dictate
+     * with, which is why the app still asks for a key, but enough to measure the facts below on
+     * 2026-09-25. A key lifts that to 400 requests a minute per project and model.
+     *
+     * A wrong key is refused, not quietly served as anonymous: `/models` answers 403 "Forbidden:
+     * authentication failed", so the credentials step of the connection test can fail as it must. Gateway
+     * errors are flat (`{"message":"…","request_id":"…"}`), the model server's are OpenAI's envelope; the
+     * client reads both.
+     */
+    val OVHCLOUD = ProviderPreset(
+        id = "ovhcloud",
+        displayName = "OVHcloud",
+        baseUrl = "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/",
+        capabilities = CHAT_AND_STT,
+        // The live list mixes chat, embedding, image, text-to-speech and safety-classifier models, with
+        // nothing to tell them apart (2026-09-25: 24 ids). The picker's name filter learned the three it did
+        // not know yet — bge-m3, stable-diffusion-xl and Qwen3Guard.
+        supportsDynamicModels = true,
+        // A key belongs to a Public Cloud project, so the page that creates one sits under a project id no
+        // link can know. This is the deepest address OVHcloud's own documentation links for it, on the EU
+        // control panel, which is where an account for these endpoints lives (their docs' link table, read
+        // 2026-09-25).
+        apiKeyUrl = "https://manager.eu.ovhcloud.com/#/public-cloud/pci/projects",
+        // Both measured with the app's own Fix Grammar prompt; each returned the corrected sentence alone.
+        // Mistral-Small-3.2 took 0.9 s, Llama-3.3-70B 4.8 s. gpt-oss-120b and Qwen3.8-27B are in the catalog
+        // but only ever answered the anonymous probe with 429, so nothing is claimed for them and the live
+        // list offers them unvouched. OVHcloud's ids are capitalised, unlike Scaleway's for the same models.
+        defaultChatModel = "Mistral-Small-3.2-24B-Instruct-2506",
+        curatedChatModels = listOf(
+            "Mistral-Small-3.2-24B-Instruct-2506", "Meta-Llama-3_3-70B-Instruct",
+        ),
+        // whisper-large-v3 rather than the turbo as the default because the turbo is the one that got words
+        // wrong: on the same German sample it wrote "Sprachkennung" in five containers out of five, where
+        // the full model heard "Spracherkennung" — at 0.5 against 0.8 seconds for ten seconds of audio, a
+        // difference nobody dictating waits for. Both read `prompt` (a lowercase, unpunctuated prompt made
+        // the answer lowercase and unpunctuated) and detect the language when none is sent.
+        defaultTranscriptionModel = "whisper-large-v3",
+        curatedTranscriptionModels = listOf("whisper-large-v3", "whisper-large-v3-turbo"),
+        // Documented: mp3, mp4, aac, m4a, wav, flac, ogg, opus, webm, mpeg, mpga (speech-to-text guide,
+        // updated 2026-05-11). Asked on 2026-09-25 with one German sample per container: these six came back
+        // correct, and so did an Ogg file named `.opus`, which OpenAI and Scaleway both refuse; amr is refused
+        // outright. AAC is left out although it is documented and accepted: the turbo model turned the second
+        // half of the ADTS sample into "und das Worttast 23" repeated, twice out of twice, while the full
+        // model read the same bytes correctly. A container that transcribes into a loop on one of the two
+        // models is not one to send untouched — a transcode costs a moment, a looped transcript a dictation.
+        acceptedAudioContainers = setOf(
+            AudioContainer.FLAC, AudioContainer.M4A, AudioContainer.MP3,
+            AudioContainer.OGG, AudioContainer.WAV, AudioContainer.WEBM,
+        ),
+        // Batch only: the guide says streaming is "not yet supported" for transcription.
+        supportsRealtime = false,
+        hostedInEu = true,
+    )
+
+    /**
      * Ollama server (OpenAI-compatible). No API key required by default. The base URL is user-editable
      * (issue #136) and defaults to localhost — point it at `http://<lan-ip>:11434/v1/` for a server on
      * another machine (localhost resolves to the phone itself).
@@ -630,10 +948,26 @@ object ProviderRegistry {
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
         CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
-        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, OLLAMA, LOCAL,
+        ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OVHCLOUD,
+        OLLAMA, LOCAL,
     )
 
     fun byId(id: String): ProviderPreset? = presets.firstOrNull { it.id == id }
+
+    /**
+     * The data-residency region [customBaseUrl] selects on [preset] (issue #403).
+     *
+     * A blank URL is the default region, because that is what every account stored before regions existed
+     * and what a fresh one still stores. Null for a preset without regions, and for a URL that is none of
+     * them — an account pointed somewhere by hand keeps going where it was pointed instead of being
+     * quietly snapped onto a region it never chose.
+     */
+    fun regionOf(preset: ProviderPreset, customBaseUrl: String): ProviderRegion? {
+        if (preset.regions.isEmpty()) return null
+        if (customBaseUrl.isBlank()) return preset.regions.first()
+        val wanted = customBaseUrl.trim().trimEnd('/')
+        return preset.regions.firstOrNull { it.baseUrl.trimEnd('/').equals(wanted, ignoreCase = true) }
+    }
 
     /**
      * The largest audio upload [providerId] accepts, or 0 when the provider does not document one.
@@ -665,6 +999,14 @@ object ProviderRegistry {
      *  - ElevenLabs 3 GB, Deepgram 2 GB, AssemblyAI 2.2 GB through the upload endpoint. Far beyond
      *    anything a keyboard produces; recorded so the number is not looked up twice.
      *  - SiliconFlow 50 MB (and one hour), from its transcription API reference.
+     *  - Scaleway 25 MB for whisper-large-v3 on its serverless API (supported-models page, read
+     *    2026-09-25), and asked the same day: the "MB" is a MiB. A 25,500,044-byte WAV transcribed; one
+     *    of 26,214,444 bytes came back 400 "Maximum file size exceeded (…, value=25.000041961669922)". Its
+     *    rate limit counts audio seconds, 1800 a minute once a payment method is on file; a single upload
+     *    at this ceiling is about 820 seconds of 16 kHz WAV, so the size, not the rate, is met first.
+     *  - OVHcloud 2048 MB or three hours per request with a key (speech-to-text guide, updated
+     *    2026-05-11) — with Deepgram's, since a keyboard never gets near it. Unmeasured: the anonymous
+     *    probe is capped at 10 MB, and the app never sends without a key.
      *  - OpenRouter 25 MB for a multipart upload, added 2026-09-04 while checking #321 — it was simply
      *    missing, which meant the file-import path never split anything for it and a shared recording
      *    went out whole to be refused. Its harder limit is not a size at all: a request gets about 60
@@ -675,14 +1017,17 @@ object ProviderRegistry {
      *  - Azure 300 MB, from the MAI-Transcribe page's prerequisites (read 2026-09-09). The Fast
      *    Transcription API it travels allows 500 MB in general; the model's own page is the stricter
      *    of the two and is the one that governs a MAI request.
+     *  - xAI 500 MB (speech-to-text guide, read 2026-09-29; a larger file is a 413). Taken as decimal
+     *    megabytes, the lower of the two readings, since nobody has measured which one xAI means.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
-        "openai", "cloud", "groq", "openrouter" -> 25L * 1024 * 1024
+        "openai", "cloud", "groq", "openrouter", "scaleway" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
         "siliconflow" -> 50L * 1024 * 1024
         "azure" -> 300L * 1024 * 1024
+        "xai" -> 500L * 1000 * 1000
         "elevenlabs" -> 3L * 1024 * 1024 * 1024
-        "deepgram" -> 2L * 1024 * 1024 * 1024
+        "deepgram", "ovhcloud" -> 2L * 1024 * 1024 * 1024
         "assemblyai" -> 2252L * 1024 * 1024
         else -> 0L
     }

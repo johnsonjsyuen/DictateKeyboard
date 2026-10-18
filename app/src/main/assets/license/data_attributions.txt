@@ -15,11 +15,13 @@ Derived from the OPUS OpenSubtitles frequency lists.
   - OPUS — the open parallel corpus: https://opus.nlpl.eu
   - Please cite: P. Lison & J. Tiedemann (2016), "OpenSubtitles2016: Extracting
     Large Parallel Corpora from Movie and TV Subtitles", LREC 2016.
-For Hindi, Tamil and Urdu, where subtitle data alone is too sparse, word counts from
-the Leipzig Corpora Collection (CC BY, cited in section 2 below) are merged in.
+For Afrikaans, Hindi, Tamil and Urdu, where subtitle data alone is too sparse, word counts
+from the Leipzig Corpora Collection (CC BY, cited in section 2 below) are merged in.
 Casing was restored, and corpus noise filtered out, using Hunspell dictionaries as a
-build-time oracle only (github.com/wooorm/dictionaries and, for Arabic and the Indic
-languages, github.com/LibreOffice/dictionaries); their word lists are not redistributed.
+build-time oracle only (github.com/wooorm/dictionaries and, for Afrikaans, Arabic and the
+Indic languages, github.com/LibreOffice/dictionaries); their word lists are not
+redistributed. Where the Afrikaans one accepts a name in lowercase, the casing the Leipzig
+corpus writes it in mid-sentence was used instead.
 
 
 2. Word-pair and word-triple frequency data for context (autocorrect Tier 2, prediction)
@@ -45,14 +47,28 @@ One-shot models — these transcribe after you stop speaking:
 
   - Whisper (tiny/base/small, multilingual and English) — © OpenAI, MIT License.
     https://github.com/openai/whisper
+  - Parakeet Ultra — a post-train of NVIDIA Parakeet TDT 0.6B v3 covering the same 25 European
+    languages, © moondream, licensed CC BY 4.0. https://huggingface.co/moondream/parakeet-ultra
   - Parakeet TDT 0.6B v3 — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3
+  - Parakeet TDT 110M (English) — © NVIDIA, licensed CC BY 4.0.
+    https://huggingface.co/nvidia/parakeet-tdt_ctc-110m
   - Parakeet German (primeline) — a German-specialized fine-tune of NVIDIA Parakeet TDT 0.6B v3,
     © primeline, licensed CC BY 4.0. https://huggingface.co/primeline/parakeet-primeline
+  - FastConformer German — © NVIDIA, licensed CC BY 4.0.
+    https://huggingface.co/nvidia/stt_de_fastconformer_hybrid_large_pc
   - Canary 180M Flash — © NVIDIA, licensed CC BY 4.0.
     https://huggingface.co/nvidia/canary-180m-flash
-  - GigaAM v2 Russian — © Salute Devices, MIT License.
+  - GigaAM v2 and v3 Russian — © Salute Devices / GigaChat Team, MIT License.
     https://github.com/salute-developers/GigaAM
+  - Dolphin base (40 Eastern languages: Hindi, Arabic, Persian, Thai, Vietnamese, Indonesian,
+    Bengali, Tamil, Urdu and more) — © DataoceanAI and Tsinghua University, Apache-2.0.
+    https://github.com/DataoceanAI/Dolphin
+    Redistributed unmodified; only the CTC branch is exported.
+  - Qwen3-ASR 1.7B (Q4_K GGUF, 30 languages) — © Qwen Team / Alibaba Cloud, Apache-2.0.
+    https://huggingface.co/Qwen/Qwen3-ASR-1.7B
+    GGUF conversion by cstr (CrispStrobe), Apache-2.0: https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF
+    Runs through the native CrispASR/ggml runtime (MIT); see assets/licenses/qwen-native.txt.
   - SenseVoice Small (Chinese, Cantonese, English, Japanese, Korean) — © Alibaba Group,
     licensed under the FunASR Model Open Source License Agreement v1.1, which permits use,
     modification and sharing with attribution of the source, the author and the model name.
@@ -88,7 +104,7 @@ for a stable, project-controlled source.
 
 6. Emoji names and keywords (emoji search, emoji suggestions)
 -------------------------------------------------------------
-Files: ime/media/emoji/annotations/<lang>.txt  (bundled, ~50 languages)
+Files: ime/media/emoji/annotations/<lang>.txt  (bundled, 51 languages)
 
 The searchable name and keywords of every emoji, in each language, come from the Unicode Common
 Locale Data Repository (CLDR v48), both the curated and the derived annotation sets.
@@ -120,10 +136,51 @@ remains the property of its owner, and their use here implies no affiliation or 
 The monochrome outlines come from two collections, both freely licensed:
 
   - Simple Icons, CC0-1.0 — OpenAI, OpenRouter, Google Gemini, Anthropic, Mistral AI, ElevenLabs,
-    Deepgram, DeepSeek, Ollama, Microsoft Azure. https://github.com/simple-icons/simple-icons
+    Deepgram, DeepSeek, Ollama, Microsoft Azure, Scaleway, OVHcloud.
+    https://github.com/simple-icons/simple-icons
   - Lobe Icons, MIT License — Groq, Together AI, DeepInfra, AssemblyAI, xAI, SiliconFlow (filed
     there under SiliconCloud, the name of their platform).
     https://github.com/lobehub/lobe-icons
 
 Soniox publish no vector mark, so theirs was traced from their own app icon and fitted to the same
 size as the rest.
+
+9. On-device text recognition ("Scan text")
+--------------------------------------------
+
+Files: libmlkit_google_ocr_pipeline.so (bundled with the ML Kit dependency below)
+
+Photographing printed text and inserting part of it is done entirely on the device. The recogniser is
+Google's ML Kit Text Recognition v2, included in its bundled form, which ships the Latin-script model
+inside the app rather than downloading it — so the feature never makes a network request of any kind,
+not even on first use.
+
+  - ML Kit Text Recognition v2 (com.google.mlkit:text-recognition), © Google LLC, Apache License 2.0.
+    https://developers.google.com/ml-kit/vision/text-recognition/v2
+
+No camera permission is declared for this: the system camera app takes the picture and hands the file
+back, and the photo is deleted from our cache as soon as it has been read.
+
+
+10. On-device translation models and engine (the translate bar)
+---------------------------------------------------------------
+
+Files: translation-models/<xx-en|en-xx>/  (downloaded on demand, per language)
+       libdictate_bergamot.so            (bundled)
+
+Translation runs entirely on the device, in a process of its own; no text is sent anywhere. The
+models are Mozilla's Firefox Translations models, mirrored unchanged to a release of this project
+(translation-models-v1) so that every download is pinned by its checksum. Mozilla trains them to and
+from English only, so a pair of two other languages is translated through English.
+
+  - Firefox Translations models, © Mozilla, Mozilla Public License 2.0.
+    https://github.com/mozilla/translations  (source code of the training pipeline and models)
+  - Bergamot translation engine (bergamot-translator, now mozilla/translations/inference), © the
+    Bergamot project and Mozilla, Mozilla Public License 2.0 — built unmodified from
+    https://github.com/mozilla/translations
+  - Marian NMT (the Bergamot fork), MIT License. https://github.com/marian-nmt/marian-dev
+  - SentencePiece, © Google, Apache License 2.0 (one line changed to compile with NDK 29, see
+    tools/bergamot/patches in the Dictate repository). https://github.com/google/sentencepiece
+  - ruy, © Google, Apache License 2.0; cpuinfo, BSD 2-Clause; simd_utils, BSD 2-Clause;
+    PCRE2, BSD 3-Clause; yaml-cpp and pathie-cpp, MIT / BSD 2-Clause; ssplit-cpp, Apache License 2.0.
+

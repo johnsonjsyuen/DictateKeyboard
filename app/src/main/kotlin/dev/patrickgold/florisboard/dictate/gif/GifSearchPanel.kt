@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
@@ -61,7 +62,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
 /**
- * The GIF search bar shown in the Smartbar's slot while the user is typing a query (the keyboard below
+ * The GIF search bar shown above the Smartbar while the user is typing a query (the keyboard below
  * does the typing; keystrokes are folded into
  * [dev.patrickgold.florisboard.ime.keyboard.KeyboardManager.gifSearchQuery]). Unlike emoji search, GIFs
  * are too small for an inline results strip — so this bar only captures the query; Enter opens a full
@@ -127,9 +128,11 @@ fun GifSearchPanel(
                                     )
                                     .padding(horizontal = 12.dp, vertical = 6.dp),
                             )
+                            // Not focusable: a focusable menu raised by the keyboard hides the keyboard (#284).
                             DropdownMenu(
                                 expanded = confirmDeleteTerm == term,
                                 onDismissRequest = { confirmDeleteTerm = null },
+                                properties = PopupProperties(focusable = false),
                             ) {
                                 DropdownMenuItem(
                                     text = { Text(stringRes(R.string.action__delete)) },

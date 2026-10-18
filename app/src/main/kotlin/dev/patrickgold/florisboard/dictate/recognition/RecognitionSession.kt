@@ -40,6 +40,8 @@ import kotlinx.coroutines.launch
 class RecognitionSession(
     private val appContext: Context,
     private val host: Host,
+    /** The caller's field is a password or incognito field: keep the dictation out of the history (#383). */
+    private val sensitiveField: Boolean = false,
 ) {
     /** Receives lifecycle + result callbacks; the service maps these to its `RecognitionService.Callback`,
      *  the activity updates its UI and returns an activity result. Only [onResults]/[onError] are required. */
@@ -61,7 +63,7 @@ class RecognitionSession(
 
     fun start() {
         RecognitionBridge.register(this)
-        DictateController.startRecognition(appContext)
+        DictateController.startRecognition(appContext, sensitiveField)
         watchdog = scope.launch {
             val startedMs = System.currentTimeMillis()
             var speechStarted = false
@@ -92,6 +94,23 @@ class RecognitionSession(
                 delay(POLL_INTERVAL_MS)
             }
         }
+    }
+
+    /**
+     * Re-sends the audio kept from a failed attempt instead of capturing a new one (issue #409), so the
+     * voice-input surfaces can offer the retry the keyboard's error chip already has. No endpointing
+     * watchdog runs — nothing is being recorded — and the outcome still arrives through [onOutcome], so
+     * the host sees the same callbacks a spoken attempt produces. Returns false when nothing is kept.
+     */
+    fun resend(): Boolean {
+        RecognitionBridge.register(this)
+        if (!DictateController.resendRecognition(appContext)) {
+            RecognitionBridge.unregister(this)
+            return false
+        }
+        // The recording is already over; a host drawing a level meter must not be left waiting for speech.
+        host.onEndOfSpeech()
+        return true
     }
 
     /** Stop capturing and transcribe; the outcome arrives asynchronously via [onOutcome]. */

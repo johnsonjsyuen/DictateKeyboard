@@ -129,6 +129,10 @@
     <string name="settings__home__title" comment="Title of the Home screen">{app_name} Uygulamasına Hoş Geldiniz</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">{app_name} sistemde etkin değil ve bu nedenle giriş yöntemi seçicisinde bir giriş yöntemi olarak kullanılamayacak. Bu sorunu çözmek için buraya tıklayın.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">{app_name} varsayılan giriş yöntemi olarak seçilmemiş. Bu sorunu çözmek için buraya tıklayın.</string>
+    <string name="dictate__settings_unreadable_card">Ayarlarınız okunamadı, bu yüzden Dictate varsayılan ayarlarla başladı. Geri getirmek için buraya dokunun.</string>
+    <string name="dictate__settings_unreadable_title">Geri yüklensin mi?</string>
+    <string name="dictate__settings_unreadable_message">Dictate başlarken ayar dosyasını okuyamadı. Dosyayı olduğu gibi sakladı ve varsayılan ayarlarla başladı. “Geri Yükle” sağlayıcılarınızı, anahtarlarınızı, komutlarınızı ve ayarlarınızı eskisi gibi geri getirir. “Sil” eski dosyayı kaldırır.</string>
+    <string name="dictate__settings_restore_failed">Eski ayarlar hâlâ okunamıyor.</string>
     <string name="settings__search__title" comment="Title of the settings search screen">Ayarlarda ara</string>
     <string name="settings__search__placeholder" comment="Placeholder in the settings search field">Ayarlarda ara…</string>
     <string name="settings__search__recent" comment="Header above recently used search terms">Son aramalar</string>
@@ -440,6 +444,28 @@
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Karakter düzeninin üzerinde bir sayı satırı göster</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">İpuçlu sayı satırı</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">İpuçlu semboller</string>
+    <string name="settings__custom_symbols__title">Özel semboller</string>
+    <string name="pref__keyboard__custom_symbols__label">Özel sembolleri kullan</string>
+    <string name="custom_symbols__edit_key">Tuşu düzenle</string>
+    <string name="custom_symbols__key">Sembol</string>
+    <string name="custom_symbols__currency">Dilin para birimi</string>
+    <string name="custom_symbols__long_press">Basılı tutunca</string>
+    <string name="custom_symbols__add_placeholder">Ekle, ör. ✔ ☑ ✅</string>
+    <string name="custom_symbols__insert_as">Şu olarak ekle</string>
+    <string name="custom_symbols__target_key">Tuş</string>
+    <string name="custom_symbols__target_long_press">Basılı tutma</string>
+    <string name="custom_symbols__palette_math">Matematik</string>
+    <string name="custom_symbols__palette_arrows">Oklar</string>
+    <string name="custom_symbols__palette_currencies">Para birimleri</string>
+    <string name="custom_symbols__palette_punctuation">Noktalama</string>
+    <string name="custom_symbols__palette_shapes">Şekiller</string>
+    <string name="custom_symbols__palette_greek">Yunanca</string>
+    <string name="custom_symbols__palette_scripts">Üst ve alt simge</string>
+    <string name="custom_symbols__reset_all">Tüm tuşları sıfırla</string>
+    <string name="custom_symbols__reset_all_confirm">Tüm tuşlar varsayılana döndürülsün mü?</string>
+    <string name="custom_symbols__import_confirm">Sembolleriniz bu dosyadakilerle değiştirilsin mi?</string>
+    <string name="custom_symbols__import_done">Semboller içe aktarıldı</string>
+    <string name="custom_symbols__import_invalid">Bu bir sembol dosyası değil</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Yardımcı tuşu göster</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Ara çubuğunun yanında yapılandırılabilir bir yardımcı tuş gösterir</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Yardımcı tuş eylemi</string>
@@ -472,6 +498,11 @@
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Paylaşılan eylem satırını mevcut duruma göre otomatik genişletir/daraltır</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Eylem satırı yerleşimi</string>
+    <string name="settings__smartbar__second_actions__title" comment="Title of the Smartbar second actions screen">İkincil eylemler</string>
+    <string name="settings__smartbar__second_actions__summary" comment="Preference summary">İkincil bir eylemi çalıştırmak için bir Smartbar düğmesini basılı tutun</string>
+    <string name="settings__smartbar__second_actions__note" comment="Header of the screen while nothing is being paired: says what to do">Bir düğmeye, ardından basılı tutulduğunda çalıştırması gereken eyleme dokunun. İkisi de kendi düğmesini korur — yeri boşaltmak için birini klavyenin eylem düzenleyicisinde gizleyin.</string>
+    <string name="settings__smartbar__second_actions__hint_pick_second" comment="Header while a button is selected; {action} is that button's name">{action} basılı tutulduğunda ne çalıştırsın?</string>
+    <string name="settings__smartbar__second_actions__section_child_only" comment="Heading above the buttons that cannot carry a second action">Yalnızca ikincil eylem olarak — bu düğmeler basılı tutulduğunda yinelenir veya kendi basılı tutma işlevleri vardır</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Yazma</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
@@ -486,6 +517,8 @@
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Mevcut giriş bağlamına göre kelimeleri büyük harfle yaz</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Noktalama işaretlerinden sonra otomatik boşluk</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Bir noktalama işaretinden sonra otomatik olarak boşluk ekler</string>
+    <string name="pref__correction__tighten_punctuation_spacing__label" comment="Preference title">Noktalama işaretlerinden önceki boşluğu sil</string>
+    <string name="pref__correction__tighten_punctuation_spacing__summary" comment="Preference summary">Bir . , ? ! işaretinden önce yazılan boşluğu kaldırır</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock durumunu hatırla</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir metin alanına geçerken caps lock açık kalır</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Boşluk çubuğuna çift dokunma</string>
@@ -702,6 +735,7 @@
     <string name="clipboard__group_pinned">Sabitlenmiş</string>
     <string name="clipboard__group_recent">Son Kullanılan</string>
     <string name="clipboard__group_other">Diğer</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Sabitlenmiş öğeler üstte</string>
     <string name="clipboard__item_description_email">E-posta</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefon</string>
@@ -727,6 +761,7 @@
     <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Kopyalarken kırp</string>
     <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Baştaki ve sondaki boşlukları ve satır sonlarını siler</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Daha önce kopyalanan pano içeriğini öner</string>
+    <string name="pref__clipboard__suggestion_show_extracted__label" comment="Preference title (switch) in the group Clipboard suggestions, keep short (one line): whether the links, email addresses and phone numbers found inside a copied text are also offered as suggestions of their own, next to the whole text">Bağlantılar, e-postalar, numaralar</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Izgara sütun sayısı</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Pano önerilerini şununla sınırla</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Son {v} saniye içinde kopyalanan ögeler</string>
@@ -1118,6 +1153,10 @@
     <!-- Dictate strings -->
     <string name="quick_action__ime_ui_mode_editing">Metin düzenleme</string>
     <string name="quick_action__ime_ui_mode_editing__tooltip">İmleci taşıyın, metni seçin ve düzenleyin</string>
+    <string name="quick_action__ime_ui_mode_scan">Metin tara</string>
+    <string name="quick_action__ime_ui_mode_scan__tooltip">Basılı metni fotoğraflayıp ekleyin</string>
+    <string name="quick_action__translate">Çevir</string>
+    <string name="quick_action__translate__tooltip">Yazarken çevirin, doğrudan bu cihazda</string>
     <string name="quick_action__ime_ui_mode_dictate">Dikte</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Dikte etmek için dokunun, yazıya dökmek için tekrar dokunun</string>
     <string name="quick_action__dictate_live_prompt">Canlı komut</string>
@@ -1194,10 +1233,16 @@
     <string name="dictate__floating_button_disclosure_continue">Ayarları aç</string>
     <string name="dictate__floating_button_mic_title">Mikrofon erişimi</string>
     <string name="dictate__floating_button_mic_summary">Sesinizi kaydetmek için gerekli · izin vermek için dokunun</string>
-    <string name="dictate__floating_button_show_with_keyboard_title">Dictate klavyesiyle göster</string>
-    <string name="dictate__floating_button_show_with_keyboard_summary_on">Düğme, Dictate klavyesi etkinken de görünür.</string>
-    <string name="dictate__floating_button_show_with_keyboard_summary_off">Dictate klavyesi etkinken gizlenir, çünkü onda zaten bir mikrofon tuşu var.</string>
+    <string name="dictate__floating_button_show_when_title">Ne zaman gösterilsin</string>
+    <string name="dictate__floating_button_show_when_field">Bir metin alanı seçilir seçilmez</string>
+    <string name="dictate__floating_button_show_when_keyboard">Yalnızca klavye açıkken</string>
+    <string name="dictate__floating_button_show_when_dictate_keyboard">Dictate klavyesiyle de</string>
     <string name="dictate__action_continue_recording">Kaydı sürdür</string>
+    <string name="dictate__a11y_mic_hold_local">Cihazda yazıya dök</string>
+    <string name="smartbar__a11y_show_actions">Eylemleri göster</string>
+    <string name="smartbar__a11y_show_suggestions">Önerileri göster</string>
+    <string name="smartbar__a11y_show_more_actions">Daha fazla eylem göster</string>
+    <string name="smartbar__a11y_hide_more_actions">Ek eylemleri gizle</string>
     <string name="dictate__floating_button_auto_dim_summary_off">Her zaman tam görünür kalır.</string>
     <string name="dictate__floating_button_auto_dim_summary_on">Birkaç saniye sonra küçük bir noktaya küçülür; geri getirmek için dokunun.</string>
     <string name="dictate__floating_button_auto_dim_title">Boştayken soluklaştır</string>
@@ -1241,8 +1286,10 @@
     <string name="dictate__floating_button_snap_summary_on">Sürükledikten sonra düğme en yakın kenara yapışır.</string>
     <string name="dictate__floating_button_snap_title">Kenara yapıştır</string>
     <string name="dictate__interrupted_recording">Kesildi ({time})</string>
+    <string name="dictate__transcription_stopped">Durduruldu, kayıt saklandı</string>
+    <string name="dictate__transcription_stopped_in_history">Durduruldu, kayıt Geçmiş’te</string>
     <string name="dictate__providers_summary_both">Yazıya dökme: {transcription} · Yeniden ifade: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Son diktenizi saklar, Smartbar üzerindeki „Yeniden ekle” düğmesiyle tekrar ekleyebilirsiniz.</string>
+    <string name="dictate__remember_last_dictation_summary">Son diktenizi saklar; böylece yüzen düğme geri alabilir, klasik düzen yeniden ekleyebilir.</string>
     <string name="dictate__remember_last_dictation_title">Son dikteyi hatırla</string>
     <string name="changelog__v4_2_0">• YENİ: kayan dikte düğmesi — başka bir klavye etkin olsa bile herhangi bir uygulamaya doğrudan dikte edin. Üç stilden birini seçin (Hap, Halka, Küre), konuşurken canlı dalga biçimini izleyin, kenara yapışmayla istediğiniz yere sürükleyin, rengini ve boyutunu ayarlayın ve yeniden ifade etmek için basılı tutun. Ayarlar ▸ Dictate ▸ Kayan düğme bölümünden açın.\n• YENİ: Google Gemini — transkripsiyon ve yeniden ifade için kendi AI Studio API anahtarını kullan.\n• İstemler artık varsayılan olarak tuşların üzerinde sabit bir sırada görünür.\n• Tarayıcılar ve diğer klavyeler dahil uygulamalar arası daha güvenilir metin ekleme.</string>
     <string name="dictate__promo_floating_button_message">Yeni: her yerde dikte et</string>
@@ -1327,6 +1374,7 @@
     <string name="dictate__model_default_summary">Sağlayıcı varsayılanı</string>
     <string name="dictate__custom_server_title">Özel sunucu</string>
     <string name="dictate__base_url_title">Temel URL</string>
+    <string name="dictate__base_url_cleartext_warning">Şifrelenmemiş: API anahtarı ve kayıtlarınız düz metin olarak iletilir. Kendi ağınızda sorun değil, ancak başka herhangi bir Wi-Fi ağında bunları başkası okuyabilir.</string>
     <string name="dictate__base_url_placeholder">https://your-server/v1/</string>
     <string name="dictate__base_url_required">Özel sağlayıcı için gereklidir</string>
     <string name="dictate__value_not_set">Ayarlanmadı</string>
@@ -1343,9 +1391,20 @@
     <string name="dictate__providers_cap_chat">Yeniden ifade etme</string>
     <string name="dictate__providers_add_custom">Kendi sunucunuzu ekleyin</string>
     <string name="dictate__providers_add_custom_summary">Kendi barındırdığınız ya da OpenAI uyumlu herhangi bir uç nokta — konuşma tanıma ve yeniden yazma için</string>
+    <string name="dictate__providers_add">Sağlayıcı ekle</string>
+    <string name="dictate__providers_search">Sağlayıcı ara</string>
+    <string name="dictate__providers_filter_eu">AB</string>
+    <string name="dictate__providers_add_none">Eşleşen sağlayıcı yok</string>
     <string name="dictate__providers_azure_endpoint">Endpoint, portaldaki “Keys and Endpoint” sayfasında anahtarın yanında durur. MAI-Transcribe yalnızca East US, West US, West US 2, North Europe, Southeast Asia ve Central India bölgelerinde çalışır.</string>
     <string name="dictate__providers_ollama_no_stt">Ollama\'nın konuşma tanıma uç noktası yoktur, bu yüzden yalnızca yeniden yazabilir. Kendi sunucunuzla dikte etmek için bir konuşma sunucusu çalıştırın (örneğin Speaches, faster-whisper-server veya whisper.cpp) ve “Kendi sunucunuzu ekleyin” altından ekleyin — ya da hiç sunucu gerektirmeyen cihaz üzerindeki motoru kullanın.</string>
+    <string name="dictate__providers_region_title">Bölge</string>
+    <string name="dictate__providers_region_us">Amerika Birleşik Devletleri</string>
+    <string name="dictate__providers_region_eu">Avrupa Birliği</string>
+    <string name="dictate__providers_region_jp">Japonya</string>
+    <string name="dictate__providers_region_in">Hindistan</string>
+    <string name="dictate__providers_region_global">Dünya geneli</string>
     <string name="dictate__providers_custom_title">Özel sunucu</string>
+    <string name="dictate__providers_get_key">API anahtarı al</string>
     <string name="dictate__providers_field_name">Ad</string>
     <string name="dictate__providers_field_transcription_model">Yazıya dökme modeli</string>
     <string name="dictate__providers_field_chat_model">Yeniden ifade etme modeli</string>
@@ -1411,8 +1470,10 @@
     <string name="dictate__recording_animation_static_description">Kayıt sırasında düz kırmızı bir nokta olarak kalır</string>
     <string name="dictate__recording_animation_pulse_label">Nabız gibi</string>
     <string name="dictate__recording_animation_pulse_description">Sabit bir hızda atar</string>
-    <string name="dictate__recording_animation_level_label">Sesinizi izler</string>
+    <string name="dictate__recording_animation_level_label">Sesinizi izler (nokta)</string>
     <string name="dictate__recording_animation_level_description">Mikrofon seviyesine tepki vererek sizi duyduğunu gösterir</string>
+    <string name="dictate__recording_animation_wave_label">Sesinizi izler (dalga)</string>
+    <string name="dictate__recording_animation_wave_description">Son saniyeleri canlı bir dalga olarak çizer, böylece ne zaman sustuğunuzu görürsünüz</string>
     <string name="dictate__skip_silent_title">Sessiz kayıtları atla</string>
     <string name="dictate__skip_silent_summary">Sessiz seste uydurma metni ve gereksiz API çağrılarını önler</string>
     <string name="dictate__trim_silent_gaps_title">Uzun duraklamaları kırp</string>
@@ -1449,7 +1510,7 @@
     <string name="dictate__providers_field_realtime_model">Gerçek zamanlı model</string>
     <string name="dictate__providers_custom_realtime">Gerçek zamanlı akış</string>
     <string name="dictate__providers_custom_realtime_summary">Bu sunucu /v1/realtime adresinde OpenAI realtime protokolünü kullanır</string>
-    <string name="dictate__providers_custom_warm_up">Yeniden yazmadan önce uyandır</string>
+    <string name="dictate__providers_custom_warm_up">Önceden uyandır</string>
     <string name="dictate__providers_custom_warm_up_summary">Sunucuya erkenden dokunur, böylece uyuyan makine açılmaya vakit bulur</string>
     <string name="dictate__providers_realtime_model_default">Varsayılan</string>
     <string name="dictate__instant_recording_title">Anında kayıt</string>
@@ -1476,7 +1537,13 @@
     <string name="dictate__languages_title">Yazıya dökme dilleri</string>
     <string name="dictate__languages_summary">Dikte ettiğiniz dilleri seçin. Kayıt çubuğundan aralarında hızlıca geçiş yapın.</string>
     <string name="dictate__language_detect">Otomatik algıla</string>
+    <string name="dictate__languages_selected_title">Seçili diller</string>
     <string name="dictate__languages_active_title">Etkin dil</string>
+    <string name="dictate__languages_follow_keyboard">Klavye dilini takip et</string>
+    <string name="dictate__languages_follow_keyboard_summary">Dil seçiliyse dikte dili de değişir</string>
+    <string name="quick_action__dictate_switch_provider">Yazıya dökme sağlayıcısı</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Yazıya dökme sağlayıcısını değiştir</string>
+    <string name="enum__space_bar_mode__transcription_provider">Yazıya dökme sağlayıcısı</string>
     <string name="dictate__prompt_selection_none">Yok</string>
     <string name="dictate__prompt_selection_predefined">Varsayılan</string>
     <string name="dictate__prompt_selection_custom">Özel</string>
@@ -1523,6 +1590,12 @@
     <string name="dictate__manage_prompts_title">Komutları yönet</string>
     <string name="dictate__manage_prompts_summary">{count} komut</string>
     <string name="dictate__manage_prompts_summary_loading">Komutlarınızı ekleyin, düzenleyin ve kaldırın</string>
+    <string name="dictate__command_word_title">Komut kelimesi</string>
+    <string name="dictate__command_word_off">Kapalı</string>
+    <string name="dictate__command_word_summary">“{word}” ile başlayan dikteler canlı komut olarak çalıştırılır</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Komut kelimesi hakkında</string>
+    <string name="dictate__command_word_info_description">Dictate normalde söylediğinizi yazar. Bir komut kelimesi ayarlarsanız, onunla başlayan bir dikte bunun yerine bir talimata dönüşür: kelime çıkarılır, kalanı seçili metinle birlikte (varsa) yapay zekâya gönderilir.\n\n“Jarvis, bunu daha resmî yap” seçimi yeniden yazar. “Jarvis, Japonya’nın başkenti neresi” cevabı alana yazar. Bu, dokunmak yerine adını söyleyerek ulaşılan canlı komut düğmesidir.\n\nKelime yalnızca diktenin en başında ve yalnızca tam kelime olarak sayılır; bu yüzden cümleye nadiren başladığınız bir şey seçin.</string>
     <string name="dictate__auto_formatting_title">Otomatik biçimlendirme</string>
     <string name="dictate__auto_formatting_summary">Sözlü biçimlendirme ipuçlarını Markdown\'a dönüştür (başlıklar, listeler, …)</string>
     <string name="dictate__system_prompt_title">Yeniden ifade etme talimatı</string>
@@ -1667,6 +1740,12 @@
     <string name="dictate__local_model_none_selected">Henüz model indirilmedi</string>
     <string name="dictate__local_model_delete_confirm">“{model}” silinsin mi? Daha sonra tekrar indirebilirsiniz.</string>
     <string name="dictate__local_model_not_installed_error">İndirilen yerel model yok</string>
+    <string name="dictate__local_model_family_installed">{total} modelden {count} tanesi yüklü</string>
+    <string name="dictate__local_model_family_open">Varyantları göster</string>
+    <plurals name="dictate__local_model_languages">
+        <item quantity="one">{count} dil</item>
+        <item quantity="other">{count} dil</item>
+    </plurals>
     <string name="dictate__local_fallback_title">Çevrimdışı yedek</string>
     <string name="dictate__local_fallback_summary">Çevrimdışıyken, sağlayıcı başarısız olduktan sonra indirilen modelle cihazda yazıya dök</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Kaydedilen yeniden ifade istemleri</string>
@@ -1674,6 +1753,8 @@
     <string name="dictate__floating_button_copy_to_clipboard_title">Her dikteyi panoya kopyala</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_on">Her dikte panoya da kopyalanır; böylece ekleme başarısız olursa metni elle yapıştırabilirsin. Bazı telefonlarda pano bildirimi gösterebilir.</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_off">Dikteler yalnızca eklenir, panoya kopyalanmaz.</string>
+    <string name="dictate__floating_button_menu_group">Basılı tutma menüsü</string>
+    <string name="dictate__floating_button_menu_settings_title">Dictate ayarları</string>
     <string name="dictate__floating_button_undo_summary_off">Geri alma düğmesi gösterilmiyor.</string>
     <string name="dictate__floating_button_undo_summary_on">Bir dikteden sonra, eklenen metni tek dokunuşla kaldırmak için düğmenin yanında bir geri alma düğmesi belirir.</string>
     <string name="dictate__floating_button_undo_title">Geri alma düğmesi</string>
@@ -1707,6 +1788,8 @@
     <string name="dictate__mappings_wholeword_summary">Yalnızca tek başına duran kelimeleri değiştir, daha uzun kelimelerin içindeki eşleşmeleri değil.</string>
     <string name="dictate__mappings_wholeword_title">Yalnızca tam kelime</string>
     <string name="dictate__wear_standalone_summary">API anahtarını saate gönder; telefon yokken de dikte edebilsin.</string>
+    <string name="dictate__wear_tether_notif_channel_name">Saatten dikte</string>
+    <string name="dictate__wear_tether_notif_title">Saatin için yazıya dökülüyor…</string>
     <string name="dictate__wear_standalone_title">Anahtarı saatle senkronize et</string>
     <string name="emoji__search__hint">Emoji ara</string>
     <string name="emoji__row__open_panel">Tüm emojileri aç</string>
@@ -1738,7 +1821,6 @@
     <string name="dictate__audio_source_voice_recognition_summary">Konuşma için ayarlanmış, daha az işleme — yazıya dökme hatalıysa bunu deneyin</string>
     <string name="dictate__audio_source_unprocessed">İşlenmemiş (ham)</string>
     <string name="dictate__audio_source_unprocessed_summary">Hiç işleme yok; telefonunuz desteklemiyorsa Ses tanımaya geri döner</string>
-    <string name="dictate__security_group">Güvenlik</string>
     <string name="dictate__trust_user_certs_title">Kullanıcı sertifikalarına güven</string>
     <string name="dictate__trust_user_certs_summary">Kendi yüklediğiniz CA sertifikalarına güven — özel CA arkasındaki uç noktalar için.</string>
     <string name="dictate__stats_title">İstatistikler</string>
@@ -2031,7 +2113,7 @@
     <string name="apptour60__chinese_body">Aday satırıyla birlikte pinyin — şimdiye kadar yalnızca neredeyse kimsenin kullanmadığı Zhengma vardı. Ayrıca gerçekten Çince üzerinde eğitilmiş bir cihaz üstü model ve anakaradan erişilebilen bir sağlayıcı geldi.</string>
     <string name="apptour60__emoji_eyebrow">Emoji</string>
     <string name="apptour60__emoji_title">Emojileri kendi dilinizde arayın</string>
-    <string name="apptour60__emoji_body">Emoji araması altı dil biliyordu. Artık kırktan fazlasını biliyor — „heart", „心" ya da „قلب" diye arayın, aynı emojiye ulaşın. Arama, klavyenizin dilini izler.</string>
+    <string name="apptour60__emoji_body">Emoji araması altı dil biliyordu. Artık kırktan fazlasını biliyor — “heart”, “心” ya da “قلب” diye arayın, aynı emojiye ulaşın. Arama, klavyenizin dilini izler.</string>
     <string name="apptour60__languages_eyebrow">Sözlükler</string>
     <string name="apptour60__languages_title">Önerisi olmayan yedi dil</string>
     <string name="apptour60__languages_body">Arapça, Bengalce, Fince, Hintçe, Endonezce, Tamilce ve Urduca artık sözcük önerisi ve otomatik düzeltme alıyor. İzlandaca ile Gürcüce düpedüz yanlış dilleri içeriyordu, yeniden oluşturuldular. 19 düzenin uzun basma karakterleri de artık o dilin gerçekten yazdığına göre.</string>
@@ -2111,6 +2193,79 @@
     <string name="apptour62__outro_eyebrow">İşte 6.2</string>
     <string name="apptour62__outro_title">Aynı klavye, daha çoğu senin</string>
     <string name="apptour62__outro_body">Nasıl dikte ettiğin konusunda hiçbir şey değişmiyor — kendi anahtarın, kendi sunucun ya da cihazdaki bir model. Tüm turları yeniden Ayarlar › Hakkında altında bulabilirsin.</string>
+    <string name="apptour63__cta_try">Dene</string>
+    <string name="apptour63__intro_eyebrow">Dictate 6.3</string>
+    <string name="apptour63__intro_title">Klavyeden çıkmadan daha fazlası</string>
+    <string name="apptour63__intro_body">Kamerayı basılı bir metne tut, metin alana düşsün. İmleç, seçim ve pano sonunda tek bir paneli paylaşıyor. Her Smartbar düğmesi uzun basışla ikinci bir eylem taşıyabiliyor. Ve çevrimdışı dikte için nihayet bir telefona gerçekten sığan modeller var.</string>
+    <string name="apptour63__scan_eyebrow">Yeni: metni tara</string>
+    <string name="apptour63__scan_title">Basılı metin doğrudan alana</string>
+    <string name="apptour63__scan_body">Mektuptaki IBAN, kutudaki seri numarası, kolideki adres: kamerayı doğrult, metin yazmakta olduğun yere gelsin, yeniden yazılmak yerine. Tanıma bu cihazda yapılır — hiçbir şey yüklenmez ve hiçbir sağlayıcı işin içine girmez. Dictate kamera iznini de hiç istemez: fotoğrafı sistem kamerası çeker ve yalnızca o tek görüntüyü geri verir; o görüntü okunur okunmaz silinir.</string>
+    <string name="apptour63__editing_eyebrow">Yeni: düzenleme paneli</string>
+    <string name="apptour63__editing_title">İmleç, seçim ve pano tek yerde</string>
+    <string name="apptour63__editing_body">Hepsi zaten vardı, bilmen gereken on bir tuşa dağılmış hâlde. Artık tek bir panel: karakter, sözcük ya da satır bazında hareket, seçme, kopyalama, yapıştırma, geri alma. Basılı tutulan tuş kendini tekrarlıyor, on bir dokunuş istemek yerine. Sayı tuş takımı da artık açıkça çağrılabiliyor; kimsenin atamadığı bir hareketle rastlantı sonucu bulunmak yerine.</string>
+    <string name="apptour63__second_eyebrow">Yeni: ikinci eylem için basılı tut</string>
+    <string name="apptour63__second_title">Bir Smartbar yerinde iki eylem</string>
+    <string name="apptour63__second_body">İkinci eylemi düğmeyle kendin eşleştiriyorsun ve uzun basış onu çalıştırıyor. Aynı anda yalnızca beş ya da altı düğme görünür — bir özelliğin var olmasıyla ona yer olması arasındaki fark tam da budur. Köşedeki küçük işaret, hangi düğmelerin böyle bir eylem taşıdığını gösterir.</string>
+    <string name="apptour63__floating_eyebrow">Yüzen düğme</string>
+    <string name="apptour63__floating_title">Basılı tutunca bir menü, ve yalnızca istediğin yerde</string>
+    <string name="apptour63__floating_body">Kısa bir menü için yüzen düğmeyi basılı tut; içindeki ilk şey bir dosyayı yazıya dökmek. Ayrıca ona hangi uygulamalarda hoş karşılandığını söyleyebilirsin; her birine peşinden gelmesi yerine. Durdurma artık tam olarak başlatmanın olduğu yerde kalıyor ve kapsül ekranın hangi kenarında olursa olsun akıcı açılıyor.</string>
+    <string name="apptour63__offline_eyebrow">Çevrimdışı dikte</string>
+    <string name="apptour63__offline_title">Telefona sığan modeller</string>
+    <string name="apptour63__offline_body">İngilizce, Almanca ve Rusça artık yalnızca 670 MB\'lık olanlarla değil, birkaç yüz megabaytlık modellerle de çevrimdışı dikte edilebiliyor. Dolphin, kataloğun şimdiye kadar yalnızca kötü yanıtlayabildiği kırk doğu dilini ekliyor. Ve liste mimariye göre değil, insanların gerçekten indirdiğine göre sıralanmış: yirmi dört yerine on satır, ayrıntılar bir dokunuş ötede.</string>
+    <string name="apptour63__more_eyebrow">Ayrıca</string>
+    <string name="apptour63__more_title">Bir sürü küçük şey</string>
+    <string name="apptour63__more_body">Kendi sözcük listen artık dosya olarak gelebiliyor ve dosya olarak çıkabiliyor. Kayıt çubuğu bir dalga formu çiziyor, böylece sesinin ne zaman durduğu görünüyor. Bir sağlayıcı hesabı verilerinin kalacağı bölgeyi seçebiliyor ve akış sunucusu da onunla taşınıyor. Bir dikte, kayıt yaptığı mikrofonun ortadan kalkmasına dayanıyor. Bağlantı testi artık yalnızca gerçekten denetlediğini söylüyor, sağlayıcının anahtar sayfası anahtarın yazıldığı alandan bir dokunuş uzakta ve yeni bir kurulum, özelliklerinin rastgele çıkış sırasıyla değil, klavyenin ne işe yaradığıyla açılıyor.</string>
+    <string name="apptour63__outro_eyebrow">İşte 6.3</string>
+    <string name="apptour63__outro_title">Daha az dolambaç, aynı klavye</string>
+    <string name="apptour63__outro_body">Nasıl dikte ettiğin konusunda hiçbir şey değişmiyor — kendi anahtarın, kendi sunucun ya da cihazdaki bir model. Tüm turları yeniden Ayarlar › Hakkında altında bulabilirsin.</string>
+    <string name="apptour64__cta_languages">Dilleri seç</string>
+    <string name="apptour64__cta_providers">Sağlayıcıları göster</string>
+    <string name="apptour64__intro_eyebrow">Dictate 6.4</string>
+    <string name="apptour64__intro_title">Telefonda çeviri, sana ait semboller</string>
+    <string name="apptour64__intro_body">Bir dilde yazıyorsun, alan başka bir dilde doluyor — çeviri bu cihazda yapılıyor. İki sembol sayfası da senin seçtiğin tuşları taşıyabiliyor. Ayrıca yeni sağlayıcılar, çok daha iyi bir çevrimdışı model, bir dikteyi talimata dönüştüren bir kelime ve tüm uygulamanın gizlilik ve güvenlik açısından gözden geçirilmesi var.</string>
+    <string name="apptour64__translate_eyebrow">Yeni: çeviri</string>
+    <string name="apptour64__translate_title">Telefondan hiç çıkmayan çeviri</string>
+    <string name="apptour64__translate_body">Smartbar’daki Çevir düğmesine dokun ve üstündeki alana yaz — uygulamanın alanı sen yazdıkça çeviriyle doluyor. İşi Mozilla’nın modelleri bu cihazda, 49 dilde yapıyor ve yazdığın hiçbir şey hiçbir yere gönderilmiyor. Enter, göndermeden önce bitmiş çeviriyi yerleştiriyor; böylece hiçbir mesaj yarı çevrilmiş hâlde gitmiyor. Her dil bir kez indiriliyor ve liste, indirmeden önce boyutunu gösteriyor.</string>
+    <string name="apptour64__symbols_eyebrow">Yeni: kendi sembollerin</string>
+    <string name="apptour64__symbols_title">Kullandığın semboller, istediğin yerde</string>
+    <string name="apptour64__symbols_body">Klavye › Özel semboller altında iki sembol sayfası da her dilde senin oluyor. Sayfanın resminde bir tuşa dokun, ne yazacağını ve uzun basışta neler sunacağını seç, sonra bunları sürükleyerek sırala. Bir palet, klavyende henüz olmayan sembolleri sunuyor. Bir tuşu değiştirene kadar sayfalar yerleşik sayfalarla tıpatıp aynı görünüyor; bitmiş bir düzen ise paylaşmak için dışa aktarılabiliyor.</string>
+    <string name="apptour64__providers_eyebrow">Sağlayıcılar ve çevrimdışı modeller</string>
+    <string name="apptour64__providers_title">Yeni sağlayıcılar ve daha iyi bir çevrimdışı model</string>
+    <string name="apptour64__providers_body">xAI’ın Grok’u artık yazıya da döküyor — dosya olarak ve canlı, yeniden ifade etmede kullanılan aynı anahtarla. Scaleway ve OVHcloud ses ve metni AB içinde tutuyor. Çevrimdışı modellerde Parakeet Ultra, Parakeet TDT 0.6B v3’ün yerini alıyor: aynı 670 MB ve aynı 25 dil, Almancada %29 daha az hatayla. v3 kullanıyorsan cihazdaki modeller listesinden Ultra’yı indir ve eskisini sil — o zamana kadar v3 çalışmaya devam eder. Ve sağlayıcı listesi artık yalnızca kullandıklarını gösteriyor; diğerlerinin hepsi arama özelliğiyle birlikte “Sağlayıcı ekle” altında.</string>
+    <string name="apptour64__command_eyebrow">Yeni: komut kelimesi</string>
+    <string name="apptour64__command_title">Kelimeyi söyle, dikte talimata dönüşsün</string>
+    <string name="apptour64__command_body">Yeniden ifade etme bölümünde bir kelime seç — örneğin “Jarvis”. Onunla başlayan bir dikte canlı komut olarak çalışır: seçili metin üzerinde ya da hiçbir şey seçili değilse bir soru olarak. Yalnızca ilk kelime sayılır; o kelimeden sadece bahseden bir cümle her zamanki gibi yazılır. Otomatik komutlar da artık amaçlandığı gibi çalışıyor: her zaman üzerinde çalıştıkları dikteyi alıyorlar ve yalnızca [köşeli parantez içinde metin] olan bir komut, modele gitmek yerine olduğu gibi sona ekleniyor.</string>
+    <string name="apptour64__privacy_eyebrow">Gizlilik ve güvenlik</string>
+    <string name="apptour64__privacy_title">Uygulamanın tamamı denetlendi</string>
+    <string name="apptour64__privacy_body">Dictate’in her parçası gizlilik ve güvenlik açısından gözden geçirildi ve bulunan her şey düzeltildi. Parola ya da PIN alanına yapılan bir dikte geçmişe girmiyor — artık yüzen düğme üzerinden yapıldığında da. Android’in bulut yedeklemesi API anahtarlarını artık yalnızca uçtan uca şifrelenmiş olarak alıyor. Ve “Kullanıcı sertifikalarına güven” artık hepsi için birden değil, her sağlayıcı hesabı için ayrı ayarlanıyor.</string>
+    <string name="apptour64__more_eyebrow">Ayrıca</string>
+    <string name="apptour64__more_title">6.4’teki diğer her şey</string>
+    <string name="apptour64__more_body">Ayrıntıları merak edenler için küçük değişiklikler. İstemiyorsan atlayıp geçebilirsin.</string>
+    <string name="apptour64__more_typing">Yazma</string>
+    <string name="apptour64__more_typing_slips">Öneriler parmak kaymalarını anlıyor: yanlış tuşa denk gelen bir harf, yer değiştirmiş iki harf, yarım yazılmış bir kelimedeki hata. Kastettiğin kelime çok daha sık çıkıyor ve her tuş basışı daha hızlı.</string>
+    <string name="apptour64__more_typing_autocorrect">Otomatik düzeltme kapalıyken de düzeltmeler öneri şeridinde görünüyor. Bu ayar artık yalnızca boşluk tuşunun kelimeyi değiştirip değiştirmeyeceğine karar veriyor.</string>
+    <string name="apptour64__more_typing_glide">Kaydırarak yazma, aksanlı bir harfle başlayan ya da biten kelimeleri buluyor — Macarca, Rusça, Fince, Lehçe, Türkçe ve daha fazlasında.</string>
+    <string name="apptour64__more_typing_swipe">Harflerin üzerinde yana kaydırma artık dili değiştirmiyor; bu çoğunlukla kazara oluyordu. Küre tuşu bunu hâlâ yapıyor ve “Hareketler ve Kaydırarak Yazma” altında kaydırmayı geri getirebilirsin.</string>
+    <string name="apptour64__more_typing_punctuation">Otomatik düzeltmenin hemen ardından gelen bir noktalama işareti onun boşluğunun yerini alıyor ve boşluk çubuğunda kaydırma artık imleci başka bir satıra kaçırmıyor.</string>
+    <string name="apptour64__more_typing_calculator">Hesap makinesi “=” işaretinden önce yanıt veriyor ve yanıta dokunmak satırı tamamlıyor.</string>
+    <string name="apptour64__more_typing_size">Klavye her dil için boyutunu hatırlıyor.</string>
+    <string name="apptour64__more_typing_languages">Afrikanca artık tam bir klavye dili. Yeni bir düzen için dilini seçmen yeterli — diğer alanlar kendiliğinden doluyor.</string>
+    <string name="apptour64__more_dictation">Dikte</string>
+    <string name="apptour64__more_dictation_stop">Hâlâ sunucuyu bekleyen bir dikteyi durdurduğunda kayıt korunuyor ve yeniden gönderilmeye hazır bekliyor.</string>
+    <string name="apptour64__more_dictation_timeout">Takılan bir bağlantı dört yerine tek bir zaman aşımından sonra pes ediyor ve sağlayıcının reddettiği bir istek yeniden gönderilmiyor.</string>
+    <string name="apptour64__more_dictation_live">Canlı dikte sırasında sildiğin bir kelime silinmiş kalıyor ve art arda iki dikte arasına bir boşluk giriyor.</string>
+    <string name="apptour64__more_dictation_hold">Konuşmak için mikrofonu basılı tutarken: yavaş bir dokunuş dokunuş olarak kalıyor ve bir saniyeden kısa basılı tutma iptal ediliyor.</string>
+    <string name="apptour64__more_dictation_talkback">TalkBack mikrofonu bulup ona basabiliyor ve diktenin o anda ne yaptığını söylüyor.</string>
+    <string name="apptour64__more_clipboard">Pano ve emoji</string>
+    <string name="apptour64__more_clipboard_pins">Sabitlenmiş öğeler artık en altta duruyor, gruplar arasında geçmek için sekmelerle. “Sabitlenmiş öğeler üstte” eski sırayı geri getiriyor.</string>
+    <string name="apptour64__more_clipboard_chips">Kopyalanan bir metnin yanındaki bağlantı, e-posta ve numara düğmeleri kapatılabiliyor.</string>
+    <string name="apptour64__more_clipboard_emoji">Emoji satırı kayıyor ve uzun basışa yanıt veriyor, emoji araması da iki satır gösteriyor.</string>
+    <string name="apptour64__more_elsewhere">Yüzen düğme ve saat</string>
+    <string name="apptour64__more_elsewhere_bubble">Yüzen düğme görünmeden önce bir klavyenin açılmasını bekleyebiliyor ve dokunduğun web alanına yazıyor.</string>
+    <string name="apptour64__more_elsewhere_watch">Saatte bir dikte, alanının istediği şekilde bitiyor — gönder, ara ya da onay işareti —, istersen otomatik gönderimle; beklerken de saniyeler sayılıyor.</string>
+    <string name="apptour64__outro_eyebrow">İşte 6.4</string>
+    <string name="apptour64__outro_title">Telefonda daha fazlası, tam sana göre</string>
+    <string name="apptour64__outro_body">Çeviri ve yeni çevrimdışı model bağlantı olmadan çalışıyor; geri kalan her şey de hâlâ senin kurduğun gibi işliyor — kendi anahtarın, kendi sunucun ya da cihazdaki bir model. Tüm turları yeniden Ayarlar › Hakkında altında bulabilirsin.</string>
     <string name="changelog__v5_0_0">• YENİ: Kaydırarak yazma — tam kelimeler yazmak için tuşların üzerinde kaydırın, istek üzerine indirilen dile özel sözlüklerle. 👆\n• YENİ: Kelime önerileri ve otomatik düzeltme — yazım hataları otomatik düzeltilir ve yazdığınız kelime bir dokunuş uzağınızda kalır. ✨\n• YENİ: Gerçek zamanlı transkripsiyon — konuşurken kelimelerinizin belirişini izleyin; OpenAI, Deepgram, Soniox, AssemblyAI ve ElevenLabs ile. ⚡\n• YENİ: Üç transkripsiyon sağlayıcısı daha — ElevenLabs Scribe, Deepgram ve AssemblyAI. ☁️\n• YENİ: Klasik dikte düzeni — Dictate 3’ün klavyesiz ses ekranı geri döndü, sabit ya da yalnızca bir kaydırma uzakta. 🎙️\n• YENİ: Topluluk istem kütüphanesi — yeniden ifade istemlerine göz atın ve paylaşın. 📚\n• YENİ: Kilometre taşlarıyla dikte istatistikleri. 📊\n• YENİ: Çevrimdışı model NVIDIA Parakeet, ayrıca boş kayıtları atlayan bir sessizlik filtresi. 📴\n• Dahası: daha kararlı bir kayan düğme, akıl yürütme çabası denetimi, dokunsal geri bildirim, yeni bir E-Reader teması ve onlarca düzeltme. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>
@@ -2125,6 +2280,11 @@
     <string name="prefs__media__gif_setup__step3">Anahtarınızı kopyalayıp aşağıdaki alana yapıştırın.</string>
     <string name="prefs__media__gif_setup__open_klipy">KLIPY İş Ortağı Paneli\'ni aç</string>
     <string name="prefs__media__gif_setup__key_label">KLIPY API anahtarı</string>
+    <string name="prefs__media__gif_content_filter">Güvenli arama</string>
+    <string name="prefs__media__gif_content_filter__high">Katı</string>
+    <string name="prefs__media__gif_content_filter__medium">Orta</string>
+    <string name="prefs__media__gif_content_filter__low">Hafif</string>
+    <string name="prefs__media__gif_content_filter__off">Kapalı</string>
     <string name="prefs__media__gif_setup__privacy_note">Arama terimleriniz yalnızca GIF paneli açıkken KLIPY\'ye gönderilir — asla dikte sırasında değil.</string>
     <string name="gif__search_placeholder">KLIPY\'de ara</string>
     <string name="gif__powered_by">KLIPY tarafından desteklenir</string>
@@ -2317,4 +2477,35 @@
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>
     <string name="sticker__source_stickers_folder">Çıkartma klasörü</string>
+    <string name="scan__take_photo">Fotoğraf çek</string>
+    <string name="scan__pick_image">Görsel seç</string>
+    <string name="scan__retake">Tekrar dene</string>
+    <string name="scan__empty_hint">Basılı metni fotoğraflayın ve istediğiniz kısma dokunun.</string>
+    <string name="scan__latin_only">Yalnızca Latin alfabesi</string>
+    <string name="scan__reading">Fotoğraf okunuyor…</string>
+    <string name="scan__no_text">Fotoğrafta metin bulunamadı.</string>
+    <string name="scan__failed">Fotoğraf okunamadı.</string>
+    <string name="scan__no_camera">Kamera uygulaması bulunamadı.</string>
+    <string name="scan__select_all">Tümünü seç</string>
+    <string name="scan__discard">Vazgeç</string>
+    <string name="scan__approve">Onayla</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Çeviri</string>
+    <string name="translate__settings_intro">Doğrudan telefonunuzda çevirir; yazdığınız hiçbir şey telefonunuzdan çıkmaz. Akıllı Çubuk\'taki “Çevir” düğmesiyle açılır.</string>
+    <string name="translate__group_installed">İndirilenler</string>
+    <string name="translate__group_available">Mevcut</string>
+    <string name="translate__english_included">Her zaman dahil</string>
+    <string name="translate__size_installed">Cihazda {size}</string>
+    <string name="translate__size_download">{download} indirme · cihazda {size}</string>
+    <string name="translate__hint">Çevirmek için yazın</string>
+    <string name="translate__detect">Dili algıla</string>
+    <string name="translate__detected">{language} (algılandı)</string>
+    <string name="translate__swap">Dillerin yerini değiştir</string>
+    <string name="translate__no_languages">Henüz indirilmiş dil yok</string>
+    <string name="translate__get_languages">Dil indir</string>
+    <string name="translate__more_languages">Diğer diller</string>
+    <string name="translate__missing">{language} indirilmemiş</string>
+    <string name="translate__failed">Çeviri başarısız</string>
+    <string name="translate__unsupported">Çeviri bu cihazda kullanılamıyor</string>
 </resources>
