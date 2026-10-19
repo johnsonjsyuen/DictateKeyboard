@@ -708,7 +708,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě Dictateu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Omlouváme se za potíže, ale aplikace Dictate spadla kvůli neočekávané chybě.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Pokud chcete tuto chybu nahlásit, podívejte se nejprve do nástroje pro sledování problémů na GitHubu, pokud již nebyla chyba nahlášena.\nPokud tomu tak není, zkopírujte vygenerovaný záznam o chybě a otevřete nový problém. Použijte šablonu „%s“ a vyplňte popis, kroky k reprodukci a na konec vložte vygenerovaný záznam o pádu. Pomůžete tak k tomu, aby byl Dictate lepší a stabilnější pro všechny. Děkujeme!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Zkopírováno do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nepodařilo se zkopírovat do systémové schránky: Instance správce schránky nenalezena</string>
@@ -903,16 +902,11 @@
     <string name="ext__validation__enter_percent_size">Zadejte prosím velikost v procentech</string>
     <string name="ext__validation__enter_number_between_0_100">Zadejte prosím kladné číslo mezi 0 a 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Jakákoli hodnota nad 50 % se bude chovat, jako kdybyste nastavili 50 %, zvažte snížení velikosti v procentech</string>
-    <string name="ext__update_box__internet_permission_hint">Jelikož tato aplikace nemá přístup k internetu, musíte aktualizace nainstalovaných rozšíření kontrolovat ručně.</string>
-    <string name="ext__update_box__search_for_updates">Vyhledat aktualizace</string>
     <string name="ext__addon_management_box__managing_placeholder">Správa {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Všechny úlohy spojené s importováním, exportováním, vytvářením, přizpůsobováním a odstraňováním rozšíření mohou být prováděny skrze centralizovaného správce doplňků.</string>
     <string name="ext__addon_management_box__go_to_page">Přejít na {ext_home_title}</string>
-    <string name="ext__home__info">Rozšíření můžete stahovat a instalovat z Obchodu s doplňky Dictate nebo importovat jakýkoli soubor rozšíření, který jste si stáhli z internetu.</string>
-    <string name="ext__home__visit_store">Navštívit Obchod s doplňky</string>
     <string name="ext__home__manage_extensions">Správa nainstalovaných doplňků</string>
     <string name="ext__list__view_details">Zobrazit podrobnosti</string>
-    <string name="ext__check_updates__title">Zkontrolovat aktualizace</string>
     <!-- Action strings -->
     <string name="action__add">Přidat</string>
     <string name="action__apply">Použít</string>
@@ -1222,7 +1216,6 @@
     <string name="setup__provider__other_provider">Použít jiného poskytovatele AI</string>
     <string name="setup__provider__other_provider_hint">Pokročilé: zvolte jinou službu než Groq. Budete potřebovat klíč API od tohoto poskytovatele.</string>
     <string name="setup__finish_up__add_key_hint">Tip: zatím jste nepřidali klíč AI. Přidejte jej kdykoli v Nastavení → Dictate → Poskytovatelé AI a začněte diktovat.</string>
-    <string name="crash_dialog__bug_report_template">Hlášení o pádu</string>
     <string name="enum__swipe_action__toggle_compact_layout">Přepnout kompaktní rozložení</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1676,8 +1669,6 @@
     <string name="dictate__prompt_library_added">Přidáno</string>
     <string name="dictate__prompt_library_add_again">Přidat znovu</string>
     <string name="dictate__prompt_library_empty">Vašemu hledání neodpovídají žádné prompty.</string>
-    <string name="dictate__prompt_library_error">Komunitní knihovnu se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.</string>
-    <string name="dictate__prompt_library_retry">Zkusit znovu</string>
     <string name="dictate__prompt_library_close">Zavřít</string>
     <string name="dictate__prompt_library_author">od {author}</string>
     <string name="dictate__file_preparing">Příprava souboru…</string>
@@ -2233,7 +2224,6 @@
     <string name="apptour64__command_body">V nastavení Přeformulování si zvolte slovo — třeba „Jarvis“. Diktát, který jím začíná, se spustí jako pokyn naživo: nad vybraným textem, nebo jako otázka, když není nic vybráno. Počítá se jen první slovo, takže věta, která ho jen zmiňuje, se napíše jako obvykle. Automatické prompty teď také fungují, jak mají: vždy dostanou diktát, ke kterému patří, a prompt, který je jen [text v hranatých závorkách], se připojí na konec beze změny, místo aby šel do modelu.</string>
     <string name="apptour64__privacy_eyebrow">Soukromí a zabezpečení</string>
     <string name="apptour64__privacy_title">Celá aplikace, prověřená</string>
-    <string name="apptour64__privacy_body">Každá část Dictate prošla kontrolou soukromí a zabezpečení a vše, co se při ní našlo, je opravené. Diktát do pole pro heslo nebo PIN zůstane mimo historii, teď i přes plovoucí tlačítko. Cloudová záloha Androidu si vaše klíče API bere jen šifrované end-to-end. A „Důvěřovat uživatelským certifikátům“ teď nastavujete pro každý účet poskytovatele zvlášť, ne pro všechny najednou.</string>
     <string name="apptour64__more_eyebrow">A ještě</string>
     <string name="apptour64__more_title">Všechno ostatní v 6.4</string>
     <string name="apptour64__more_body">Drobnější změny pro ty, kdo chtějí znát podrobnosti. Pokud ne, klidně listujte dál.</string>

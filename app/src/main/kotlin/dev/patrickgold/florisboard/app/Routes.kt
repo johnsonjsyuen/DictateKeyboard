@@ -41,7 +41,6 @@ import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.settings.translation.TranslationScreen
-import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
@@ -364,10 +363,6 @@ object Routes {
         @Serializable
         @Deeplink("ext/view")
         data class View(val id: String)
-
-        @Serializable
-        @Deeplink("ext/check-updates")
-        object CheckUpdates
     }
 
     @Composable
@@ -509,9 +504,6 @@ object Routes {
                 val payload = navBackStack.toRoute<Ext.View>()
                 val extensionId = payload.id
                 ExtensionViewScreen(id = extensionId)
-            }
-            composableWithDeepLink(Ext.CheckUpdates::class) {
-                CheckUpdatesScreen()
             }
         }
     }

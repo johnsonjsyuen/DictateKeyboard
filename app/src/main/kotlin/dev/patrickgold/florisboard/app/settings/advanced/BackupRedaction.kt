@@ -59,10 +59,6 @@ object BackupRedaction {
         "gif__klipy_api_key",
         "dictate__api_key",
         "dictate__rewording_api_key",
-        // Not a credential, but it belongs to the credential that is leaving. The KLIPY customer id is a
-        // stable per-install identifier sent to the provider; two devices sharing one would fuse two
-        // people's history there, and it is regenerated on first use, so dropping it costs nothing.
-        "gif__customer_id",
     )
 
     /**

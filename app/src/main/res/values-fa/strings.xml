@@ -237,7 +237,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">اگر شما دوست دارید که این خطا را گزارش کنید، لطفا اول به صفحه ایرادات ردیابی شده را در گیت هاب ما سری بزنید و از اینکه این گزارش از قبل ارائه نشده مطمعن شوید.\nاگر که گزارشی نبود، لاگ تولید شده پس از متوقف شدن را کپی کنید و یک گزارش ایراد جدید را بسازید. از نمونه \"%s\" استفاده کنید و توضیحات، مراحل بازتولید، و لاگ تولید شده پس از متوقف شدن را در نهایت درج کنید. این به فلوریس بورد کمک شایانی در بهتر شدن و پایدار تر شدن آن برای همه می کند. بسیار از شما متشکریم!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی به کلیپبورد سیستم</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">به کلیپبورد سیستم کپی شد</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">نمی توان به کلیپبورد سیستم کپی کرد: نمایه مدیرت کلیپبورد یافت نشد</string>

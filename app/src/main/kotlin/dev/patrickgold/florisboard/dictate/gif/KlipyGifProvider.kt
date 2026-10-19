@@ -11,7 +11,6 @@
 package dev.patrickgold.florisboard.dictate.gif
 
 import dev.patrickgold.florisboard.dictate.gif.GifProvider.Companion.PER_PAGE
-import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,28 +20,23 @@ import kotlinx.serialization.json.Json
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.MediaType.Companion.toMediaType
 
 /**
  * [GifProvider] backed by the KLIPY GIF API (<https://klipy.com>). KLIPY is a free, self-serve,
  * Tenor-compatible GIF/sticker backend; each user brings their own free API key (Bring-Your-Own-Key,
  * consistent with the app's LLM/STT provider keys). The key is passed as a path segment:
  *
- *     https://api.klipy.com/api/v1/<apiKey>/gifs/{trending,search}?page=&per_page=&customer_id=
+ *     https://api.klipy.com/api/v1/<apiKey>/gifs/{trending,search}?page=&per_page=&content_filter=
  *
  * The many `ad-*` query parameters from KLIPY's sample app are only needed for the (optional) Ads
  * API; we deliberately omit them so results are clean and ad-free.
  *
  * @param apiKeyProvider supplies the current (possibly blank) API key.
- * @param customerIdProvider supplies a stable per-install id used for relevance/localization; may
- *   return a blank string, in which case the parameter is omitted.
  * @param contentFilterProvider supplies the safe-search level, sent with every trending and search
  *   request.
  */
 class KlipyGifProvider(
     private val apiKeyProvider: () -> String,
-    private val customerIdProvider: () -> String = { "" },
     private val contentFilterProvider: () -> GifContentFilter = { GifContentFilter.HIGH },
 ) : GifProvider {
 
@@ -73,10 +67,6 @@ class KlipyGifProvider(
                 // keyboard searched at whatever KLIPY's own default is. Both trending and search take
                 // off/low/medium/high (docs.klipy.com, read 2026-10-06).
                 .addQueryParameter("content_filter", contentFilterProvider().apiValue)
-            val customerId = customerIdProvider()
-            if (customerId.isNotBlank()) {
-                urlBuilder.addQueryParameter("customer_id", customerId)
-            }
             if (query != null) {
                 urlBuilder.addQueryParameter("q", query)
             }
@@ -88,30 +78,6 @@ class KlipyGifProvider(
                 JSON.decodeFromString<KlipyResponse>(body).toGifPage()
             }
         }
-
-    override suspend fun registerShare(id: String) {
-        if (id.isBlank()) return
-        val apiKey = apiKeyProvider()
-        if (apiKey.isBlank()) return
-        try {
-            withContext(Dispatchers.IO) {
-                val customerId = customerIdProvider()
-                val payload = if (customerId.isNotBlank()) {
-                    """{"customer_id":"$customerId"}"""
-                } else {
-                    "{}"
-                }
-                val request = Request.Builder()
-                    .url("https://api.klipy.com/api/v1/$apiKey/gifs/share/$id")
-                    .post(payload.toRequestBody(JSON_MEDIA_TYPE))
-                    .build()
-                client.newCall(request).execute().close()
-            }
-        } catch (e: Exception) {
-            // Purely advisory ranking ping — never surface failures.
-            flogError { "KLIPY share ping failed: ${e.message}" }
-        }
-    }
 
     private fun KlipyResponse.toGifPage(): GifPage {
         val items = data?.data.orEmpty().mapNotNull { it.toGifItem() }
@@ -141,7 +107,6 @@ class KlipyGifProvider(
 
     private companion object {
         val JSON = Json { ignoreUnknownKeys = true }
-        val JSON_MEDIA_TYPE = "application/json".toMediaType()
     }
 }
 

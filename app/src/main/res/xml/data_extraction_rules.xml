@@ -3,15 +3,18 @@
   Android 12+ reads these rules and ignores backup_rules.xml (#383). Until now it was pointed at
   backup_rules.xml itself, whose <full-backup-content> root is the wrong format here.
 
-  The intent is the same as there: the settings (API keys included, a deliberate decision), the
-  keyboard's own files and the user dictionary. Never the dictation history, its audio or
-  the clipboard, which are left out by not being listed.
+  Google cloud backup takes the keyboard's own files and the user dictionary, but no settings:
+  jetpref_datastore keeps every preference in one file, the provider keyring with its API keys, the
+  proxy password and the KLIPY key among them, and a backup rule can only take or leave a whole file.
 
-  The cloud backup only runs when it is end-to-end encrypted with the screen lock.
+  A device-to-device transfer never leaves the user's hands, so it still carries the settings (API keys
+  included), the keyboard's own files and the user dictionary.
+
+  Never the dictation history, its audio or the clipboard, which are left out of both by not being
+  listed.
 -->
 <data-extraction-rules>
     <cloud-backup disableIfNoEncryptionCapabilities="true">
-        <include domain="root" path="jetpref_datastore" />
         <include domain="file" path="ime" />
         <include domain="database" path="floris_user_dictionary" />
     </cloud-backup>

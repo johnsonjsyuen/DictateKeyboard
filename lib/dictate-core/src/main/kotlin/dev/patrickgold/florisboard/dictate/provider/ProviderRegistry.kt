@@ -309,9 +309,10 @@ object ProviderRegistry {
             AudioContainer.OGG, AudioContainer.WEBM, AudioContainer.AAC,
         ),
         // Attribution headers recommended by OpenRouter: both are used for app ranking and some routes
-        // reject requests without an HTTP-Referer. The value is a stable identifier, not a real URL.
+        // reject requests without an HTTP-Referer. The value is a stable identifier: this fork's
+        // repository, not the original project's.
         extraHeaders = mapOf(
-            "HTTP-Referer" to "https://github.com/DevEmperor/Dictate",
+            "HTTP-Referer" to "https://github.com/johnsonjsyuen/DictateKeyboard",
             "X-Title" to "Dictate",
         ),
         // Data residency (#403): the EU entry point decrypts in the EU and routes only to in-region

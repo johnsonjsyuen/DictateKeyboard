@@ -135,7 +135,6 @@ fun GifPanel(
     LaunchedEffect(hasKey, submittedQuery) {
         if (!hasKey) return@LaunchedEffect
         initialLoading = true; loadError = false; gifs = emptyList(); page = 1; hasNext = false
-        GifManager.ensureCustomerId()
         // Remember the term so it shows up as a recent-search chip next time.
         submittedQuery?.takeIf { it.isNotBlank() }?.let {
             GifHistoryHelper.addSearch(prefs, PrivateSession.isActive(context), it)

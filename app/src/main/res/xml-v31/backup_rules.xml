@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Not read: on Android 12+ the app (targeting API 31+) uses data_extraction_rules.xml instead of
+  android:fullBackupContent. Kept in step with it so nothing here says otherwise: no settings
+  (jetpref_datastore, which holds the API keys) in the cloud backup, only in a device-to-device transfer.
+-->
 <data-extraction-rules>
-    <cloud-backup>
-        <include
-            domain="root"
-            path="jetpref_datastore"/>
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
         <include
             domain="file"
             path="ime"/>

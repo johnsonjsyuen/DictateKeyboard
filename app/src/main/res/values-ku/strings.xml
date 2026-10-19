@@ -239,7 +239,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber nelirêtîyê xemgîn im, lê Dictate ji ber xeletîyeka nelibendê têk çû.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Heke hûn bixwazin vê çewtiyê ragihînin, pêşî li ser GitHubê temaşekerê pirsgirêkê kontrol bikin heke qezaya we jixwe nehatibe ragihandin. nIf ew nehatibe ragihandin, qeyda têkçûnê ya hilberandî kopî bikin û pirsgirêkeke nû vekin. Şablona \"%s\" bi kar bîne û danasînê, gavên ji nû ve hilberînê dagire û di dawîyê da rojnivîska têkçûnê ya çêkirî pê ve bike. Ev, dibe alîkar ku Dictate ji bo her kesî baştir û aramtir bibe. Sax bî!</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorîsBoardê dest ji kar berda…</string>

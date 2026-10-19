@@ -672,7 +672,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictateエラーレポート</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">ご不便をおかけして申し訳ありませんが、予期しないエラーによりDictateがクラッシュしました。</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">このエラーを報告する場合、まずGitHubの課題トラッカーでクラッシュがまだ報告されていないか確認してください。\n報告されていない場合は、生成されたクラッシュログをコピーして新しい課題を開き、「%s」テンプレートを使用して説明と再現手順を入力し、最後に生成されたクラッシュログを貼り付けてください。これにより、Dictateをより良く、より安定させるのに役立ちます。ご協力ありがとうございます！</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">システムクリップボードにコピー</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">システムクリップボードにコピーしました</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">システムクリップボードにコピーできません：クリップボードマネージャーのインスタンスが見つかりません</string>
@@ -854,16 +853,11 @@
     <string name="ext__validation__enter_percent_size">パーセントサイズを入力してください</string>
     <string name="ext__validation__enter_number_between_0_100">0から100の間の正の数を入力してください</string>
     <string name="ext__validation__hint_value_above_50_percent">50%を超える値は50%に設定した場合と同様に動作します。パーセントサイズを小さくすることを検討してください</string>
-    <string name="ext__update_box__internet_permission_hint">このアプリにはインターネットアクセス許可がないため、インストールされている拡張機能の更新は手動で確認する必要があります。</string>
-    <string name="ext__update_box__search_for_updates">更新を確認</string>
     <string name="ext__addon_management_box__managing_placeholder">{extensions}を管理中</string>
     <string name="ext__addon_management_box__addon_manager_info">拡張機能のインポート、エクスポート、作成、カスタマイズ、削除に関連するすべてのタスクは、集中管理されたアドオンマネージャーを通じて処理できます。</string>
     <string name="ext__addon_management_box__go_to_page">{ext_home_title} に移動</string>
-    <string name="ext__home__info">Dictateアドオンストアから拡張機能をダウンロードしてインストールしたり、インターネットからダウンロードした拡張機能ファイルをインポートしたりできます。</string>
-    <string name="ext__home__visit_store">アドオンストアにアクセス</string>
     <string name="ext__home__manage_extensions">インストール済み拡張機能を管理</string>
     <string name="ext__list__view_details">詳細を表示</string>
-    <string name="ext__check_updates__title">更新を確認</string>
     <!-- Action strings -->
     <string name="action__add">追加</string>
     <string name="action__apply">適用</string>
@@ -1138,7 +1132,6 @@
     <string name="setup__provider__other_provider">別のAIプロバイダーを使用</string>
     <string name="setup__provider__other_provider_hint">詳細設定: Groq以外のサービスを選択します。そのプロバイダーのAPIキーが必要です。</string>
     <string name="setup__finish_up__add_key_hint">ヒント: まだAIキーを追加していません。設定 → Dictate → AIプロバイダーでいつでも追加して、音声入力を始められます。</string>
-    <string name="crash_dialog__bug_report_template">クラッシュレポート</string>
     <string name="enum__swipe_action__toggle_compact_layout">コンパクトレイアウトの切り替え</string>
     <string name="unit__hours__symbol">{v}時間</string>
     <string name="unit__minutes__symbol">{v}分</string>
@@ -1592,8 +1585,6 @@
     <string name="dictate__prompt_library_added">追加済み</string>
     <string name="dictate__prompt_library_add_again">もう一度追加</string>
     <string name="dictate__prompt_library_empty">検索に一致するプロンプトがありません。</string>
-    <string name="dictate__prompt_library_error">コミュニティライブラリを読み込めませんでした。接続を確認して、もう一度お試しください。</string>
-    <string name="dictate__prompt_library_retry">再試行</string>
     <string name="dictate__prompt_library_close">閉じる</string>
     <string name="dictate__prompt_library_author">作成者: {author}</string>
     <string name="dictate__file_preparing">ファイルを準備中…</string>
@@ -2146,7 +2137,6 @@
     <string name="apptour64__command_body">「言い換え」で一語を選びます。たとえば「ジャービス」。その語で始まる音声入力は、音声指示として実行されます。テキストが選択されていればそのテキストに対して、何も選択されていなければ質問として。有効なのは最初の一語だけなので、その語に触れただけの文はいつもどおり書き取られます。自動プロンプトも本来の動きになりました。対象の音声入力を必ず受け取り、[角かっこ内のテキスト] だけのプロンプトはモデルに送られず、書かれたとおり末尾に追加されます。</string>
     <string name="apptour64__privacy_eyebrow">プライバシーとセキュリティ</string>
     <string name="apptour64__privacy_title">アプリ全体を点検しました</string>
-    <string name="apptour64__privacy_body">Dictate のあらゆる部分をプライバシーとセキュリティの観点から見直し、見つかった問題は修正しました。パスワードや PIN の入力欄への音声入力は履歴に残りません。フローティングボタン経由でも同様になりました。Android のクラウドバックアップに API キーが含まれるのは、エンドツーエンドで暗号化される場合だけです。また「ユーザー証明書を信頼」は、すべてまとめてではなく、プロバイダーのアカウントごとに設定するようになりました。</string>
     <string name="apptour64__more_eyebrow">さらに</string>
     <string name="apptour64__more_title">6.4 のその他の変更</string>
     <string name="apptour64__more_body">細かな変更点を、詳しく知りたい方のために。興味がなければ読み飛ばしてください。</string>

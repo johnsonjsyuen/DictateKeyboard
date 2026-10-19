@@ -589,7 +589,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Segnalazione errore</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Ci dispiace per l\'inconveniente, ma Dictate si è chiuso a causa di un errore inaspettato.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Se desideri segnalare questo errore, prima controlla se è già stato segnalato nel centro problemi su GitHub.\nSe non lo è, copia il registro di \'interruzione generato e apri un nuovo problema. Usa il modello \"%s\" e compila la descrizione, i passi per riprodurre il problema, e incolla il registro di interruzione generato alla fine. Questo aiuta a migliorare Dictate e a renderlo più stabile per tutti. Grazie!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia negli appunti di sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiato negli appunti di sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Impossibile copiare sugli appunti di sistema: l\'istanza del gestore appunti non è stata trovata</string>
@@ -738,8 +737,6 @@
     <string name="ext__validation__enter_component_id">Inserisci l\'ID corretto</string>
     <string name="ext__validation__hint_value_above_50_percent">Qualsiasi valore superiore al 50% si comporterà come se impostassi il 50%, prendi in considerazione di ridurre la dimensione percentuale</string>
     <string name="ext__addon_management_box__addon_manager_info">Tutte le attività relative all\'importazione, all\'esportazione, alla creazione, alla personalizzazione e alla rimozione delle estensioni possono essere gestite tramite il gestore interno</string>
-    <string name="ext__home__info">Puoi scaricare e installare estensioni dallo Store di Dictate o importare qualsiasi addon</string>
-    <string name="ext__home__visit_store">Vai allo Store degli addons</string>
     <string name="ext__home__manage_extensions">Gestisci temi installati</string>
     <string name="ext__list__view_details">Visualizza dettagli</string>
     <!-- Action strings -->
@@ -989,7 +986,6 @@
     <string name="setup__provider__other_provider">Usa un altro fornitore IA</string>
     <string name="setup__provider__other_provider_hint">Avanzate: scegli un servizio diverso da Groq. Ti servirà una chiave API di quel fornitore.</string>
     <string name="setup__finish_up__add_key_hint">Suggerimento: non hai ancora aggiunto una chiave IA. Aggiungine una in qualsiasi momento in Impostazioni → Dictate → Fornitori IA per iniziare a dettare.</string>
-    <string name="crash_dialog__bug_report_template">Rapporto di arresto anomalo</string>
     <string name="enum__swipe_action__toggle_compact_layout">Attiva/disattiva layout compatto</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1443,8 +1439,6 @@
     <string name="dictate__prompt_library_added">Aggiunto</string>
     <string name="dictate__prompt_library_add_again">Aggiungi di nuovo</string>
     <string name="dictate__prompt_library_empty">Nessun prompt corrisponde alla tua ricerca.</string>
-    <string name="dictate__prompt_library_error">Impossibile caricare la libreria della community. Controlla la connessione e riprova.</string>
-    <string name="dictate__prompt_library_retry">Riprova</string>
     <string name="dictate__prompt_library_close">Chiudi</string>
     <string name="dictate__prompt_library_author">di {author}</string>
     <string name="dictate__file_preparing">Preparazione del file…</string>
@@ -1998,7 +1992,6 @@
     <string name="apptour64__command_body">Scegli una parola in Riformulazione, ad esempio «Jarvis». Una dettatura che inizia con quella parola viene eseguita come istruzione dal vivo: sul testo selezionato, o come domanda se non è selezionato nulla. Conta solo la prima parola, quindi una frase che si limita a nominarla viene scritta come sempre. Anche i prompt automatici ora funzionano come previsto: ricevono sempre la dettatura su cui agiscono, e uno composto solo da [testo tra parentesi quadre] viene aggiunto alla fine così com’è invece di andare al modello.</string>
     <string name="apptour64__privacy_eyebrow">Privacy e sicurezza</string>
     <string name="apptour64__privacy_title">Tutta l’app, verificata</string>
-    <string name="apptour64__privacy_body">Ogni parte di Dictate è stata esaminata per privacy e sicurezza, e ciò che è emerso è stato corretto. Una dettatura in un campo password o PIN resta fuori dalla cronologia, ora anche tramite il pulsante flottante. Il backup cloud di Android prende le tue chiavi API solo con crittografia end-to-end. E «Considera attendibili i certificati utente» ora si imposta per ogni account del fornitore anziché per tutti insieme.</string>
     <string name="apptour64__more_eyebrow">Inoltre</string>
     <string name="apptour64__more_title">Tutto il resto della 6.4</string>
     <string name="apptour64__more_body">Le modifiche più piccole, per chi vuole i dettagli. Altrimenti, vai pure avanti.</string>

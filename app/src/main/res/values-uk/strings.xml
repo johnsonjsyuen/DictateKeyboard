@@ -585,7 +585,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Вибачте за незручності, але стався збій у Dictate через несподівану помилку.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Якщо ви хочете повідомити про цю помилку, спочатку перевірте відстеження проблем на GitHub, якщо про ваш збій ще не повідомлялося.\nЯкщо ні, скопіюйте згенерований журнал збоїв і створіть нову проблему. Використовуйте шаблон «%s» і заповніть опис, кроки для відтворення, а в кінці вставте згенерований лог збоїв. Це допоможе зробити Dictate кращим і стабільнішим для всіх. Дякуємо!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Зкопіювати в системний буфер обміну</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Зкопійовано в системний буфер обміну</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Не вдається скопіювати до системного буфера обміну: Не знайдено екземпляр диспетчера буфера обміну</string>
@@ -762,16 +761,11 @@
     <string name="ext__validation__enter_percent_size">Введіть розмір у відсотках</string>
     <string name="ext__validation__enter_number_between_0_100">Введіть додатне число від 0 до 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Будь-яке значення вище 50% буде таке ж як і 50%, розгляньте можливість зменшення розміру відсотка</string>
-    <string name="ext__update_box__internet_permission_hint">Оскільки цей застосунок не має дозволу на доступ до Інтернету, оновлення для встановлених розширень потрібно перевіряти вручну.</string>
-    <string name="ext__update_box__search_for_updates">Перевірити оновлення</string>
     <string name="ext__addon_management_box__managing_placeholder">Керування {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Всі завдання, пов\'язані з імпортом, експортом, створенням, налаштуванням і видаленням розширень, можна вирішувати за допомогою централізованого менеджера розширень.</string>
     <string name="ext__addon_management_box__go_to_page">Перейти до {ext_home_title}</string>
-    <string name="ext__home__info">Ви можете завантажити і встановити розширення з магазину розширень Dictate або імпортувати будь-який файл розширення, який ви завантажили з мережі.</string>
-    <string name="ext__home__visit_store">Відвідати магазин розширень</string>
     <string name="ext__home__manage_extensions">Керування встановленими розширеннями</string>
     <string name="ext__list__view_details">Докладніше</string>
-    <string name="ext__check_updates__title">Перевірити оновлення</string>
     <!-- Action strings -->
     <string name="action__add">Додати</string>
     <string name="action__apply">Застосувати</string>
@@ -1051,7 +1045,6 @@
     <string name="setup__provider__other_provider">Використати іншого постачальника ШІ</string>
     <string name="setup__provider__other_provider_hint">Додатково: виберіть інший сервіс замість Groq. Вам знадобиться ключ API цього постачальника.</string>
     <string name="setup__finish_up__add_key_hint">Порада: ви ще не додали ключ ШІ. Додайте його будь-коли в Налаштування → Dictate → Постачальники ШІ, щоб почати диктувати.</string>
-    <string name="crash_dialog__bug_report_template">Звіт про збій</string>
     <string name="enum__swipe_action__toggle_compact_layout">Перемкнути компактне розкладання</string>
     <string name="unit__hours__symbol">{v} год</string>
     <string name="unit__minutes__symbol">{v} хв</string>
@@ -1505,8 +1498,6 @@
     <string name="dictate__prompt_library_added">Додано</string>
     <string name="dictate__prompt_library_add_again">Додати ще раз</string>
     <string name="dictate__prompt_library_empty">Немає промптів, що відповідають вашому запиту.</string>
-    <string name="dictate__prompt_library_error">Не вдалося завантажити бібліотеку спільноти. Перевірте підключення та повторіть спробу.</string>
-    <string name="dictate__prompt_library_retry">Повторити</string>
     <string name="dictate__prompt_library_close">Закрити</string>
     <string name="dictate__prompt_library_author">від {author}</string>
     <string name="dictate__file_preparing">Підготовка файлу…</string>
@@ -2062,7 +2053,6 @@
     <string name="apptour64__command_body">Оберіть слово в розділі «Переформулювання» — скажімо, «Джарвіс». Диктування, що з нього починається, виконується як голосова інструкція: над виділеним текстом або як запитання, якщо нічого не виділено. Зараховується лише перше слово, тож речення, де воно просто згадується, записується як завжди. І автоматичні промпти тепер працюють як задумано: вони завжди отримують диктування, до якого застосовуються, а промпт, у якому є лише [текст у квадратних дужках], додається в кінець як є, замість того щоб іти до моделі.</string>
     <string name="apptour64__privacy_eyebrow">Приватність і безпека</string>
     <string name="apptour64__privacy_title">Перевірено весь застосунок</string>
-    <string name="apptour64__privacy_body">Кожну частину Dictate перевірено на приватність і безпеку, і все знайдене виправлено. Диктування в поле пароля чи PIN-коду не потрапляє до історії — тепер і через плаваючу кнопку. Хмарне резервне копіювання Android зберігає ваші API-ключі лише з наскрізним шифруванням. А «Довіряти сертифікатам користувача» тепер налаштовується для кожного облікового запису постачальника окремо, а не для всіх одразу.</string>
     <string name="apptour64__more_eyebrow">А ще</string>
     <string name="apptour64__more_title">Усе інше в 6.4</string>
     <string name="apptour64__more_body">Дрібніші зміни — для тих, кому цікаві подробиці. Якщо ні, просто гортайте далі.</string>

@@ -632,7 +632,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Rapport d\'erreur de Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Désolé pour le désagrément, mais Dictate a crashé en raison d\'une erreur inattendue.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vous souhaitez signaler cette erreur, vérifier avant tout si votre problème n\'a pas déjà été signalé sur le tracker d\'erreur de github.\nSi ce n\'est pas le cas, copiez le journal d\'erreur généré et ouvrez une nouvelle issue. Utilisez le modèle \"%s\" et remplissez la description, les étapes de reproduction puis collez le journal d\'erreur généré à la fin. Ceci contribue à améliorer Dictate et à le rendre plus stable pour tous. Merci de votre aide!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copier vers le presse-papier système</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copié vers le presse-papier système</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Impossible de copier vers le presse-papier système : Instance du gestionnaire de presse-papier introuvable</string>
@@ -809,16 +808,11 @@
     <string name="ext__validation__enter_percent_size">Veuillez saisir un pourcentage</string>
     <string name="ext__validation__enter_number_between_0_100">Veuillez saisir un nombre positif entre 0 et 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Toute valeur supérieure à 50 % sera comme si vous aviez fixé 50 %, veuillez réduire la taille du pourcentage</string>
-    <string name="ext__update_box__internet_permission_hint">Comme cette application ne dispose pas d\'une autorisation Internet, les mises à jour des extensions doivent être vérifiées manuellement.</string>
-    <string name="ext__update_box__search_for_updates">Rechercher les mises à jour</string>
     <string name="ext__addon_management_box__managing_placeholder">Gestion de {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Les tâches d\'importation, d\'exportation, de création, de personnalisation et de suppression d\'extensions peuvent être gérées par le gestionnaire d\'extensions centralisé.</string>
     <string name="ext__addon_management_box__go_to_page">Aller à {ext_home_title}</string>
-    <string name="ext__home__info">Vous pouvez télécharger et installer des extensions à partir du magasin d\'extensions Dictate ou importer un fichier d\'extension téléchargé sur Internet.</string>
-    <string name="ext__home__visit_store">Visiter le magasin d\'extensions</string>
     <string name="ext__home__manage_extensions">Gestion des Extensions Installées</string>
     <string name="ext__list__view_details">Voir les détails</string>
-    <string name="ext__check_updates__title">Vérifier les mises à jour</string>
     <!-- Action strings -->
     <string name="action__add">Ajouter</string>
     <string name="action__apply">Appliquer</string>
@@ -1084,7 +1078,6 @@
     <string name="setup__provider__other_provider">Utiliser un autre fournisseur d\'IA</string>
     <string name="setup__provider__other_provider_hint">Avancé : choisissez un autre service que Groq. Il vous faudra une clé d\'API de ce fournisseur.</string>
     <string name="setup__finish_up__add_key_hint">Astuce : vous n\'avez pas encore ajouté de clé d\'IA. Ajoutez-en une à tout moment dans Paramètres → Dictate → Fournisseurs d\'IA pour commencer à dicter.</string>
-    <string name="crash_dialog__bug_report_template">Rapport de plantage</string>
     <string name="enum__swipe_action__toggle_compact_layout">Basculer la disposition compacte</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1538,8 +1531,6 @@
     <string name="dictate__prompt_library_added">Ajouté</string>
     <string name="dictate__prompt_library_add_again">Ajouter à nouveau</string>
     <string name="dictate__prompt_library_empty">Aucun prompt ne correspond à votre recherche.</string>
-    <string name="dictate__prompt_library_error">Impossible de charger la bibliothèque communautaire. Vérifiez votre connexion et réessayez.</string>
-    <string name="dictate__prompt_library_retry">Réessayer</string>
     <string name="dictate__prompt_library_close">Fermer</string>
     <string name="dictate__prompt_library_author">par {author}</string>
     <string name="dictate__file_preparing">Préparation du fichier…</string>
@@ -2091,7 +2082,6 @@
     <string name="apptour64__command_body">Choisissez un mot dans Reformulation — « Jarvis », par exemple. Une dictée qui commence par ce mot est exécutée comme instruction en direct : sur le texte sélectionné, ou comme question si rien n’est sélectionné. Seul le premier mot compte, donc une phrase qui se contente de le mentionner est écrite normalement. Les prompts automatiques fonctionnent aussi enfin comme prévu : ils reçoivent toujours la dictée à laquelle ils s’appliquent, et un prompt composé uniquement de [texte entre crochets] est ajouté tel quel à la fin au lieu d’être envoyé au modèle.</string>
     <string name="apptour64__privacy_eyebrow">Confidentialité et sécurité</string>
     <string name="apptour64__privacy_title">Toute l’application, vérifiée</string>
-    <string name="apptour64__privacy_body">Chaque partie de Dictate a été passée en revue sous l’angle de la confidentialité et de la sécurité, et ce qui est ressorti a été corrigé. Une dictée dans un champ de mot de passe ou de code PIN reste hors de l’historique, désormais aussi via le bouton flottant. La sauvegarde cloud d’Android n’emporte vos clés API que chiffrées de bout en bout. Et « Faire confiance aux certificats utilisateur » se règle désormais par compte de fournisseur plutôt que pour tous à la fois.</string>
     <string name="apptour64__more_eyebrow">Et aussi</string>
     <string name="apptour64__more_title">Tout le reste de la 6.4</string>
     <string name="apptour64__more_body">Les changements plus discrets, pour qui veut les détails. Sinon, passez directement à la suite.</string>

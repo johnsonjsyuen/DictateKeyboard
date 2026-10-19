@@ -268,7 +268,7 @@ private fun DevtoolsStylesheetFailedToLoadOverlay(loadFailure: ThemeManager.Load
 
                     If you are the theme author, please update your theme to support Snygg v2.
 
-                    If you’re a user, please update your theme via the Addons Store. If an updated version isn’t available yet, please select one of the built-in themes during this transition period.
+                    If you’re a user, please import an updated version of your theme. If one isn’t available yet, please select one of the built-in themes during this transition period.
                 """.trimIndent()
                 )
             }
