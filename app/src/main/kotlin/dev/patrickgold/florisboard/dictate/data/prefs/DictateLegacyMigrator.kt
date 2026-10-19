@@ -276,6 +276,34 @@ object DictateLegacyMigrator {
     }
 
     /**
+     * Set by `FlorisPreferenceModel.migrate` when the store it read still held saved Dictate Cloud data: a
+     * "cloud" account in the keyring, the low-credit nudge latch, or a provider id pointing at "cloud".
+     */
+    @Volatile
+    private var removedProviderDataFound = false
+
+    /** Called from `FlorisPreferenceModel.migrate`; see [purgeRemovedProviderDataIfNeeded]. */
+    fun noteRemovedProviderData() {
+        removedProviderDataFound = true
+    }
+
+    /**
+     * Writes the settings file once more after a load that found Dictate Cloud data, so the wallet token is
+     * gone from the disk and not only from memory.
+     *
+     * The migration has already removed it from what was loaded, but JetPref writes the file only when a
+     * value is set — and then always the whole store as it is in memory, which leaves out every key no
+     * longer declared. Setting the keyring to itself is that write. Idempotent: the rewritten file holds
+     * nothing for the migration to find, so the next start does nothing here.
+     */
+    suspend fun purgeRemovedProviderDataIfNeeded() {
+        if (!removedProviderDataFound) return
+        removedProviderDataFound = false
+        val prefs by FlorisPreferenceStore
+        prefs.dictate.providerAccounts.set(prefs.dictate.providerAccounts.get())
+    }
+
+    /**
      * Removes the live-prompt Smartbar action ([KeyCode.DICTATE_LIVE_PROMPT]) from the saved action
      * arrangement. The live prompt is now a chip inside the prompt panel/row, so it no longer ships as a
      * separate Smartbar button; this strips the action that the earlier injection added (and that the
