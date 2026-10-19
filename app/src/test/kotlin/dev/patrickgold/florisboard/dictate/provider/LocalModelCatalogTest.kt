@@ -45,7 +45,8 @@ class LocalModelCatalogTest {
             )
         }
         for (spec in LocalModelCatalog.all) {
-            val tokenizer = if (spec.kind == LocalModelKind.QWEN_GGUF) "model.gguf" else tokens
+            // GGUF models carry their tokenizer inside the weights file.
+            val tokenizer = if (spec.kind.crispAsrBackend != null) LocalTranscriptionProvider.GGUF else tokens
             assertTrue(tokenizer in names(spec), "${spec.id} has no tokenizer")
         }
     }
@@ -64,9 +65,16 @@ class LocalModelCatalogTest {
         for (spec in LocalModelCatalog.all) {
             val files = names(spec)
             when (spec.kind) {
-                LocalModelKind.QWEN_GGUF -> {
-                    assertTrue("model.gguf" in files, "${spec.id} needs embedded model and tokenizer")
+                LocalModelKind.QWEN_GGUF, LocalModelKind.GRANITE_4_1_GGUF, LocalModelKind.COHERE_GGUF,
+                LocalModelKind.MOONSHINE_GGUF -> {
+                    assertTrue(LocalTranscriptionProvider.GGUF in files, "${spec.id} needs embedded model and tokenizer")
                     assertTrue(tokens !in files && encoder !in files && decoder !in files)
+                    assertEquals(setOf("arm64-v8a"), spec.supportedAbis, "${spec.id}: the GGUF runtime is ARM64 only")
+                    assertEquals(
+                        spec.kind == LocalModelKind.MOONSHINE_GGUF,
+                        LocalTranscriptionProvider.MOONSHINE_TOKENIZER in files,
+                        "${spec.id}: only Moonshine reads a separate tokenizer.bin",
+                    )
                 }
                 LocalModelKind.WHISPER, LocalModelKind.CANARY -> {
                     assertTrue(encoder in files && decoder in files, "${spec.id} needs an encoder and a decoder")
@@ -136,7 +144,7 @@ class LocalModelCatalogTest {
                 )
                 // Canary is told its language and would default to English (LocalTranscriptionProvider).
                 assertTrue(
-                    spec.kind != LocalModelKind.CANARY,
+                    spec.detectsLanguage,
                     "${spec.id} must be told its language, which setup has not asked for yet",
                 )
                 // The shortlist is the one place a retired model could still reach somebody brand new:
@@ -362,9 +370,12 @@ class LocalModelCatalogTest {
     }
 
     @Test
-    fun `only Canary has to be told its language`() {
+    fun `only Canary and Cohere have to be told their language`() {
         val told = LocalModelCatalog.all.filter { !it.detectsLanguage }
-        assertEquals(listOf(LocalModelCatalog.CANARY_180M_FLASH.id), told.map { it.id })
+        assertEquals(
+            setOf(LocalModelCatalog.CANARY_180M_FLASH.id, LocalModelCatalog.COHERE_TRANSCRIBE.id),
+            told.map { it.id }.toSet(),
+        )
     }
 
     /**

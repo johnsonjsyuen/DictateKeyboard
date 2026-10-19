@@ -42,7 +42,8 @@ jobs:
         run: |
           tools/fetch-sherpa-onnx.sh
           export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
-          tools/build-qwen-native.sh android
+          # Two builds (baseline armv8-a + dot-product); the runner has 4 cores.
+          BUILD_JOBS=4 tools/build-qwen-native.sh android
           # Upstream 6.4 on-device translation (issue #424): preBuild requires libdictate_bergamot.so.
           tools/bergamot/build-android.sh arm64-v8a
 
@@ -51,6 +52,12 @@ jobs:
           mkdir -p "$HOME/.android"
           base64 --decode .github/ci/debug.keystore.base64 > "$HOME/.android/debug.keystore"
           chmod 600 "$HOME/.android/debug.keystore"
+
+      - name: On-device model unit tests
+        run: |
+          ./gradlew :app:testDebugUnitTest --no-daemon --no-configuration-cache --max-workers=2 \
+            -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process \
+            --tests 'dev.patrickgold.florisboard.dictate.provider.*'
 
       - name: Build debug APK
         run: |
@@ -113,7 +120,8 @@ jobs:
           A local debug build signed with another key must be uninstalled first; this removes its app data.
           This is a debuggable development build, not a production release.
 
-          Qwen requires an ARM64 device. Download its model separately inside the app.
+          The GGUF models (Qwen3-ASR, Granite Speech, Cohere Transcribe, Moonshine) require an ARM64 device.
+          Download models separately inside the app.
           A SHA-256 checksum is included alongside the APK.
           Build: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
           EOF

@@ -49,9 +49,32 @@ enum class LocalModelKind {
      */
     DOLPHIN,
 
-    /** Qwen3-ASR GGUF: Q4_K decoder and Q8 audio encoder, native ARM64 CPU runtime (CrispASR/ggml). */
+    /**
+     * Qwen3-ASR GGUF on the native CrispASR/ggml runtime (ARM64 only). Detects its language itself.
+     * The GGUF kinds share that runtime and differ only in the backend it is told to load; see
+     * [crispAsrBackend].
+     */
     QWEN_GGUF,
+
+    /** IBM Granite Speech 4.1-2B GGUF: the same runtime, prompted for punctuated, truecased output. */
+    GRANITE_4_1_GGUF,
+
+    /** Cohere Transcribe GGUF: must be *told* its language, like Canary — it has no detection. */
+    COHERE_GGUF,
+
+    /** Moonshine v2 streaming-architecture GGUF (English), decoded one segment at a time here. */
+    MOONSHINE_GGUF,
 }
+
+/** The CrispASR backend a GGUF kind loads, or null for the sherpa-onnx kinds. */
+val LocalModelKind.crispAsrBackend: CrispAsrBackend?
+    get() = when (this) {
+        LocalModelKind.QWEN_GGUF -> CrispAsrBackend.QWEN3_ASR
+        LocalModelKind.GRANITE_4_1_GGUF -> CrispAsrBackend.GRANITE_SPEECH_4_1
+        LocalModelKind.COHERE_GGUF -> CrispAsrBackend.COHERE
+        LocalModelKind.MOONSHINE_GGUF -> CrispAsrBackend.MOONSHINE_STREAMING
+        else -> null
+    }
 
 /**
  * Who made a model's weights and under what terms. All three are proper nouns, identifiers and a URL,
@@ -178,10 +201,10 @@ data class LocalModelSpec(
         get() = files.any { it.destName == LocalTranscriptionProvider.VAD }
 
     /**
-     * False for a model that has to be *told* which language it is hearing. Only Canary, which is why
-     * it is the one model kept out of [LocalModelCatalog.onboardingPicks].
+     * False for a model that has to be *told* which language it is hearing — Canary and Cohere
+     * Transcribe, which is why they are kept out of [LocalModelCatalog.onboardingPicks].
      */
-    val detectsLanguage: Boolean get() = kind != LocalModelKind.CANARY
+    val detectsLanguage: Boolean get() = kind != LocalModelKind.CANARY && kind != LocalModelKind.COHERE_GGUF
 }
 
 /**
@@ -846,15 +869,18 @@ object LocalModelCatalog {
         ),
     )
 
+    // Declared before the first entry that reads it: object properties initialise top to bottom.
+    /** The 30 languages the Qwen3-ASR model cards list (both sizes; they also recognise 22 Chinese dialects). */
+    private val QWEN3_LANGUAGES = listOf(
+        "zh", "en", "yue", "ar", "cs", "da", "de", "el", "es", "fa", "fi", "fil", "fr", "hi", "hu",
+        "id", "it", "ja", "ko", "mk", "ms", "nl", "pl", "pt", "ro", "ru", "sv", "th", "tr", "vi",
+    )
+
     /** Mixed precision export: Q4_K decoder, Q8_0 audio encoder; embedded tokenizer. */
     val QWEN3_ASR_Q4 = LocalModelSpec(
         id = "qwen3-asr-1.7b-q4-k",
         displayName = "Qwen3-ASR 1.7B (Q4_K)",
-        // The 30 languages the Qwen3-ASR model card lists (it also recognises 22 Chinese dialects).
-        languages = listOf(
-            "zh", "en", "yue", "ar", "cs", "da", "de", "el", "es", "fa", "fi", "fil", "fr", "hi", "hu",
-            "id", "it", "ja", "ko", "mk", "ms", "nl", "pl", "pt", "ro", "ru", "sv", "th", "tr", "vi",
-        ),
+        languages = QWEN3_LANGUAGES,
         punctuates = true,
         credit = ModelCredit(
             "Qwen Team / Alibaba Cloud", "Apache-2.0", "https://huggingface.co/Qwen/Qwen3-ASR-1.7B",
@@ -870,6 +896,207 @@ object LocalModelCatalog {
             VAD_FILE,
         ),
     )
+
+    /**
+     * ~1.75 GB. The same Qwen3-ASR 1.7B with a Q5_K decoder: in transcribe.cpp's measurements Q4_K
+     * costs about 0.2 points of WER on LibriSpeech clean (1.81 % vs 1.62 %) that Q5_K gets back, for
+     * 250 MB more. cstr publishes no Q6_K, so this is the most accurate size short of Q8_0 (2.5 GB).
+     */
+    val QWEN3_ASR_Q5 = LocalModelSpec(
+        id = "qwen3-asr-1.7b-q5-k",
+        displayName = "Qwen3-ASR 1.7B (Q5_K)",
+        languages = QWEN3_LANGUAGES,
+        punctuates = true,
+        credit = ModelCredit(
+            "Qwen Team / Alibaba Cloud", "Apache-2.0", "https://huggingface.co/Qwen/Qwen3-ASR-1.7B",
+        ),
+        kind = LocalModelKind.QWEN_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF/resolve/674df5d44b50a63e7102a18895ed20e3f91de301/qwen3-asr-1.7b-q5_k.gguf",
+                LocalTranscriptionProvider.GGUF, 1_744_867_200L,
+                "19cf933548253f5fa0f5ce029c816811e8c16478644e494767a49f64a94438ff",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~630 MB. Qwen3-ASR 0.6B: the same 30 languages and automatic language detection as the 1.7B at
+     * about a third of the compute (Open ASR average 6.42 against 5.76), on the very same native code.
+     */
+    val QWEN3_ASR_06B = LocalModelSpec(
+        id = "qwen3-asr-0.6b-q4-k",
+        displayName = "Qwen3-ASR 0.6B (Q4_K)",
+        languages = QWEN3_LANGUAGES,
+        punctuates = true,
+        credit = ModelCredit(
+            "Qwen Team / Alibaba Cloud", "Apache-2.0", "https://huggingface.co/Qwen/Qwen3-ASR-0.6B",
+        ),
+        kind = LocalModelKind.QWEN_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/qwen3-asr-0.6b-GGUF/resolve/58bd3202f835f46b24b17142cb503b0860c737a5/qwen3-asr-0.6b-q4_k.gguf",
+                LocalTranscriptionProvider.GGUF, 631_026_336L,
+                "f63771c02dfa486d9399d41ab6ab8cd2d8ca24e077cd32130ea1f67f4fd8dade",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~2.27 GB. IBM Granite Speech 4.1 2B — top of the Open ASR leaderboard average (5.33) when it was
+     * released, in six languages. The `q4_k-f16enc` build: Q4_K language model with the encoder and
+     * projector in F16, which cstr measured at cosine ≥ 0.99985 against the BF16 reference — about
+     * 0.7 GB under the all-F32-encoder `q4_k` (2.94 GB) for no measurable loss. The smaller `q4_k-mini`
+     * quantises the encoder too and regresses on harder audio, so it is not offered.
+     *
+     * Prompted with IBM's chat template and its "proper punctuation and capitalization" instruction
+     * (see crispasr_engines.cpp); the model finds the language itself.
+     */
+    val GRANITE_SPEECH_4_1 = LocalModelSpec(
+        id = "granite-speech-4.1-2b",
+        displayName = "Granite Speech 4.1 2B",
+        languages = listOf("en", "fr", "de", "es", "pt", "ja"),
+        punctuates = true,
+        credit = ModelCredit("IBM", "Apache-2.0", "https://huggingface.co/ibm-granite/granite-speech-4.1-2b"),
+        kind = LocalModelKind.GRANITE_4_1_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/granite-speech-4.1-2b-GGUF/resolve/22387903f310805b3b6fd7fd93fd91a8afab2b98/granite-speech-4.1-2b-q4_k-f16enc.gguf",
+                LocalTranscriptionProvider.GGUF, 2_268_201_440L,
+                "077f5afeb5519c7b73aee163be422ecfa934fa56e16804d970630b44cc4c32cf",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~1.29 GB. Cohere Transcribe 03-2026 (2B, Open ASR average 5.42; 2.37 % on LibriSpeech other
+     * against Qwen3-ASR 1.7B's 3.38 %). Like Canary it must be *told* its language and has no
+     * detection: the chosen input language is passed on every decode, and anything it does not know —
+     * including auto-detect — falls back to English (crispasr_engines.cpp).
+     */
+    val COHERE_TRANSCRIBE = LocalModelSpec(
+        id = "cohere-transcribe-03-2026",
+        displayName = "Cohere Transcribe",
+        languages = listOf("en", "fr", "de", "it", "es", "pt", "el", "nl", "pl", "zh", "ja", "ko", "vi", "ar"),
+        punctuates = true,
+        credit = ModelCredit(
+            "Cohere Labs", "Apache-2.0", "https://huggingface.co/CohereLabs/cohere-transcribe-03-2026",
+        ),
+        kind = LocalModelKind.COHERE_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/cohere-transcribe-03-2026-GGUF/resolve/77234fcd7f77d271e5fc57f14fb05f260275558c/cohere-transcribe-q4_k.gguf",
+                LocalTranscriptionProvider.GGUF, 1_289_178_240L,
+                "116f4c4f7ff1b03997100d3a097e13fecd84350555b9979867b241cd6803e4f5",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~190 MB. Moonshine v2 Streaming Medium (245M parameters, English, Open ASR average 6.65): a
+     * streaming architecture, decoded here one VAD segment at a time like the other one-shot models.
+     * CrispASR reads `tokenizer.bin` from the GGUF's directory.
+     */
+    val MOONSHINE_STREAMING_MEDIUM = LocalModelSpec(
+        id = "moonshine-streaming-medium",
+        displayName = "Moonshine Medium",
+        languages = listOf("en"),
+        punctuates = true,
+        credit = ModelCredit(
+            "Moonshine AI (Useful Sensors)", "MIT", "https://huggingface.co/moonshine-ai/moonshine-streaming-medium",
+        ),
+        kind = LocalModelKind.MOONSHINE_GGUF,
+        supportedAbis = setOf("arm64-v8a"),
+        files = listOf(
+            LocalModelFile(
+                "https://huggingface.co/cstr/moonshine-streaming-medium-GGUF/resolve/a763b67f9797cb417861dcdd0317a141f3785e60/moonshine-streaming-medium-q4_k.gguf",
+                LocalTranscriptionProvider.GGUF, 190_998_560L,
+                "e40e0f24fa1ae70aa09287b1cda2203811bf8170fa6dcfa0b877060fd6d1450f",
+            ),
+            LocalModelFile(
+                "https://huggingface.co/cstr/moonshine-streaming-medium-GGUF/resolve/a763b67f9797cb417861dcdd0317a141f3785e60/tokenizer.bin",
+                LocalTranscriptionProvider.MOONSHINE_TOKENIZER, 251_254L,
+                "0e90e02b765a10f0fa35b7d67877df29dd22a1fd4890899c9b1b203a19bc8999",
+            ),
+            VAD_FILE,
+        ),
+    )
+
+    /**
+     * ~663 MB. NVIDIA Parakeet Unified English 0.6B (April 2026), offline export: Open ASR average 5.91,
+     * close to Qwen3-ASR 1.7B, at Parakeet speed — 0.9 s for a 7.4 s clip on two desktop cores in the
+     * vendored sherpa-onnx. Its streaming export is deliberately absent: the unified model re-encodes
+     * its whole context every chunk, and the 560 ms build ran at about 5× real time on the same cores.
+     *
+     * Files: sherpa-onnx's int8 export, hosted per file by its maintainer (csukuangfj2); hashes checked
+     * against the k2-fsa release tarball. Licence: NVIDIA Open Model License.
+     */
+    val PARAKEET_UNIFIED_EN = LocalModelSpec(
+        id = "parakeet-unified-en-0.6b",
+        displayName = "Parakeet Unified English",
+        // Same FastConformer encoder with full attention as the Parakeet TDTs, which document minutes.
+        maxSegmentSeconds = 120,
+        languages = listOf("en"),
+        punctuates = true,
+        credit = ModelCredit(
+            "NVIDIA", "NVIDIA Open Model License", "https://huggingface.co/nvidia/parakeet-unified-en-0.6b",
+        ),
+        kind = LocalModelKind.NEMO_TRANSDUCER,
+        files = listOf(
+            LocalModelFile("$PARAKEET_UNIFIED/encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 654_040_552, "6716910b7a0833997fec7a410494c995d70124001a0e9b66d6370d6aced577e0"),
+            LocalModelFile("$PARAKEET_UNIFIED/decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 7_257_753, "a5e223392c90e75f8144cdb5eb95af7625db389e39edef2bd1a9c872b3298fe6"),
+            LocalModelFile("$PARAKEET_UNIFIED/joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 1_735_860, "869f43f7d24595c55581ad3bf249a935fb8a71389fbdaa7504b9f46f93140f8a"),
+            LocalModelFile("$PARAKEET_UNIFIED/tokens.txt", LocalTranscriptionProvider.TOKENS, 8_952, "dc0b4584ab2e4ddbf888425c076c61b736e7356a015250db7d307e6f1a8188ff"),
+            VAD_FILE,
+        ),
+    )
+
+    private const val PARAKEET_UNIFIED =
+        "https://huggingface.co/csukuangfj2/sherpa-onnx-nemo-parakeet-unified-en-0.6b-int8-non-streaming/resolve/8c3a10fb13408c7a7054f6898958bf1c64a8d6c7"
+
+    /**
+     * ~682 MB. NVIDIA Nemotron 3.5 ASR Streaming 0.6B, 560 ms chunks: live transcription with
+     * punctuation in the 28 languages its card calls transcription-ready or broad-coverage (the eight
+     * "adaptation-ready" ones are left out). A cache-aware streaming transducer that sherpa-onnx detects
+     * from the decoder itself; it needs the NeMo streaming greedy-search fix in sherpa-onnx ≥ 1.13.5.
+     * Decoded German/Spanish/French/Chinese/Ukrainian test clips at about 0.5× real time on two
+     * desktop cores.
+     *
+     * k2-fsa publishes this export only as a release tarball, so the per-file host is a verbatim
+     * third-party mirror (apbaxel), pinned by commit; every hash matches the tarball's. Licence:
+     * OpenMDW-1.1.
+     */
+    val NEMOTRON_3_5_STREAMING = LocalModelSpec(
+        id = "nemotron-3.5-asr-streaming-560ms",
+        displayName = "Nemotron 3.5 Streaming",
+        languages = listOf(
+            "en", "es", "fr", "it", "pt", "nl", "de", "tr", "ru", "ar", "hi", "ja", "ko", "vi", "uk",
+            "pl", "sv", "cs", "nb", "da", "bg", "fi", "hr", "sk", "zh", "hu", "ro", "et",
+        ),
+        punctuates = true,
+        credit = ModelCredit(
+            "NVIDIA", "OpenMDW-1.1", "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b",
+        ),
+        kind = LocalModelKind.NEMO_TRANSDUCER,
+        isStreaming = true,
+        files = listOf(
+            LocalModelFile("$NEMOTRON_STREAMING/encoder.int8.onnx", LocalTranscriptionProvider.ENCODER, 657_601_403, "012e9321373af99021415e0b0eb3ec827b4be3153be6f30d9b448fe65e896e68"),
+            LocalModelFile("$NEMOTRON_STREAMING/decoder.int8.onnx", LocalTranscriptionProvider.DECODER, 14_978_075, "19f9c98fc6d0a2c33a65a43b36fdb2e914c26c0aa9764be3aebc502a1e982fb0"),
+            LocalModelFile("$NEMOTRON_STREAMING/joiner.int8.onnx", LocalTranscriptionProvider.JOINER, 9_504_438, "4101c7c679a0bc30483794b27a059e34e79232aa2068d78d51231a22c8b0d7ce"),
+            LocalModelFile("$NEMOTRON_STREAMING/tokens.txt", LocalTranscriptionProvider.TOKENS, 131_440, "729cc103155bafa785f9cd45746cd41cabe97eab7182fc04d594129587958f8a"),
+        ),
+    )
+
+    private const val NEMOTRON_STREAMING =
+        "https://huggingface.co/apbaxel/sherpa-onnx-nemotron-3.5-asr-streaming-0.6b-int8/resolve/da020e62fd22dde0489809296e9412d66f43171e"
 
     /** Catalog availability follows the ABIs with a packaged runtime for each model. */
     fun availableForAbis(abis: List<String>): List<LocalModelSpec> = all.filter { it.supportsAnyAbi(abis) }
@@ -919,7 +1146,13 @@ object LocalModelCatalog {
         CANARY_180M_FLASH,
         PARAKEET_ULTRA,
         PARAKEET_TDT_V3,
+        PARAKEET_UNIFIED_EN,
+        GRANITE_SPEECH_4_1,
+        COHERE_TRANSCRIBE,
+        QWEN3_ASR_06B,
         QWEN3_ASR_Q4,
+        QWEN3_ASR_Q5,
+        MOONSHINE_STREAMING_MEDIUM,
         FASTCONFORMER_DE,
         SENSE_VOICE_SMALL,
         DOLPHIN_BASE,
@@ -930,6 +1163,7 @@ object LocalModelCatalog {
         WHISPER_TINY_EN, WHISPER_BASE_EN, WHISPER_SMALL_EN,
         KROKO_EN, KROKO_DE, KROKO_ES, KROKO_FR,
         KROKO_IT, KROKO_NL, KROKO_PT, KROKO_SV, KROKO_TR, KROKO_HE,
+        NEMOTRON_3_5_STREAMING,
     )
 
     /**
@@ -972,9 +1206,9 @@ object LocalModelCatalog {
 
     /**
      * [all] folded into the rows the picker's first level shows: a family appears once, in the place of
-     * its first member, and everything else stands for itself. Twenty-six entries become twelve rows,
-     * of which [visibleTopLevel] shows ten to anyone new: eight models that are their own choice, plus
-     * Whisper and Kroko — the two retired entries are seen only by the people who have them.
+     * its first member, and everything else stands for itself. Thirty-four entries become twenty rows,
+     * of which [visibleTopLevel] shows eighteen to anyone new: sixteen models that are their own choice,
+     * plus Whisper and Kroko — the two retired entries are seen only by the people who have them.
      *
      * Order is [all]'s, which is what keeps the streaming rows a contiguous tail and the "Live" heading
      * where it belongs. Relies on a family's members sitting next to each other — asserted by a test,

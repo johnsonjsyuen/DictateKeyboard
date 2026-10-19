@@ -69,6 +69,25 @@ One-shot models — these transcribe after you stop speaking:
     https://huggingface.co/Qwen/Qwen3-ASR-1.7B
     GGUF conversion by cstr (CrispStrobe), Apache-2.0: https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF
     Runs through the native CrispASR/ggml runtime (MIT); see assets/licenses/qwen-native.txt.
+  - Qwen3-ASR 0.6B (Q4_K GGUF, 30 languages) — © Qwen Team / Alibaba Cloud, Apache-2.0.
+    https://huggingface.co/Qwen/Qwen3-ASR-0.6B
+    GGUF conversion by cstr (CrispStrobe), Apache-2.0: https://huggingface.co/cstr/qwen3-asr-0.6b-GGUF
+  - Granite Speech 4.1 2B and Granite 4.0 1B Speech (English, French, German, Spanish, Portuguese,
+    Japanese) — © IBM, Apache-2.0.
+    https://huggingface.co/ibm-granite/granite-speech-4.1-2b
+    https://huggingface.co/ibm-granite/granite-4.0-1b-speech
+    GGUF conversions by cstr (CrispStrobe), Apache-2.0:
+    https://huggingface.co/cstr/granite-speech-4.1-2b-GGUF
+    https://huggingface.co/cstr/granite-speech-4.0-1b-GGUF
+  - Cohere Transcribe 03-2026 (14 languages) — © Cohere Labs, Apache-2.0.
+    https://huggingface.co/CohereLabs/cohere-transcribe-03-2026
+    GGUF conversion by cstr (CrispStrobe), Apache-2.0: https://huggingface.co/cstr/cohere-transcribe-03-2026-GGUF
+  - Moonshine Streaming Medium (English) — © Moonshine AI (Useful Sensors), MIT License.
+    https://huggingface.co/moonshine-ai/moonshine-streaming-medium
+    GGUF conversion by cstr (CrispStrobe), MIT: https://huggingface.co/cstr/moonshine-streaming-medium-GGUF
+  - Parakeet Unified English 0.6B — © NVIDIA, NVIDIA Open Model License.
+    https://huggingface.co/nvidia/parakeet-unified-en-0.6b
+    License text: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
   - SenseVoice Small (Chinese, Cantonese, English, Japanese, Korean) — © Alibaba Group,
     licensed under the FunASR Model Open Source License Agreement v1.1, which permits use,
     modification and sharing with attribution of the source, the author and the model name.
@@ -83,6 +102,9 @@ Streaming models — these transcribe live, while you are still speaking:
     https://huggingface.co/Banafo/Kroko-ASR
     Redistributed unmodified. The ShareAlike term governs adaptations of the model itself; the
     files shipped here are verbatim copies.
+  - Nemotron 3.5 ASR Streaming 0.6B (28 languages) — © NVIDIA, licensed OpenMDW-1.1.
+    https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b
+    License text: https://openmdw.ai/license/
 
 4. Supporting on-device models
 -------------------------------
