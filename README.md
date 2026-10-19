@@ -86,6 +86,13 @@ PRs are build-only, and PR prereleases never become the latest stable release. T
 [workflow](.github/workflows/android-apk.yml) runs once it is on `main` and GitHub Actions is
 enabled; repository policy must allow its release job `contents: write` permission.
 
+Each merge to `main` also runs the [release workflow](.github/workflows/android-release-apk.yml), which
+builds the minified `net.devemperor.dictate` release APK, signs it with the private release key, and
+publishes it as the latest release (`DictateKeyboard-release.apk` plus checksum). It needs four
+repository secrets: `RELEASE_KEYSTORE_BASE64` (the keystore, `base64 -w0`), `RELEASE_STORE_PASSWORD`,
+`RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD`. Without them the job fails rather than publishing an
+unsigned APK.
+
 ### Building it yourself
 
 The GGUF models (Granite, Cohere, Qwen3, Moonshine) run on a native CrispASR/ggml runtime that is

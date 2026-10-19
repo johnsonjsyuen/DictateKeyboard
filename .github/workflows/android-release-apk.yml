@@ -1,0 +1,158 @@
+name: Main release APK
+
+# Every merged pull request lands on main as a push, so this builds a signed,
+# minified release APK for each merge (and for any direct push to main).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Keep each pushed revision: newer pushes must not cancel older builds.
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+        with:
+          # The action defaults to "tools platform-tools"; SDK "tools" was removed.
+          packages: platform-tools
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Install Android build prerequisites
+        run: |
+          sdkmanager 'platforms;android-36' 'build-tools;36.0.0' \
+            'ndk;27.0.12077973' 'ndk;29.0.14206865' 'cmake;4.1.2'
+          cmake --version
+
+      - name: Prepare native speech runtimes
+        run: |
+          tools/fetch-sherpa-onnx.sh
+          export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
+          # Two builds (baseline armv8-a + dot-product); the runner has 4 cores.
+          BUILD_JOBS=4 tools/build-qwen-native.sh android
+          # Upstream 6.4 on-device translation (issue #424): preBuild requires libdictate_bergamot.so.
+          tools/bergamot/build-android.sh arm64-v8a
+
+      # The release signing key must stay private (never the public CI debug key in .github/ci).
+      # It is supplied through repository secrets and written to the untracked keystore.properties
+      # that app/build.gradle.kts reads (see keystore.properties.template).
+      - name: Install release signing key
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          missing=()
+          for name in RELEASE_KEYSTORE_BASE64 RELEASE_STORE_PASSWORD RELEASE_KEY_ALIAS RELEASE_KEY_PASSWORD; do
+            [[ -n "${!name}" ]] || missing+=("$name")
+          done
+          if (( ${#missing[@]} )); then
+            echo "::error::Missing repository secrets: ${missing[*]}. Add them under Settings → Secrets and variables → Actions to sign release builds."
+            exit 1
+          fi
+          keystore="$RUNNER_TEMP/release.keystore"
+          printf '%s' "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "$keystore"
+          chmod 600 "$keystore"
+          umask 077
+          {
+            echo "storeFile=$keystore"
+            echo "storePassword=$RELEASE_STORE_PASSWORD"
+            echo "keyAlias=$RELEASE_KEY_ALIAS"
+            echo "keyPassword=$RELEASE_KEY_PASSWORD"
+          } > keystore.properties
+
+      - name: Build release APK
+        run: |
+          ./gradlew :app:assembleRelease --no-daemon --no-configuration-cache --max-workers=2 \
+            -Dorg.gradle.jvmargs=-Xmx3072m -Pkotlin.compiler.execution.strategy=in-process
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f keystore.properties "$RUNNER_TEMP/release.keystore"
+
+      - name: Verify and package APK
+        run: |
+          apk=app/build/outputs/apk/release/app-release.apk
+          if [[ ! -f "$apk" ]]; then
+            echo "::error::Signed release APK not found (did signing get configured?)"
+            ls -R app/build/outputs/apk/release || true
+            exit 1
+          fi
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$apk"
+          mkdir -p dist
+          cp "$apk" dist/DictateKeyboard-release.apk
+          cd dist
+          sha256sum DictateKeyboard-release.apk > DictateKeyboard-release.apk.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: dist/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
+  release:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-apk
+          path: dist
+
+      - name: Publish commit release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          tag="release-${RELEASE_SHA}"
+          title="Main release build #${GITHUB_RUN_NUMBER} (${RELEASE_SHA:0:7})"
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          Automated release build from commit ${RELEASE_SHA}.
+
+          Download **DictateKeyboard-release.apk** below and allow installation from your browser.
+          Package: net.devemperor.dictate (the regular app, minified and signed with the release key).
+          It does not share data with the debug builds (net.devemperor.dictate.debug), which install alongside it.
+
+          The GGUF models (Qwen3-ASR, Granite Speech, Cohere Transcribe, Moonshine) require an ARM64 device.
+          Download models separately inside the app.
+          A SHA-256 checksum is included alongside the APK.
+          Build: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          EOF
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/* --clobber
+          else
+            gh release create "$tag" dist/* \
+              --target "$RELEASE_SHA" \
+              --title "$title" \
+              --notes-file "$RUNNER_TEMP/release-notes.md" \
+              --latest
+          fi
+          # Exercise the release download path, not just workflow artifact storage.
+          gh release download "$tag" --dir "$RUNNER_TEMP/release-download" \
+            --pattern 'DictateKeyboard-release.apk' --pattern 'DictateKeyboard-release.apk.sha256'
+          cmp dist/DictateKeyboard-release.apk.sha256 "$RUNNER_TEMP/release-download/DictateKeyboard-release.apk.sha256"
+          (cd "$RUNNER_TEMP/release-download" && sha256sum --check DictateKeyboard-release.apk.sha256)
+          release_url=$(gh release view "$tag" --json url --jq .url)
+          echo "Release: ${release_url}" >> "$GITHUB_STEP_SUMMARY"
