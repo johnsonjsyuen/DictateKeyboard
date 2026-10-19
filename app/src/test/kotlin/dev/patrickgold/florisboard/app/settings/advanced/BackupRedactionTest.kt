@@ -60,29 +60,25 @@ class BackupRedactionTest {
         cachedModels = listOf("gpt-5", "whisper-1"),
     )
 
-    private val cloud = ProviderAccount(
-        providerId = "cloud",
-        apiKey = "the-wallet-token",
-        walletId = "w-123",
-        walletRecoveryCode = "recover-me-once",
-        balanceSeconds = 4200,
-        balanceRewords = 17,
-        balanceCheckedAt = 1_700_000_000_000L,
+    private val groq = ProviderAccount(
+        providerId = "groq",
+        apiKey = "gsk-the-other-secret",
+        transcriptionModel = "whisper-large-v3",
     )
 
     @Test
     fun `no secret survives anywhere in the document`() {
-        val redacted = BackupRedaction.redact(keyringLine(accountsOf(openai, cloud)))
+        val redacted = BackupRedaction.redact(keyringLine(accountsOf(openai, groq)))
 
         // The point of the issue: not "the record parses as keyless" but "the string does not contain it".
-        for (secret in listOf("sk-the-secret-one", "the-wallet-token", "w-123", "recover-me-once")) {
+        for (secret in listOf("sk-the-secret-one", "gsk-the-other-secret")) {
             assertFalse(redacted.contains(secret), "redacted document still contains $secret")
         }
     }
 
     @Test
     fun `redaction keeps the configuration and clears the credential`() {
-        val redacted = keyringOf(BackupRedaction.redact(keyringLine(accountsOf(openai, cloud))))
+        val redacted = keyringOf(BackupRedaction.redact(keyringLine(accountsOf(openai, groq))))
 
         val openaiBack = redacted["openai"]!!
         assertEquals("openai", openaiBack.providerId)
@@ -94,17 +90,9 @@ class BackupRedactionTest {
         assertEquals(listOf("gpt-5", "whisper-1"), openaiBack.cachedModels)
         assertEquals("", openaiBack.apiKey)
 
-        // The Cloud wallet is the one secret that cannot be re-issued: the server keeps only a hash of the
-        // recovery code, so a leaked archive is a permanently leaked credit account. The balance goes back
-        // to the documented never-fetched triple, because it described credit this record can no longer
-        // reach — the same reasoning as DictateCloud.forget().
-        val cloudBack = redacted["cloud"]!!
-        assertEquals("", cloudBack.apiKey)
-        assertEquals("", cloudBack.walletId)
-        assertEquals("", cloudBack.walletRecoveryCode)
-        assertEquals(-1, cloudBack.balanceSeconds)
-        assertEquals(-1, cloudBack.balanceRewords)
-        assertEquals(0L, cloudBack.balanceCheckedAt)
+        val groqBack = redacted["groq"]!!
+        assertEquals("whisper-large-v3", groqBack.transcriptionModel)
+        assertEquals("", groqBack.apiKey)
     }
 
     @Test
@@ -127,7 +115,7 @@ class BackupRedactionTest {
 
     @Test
     fun `redaction is idempotent`() {
-        val once = BackupRedaction.redact(keyringLine(accountsOf(openai, cloud)))
+        val once = BackupRedaction.redact(keyringLine(accountsOf(openai, groq)))
         assertEquals(once, BackupRedaction.redact(once))
     }
 
@@ -184,7 +172,6 @@ class BackupRedactionTest {
             "s;gif__customer_id;\"cust-42\"",
             "s;dictate__api_key;\"legacy\"",
             "s;dictate__rewording_api_key;\"legacy-reword\"",
-            "b;dictate__cloud_low_credit_nudged;true",
             "b;dictate__provider_accounts_migrated;true",
             "s;dictate__proxy_host;\"proxy.example.test\"",
         ).joinToString("\n")
@@ -194,7 +181,6 @@ class BackupRedactionTest {
         for (gone in listOf("admin", "hunter2", "klipy-secret", "cust-42", "legacy", "legacy-reword")) {
             assertFalse(redacted.contains(gone), "redacted document still contains $gone")
         }
-        assertFalse(redacted.contains("dictate__cloud_low_credit_nudged"))
         // A key that merely starts with or contains a dropped name is a different preference.
         assertTrue(redacted.contains("b;dictate__provider_accounts_migrated;true"))
         assertTrue(redacted.contains("s;dictate__proxy_host;\"proxy.example.test\""))
@@ -213,36 +199,33 @@ class BackupRedactionTest {
     }
 
     @Test
-    fun `merging takes a credential whole or not at all`() {
+    fun `merging fills a missing key and keeps the archive's own`() {
         val local = accountsOf(
             openai,
-            cloud,
-            ProviderAccount(providerId = "groq", apiKey = "local-groq"),
+            groq,
+            ProviderAccount(providerId = "mistral", apiKey = "local-mistral"),
         )
         val incoming = accountsOf(
             openai.withoutSecrets(),
-            // Any one of the three makes this the archive's own credential, so none of it is overwritten —
-            // pairing this wallet id with the local token would be a state nothing in the app expects.
-            cloud.withoutSecrets().copy(walletId = "w-999"),
+            // The archive brings a key of its own here, so the local one does not overwrite it.
+            groq.copy(apiKey = "gsk-newer"),
             ProviderAccount(providerId = "ollama"),
         )
 
         val merged = incoming.withSecretsFrom(local)
 
         assertEquals("sk-the-secret-one", merged["openai"]!!.apiKey)
-        assertEquals("w-999", merged["cloud"]!!.walletId)
-        assertEquals("", merged["cloud"]!!.apiKey)
-        assertEquals("", merged["cloud"]!!.walletRecoveryCode)
-        // The archive does not mention groq, so neither does the result: this fills gaps, it does not add
-        // accounts — the same whole-preference reading of Merge that JetPref itself applies.
-        assertNull(merged["groq"])
+        assertEquals("gsk-newer", merged["groq"]!!.apiKey)
+        // The archive does not mention mistral, so neither does the result: this fills gaps, it does not
+        // add accounts — the same whole-preference reading of Merge that JetPref itself applies.
+        assertNull(merged["mistral"])
         // Nothing here to fill an account the device has never seen with.
         assertEquals("", merged["ollama"]!!.apiKey)
     }
 
     @Test
     fun `redacting and merging back is an exact round trip`() {
-        val original = accountsOf(openai, cloud)
+        val original = accountsOf(openai, groq)
         assertEquals(original, original.withoutSecrets().withSecretsFrom(original))
     }
 
@@ -259,11 +242,9 @@ class BackupRedactionTest {
     @Test
     fun `hasNoSecrets answers for the keyring as a whole`() {
         assertFalse(ProviderAccounts.Empty.hasNoSecrets, "an empty keyring says nothing about credentials")
-        assertFalse(accountsOf(openai, cloud).hasNoSecrets)
-        assertFalse(accountsOf(openai.withoutSecrets(), cloud).hasNoSecrets)
-        // A recovery code alone is still a credential — it is what buys a wallet back.
-        assertFalse(accountsOf(cloud.withoutSecrets().copy(walletRecoveryCode = "x")).hasNoSecrets)
-        assertTrue(accountsOf(openai, cloud).withoutSecrets().hasNoSecrets)
+        assertFalse(accountsOf(openai, groq).hasNoSecrets)
+        assertFalse(accountsOf(openai.withoutSecrets(), groq).hasNoSecrets)
+        assertTrue(accountsOf(openai, groq).withoutSecrets().hasNoSecrets)
     }
 
     @Test

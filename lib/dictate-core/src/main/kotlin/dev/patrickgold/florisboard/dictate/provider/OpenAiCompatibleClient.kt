@@ -107,8 +107,7 @@ class OpenAiCompatibleClient(
         return when (first) {
             is Completion.Answer -> first.result
             // A 200 with nothing usable in it. When the model spent its whole answer thinking there is
-            // exactly one remedy on this side of the wire, and it is the one Dictate Cloud applies to
-            // itself: ask again with the thinking turned down. Once, and only while there is something
+            // exactly one remedy on this side of the wire: ask again with the thinking turned down. Once, and only while there is something
             // left to turn down — an answer that came back empty at "low" will not come back fuller at
             // "low" (issue #304).
             is Completion.Empty -> {

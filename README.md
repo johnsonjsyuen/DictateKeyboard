@@ -218,10 +218,9 @@ your typos. Need the text more formal, translated, summarised, or fixed-up? Hand
 rewording prompt and let the model do the work. With the floating button you can even
 dictate straight into apps while another keyboard is open.
 
-There are four ways to power it, and you pick one during setup: **your own API key** with the
-provider of your choice, **a server of your own**, **a model on the device** with no network at
-all, or **prepaid credit** if you would rather not deal with any of that. The first three cost
-Dictate nothing and are not going anywhere.
+There are three ways to power it, and you pick one during setup: **your own API key** with the
+provider of your choice, **a server of your own**, or **a model on the device** with no network at
+all.
 
 <br>
 
@@ -253,8 +252,7 @@ Dictate nothing and are not going anywhere.
 - **Scan text** — photograph an IBAN, a serial number or an address on an envelope and tap the part of it you want in the field. Recognition runs on the device, no camera permission is asked for, and the photo is deleted as soon as it has been read.
 - **Offline translation** — tap Translate in the Smartbar, type in your language and the translation appears in the text field as you go; press Enter and it is sent. Runs entirely on the phone with Mozilla's Firefox Translations models: 49 languages including Hindi, Japanese and Arabic, downloaded one at a time (30–75 MB each), and nothing you type leaves the device.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
-- **Backup & restore** — take your whole setup to a new phone: preferences, rewording prompts, personal dictionary and learned words, themes, layouts. You choose what goes in, and an archive can be made **without** your API keys, passwords or Dictate Cloud credit — so it can be handed to someone else or attached to a bug report without leaking anything.
-- **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
+- **Backup & restore** — take your whole setup to a new phone: preferences, rewording prompts, personal dictionary and learned words, themes, layouts. You choose what goes in, and an archive can be made **without** your API keys or passwords — so it can be handed to someone else or attached to a bug report without leaking anything.
 - **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, xAI, Soniox, Deepgram, AssemblyAI, ElevenLabs, Azure Speech and other compatible endpoints, so you stay in control of usage and cost. xAI's Grok Voice Transcribe costs ten cents an hour of audio, and twenty streamed live. Azure runs Microsoft's own MAI-Transcribe, which detects across 60 languages and follows a switch mid-sentence. Gemini transcribes with Google's dedicated speech-to-text models rather than a chat model under instruction, and if you speak more than one language you can say which ones instead of picking one and hoping. Where a provider runs its data where you are — Soniox has projects in the EU, Japan and India, OpenRouter an EU entry point — the region is a field in the provider editor, and it moves live streaming with it rather than leaving that one request on another continent. For audio and text that never leave the EU at all, **Scaleway** (Paris) and **OVHcloud** (Gravelines) transcribe and reword in France, under the GDPR and with zero data retention.
 - **Self-hosting friendly** — point Dictate at a server of your own for transcription, rewording and even live streaming, and let it wake a sleeping GPU machine before the first request arrives.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
@@ -268,7 +266,7 @@ Dictate nothing and are not going anywhere.
   - A **text editing panel** — a cursor pad that repeats when held, a *Select* key that turns the arrows into a selection, and cut/copy/paste next to them, so fixing a typo in the middle of a paragraph does not mean aiming at it with a fingertip
   - **Your own symbol pages** — put the symbols you actually use on both symbol pages, each key with long presses of your choosing: tap a key in a picture of the page, pick from a palette or paste anything, an e-mail address included. A layout can be shared as a file and travels in the backup with your settings
   - One-handed / compact mode, a **split keyboard** for two thumbs on a tablet or an unfolded foldable, gesture actions, customizable key sound & haptic feedback
-- **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Choose a key, a server of your own or an on-device model and Dictate never talks to us at all; choose Dictate Cloud and nothing you say or write is stored on the way through.
+- **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Whether you choose a key, a server of your own or an on-device model, Dictate never talks to us at all.
 
 <p align="center"><i>Bring your own API key — Dictate works with:</i></p>
 <p align="center">
@@ -337,35 +335,6 @@ entirely.
 model (Whisper, Parakeet, FastConformer, Canary, GigaAM, SenseVoice, Dolphin, or a live-typing Kroko model). No account, no
 network, no audio leaving the phone — offered right in the setup wizard, and under
 *Settings → AI providers → On-device (offline)*.
-
-<br>
-
-## ☁️ Dictate Cloud
-
-Everything above needs you to bring *something* — a key, a server, or the patience to download a
-model. **Dictate Cloud** is for the people who would rather not: buy prepaid minutes through Google
-Play and start dictating. It is one option among four, it is off unless you choose it, and the rest
-of the app does not depend on it in any way.
-
-Because it is the one path where your words pass through a machine of ours, here is exactly what
-that machine does:
-
-- **Nothing of yours is written to disk.** Your audio and your text are forwarded to the provider
-  and the answer comes straight back. What is stored is numbers — wallet id, timestamp, duration,
-  token counts, status code, milliseconds.
-- **It has no idea who you are.** An account is a wallet and a recovery code; no name, no email
-  address, no sign-in. You can delete it from inside the app, and the app says what deletion leaves
-  behind before you do.
-- **The source is right here**, in [`cloud/`](cloud/) — a single Cloudflare Worker. The privacy
-  policy makes claims about this server, and [`cloud/src/meter.ts`](cloud/src/meter.ts) is the only
-  file in it that writes anything. That is the point of publishing it: a claim you can read the
-  source of is worth more than one you have to take on trust.
-- **Credit is seconds**, and every service prices itself into them. So a pack's price is a hard
-  ceiling on what it can cost to serve, whatever you spend it on — which is why there is no fair-use
-  clause anywhere.
-
-Larger packs cost less per minute, and the shop says by how much. If you already have an API key,
-keep using it — it is the cheaper way and it is not going to stop working.
 
 <br>
 

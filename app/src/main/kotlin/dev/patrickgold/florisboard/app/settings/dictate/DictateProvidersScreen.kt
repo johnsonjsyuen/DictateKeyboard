@@ -123,9 +123,8 @@ import org.florisboard.lib.compose.stringRes
  *
  * Two of the four ways out of the provider step already have a screen here — a server of the user's own
  * and the full on-device model list — and rebuilding either inside the wizard would mean a second editor
- * to keep working. A flag rather than a route argument, for the same reason [DictateCloud.openedFromSetup]
- * is one: the route is also a deep link, and a deep link carrying an onboarding flag would be a way to
- * reach a half-state from outside the app.
+ * to keep working. A flag rather than a route argument: the route is also a deep link, and a deep link
+ * carrying an onboarding flag would be a way to reach a half-state from outside the app.
  */
 object ProviderSetupHandoff {
     /** Provider id whose editor to open, [ADD_CUSTOM] for a fresh endpoint, or null for nothing. */
@@ -228,7 +227,7 @@ fun DictateProvidersScreen() = FlorisScreen {
             val noKey = stringRes(R.string.dictate__providers_status_no_key)
             val activeIds = setOf(activeTranscriptionId, activeRewordingId)
 
-            // The user's own providers only, with on-device and Dictate Cloud always among them (see
+            // The user's own providers only, with on-device always among them (see
             // [ProviderListing.isListed]); the other presets wait behind "Add a provider" at the end.
             // On-device first, above the cloud providers like OpenAI (issue #228); the rest keep their
             // registry display order (sortedByDescending is stable).
@@ -241,29 +240,8 @@ fun DictateProvidersScreen() = FlorisScreen {
                 } else {
                     null
                 }
-            val cloudAccount = accounts.getOrEmpty(ProviderRegistry.CLOUD.id)
-            val cloudNoCredit = stringRes(R.string.dictate__cloud_row_summary_none)
-            val cloudBalance = stringRes(
-                R.string.dictate__cloud_row_summary_balance,
-                "minutes" to (cloudAccount.balanceSeconds.coerceAtLeast(0) / 60).toString(),
-            )
 
             orderedPresets.forEach { preset ->
-                // Dictate Cloud has no API key to type in — it has a balance, packs and a recovery
-                // code — so its row opens its own screen instead of the credential editor.
-                if (preset.id == ProviderRegistry.CLOUD.id) {
-                    Preference(
-                        // The service's own mark, like every other provider in this list — a
-                        // generic cloud here is what the app uses for "an endpoint with no logo".
-                        icon = providerIcon(preset.id),
-                        modifier = Modifier.settingsSearchAnchor("dictate__cloud_title"),
-                        title = preset.displayName,
-                        summary = if (cloudAccount.hasWallet) cloudBalance else cloudNoCredit,
-                        trailing = roles(preset.id),
-                        onClick = { navController.navigate(Routes.Settings.DictateCloud) },
-                    )
-                    return@forEach
-                }
                 val account = accounts[preset.id]
                 Preference(
                     icon = providerIcon(preset.id),
@@ -806,7 +784,7 @@ internal fun ProviderEditorDialog(
         //
         // Shown on `apiKeyUrl` alone: not gated on the field being empty, because replacing an expired key
         // is the same errand, and a control that appears and disappears with the text is worse than one
-        // that is simply there. Absent for Dictate Cloud, Ollama, on-device and custom endpoints, which
+        // that is simply there. Absent for Ollama, on-device and custom endpoints, which
         // have no key page at all — that absence is the honest answer, not a gap.
         //
         // No tooltip: PlainTooltip consumes the release on the Initial pass (#257/#261), and this sits in

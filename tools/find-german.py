@@ -44,12 +44,6 @@ ALLOWED = [
      'word and bigram data — corpus output, not prose'),
     (r'(data_attributions\.txt|ATTRIBUTION\.md|generate_bigrams\.py)$',
      'source attributions: institution names are quoted verbatim'),
-    (r'^cloud/src/admin/',
-     'operator dashboard: one reader, behind Access on a single address — see cloud/README.md'),
-    (r'^cloud/src/notify/',
-     'alert mails: one recipient, same reason'),
-    (r'^cloud/src/(routes/(rtdn|redeem|transcriptions|wallet)|rules|throttle|meter|sweep|costs)\.ts$',
-     'alert texts raised from these files; their comments are English'),
     (r'^app/src/test/.*TranscriptParagraphsTest',
      'German fixtures for the German abbreviation handling — the subject of the test'),
     (r'^app/src/main/kotlin/.*/nlp/latin/LatinLanguageProvider\.kt$',
@@ -68,8 +62,7 @@ UMLAUT_RE = re.compile(r'[äöüÄÖÜß]')
 
 
 def git_ignored(paths):
-    """Paths git ignores. The real `cloud/wrangler.jsonc` lives only on the operator's machine and is
-    German like the rest of the operator's material; it is not part of what gets published."""
+    """Paths ignored by the VCS: local material that is not part of what gets published."""
     if not paths:
         return set()
     try:

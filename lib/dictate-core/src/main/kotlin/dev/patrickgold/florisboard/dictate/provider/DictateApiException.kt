@@ -26,8 +26,8 @@ class DictateApiException(
      *
      * [kind] deliberately flattens many causes into one bucket — "out of credit" and "rate limited"
      * are both [Kind.QUOTA_EXCEEDED], because for most providers the remedy is the same: wait or top
-     * up somewhere else. Dictate Cloud is the exception, since the remedy is a button in this app, so
-     * that one case has to be told apart from the rest by something more precise than a keyword.
+     * up somewhere else. The verbatim code is kept for the cases that need something more precise
+     * than a keyword, and for diagnostics.
      */
     val code: String? = null,
 ) : Exception(message, cause) {
@@ -43,8 +43,7 @@ class DictateApiException(
          *
          * They arrive as the same HTTP 413 and used to be classified as the same thing, so a
          * rewording that did not fit told the user their "recording" was too long and offered to
-         * save an audio file that had nothing to do with it. Dictate Cloud names the difference in
-         * its error code; this is the app listening to it.
+         * save an audio file that had nothing to do with it.
          */
         TEXT_SIZE_LIMIT,
         FORMAT_NOT_SUPPORTED,

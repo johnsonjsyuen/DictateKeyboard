@@ -67,20 +67,6 @@ class ProviderConfiguredTest {
     }
 
     /**
-     * Dictate Cloud has no key page either, so on `apiKeyUrl` alone it looks exactly like Ollama. Its
-     * credential is the wallet token, and without one there is nothing to dictate with.
-     */
-    @Test
-    fun `Dictate Cloud without a wallet is not set up`() {
-        val cloud = ProviderRegistry.CLOUD.id
-        assertTrue(ProviderAccount(providerId = cloud).requiresCredential)
-        assertFalse(isProviderConfigured(accountsOf(), cloud, installed()))
-        assertTrue(
-            isProviderConfigured(accountsOf(ProviderAccount(providerId = cloud, apiKey = "token")), cloud, installed()),
-        )
-    }
-
-    /**
      * On-device is the case the shared credential rule cannot answer: it needs no key at all, but with
      * nothing downloaded it cannot transcribe a word.
      */

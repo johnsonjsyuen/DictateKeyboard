@@ -30,15 +30,12 @@ older versions.
 
 ## In scope
 
-The Android app, the Wear OS app, and the Dictate Cloud backend. In particular:
+The Android app and the Wear OS app. In particular:
 
-- Anything that exposes a stored provider API key, or a Dictate Cloud wallet or recovery code, to
-  another app or to someone on the network.
+- Anything that exposes a stored provider API key to another app or to someone on the network.
 - Anything that lets another app read what is typed or dictated, or drive the floating button's
   accessibility service.
 - Anything that sends audio or text somewhere other than the provider you configured.
-- Anything server-side in Dictate Cloud: manipulating credit, reaching another person's balance or
-  history, or getting transcription without paying for it.
 - Extensions and language packs: a crafted `.flex` that escapes its directory, overwrites files
   outside it, or gets code executed.
 - Anything that weakens or bypasses TLS beyond the switches documented below.

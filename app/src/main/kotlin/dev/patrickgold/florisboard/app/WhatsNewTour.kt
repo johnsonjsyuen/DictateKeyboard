@@ -14,7 +14,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.ui.viewinterop.AndroidView
-import dev.patrickgold.florisboard.dictate.cloud.DictateCloudPack
 import dev.patrickgold.florisboard.dictate.ui.AudioReactiveCloudOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateAuroraOrbView
 import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
@@ -203,9 +202,6 @@ internal enum class TourArt {
 
     /** Aurora and Lattice side by side, both idle, as the button actually sits there (5.3). */
     DESIGN_ORBS,
-
-    /** A credit pack filling up, minutes counting on (6.0). */
-    CREDIT_METER,
 
     /** One recording drawn twice, the second squeezed — what speeding up does to the bill (6.0). */
     WAVE_COMPRESS,
@@ -655,16 +651,6 @@ private val WhatsNewPages60: List<WhatsNewPage> = listOf(
         cta = R.string.apptour__start,
         route = null,
         kind = PageKind.INTRO,
-    ),
-    WhatsNewPage(
-        icon = Icons.Filled.Cloud,
-        eyebrow = R.string.apptour60__cloud_eyebrow,
-        title = R.string.apptour60__cloud_title,
-        body = R.string.apptour60__cloud_body,
-        cta = R.string.apptour60__cta_try,
-        route = Routes.Settings.DictateCloud,
-        highlight = true,
-        art = TourArt.CREDIT_METER,
     ),
     WhatsNewPage(
         icon = Icons.Filled.ContentCut,
@@ -1417,66 +1403,6 @@ private fun TourDesignOrbs() {
             update = { it.setMode(DictateLatticeSphereView.Mode.WEB, accent) },
             modifier = Modifier.size(96.dp),
         )
-    }
-}
-
-/**
- * A credit pack filling up: the minutes count on and the bar follows.
- *
- * The figure is [DictateCloudPack.PRO]'s own, read from the enum the shop reads, so the picture
- * cannot drift away from what is actually on sale. Deliberately no "x % cheaper" badge: that
- * number is worked out from Play's own prices at runtime and differs by country, so a fixed one
- * painted into an illustration would be a claim the tour cannot keep.
- */
-@Composable
-private fun TourCreditMeter() {
-    val accent = MaterialTheme.colorScheme.primary
-    val transition = rememberInfiniteTransition(label = "credit")
-    val cycle by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(4200, easing = LinearEasing), RepeatMode.Restart),
-        label = "credit-cycle",
-    )
-    // Fills over the first third and then rests, so someone arriving mid-animation still sees it
-    // happen rather than a bar that is simply already full.
-    val fill = (cycle / 0.34f).coerceAtMost(1f)
-    Surface(shape = RoundedCornerShape(20.dp), color = accent.copy(alpha = 0.12f)) {
-        Column(modifier = Modifier.width(200.dp).padding(18.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = (DictateCloudPack.PRO.minutes * fill).toInt().toString(),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = accent,
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = stringRes(R.string.apptour60__art_minutes),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_dictate_cloud),
-                    contentDescription = null,
-                    tint = accent,
-                    modifier = Modifier.size(24.dp),
-                )
-            }
-            Spacer(modifier = Modifier.height(14.dp))
-            Canvas(modifier = Modifier.fillMaxWidth().height(8.dp)) {
-                drawRoundRect(
-                    color = accent.copy(alpha = 0.22f),
-                    cornerRadius = CornerRadius(size.height / 2f),
-                )
-                drawRoundRect(
-                    color = accent,
-                    size = Size(size.width * fill, size.height),
-                    cornerRadius = CornerRadius(size.height / 2f),
-                )
-            }
-        }
     }
 }
 
@@ -4223,7 +4149,6 @@ private fun PageContent(page: WhatsNewPage) {
             when (page.art) {
                 TourArt.CLOUD_ORB -> TourCloudOrb()
                 TourArt.DESIGN_ORBS -> TourDesignOrbs()
-                TourArt.CREDIT_METER -> TourCreditMeter()
                 TourArt.WAVE_COMPRESS -> TourWaveCompress()
                 TourArt.PINYIN_STRIP -> TourPinyinStrip()
                 TourArt.SCRIPT_CAROUSEL -> TourScriptCarousel()

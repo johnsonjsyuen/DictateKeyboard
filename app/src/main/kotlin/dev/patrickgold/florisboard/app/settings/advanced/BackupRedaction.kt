@@ -59,12 +59,9 @@ object BackupRedaction {
         "gif__klipy_api_key",
         "dictate__api_key",
         "dictate__rewording_api_key",
-        // Not credentials, but they belong to the credential that is leaving. The nudge latch is keyed to
-        // a Cloud account, and `DictateCloud.forget()` resets it for exactly this reason — the next account
-        // must not inherit a low-credit warning it never earned. The KLIPY customer id is a stable
-        // per-install identifier sent to the provider; two devices sharing one would fuse two people's
-        // history there, and it is regenerated on first use, so dropping it costs nothing.
-        "dictate__cloud_low_credit_nudged",
+        // Not a credential, but it belongs to the credential that is leaving. The KLIPY customer id is a
+        // stable per-install identifier sent to the provider; two devices sharing one would fuse two
+        // people's history there, and it is regenerated on first use, so dropping it costs nothing.
         "gif__customer_id",
     )
 
