@@ -15,10 +15,10 @@
 #
 set -euo pipefail
 
-VERSION="1.13.3"
+VERSION="1.13.8"
 ORT_VERSION="1.24.3"
-# sha256 of sherpa-onnx-<VERSION>.aar from the GitHub release (verified 2026-06-22).
-AAR_SHA256="243ad797a3b6e75ebbeaf7a2ab4aec0777e7d71b730685abb762a120940b07b6"
+# sha256 of sherpa-onnx-<VERSION>.aar from the GitHub release (verified 2026-10-19).
+AAR_SHA256="633c24321e06b1fe79feafa03ea16cbc0f8a286641e2da3559bac91bdb13bd96"
 URL="https://github.com/k2-fsa/sherpa-onnx/releases/download/v${VERSION}/sherpa-onnx-${VERSION}.aar"
 ORT_AAR_SHA256="67397e4a970e75617f765d2015ceaf911917e1d822276cfb5792744e8085cbce"
 ORT_URL="https://repo1.maven.org/maven2/com/microsoft/onnxruntime/onnxruntime-android/${ORT_VERSION}/onnxruntime-android-${ORT_VERSION}.aar"

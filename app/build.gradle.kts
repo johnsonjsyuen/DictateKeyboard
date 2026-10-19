@@ -279,10 +279,10 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
-    // sherpa-onnx on-device STT spike (issue #104). Vendored from the v1.13.3 GitHub release AAR:
+    // sherpa-onnx on-device STT spike (issue #104). Vendored from the v1.13.8 GitHub release AAR:
     // the Kotlin/JNI API as a jar here; the matching native .so live in src/main/jniLibs/<abi>/.
     // Not on Maven Central, so consumed as a local file (see private/docs/research/sherpa-onnx-feasibility.md).
-    implementation(files("libs/sherpa-onnx-1.13.3.jar"))
+    implementation(files("libs/sherpa-onnx-1.13.8.jar"))
     // Generic ONNX Runtime Java/JNI bridge for Smart Turn v3. The matching 1.24.3 runtime is already
     // shipped by sherpa-onnx; tools/fetch-sherpa-onnx.sh extracts only the API jar + tiny JNI bridge,
     // avoiding a second ~20–27 MB copy of libonnxruntime per ABI.
@@ -317,7 +317,7 @@ val verifySherpaOnnxLibs by tasks.registering {
     // cache cannot serialize references to Gradle script/Project objects).
     val projectDir = layout.projectDirectory
     val required = buildList {
-        add(projectDir.file("libs/sherpa-onnx-1.13.3.jar").asFile)
+        add(projectDir.file("libs/sherpa-onnx-1.13.8.jar").asFile)
         add(projectDir.file("libs/onnxruntime-android-1.24.3.jar").asFile)
         // Must match the abiFilters above. A missing ABI here would not fail the build — it would
         // produce a split for that architecture carrying no sherpa-onnx at all, which installs
@@ -339,11 +339,16 @@ val verifySherpaOnnxLibs by tasks.registering {
         }
     }
 }
+// The native CrispASR/ggml runtime for the GGUF models (Qwen3-ASR, Granite Speech, Cohere Transcribe,
+// Moonshine): a baseline armv8-a build plus an ARMv8.2 dot-product build picked at runtime.
 val verifyQwenNativeLib by tasks.registering {
-    val library = layout.projectDirectory.file("src/main/jniLibs/arm64-v8a/libdictate-qwen.so").asFile
+    val libraries = listOf("libdictate-crispasr.so", "libdictate-crispasr-dotprod.so").map {
+        layout.projectDirectory.file("src/main/jniLibs/arm64-v8a/$it").asFile
+    }
     doLast {
-        if (!library.isFile) throw GradleException(
-            "Missing Qwen GGUF native runtime. Run: tools/build-qwen-native.sh android",
+        val missing = libraries.filterNot { it.isFile }
+        if (missing.isNotEmpty()) throw GradleException(
+            "Missing GGUF native runtime (${missing.joinToString { it.name }}). Run: tools/build-qwen-native.sh android",
         )
     }
 }

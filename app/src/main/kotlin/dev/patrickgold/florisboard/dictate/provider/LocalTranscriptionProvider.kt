@@ -38,7 +38,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
 /**
- * On-device speech-to-text using sherpa-onnx models or the native Qwen GGUF runtime.
+ * On-device speech-to-text using sherpa-onnx models or the native CrispASR GGUF runtime.
  * No audio ever leaves the device. This is the offline counterpart to [OpenAiCompatibleClient] and plugs
  * into the same [TranscriptionProvider] seam the dictation flow already uses.
  *
@@ -376,6 +376,12 @@ class LocalTranscriptionProvider(
          */
         const val JOINER = "joiner.onnx"
 
+        /** Single-file GGUF model (weights + tokenizer) for the native CrispASR runtime. */
+        const val GGUF = "model.gguf"
+
+        /** Moonshine's tokenizer, read by CrispASR from the GGUF's directory. */
+        const val MOONSHINE_TOKENIZER = "tokenizer.bin"
+
         /** Optional Silero VAD model, downloaded alongside each model; enables long-audio segmenting. */
         const val VAD = "vad.onnx"
 
@@ -467,11 +473,12 @@ private object RecognizerCache {
 
         // Language is baked into the Whisper and Canary configs at build time, so it is part of the cache
         // key (switching the input language rebuilds the recognizer; ~1s). A transducer decodes the audio
-        // as-is and ignores the language, Dolphin's config has no language field at all, and the Qwen GGUF
-        // runtime auto-detects, so it stays out of the key for those — otherwise switching languages would
-        // throw the model away for nothing. Thread count is part of the key for the native Qwen runtime.
+        // as-is and ignores the language, Dolphin's config has no language field at all, and the GGUF
+        // runtime takes the language on every decode (below), so it stays out of the key for those —
+        // otherwise switching languages would throw a model of up to 1.5 GB away for nothing. Thread count
+        // is part of the key for the native GGUF runtime.
         val languageless = kind == LocalModelKind.NEMO_TRANSDUCER || kind == LocalModelKind.DOLPHIN ||
-            kind == LocalModelKind.QWEN_GGUF
+            kind.crispAsrBackend != null
         val cacheKey = modelDir.absolutePath + "|" + (if (languageless) "" else language) + "|" + numThreads
         val existing = recognizer
         val rec = if (existing != null && cacheKey == key) {
@@ -485,6 +492,7 @@ private object RecognizerCache {
                 key = cacheKey
             }
         }
+        (rec as? CrispAsrGgufRecognizer)?.language = language
         // A fresh use cancels any pending unload for the now-current model and marks it in use.
         releasePending = false
         activeUsers++
@@ -539,14 +547,15 @@ private object RecognizerCache {
         numThreads: Int,
         language: String,
     ): LocalBatchRecognizer {
-        if (kind == LocalModelKind.QWEN_GGUF) {
+        kind.crispAsrBackend?.let { backend ->
             check(android.os.Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
-                "Qwen3-ASR Q4_K requires an ARM64 device"
+                "${backend.label} requires an ARM64 device"
             }
-            return QwenGgufRecognizer(File(encoder.parentFile, "model.gguf"), numThreads)
+            return CrispAsrGgufRecognizer(File(encoder.parentFile, LocalTranscriptionProvider.GGUF), backend, numThreads)
         }
         val modelConfig = when (kind) {
-            LocalModelKind.QWEN_GGUF -> error("Qwen GGUF is handled by its native runtime")
+            LocalModelKind.QWEN_GGUF, LocalModelKind.GRANITE_4_1_GGUF, LocalModelKind.COHERE_GGUF,
+            LocalModelKind.MOONSHINE_GGUF -> error("GGUF models are handled by the native CrispASR runtime")
             // NeMo Parakeet TDT (issue #154) and GigaAM (#255): encoder/decoder/joiner transducer.
             LocalModelKind.NEMO_TRANSDUCER -> OfflineModelConfig(
                 transducer = OfflineTransducerModelConfig(
