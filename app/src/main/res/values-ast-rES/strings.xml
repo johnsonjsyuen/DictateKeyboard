@@ -148,7 +148,6 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Xestos de la barra d\'espaciu</string>
     <!-- About UI strings -->
     <string name="about__view_licenses" comment="Label of View licenses button in About">Llicencies de códigu abiertu</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidá</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Códigu fonte</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicencies de códigu abiertu</string>
     <string name="about__version__title" comment="Preference title">Versión</string>
@@ -158,8 +157,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Contién les novedaes</string>
     <string name="about__repository__title" comment="Preference title">Depósitu (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">El códigu fonte, los discutinios, los problemes y más información</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Política de privacidá</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacidá d\'esti proyeutu</string>
     <string name="about__project_license__title" comment="Preference title">Llicencia del proyeutu</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: la carga del testu de la llicencia falló.\n-&gt; Motivu: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Llicencies de terceros</string>
@@ -167,7 +164,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">¡Afáyate!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">¡Gracies por usar {app_name}! Esta configuración rápida va guiate pelos pasos necesarios pa usar {app_name} nel preséu.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacidá</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Depósitu</string>
     <string name="setup__enable_ime__title">Activación de {app_name}</string>
     <string name="setup__enable_ime__description">Android rique que tolos teclaos personalizaos s\'activen per separtao enantes de poder usalos. Vete a la configuración de <i>Llingua y entrada</i> p\'activar «{app_name}» ellí.</string>

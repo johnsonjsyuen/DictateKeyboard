@@ -71,13 +71,10 @@
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name} appikon</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Licenser för öppen källkod</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Sekretesspolicy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Källkod</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenser för öppen källkod</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Sekretesspolicy</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Välkommen!</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Sekretesspolicy</string>
     <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->

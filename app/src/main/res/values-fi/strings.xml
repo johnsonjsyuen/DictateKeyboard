@@ -246,7 +246,6 @@
     <string name="about__title" comment="Title of About activity">Tietoa</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name}in kuvake</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Avoimen lähdekoodin lisenssit</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Tietosuojakäytäntö</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Lähdekoodi</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Avoimen lähdekoodin lisenssit</string>
     <string name="about__version__title" comment="Preference title">Versio</string>
@@ -256,8 +255,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Mitä uutta</string>
     <string name="about__repository__title" comment="Preference title">Tietovarasto (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Lähdekoodi, keskustelut, virheraportit sekä tietoa</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Tietosuojakäytäntö</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Projektin tietosuojakäytäntö</string>
     <string name="about__project_license__title" comment="Preference title">Projektin lisenssi</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}in on lisensoitu lisenssillä {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Virhe: Lisenssitekstin lataus epäonnistui.\n-&gt; Syy: {error_message}</string>
@@ -266,7 +263,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Tervetuloa!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Kiitos kun käytät sovellusta {app_name}! Tämä pika-asennus ohjaa sinut ottamaan sovelluksen {app_name} käyttöön laitteellasi.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Tietosuojakäytäntö</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Tietovarasto</string>
     <string name="setup__enable_ime__title">Ota käyttöön {app_name}</string>
     <string name="setup__enable_ime__description">Android vaatii, että jokainen näppäimistö on otettu erikseen käyttöön järjestelmäasetuksissa. Avaa Järjestelmän <i>Kielet ja syöttötapa</i>-asetukset ja ota käyttöön \"{app_name}\".</string>

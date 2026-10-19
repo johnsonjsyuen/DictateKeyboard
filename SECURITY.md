@@ -44,8 +44,7 @@ The Android app and the Wear OS app. In particular:
 
 These are how the app is built, and reporting them will get you this section quoted back:
 
-- **Your audio and text go to the AI provider you configured.** That is what the app is for; the
-  [privacy policy](PRIVACY_POLICY.md) describes exactly what leaves the device and when. Choosing
+- **Your audio and text go to the AI provider you configured.** That is what the app is for. Choosing
   the on-device engine is how you avoid it entirely.
 - **Your API key is stored on the device**, in Dictate's private storage. An attacker who already
   has root, an unlocked bootloader, or physical access to an unlocked phone can read it — that is

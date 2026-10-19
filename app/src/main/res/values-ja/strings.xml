@@ -605,7 +605,6 @@
     <string name="about__title" comment="Title of About activity">アプリについて</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name}のアプリアイコン</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">オープンソースライセンス</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">プライバシーポリシー</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">ソースコード</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">オープンソースライセンス</string>
     <string name="about__data_attributions__title">データとモデルのライセンス</string>
@@ -617,8 +616,6 @@
     <string name="about__changelog__summary" comment="Preference summary">新機能</string>
     <string name="about__repository__title" comment="Preference title">リポジトリ (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">ソースコード、ディスカッション、課題、情報</string>
-    <string name="about__privacy_policy__title" comment="Preference title">プライバシーポリシー</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">このプロジェクトのプライバシーポリシー</string>
     <string name="about__project_license__title" comment="Preference title">プロジェクトライセンス</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}は{license_name}の下でライセンスされています</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">エラー: ライセンステキストの読み込みに失敗しました。\n-&gt; 理由: {error_message}</string>
@@ -628,7 +625,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">ようこそ！</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name}をご利用いただきありがとうございます！このクイックセットアップでは、お使いのデバイスで{app_name}を使用するために必要な手順を案内します。</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">プライバシーポリシー</string>
     <string name="setup__footer__repository" comment="Repository label for URL">リポジトリ</string>
     <string name="setup__enable_ime__title">{app_name}を有効にする</string>
     <string name="setup__enable_ime__description">Androidでは、使用する前にすべてのカスタムキーボードを個別に有効にする必要があります。システムの<i>「言語と入力」</i>設定を開き、「{app_name}」を有効にしてください。</string>
@@ -1116,10 +1112,6 @@
     <string name="about__based_on_floris__title">FlorisBoardベース</string>
     <string name="about__based_on_floris__summary">Patrick Goldinger 氏と貢献者による FlorisBoard のフォーク、Apache 2.0。タップして開きます。</string>
     <string name="about__made_by">DevEmperorが❤️を込めて制作\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">フィードバックとサポート</string>
-    <string name="about__feedback__summary">質問・不具合・アイデアをメールで送信</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">文字起こしの方法を選ぶ</string>
     <string name="setup__provider__choice_own_title">自分の AI プロバイダーを使う</string>
     <string name="setup__provider__choice_own_body">お好きなプロバイダーでキーを作成します。Groq は日常的な音声入力なら無料です。ご自身のアカウントのまま、プロバイダーの料金で直接支払います。2分ほどで終わります。</string>
@@ -1302,9 +1294,7 @@
     <string name="dictate__action_yes">はい</string>
     <string name="dictate__action_no">いいえ、結構です</string>
     <string name="dictate__promo_rate_message">Dictateはいかがですか？</string>
-    <string name="dictate__promo_donate_message">Dictateを応援しませんか？</string>
     <string name="dictate__promo_rate_action">評価する</string>
-    <string name="dictate__promo_donate_action">寄付する</string>
     <string name="dictate__promo_changelog_message">Dictateが更新されました</string>
     <string name="dictate__promo_changelog_action">詳細</string>
     <string name="dictate__title">Dictate</string>
@@ -1660,7 +1650,6 @@
     <string name="changelog__view_all">すべての変更を表示</string>
     <string name="changelog__intro">Dictateが更新されました。新着情報はこちら:</string>
     <string name="changelog__version_header">バージョン{version}</string>
-    <string name="changelog__donate">Dictateはいかがですか？ ここをタップして開発を応援してください ♥</string>
     <string name="changelog__current">• まったく新しいキーボード: Dictateは、音声パネルを開く専用マイクキーを備えた本格的な多言語レイアウトキーボードとして提供されるようになりました。\n• 自分のAIを使用: OpenAI互換の任意のプロバイダーを選び、設定 → DictateでAPIキーを入力します。\n• 選択したモデルによるスマートな書式設定と言い換え。\n• 以前のDictateアプリの設定が自動的にインポートされます。</string>
     <string name="changelog__v4_1_0">• 新機能: キーボードから直接絵文字を検索できます。\n• 新しい文字起こしプロバイダー: Soniox。\n• 直前のディクテーションを再挿入し、キーボードを閉じたときに中断された録音を復元できます。\n• プロンプトバーがライブ更新されるようになりました。プロンプトを長押しすると編集できます。\n• AIプロバイダー画面に、有効な文字起こしプロバイダーと言い換えプロバイダーの両方が表示されるようになりました。\n• 録音ボタンが大きくなり、タップしやすくなりました。\n• 修正: 一部の言語でサポートの案内が固まってバーを覆ってしまう問題を修正しました。プロンプト・キーボード・テーマを選択した状態でバックアップが失敗しなくなりました。保存したAPIキーがアップデート後も保持されます。</string>
     <string name="changelog__v4_1_1">• 修正: 一部の端末でアクセントカラーが緑色に表示されることがありました。キーやボタンが本来のDictateブルーに戻りました。</string>
@@ -1983,7 +1972,7 @@
     <string name="apptour51__more_body">小さな改良もたくさんあります：設定で使用する文字起こしの言語を選べる、停止ボタンが実行中のリクエストを本当にキャンセルするようになった、API キーの表示/非表示切り替え、言語をまたぐ自動修正のない多言語入力 — さらにクラシックレイアウトや数字パッドなど、さまざまな修正も。</string>
     <string name="apptour51__outro_eyebrow">これが 5.1</string>
     <string name="apptour51__outro_title">アップデートをお楽しみください</string>
-    <string name="apptour51__outro_body">Dictate をご利用いただきありがとうございます！ 毎日役立っているなら、少しの寄付がこのプロジェクトを支えます。これらのツアーはいつでも「設定 › アプリについて」から見直せます。</string>
+    <string name="apptour51__outro_body">Dictate をご利用いただきありがとうございます！ これらのツアーはいつでも「設定 › アプリについて」から見直せます。</string>
     <string name="apptour52__cta_try">試す</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">どこでも音声入力</string>

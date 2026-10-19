@@ -531,7 +531,6 @@
     <string name="about__title" comment="Title of About activity">Quant a</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona de l\'aplicació de {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Llicències de codi obert</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicències de codi obert</string>
     <string name="about__data_attributions__title">Llicències de dades i models</string>
@@ -543,8 +542,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Novetats</string>
     <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Codi font, debats, incidències i informació</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Política de privacitat</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacitat per a aquest projecte</string>
     <string name="about__project_license__title" comment="Preference title">Llicència del projecte</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} està sota la llicència de {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: No s\'ha pogut carregar la llicència.\n-&gt; Motiu: {error_message}</string>
@@ -554,7 +551,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Benvinguts!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Gràcies per usar {app_name}! Aquesta configuració ràpida t\'acompanyarà en els passos necessaris per poder usar {app_name} al teu dispositiu.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacitat</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repositori</string>
     <string name="setup__enable_ime__title">Habilita {app_name}</string>
     <string name="setup__enable_ime__description">Android requereix que cada teclat personalitzat s\'habiliti per separat abans de poder usar-lo. Obre els paràmetres de <i>Idioma i entrada</i> a Sistema i allà habilita \"{app_name}\".</string>
@@ -1054,10 +1050,6 @@
     <string name="about__based_on_floris__title">Basat en FlorisBoard</string>
     <string name="about__based_on_floris__summary">Una bifurcació de FlorisBoard de Patrick Goldinger i col·laboradors, Apache 2.0. Toca per obrir-lo.</string>
     <string name="about__made_by">Fet amb ❤️ per DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Comentaris i assistència</string>
-    <string name="about__feedback__summary">Envia un correu amb preguntes, errors o idees</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Tria com transcriu el Dictate</string>
     <string name="setup__provider__choice_own_title">Utilitzar el teu propi proveïdor d\'IA</string>
     <string name="setup__provider__choice_own_body">Crea una clau al proveïdor que vulguis: Groq és gratuït per al dictat del dia a dia. Conserves el teu compte i pagues directament al proveïdor als seus preus. Es triga uns dos minuts.</string>
@@ -1240,9 +1232,7 @@
     <string name="dictate__action_yes">Sí</string>
     <string name="dictate__action_no">No, gràcies</string>
     <string name="dictate__promo_rate_message">T\'agrada el Dictate?</string>
-    <string name="dictate__promo_donate_message">Vols donar suport al Dictate?</string>
     <string name="dictate__promo_rate_action">Valora</string>
-    <string name="dictate__promo_donate_action">Fes un donatiu</string>
     <string name="dictate__promo_changelog_message">El Dictate s\'ha actualitzat</string>
     <string name="dictate__promo_changelog_action">Detalls</string>
     <string name="dictate__title">Dictate</string>
@@ -1598,7 +1588,6 @@
     <string name="changelog__view_all">Mostra tots els canvis</string>
     <string name="changelog__intro">El Dictate s\'ha actualitzat. Aquestes són les novetats:</string>
     <string name="changelog__version_header">Versió {version}</string>
-    <string name="changelog__donate">T\'agrada el Dictate? Toca aquí per donar suport al desenvolupament ♥</string>
     <string name="changelog__current">• Teclat totalment nou: el Dictate ara és un teclat amb disposició completa i multilingüe, amb una tecla de micròfon dedicada que obre el tauler de veu.\n• Usa la teva pròpia IA: tria qualsevol proveïdor compatible amb OpenAI i introdueix la teva clau d\'API a Configuració → Dictate.\n• Formatació i reformulació intel·ligents amb el model que triïs.\n• La configuració de l\'app Dictate anterior s\'importa automàticament.</string>
     <string name="changelog__v4_1_0">• Nou: cerca emojis directament des del teclat.\n• Nou proveïdor de transcripció: Soniox.\n• Torna a inserir l\'últim dictat i recupera els enregistraments interromputs en tancar-se el teclat.\n• La barra de prompts ara s\'actualitza en directe: mantén premut un prompt per editar-lo.\n• La pantalla de proveïdors d\'IA ara mostra tant el proveïdor de transcripció com el de reformulació actius.\n• Botó d\'enregistrament més gran i més fàcil de prémer.\n• Correccions: un avís de suport es podia quedar encallat i tapar la barra en alguns idiomes; la còpia de seguretat ja no falla quan hi ha prompts, teclat o tema seleccionats; les claus d\'API desades es conserven en actualitzar.</string>
     <string name="changelog__v4_1_1">• Correcció: el color d\'accent podia aparèixer verd en alguns dispositius; les tecles i els botons tornen a ser del blau de Dictate.</string>
@@ -1922,7 +1911,7 @@
     <string name="apptour51__more_body">També hi ha moltes millores més petites: tria l’idioma de transcripció actiu a la configuració, ara el botó d’aturada cancel·la de debò una petició en curs, un interruptor per mostrar o amagar les claus API i l’escriptura multilingüe sense correcció automàtica entre idiomes — a més de moltes correccions a la disposició clàssica, el teclat numèric i més enllà.</string>
     <string name="apptour51__outro_eyebrow">Això és la 5.1</string>
     <string name="apptour51__outro_title">Gaudeix de l’actualització</string>
-    <string name="apptour51__outro_body">Gràcies per fer servir Dictate! Si t’ajuda cada dia, una petita donació manté el projecte en marxa. Pots tornar a veure qualsevol d’aquests recorreguts quan vulguis a Configuració › Quant a.</string>
+    <string name="apptour51__outro_body">Gràcies per fer servir Dictate! Pots tornar a veure qualsevol d’aquests recorreguts quan vulguis a Configuració › Quant a.</string>
     <string name="apptour52__cta_try">Prova-ho</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Dicta a tot arreu</string>

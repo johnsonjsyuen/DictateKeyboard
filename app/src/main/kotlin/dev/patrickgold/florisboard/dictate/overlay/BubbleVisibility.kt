@@ -19,7 +19,7 @@ import dev.patrickgold.florisboard.dictate.DictateController
  * It used to live inline in the controller's flow collector, where its second clause read "the state is
  * not idle". That was meant as *a dictation is running*, and for a while the two were the same thing.
  * They stopped being the same when the state machine gained resting states that merely carry an offer:
- * a rate/donate nudge, a recording the screen going dark interrupted, a failure with the audio kept for
+ * a rate nudge, a recording the screen going dark interrupted, a failure with the audio kept for
  * a retry. All of those are Smartbar chips — they can only be seen and dismissed on the keyboard — so
  * for someone using the button with a different keyboard, one of them parked the state off idle with
  * nothing in the overlay world able to clear it again, and the button stayed on screen over every app

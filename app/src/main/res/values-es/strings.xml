@@ -624,7 +624,6 @@
     <string name="about__title" comment="Title of About activity">Acerca de</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icono de la aplicación de {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Licencias de código abierto</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidad</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Código fuente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licencias de código abierto</string>
     <string name="about__data_attributions__title">Licencias de datos y modelos</string>
@@ -636,8 +635,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Qué hay de nuevo</string>
     <string name="about__repository__title" comment="Preference title">Repositorio (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Código fuente, discusiones, problemas e informaciones</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Política de privacidad</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacidad para este proyecto</string>
     <string name="about__project_license__title" comment="Preference title">Licencia del proyecto</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} está licenciado bajo {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Fallo al cargar texto de licencia.\n-&gt; Razón: {error_message}</string>
@@ -647,7 +644,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">¡Bienvenido/a!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">¡Gracias por usar {app_name}! Esta configuración rápida lo guiará a través de los pasos necesarios para poder utilizar {app_name} en su dispositivo.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacidad</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repositorio</string>
     <string name="setup__enable_ime__title">Habilitar {app_name}</string>
     <string name="setup__enable_ime__description">Android requiere que cada teclado personalizado esté habilitado separadamente antes de poder usarlo. Abra los ajustes de <i>Idiomas e introducción de texto</i> en Sistema y de ahí habilite \"{app_name}\".</string>
@@ -1166,10 +1162,6 @@
     <string name="about__based_on_floris__title">Basado en FlorisBoard</string>
     <string name="about__based_on_floris__summary">Una bifurcación de FlorisBoard de Patrick Goldinger y colaboradores, Apache 2.0. Toca para abrirlo.</string>
     <string name="about__made_by">Hecho con ❤️ por DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Comentarios y soporte</string>
-    <string name="about__feedback__summary">Envía un correo con preguntas, errores o ideas</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Elige cómo transcribe Dictate</string>
     <string name="setup__provider__choice_own_title">Usar tu propio proveedor de IA</string>
     <string name="setup__provider__choice_own_body">Crea una clave con el proveedor que prefieras: Groq es gratuito para el dictado diario. Conservas tu propia cuenta y pagas directamente al proveedor a sus precios. Tarda unos dos minutos.</string>
@@ -1352,9 +1344,7 @@
     <string name="dictate__action_yes">Sí</string>
     <string name="dictate__action_no">No, gracias</string>
     <string name="dictate__promo_rate_message">¿Te gusta Dictate?</string>
-    <string name="dictate__promo_donate_message">¿Apoyar a Dictate?</string>
     <string name="dictate__promo_rate_action">Valorar</string>
-    <string name="dictate__promo_donate_action">Donar</string>
     <string name="dictate__promo_changelog_message">Dictate se ha actualizado</string>
     <string name="dictate__promo_changelog_action">Detalles</string>
     <string name="dictate__title">Dictate</string>
@@ -1710,7 +1700,6 @@
     <string name="changelog__view_all">Ver todos los cambios</string>
     <string name="changelog__intro">Dictate se ha actualizado. Esto es lo nuevo:</string>
     <string name="changelog__version_header">Versión {version}</string>
-    <string name="changelog__donate">¿Te gusta Dictate? Toca aquí para apoyar el desarrollo ♥</string>
     <string name="changelog__current">• Teclado completamente nuevo: Dictate ahora se ofrece como un teclado de diseño completo y multilingüe con una tecla de micrófono dedicada que abre el panel de voz.\n• Usa tu propia IA: elige cualquier proveedor compatible con OpenAI e introduce tu clave de API en Ajustes → Dictate.\n• Formato y reformulación inteligentes con el modelo que elijas.\n• Tus ajustes de la app Dictate anterior se importan automáticamente.</string>
     <string name="changelog__v4_1_0">• Nuevo: busca emojis directamente desde el teclado.\n• Nuevo proveedor de transcripción: Soniox.\n• Vuelve a insertar tu último dictado y recupera las grabaciones interrumpidas al cerrar el teclado.\n• La barra de prompts ahora se actualiza en vivo: mantén pulsado un prompt para editarlo.\n• La pantalla de proveedores de IA ahora muestra tanto el proveedor de transcripción como el de reformulación activos.\n• Botón de grabación más grande y fácil de pulsar.\n• Correcciones: un aviso de apoyo podía quedarse bloqueado y tapar la barra en algunos idiomas; la copia de seguridad ya no falla con prompts, teclado o tema seleccionados; las claves de API guardadas se conservan al actualizar.</string>
     <string name="changelog__v4_1_1">• Corrección: el color de acento podía verse verde en algunos dispositivos; las teclas y los botones vuelven al azul de Dictate.</string>
@@ -2034,7 +2023,7 @@
     <string name="apptour51__more_body">También muchas mejoras más pequeñas: elige el idioma de transcripción activo en los ajustes, el botón de detener ahora cancela de verdad una solicitud en curso, un interruptor para mostrar u ocultar las claves API y escritura multilingüe sin autocorrección entre idiomas — además de muchas correcciones en el diseño clásico, el teclado numérico y más allá.</string>
     <string name="apptour51__outro_eyebrow">Esto es 5.1</string>
     <string name="apptour51__outro_title">Disfruta la actualización</string>
-    <string name="apptour51__outro_body">¡Gracias por usar Dictate! Si te ayuda cada día, una pequeña donación mantiene el proyecto en marcha. Puedes volver a ver cualquiera de estos recorridos en cualquier momento en Ajustes › Acerca de.</string>
+    <string name="apptour51__outro_body">¡Gracias por usar Dictate! Puedes volver a ver cualquiera de estos recorridos en cualquier momento en Ajustes › Acerca de.</string>
     <string name="apptour52__cta_try">Probar</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Dicta en todas partes</string>

@@ -275,7 +275,7 @@ fun LegacyDictateLayout(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = KeyMarginH, vertical = KeyMarginV),
             ) {
                 // Row 1: normally the prompt strip (when rewording is on), but it doubles as the status
-                // surface – errors, the interrupted-recording chip and the rate/donate/milestone promos
+                // surface – errors, the interrupted-recording chip and the rate/milestone promos
                 // reuse the same DictateSmartbarUi the main keyboard shows, so all of those work here too.
                 val showStatus = dictateState is DictateController.UiState.Error ||
                     dictateState is DictateController.UiState.Interrupted ||

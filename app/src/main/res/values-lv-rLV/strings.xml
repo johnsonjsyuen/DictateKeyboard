@@ -586,7 +586,6 @@
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name} lietotnes ikona</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Atvērtā pirmavota licences</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privātuma nosacījumi</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Avota kods</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Atvērtā pirmavota licences</string>
     <string name="about__data_attributions__title">Datu un modeļu licences</string>
@@ -598,8 +597,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Kas jauns?</string>
     <string name="about__repository__title" comment="Preference title">Glabātava (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Pirmkods, apspriedes, nepilnības un uzziņa</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privātuma nosacījumi</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Šī projekta privātuma nosacījumi</string>
     <string name="about__project_license__title" comment="Preference title">Projekta licence</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} ir licencēts ar {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kļūda: neizdevās ielādēt licences saturu.\n-&gt; Iemesls: {error_message}</string>
@@ -609,7 +606,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Sveiciens!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Paldies par {app_name} izmantošanu! Ātrā uzstādīšana virza caur nepieciešamajiem soļiem, lai ierīcē izmantotu {app_name}.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privātuma nosacījumi</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Glabātava</string>
     <string name="setup__enable_ime__title">Iespējot {app_name}</string>
     <string name="setup__enable_ime__description">Android ir nepieciešams pirms katras pielāgotās tastatūras izmantošanas to iespējot. Lai to izdarītu, jāatver sistēmas iestatījumi <i>Valoda un ievade</i> un tur jāiespējo \"{app_name}\".</string>
@@ -1129,10 +1125,6 @@
     <string name="about__based_on_floris__title">Balstīts uz FlorisBoard</string>
     <string name="about__based_on_floris__summary">FlorisBoard atzars, ko izstrādājis Patrick Goldinger un līdzautori, Apache 2.0. Pieskaries, lai atvērtu.</string>
     <string name="about__made_by">Izveidoja ar ❤️ DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Atsauksmes un atbalsts</string>
-    <string name="about__feedback__summary">Nosūtiet e-pastu ar jautājumiem, kļūdām vai idejām</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Izvēlieties, kā Dictate atšifrē runu</string>
     <string name="setup__provider__choice_own_title">Izmantot savu MI pakalpojuma sniedzēju</string>
     <string name="setup__provider__choice_own_body">Izveidojiet atslēgu pie sev tīkama pakalpojuma sniedzēja — Groq ikdienas diktēšanai ir bez maksas. Jūs paturat savu kontu un maksājat tieši sniedzējam pēc viņa cenām. Aizņem apmēram divas minūtes.</string>
@@ -1315,9 +1307,7 @@
     <string name="dictate__action_yes">Jā</string>
     <string name="dictate__action_no">Nē, paldies</string>
     <string name="dictate__promo_rate_message">Vai jums patīk Dictate?</string>
-    <string name="dictate__promo_donate_message">Atbalstīt Dictate?</string>
     <string name="dictate__promo_rate_action">Novērtēt</string>
-    <string name="dictate__promo_donate_action">Ziedot</string>
     <string name="dictate__promo_changelog_message">Dictate tika atjaunināts</string>
     <string name="dictate__promo_changelog_action">Detaļas</string>
     <string name="dictate__title">Dictate</string>
@@ -1673,7 +1663,6 @@
     <string name="changelog__view_all">Skatīt visas izmaiņas</string>
     <string name="changelog__intro">Dictate tika atjaunināts. Lūk, kas jauns:</string>
     <string name="changelog__version_header">Versija {version}</string>
-    <string name="changelog__donate">Vai jums patīk Dictate? Pieskarieties šeit, lai atbalstītu izstrādi ♥</string>
     <string name="changelog__current">• Pavisam jauna tastatūra: Dictate tagad tiek piedāvāta kā pilnvērtīga daudzvalodu izkārtojuma tastatūra ar īpašu mikrofona taustiņu, kas atver balss paneli.\n• Izmantojiet savu MI: izvēlieties jebkuru ar OpenAI saderīgu pakalpojuma sniedzēju un ievadiet savu API atslēgu sadaļā Iestatījumi → Dictate.\n• Vieda formatēšana un pārformulēšana, ko nodrošina jūsu izvēlētais modelis.\n• Jūsu iestatījumi no iepriekšējās Dictate lietotnes tiek importēti automātiski.</string>
     <string name="changelog__v4_1_0">• Jauns: meklē emocijzīmes tieši no tastatūras.\n• Jauns transkripcijas pakalpojums: Soniox.\n• Atkārtoti ievieto pēdējo diktātu un atjauno ierakstus, kas tika pārtraukti, aizverot tastatūru.\n• Uzvedņu josla tagad atjauninās reāllaikā: turi nospiestu uzvedni, lai to rediģētu.\n• AI pakalpojumu ekrānā tagad redzams gan aktīvais transkripcijas, gan pārformulēšanas pakalpojums.\n• Lielāka ierakstīšanas poga, kurā vieglāk trāpīt.\n• Labojumi: atbalsta paziņojums dažās valodās varēja iestrēgt un aizsegt joslu; dublēšana vairs neizgāžas, kad atlasītas uzvednes, tastatūra vai motīvs; saglabātās API atslēgas tiek saglabātas pēc atjaunināšanas.</string>
     <string name="changelog__v4_1_1">• Labojums: akcenta krāsa dažās ierīcēs varēja izskatīties zaļa; taustiņi un pogas atkal ir Dictate zilā krāsā.</string>
@@ -1998,7 +1987,7 @@
     <string name="apptour51__more_body">Arī daudz mazāku uzlabojumu: iestatījumos izvēlies aktīvo transkripcijas valodu, apturēšanas poga tagad patiešām atceļ notiekošu pieprasījumu, API atslēgu rādīšanas/slēpšanas slēdzis un daudzvalodu rakstīšana bez starpvalodu automātiskās labošanas — kā arī daudz labojumu klasiskajā izkārtojumā, ciparu blokā un citur.</string>
     <string name="apptour51__outro_eyebrow">Tā ir 5.1</string>
     <string name="apptour51__outro_title">Izbaudi atjauninājumu</string>
-    <string name="apptour51__outro_body">Paldies, ka izmanto Dictate! Ja tas tev palīdz katru dienu, neliels ziedojums palīdz projektam turpināties. Jebkuru no šīm tūrēm vari apskatīt jebkurā laikā sadaļā Iestatījumi › Par.</string>
+    <string name="apptour51__outro_body">Paldies, ka izmanto Dictate! Jebkuru no šīm tūrēm vari apskatīt jebkurā laikā sadaļā Iestatījumi › Par.</string>
     <string name="apptour52__cta_try">Izmēģināt</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Diktē jebkur</string>

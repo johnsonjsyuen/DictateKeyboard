@@ -244,11 +244,11 @@ object DictateController {
     }
 
     /**
-     * Which one-time nudge is being shown. RATE/DONATE are usage-gated (see [maybePromptForReview]);
+     * Which one-time nudge is being shown. RATE is usage-gated (see [maybePromptForReview]);
      * CHANGELOG is shown right after an app update (see [maybePromptChangelog]) and opens the in-app
      * "What's new" dialog instead of a web page.
      */
-    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE }
+    enum class PromoKind { RATE, CHANGELOG, FLOATING_BUTTON, MILESTONE }
 
     /**
      * Where the active dictation's output goes: the keyboard editor ([OutputTarget.IME]) or the
@@ -744,7 +744,7 @@ object DictateController {
     /** Shortest gap between two wake-up pokes at the same sleeping server (#189). */
     private const val WARM_UP_THROTTLE_MS = 60_000L
 
-    /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
+    /** Cumulative recorded audio (seconds) after which the rate nudge appears (roadmap 9.7). */
 
     /** How long the discarded mic takes to reach the bin; the bar outlives the recording by this much. */
     const val PUSH_TO_TALK_FLIGHT_MS = 950L
@@ -753,7 +753,6 @@ object DictateController {
     const val PUSH_TO_TALK_LOCK_FLASH_MS = 600L
 
     private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
-    private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
 
     /**
      * Single entry point for the mic button: starts recording, or stops and transcribes. [target]
@@ -1727,7 +1726,7 @@ object DictateController {
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
         // Capture the recorded length before leaving the Recording state, to credit the usage counter
-        // that gates the rate/donate nudges (roadmap 9.7/9.8). Includes any carried-over seconds.
+        // that gates the rate nudge (roadmap 9.7). Includes any carried-over seconds.
         val recordedSeconds = recordedSecondsOf(_state.value)
         val recorderStopStartedNanos = SystemClock.elapsedRealtimeNanos()
         val audioFile = activeRecorder?.stop()
@@ -3960,7 +3959,7 @@ object DictateController {
      * True when the dictation is going into a password field or an incognito one, so it must not be
      * logged or kept for re-insert.
      *
-     * Every path is asked, because the privacy policy promises it of every path (#383). Until then only
+     * Every path is asked, because the promise has to hold for every path (#383). Until then only
      * the keyboard was; the floating button was assumed to have no signal, though the accessibility node
      * says `isPassword`. The voice IME passes its field's answer in [startRecognition]. An app asking
      * Android's speech recognition says nothing about what the words are for, so that request is logged.
@@ -4020,21 +4019,19 @@ object DictateController {
         )
     }
 
-    // --- Rate / Donate nudges (roadmap 9.7/9.8) -------------------------------------------------
+    // --- Rate nudge (roadmap 9.7) ---------------------------------------------------------------
 
     /**
-     * Shows a one-time rate or donate nudge in the Smartbar once the user has accumulated enough
-     * transcribed audio, mirroring the legacy app: rate after [RATE_THRESHOLD_SECONDS], donate after
-     * [DONATE_THRESHOLD_SECONDS]. Each is shown until acted on (a flag is then set); accepting or
-     * declining donate also marks rate as done, so a donor is never asked to rate. No-op unless idle.
+     * Shows a one-time rate nudge in the Smartbar once the user has accumulated more than
+     * [RATE_THRESHOLD_SECONDS] of transcribed audio, mirroring the legacy app. It is shown until acted
+     * on (a flag is then set). No-op unless idle.
      * Called when the keyboard appears so it never interrupts an in-flight recording/transcription.
      */
     fun maybePromptForReview() {
         if (_state.value !is UiState.Idle) return
         val total = prefs.dictate.totalAudioSeconds.get()
         val kind = when {
-            total > DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasDonated.get() -> PromoKind.DONATE
-            total > RATE_THRESHOLD_SECONDS && total <= DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasRated.get() -> PromoKind.RATE
+            total > RATE_THRESHOLD_SECONDS && !prefs.dictate.hasRated.get() -> PromoKind.RATE
             else -> return
         }
         _state.value = UiState.Promo(kind)
@@ -4096,7 +4093,7 @@ object DictateController {
     }
 
     /**
-     * Acts on the active promo and marks it done: RATE/DONATE open the Play Store / PayPal page,
+     * Acts on the active promo and marks it done: RATE opens the Play Store page,
      * CHANGELOG opens the app (which then shows the "What's new" dialog), FLOATING_BUTTON deep-links to its
      * settings screen. No-op otherwise.
      */
@@ -4106,7 +4103,6 @@ object DictateController {
             val intent = when (kind) {
                 PromoKind.RATE -> Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://play.google.com/store/apps/details?id=net.devemperor.dictate"))
-                PromoKind.DONATE -> Intent(Intent.ACTION_VIEW, Uri.parse("https://paypal.me/DevEmperor"))
                 PromoKind.CHANGELOG -> Intent(context, FlorisAppActivity::class.java)
                 PromoKind.FLOATING_BUTTON -> Intent(
                     Intent.ACTION_VIEW,
@@ -4134,15 +4130,11 @@ object DictateController {
         _state.value = UiState.Idle
     }
 
-    /** Persists the "handled" flags: declining/accepting donate also marks rate as done. */
+    /** Persists the "handled" flags. */
     private fun markPromoDone(kind: PromoKind) {
         scope.launch {
             when (kind) {
                 PromoKind.RATE -> prefs.dictate.hasRated.set(true)
-                PromoKind.DONATE -> {
-                    prefs.dictate.hasDonated.set(true)
-                    prefs.dictate.hasRated.set(true)
-                }
                 // Remember this version so the keyboard nudge shows only once per update. The in-app
                 // dialog stays governed by versionLastChangelog, so tapping/dismissing here never hides it.
                 PromoKind.CHANGELOG -> prefs.dictate.changelogNudgeVersion.set(BuildConfig.VERSION_NAME)
@@ -4179,7 +4171,7 @@ object DictateController {
         target: OutputTarget? = null,
     ) {
         // A nudge is a notice, not work: it must not swallow an action the user asked for. Left over from
-        // #339, where a rate/donate chip parked the state machine and the floating button's long-press
+        // #339, where a rate chip parked the state machine and the floating button's long-press
         // menu quietly did nothing. Interrupted stays out — an offer of kept audio hangs on it.
         if (_state.value !is UiState.Idle && _state.value !is UiState.Error &&
             _state.value !is UiState.Promo

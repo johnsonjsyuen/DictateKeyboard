@@ -620,7 +620,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__title" comment="Title of About activity">Tentang</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikon aplikasi {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Lisensi sumber terbuka</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Kebijakan privasi</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kode sumber</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lisensi sumber terbuka</string>
     <string name="about__data_attributions__title">Lisensi data dan model</string>
@@ -632,8 +631,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__changelog__summary" comment="Preference summary">Apa yang baru</string>
     <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Sumber kode, diskusi, masalah dan info</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Kebijakan privasi</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Kebijakan privasi untuk proyek ini</string>
     <string name="about__project_license__title" comment="Preference title">Lisensi proyek</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} dilisensikan di bawah {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kesalahan: Gagal memuat teks lisensi.\n-&gt; Alasan: {error_message}</string>
@@ -643,7 +640,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Selamat datang!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Terima kasih telah menggunakan {app_name}! Penyiapan cepat ini memandu Anda melalui langkah-langkah yang diperlukan untuk menggunakan {app_name} di perangkat Anda.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Kebijakan privasi</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repositori</string>
     <string name="setup__enable_ime__title">Aktifkan {app_name}</string>
     <string name="setup__enable_ime__description">Android mengharuskan setiap papan ketik kustom diaktifkan secara terpisah sebelum Anda dapat menggunakannya. Buka setelan <i>Bahasa &amp; masukan</i> sistem, dan di sana aktifkan \"{app_name}\".</string>
@@ -1139,10 +1135,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__based_on_floris__title">Berdasarkan FlorisBoard</string>
     <string name="about__based_on_floris__summary">Cabang dari FlorisBoard oleh Patrick Goldinger dan kontributor, Apache 2.0. Ketuk untuk membuka.</string>
     <string name="about__made_by">Dibuat dengan ❤️ oleh DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Masukan &amp; dukungan</string>
-    <string name="about__feedback__summary">Kirim email berisi pertanyaan, bug, atau ide</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Pilih cara Dictate menyalin suara</string>
     <string name="setup__provider__choice_own_title">Pakai penyedia AI sendiri</string>
     <string name="setup__provider__choice_own_body">Buat kunci di penyedia pilihanmu — Groq gratis untuk pendiktean sehari-hari. Kamu tetap memegang akunmu sendiri dan membayar langsung ke penyedia dengan harganya. Perlu sekitar dua menit.</string>
@@ -1325,9 +1317,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__action_yes">Ya</string>
     <string name="dictate__action_no">Tidak, terima kasih</string>
     <string name="dictate__promo_rate_message">Suka dengan Dictate?</string>
-    <string name="dictate__promo_donate_message">Dukung Dictate?</string>
     <string name="dictate__promo_rate_action">Beri nilai</string>
-    <string name="dictate__promo_donate_action">Donasi</string>
     <string name="dictate__promo_changelog_message">Dictate telah diperbarui</string>
     <string name="dictate__promo_changelog_action">Detail</string>
     <string name="dictate__title">Dictate</string>
@@ -1683,7 +1673,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="changelog__view_all">Lihat semua perubahan</string>
     <string name="changelog__intro">Dictate telah diperbarui. Inilah yang baru:</string>
     <string name="changelog__version_header">Versi {version}</string>
-    <string name="changelog__donate">Suka dengan Dictate? Ketuk di sini untuk mendukung pengembangan ♥</string>
     <string name="changelog__current">• Papan ketik yang sama sekali baru: Dictate kini hadir sebagai papan ketik tata letak multibahasa lengkap dengan tombol mikrofon khusus yang membuka panel suara.\n• Bawa AI Anda sendiri: pilih penyedia apa pun yang kompatibel dengan OpenAI dan masukkan kunci API Anda di Pengaturan → Dictate.\n• Pemformatan dan penyusunan ulang cerdas yang didukung oleh model pilihan Anda.\n• Pengaturan Anda dari aplikasi Dictate sebelumnya diimpor secara otomatis.</string>
     <string name="changelog__v4_1_0">• Baru: cari emoji langsung dari keyboard.\n• Penyedia transkripsi baru: Soniox.\n• Sisipkan kembali dikte terakhir Anda, dan pulihkan rekaman yang terputus saat keyboard ditutup.\n• Bilah prompt kini diperbarui secara langsung: tekan lama sebuah prompt untuk mengeditnya.\n• Layar penyedia AI kini menampilkan penyedia transkripsi dan pengubahan kata yang aktif.\n• Tombol rekam lebih besar dan lebih mudah ditekan.\n• Perbaikan: pesan dukungan bisa macet dan menutupi bilah dalam beberapa bahasa; pencadangan tidak lagi gagal saat prompt, keyboard, atau tema dipilih; kunci API yang tersimpan dipertahankan saat memperbarui.</string>
     <string name="changelog__v4_1_1">• Perbaikan: warna aksen bisa tampak hijau di beberapa perangkat; tombol dan tuts kembali ke biru Dictate.</string>
@@ -2006,7 +1995,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour51__more_body">Banyak juga peningkatan kecil: pilih bahasa transkripsi aktif di pengaturan, tombol berhenti kini benar-benar membatalkan permintaan yang sedang berjalan, sakelar tampilkan/sembunyikan untuk kunci API, dan mengetik multibahasa tanpa koreksi otomatis antarbahasa — plus banyak perbaikan di tata letak klasik, papan angka, dan lainnya.</string>
     <string name="apptour51__outro_eyebrow">Itulah 5.1</string>
     <string name="apptour51__outro_title">Selamat menikmati pembaruan</string>
-    <string name="apptour51__outro_body">Terima kasih telah menggunakan Dictate! Jika ini membantumu setiap hari, donasi kecil membuat proyek ini terus berjalan. Kamu dapat mengunjungi kembali tur mana pun kapan saja di Pengaturan › Tentang.</string>
+    <string name="apptour51__outro_body">Terima kasih telah menggunakan Dictate! Kamu dapat mengunjungi kembali tur mana pun kapan saja di Pengaturan › Tentang.</string>
     <string name="apptour52__cta_try">Coba</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Dikte di mana saja</string>

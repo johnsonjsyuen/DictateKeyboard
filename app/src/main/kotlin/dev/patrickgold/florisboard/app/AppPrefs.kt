@@ -757,7 +757,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__interrupted_audio_pending",
             default = false,
         )
-        // Recorded seconds of the interrupted audio, re-credited towards the rate/donate nudges on send.
+        // Recorded seconds of the interrupted audio, re-credited towards the rate nudge on send.
         val interruptedAudioSeconds = long(
             key = "dictate__interrupted_audio_seconds",
             default = 0L,
@@ -848,9 +848,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // A crossed-but-not-yet-shown milestone, consumed on next app open: "time:<min>" | "count:<n>".
         val statsPendingMilestone = string(key = "dictate__stats_pending_milestone", default = "")
 
-        // --- Rate / Donate nudges (roadmap 9.7/9.8) ----------------------------------------------
+        // --- Rate nudge (roadmap 9.7) ------------------------------------------------------------
         // Cumulative seconds of successfully transcribed *recorded* audio, used to gate the one-time
-        // rate/donate prompts. Replaces the legacy usage DB (which was dropped); only this counter
+        // rate prompt. Replaces the legacy usage DB (which was dropped); only this counter
         // remains. Incremented after each successful mic transcription.
         val totalAudioSeconds = long(
             key = "dictate__total_audio_seconds",
@@ -859,12 +859,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // Set once the user has acted on the rate prompt (accepted or declined), so it never reappears.
         val hasRated = boolean(
             key = "dictate__has_rated",
-            default = false,
-        )
-        // Set once the user has acted on the donate prompt; accepting/declining donate also sets
-        // hasRated, so a donor is never asked to rate afterwards (mirrors the legacy behavior).
-        val hasDonated = boolean(
-            key = "dictate__has_donated",
             default = false,
         )
         // The app version whose "Dictate was updated" changelog nudge has already been shown on the
@@ -928,10 +922,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = false,
         )
         // Guard for the one-time re-engagement reset shipped with the 4.0.0 relaunch: existing users
-        // (who had already rated/donated, or whose audio counter was long past the thresholds) are
-        // given the rate & donate nudges one more time so they can react to the new app. Clears
-        // hasRated/hasDonated and resets totalAudioSeconds exactly once. See
-        // DictateLegacyMigrator.reofferRateAndDonateIfNeeded.
+        // (who had already rated, or whose audio counter was long past the threshold) are
+        // given the rate nudge one more time so they can react to the new app. Clears
+        // hasRated and resets totalAudioSeconds exactly once. See
+        // DictateLegacyMigrator.reofferRateIfNeeded.
         val promoReengagementDone = boolean(
             key = "dictate__promo_reengagement_done",
             default = false,

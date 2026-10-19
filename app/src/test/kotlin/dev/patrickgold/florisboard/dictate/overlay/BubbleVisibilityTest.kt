@@ -19,7 +19,7 @@ import kotlin.test.assertTrue
  * When the floating button is on screen (issue #339).
  *
  * The reported failure is the first test: the button stood on the home screen after a finished
- * dictation, because the rate/donate nudge armed at the end of it left the state machine off idle — and
+ * dictation, because the rate nudge armed at the end of it left the state machine off idle — and
  * "not idle" was being read as "a dictation is running". The second test is the behaviour that must not
  * be traded away for it (#293): a recording keeps the button even after the user has left the app,
  * because the microphone is still open.

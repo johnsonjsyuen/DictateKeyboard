@@ -628,7 +628,6 @@
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Лицензии открытого ПО</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Конфиденциальность</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Исходный код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого ПО</string>
     <string name="about__data_attributions__title">Лицензии данных и моделей</string>
@@ -640,8 +639,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Что нового</string>
     <string name="about__repository__title" comment="Preference title">Репозиторий (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Исходный код, обсуждения, проблемы и информация</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Конфиденциальность</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Политика конфиденциальности этого проекта</string>
     <string name="about__project_license__title" comment="Preference title">Лицензия проекта</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} выпускается под лицензией {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Ошибка: невозможно загрузить текст лицензии.\n-&gt; Причина: {error_message}</string>
@@ -651,7 +648,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добро пожаловать!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за установку {app_name}! Это краткое руководство проведёт вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Конфиденциальность</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Исходный код</string>
     <string name="setup__enable_ime__title">Включите {app_name}</string>
     <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете её использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
@@ -1190,10 +1186,6 @@
     <string name="about__based_on_floris__title">На основе FlorisBoard</string>
     <string name="about__based_on_floris__summary">Форк FlorisBoard от Patrick Goldinger и участников, Apache 2.0. Нажмите, чтобы открыть.</string>
     <string name="about__made_by">Сделано с ❤️ DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Отзывы и поддержка</string>
-    <string name="about__feedback__summary">Отправьте письмо с вопросами, ошибками или идеями</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Выберите, как Dictate распознаёт речь</string>
     <string name="setup__provider__choice_own_title">Использовать своего провайдера ИИ</string>
     <string name="setup__provider__choice_own_body">Создайте ключ у провайдера на ваш выбор — Groq бесплатен для повседневной диктовки. Вы сохраняете свой аккаунт и платите провайдеру напрямую по его ценам. Займёт около двух минут.</string>
@@ -1376,9 +1368,7 @@
     <string name="dictate__action_yes">Да</string>
     <string name="dictate__action_no">Нет, спасибо</string>
     <string name="dictate__promo_rate_message">Нравится Dictate?</string>
-    <string name="dictate__promo_donate_message">Поддержать Dictate?</string>
     <string name="dictate__promo_rate_action">Оценить</string>
-    <string name="dictate__promo_donate_action">Поддержать</string>
     <string name="dictate__promo_changelog_message">Dictate обновлён</string>
     <string name="dictate__promo_changelog_action">Подробнее</string>
     <string name="dictate__title">Dictate</string>
@@ -1734,7 +1724,6 @@
     <string name="changelog__view_all">Посмотреть все изменения</string>
     <string name="changelog__intro">Dictate обновлён. Вот что нового:</string>
     <string name="changelog__version_header">Версия {version}</string>
-    <string name="changelog__donate">Нравится Dictate? Нажмите здесь, чтобы поддержать разработку ♥</string>
     <string name="changelog__current">• Совершенно новая клавиатура: Dictate теперь полноценная многоязычная клавиатура с раскладкой и отдельной клавишей микрофона, открывающей голосовую панель.\n• Собственный ИИ: выберите любого поставщика, совместимого с OpenAI, и введите ключ API в Настройки → Dictate.\n• Умное форматирование и переформулирование с выбранной вами моделью.\n• Настройки из предыдущего приложения Dictate импортируются автоматически.</string>
     <string name="changelog__v4_1_0">• Новое: поиск эмодзи прямо с клавиатуры.\n• Новый провайдер транскрипции: Soniox.\n• Повторно вставляйте последнюю диктовку и восстанавливайте записи, прерванные при закрытии клавиатуры.\n• Панель промптов теперь обновляется в реальном времени: удерживайте промпт, чтобы изменить его.\n• На экране провайдеров ИИ теперь показаны и активный провайдер транскрипции, и провайдер переформулировки.\n• Более крупная кнопка записи, по которой проще попасть.\n• Исправления: подсказка о поддержке могла зависнуть и перекрыть панель на некоторых языках; резервное копирование больше не падает при выбранных промптах, клавиатуре или теме; сохранённые API-ключи сохраняются при обновлении.</string>
     <string name="changelog__v4_1_1">• Исправление: на некоторых устройствах акцентный цвет мог отображаться зелёным — клавиши и кнопки снова синие, как в Dictate.</string>
@@ -2060,7 +2049,7 @@
     <string name="apptour51__more_body">Много и мелких улучшений: выбор активного языка транскрипции в настройках, кнопка остановки теперь действительно отменяет запущенный запрос, переключатель показа/скрытия для ключей API, а также многоязычный набор без межъязыковой автокоррекции — плюс множество исправлений в классическом макете, цифровой панели и не только.</string>
     <string name="apptour51__outro_eyebrow">Это 5.1</string>
     <string name="apptour51__outro_title">Наслаждайтесь обновлением</string>
-    <string name="apptour51__outro_body">Спасибо, что пользуетесь Dictate! Если он помогает вам каждый день, небольшое пожертвование поддержит проект. Вы можете вернуться к любому из этих туров в любое время в разделе «Настройки › О приложении».</string>
+    <string name="apptour51__outro_body">Спасибо, что пользуетесь Dictate! Вы можете вернуться к любому из этих туров в любое время в разделе «Настройки › О приложении».</string>
     <string name="apptour52__cta_try">Попробовать</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Диктуйте где угодно</string>

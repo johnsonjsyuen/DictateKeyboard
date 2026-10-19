@@ -515,7 +515,6 @@
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">تراخيص البرامج مفتوحة المصدر</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
     <string name="about__data_attributions__title">تراخيص البيانات والنماذج</string>
@@ -527,8 +526,6 @@
     <string name="about__changelog__summary" comment="Preference summary">مالجديد</string>
     <string name="about__repository__title" comment="Preference title">المستودع(چيتهب)</string>
     <string name="about__repository__summary" comment="Preference summary">الكود المصدري, المناقشات, الاخطاء والمعلومات</string>
-    <string name="about__privacy_policy__title" comment="Preference title">سياسة الخصوصية</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">سياسة الخصوصية لهذا المشروع</string>
     <string name="about__project_license__title" comment="Preference title">رخصة المشروع</string>
     <string name="about__project_license__summary" comment="Preference summary">هذا التطبيق هو مرخص تحت رخصة {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطأ: فشل تحميل نص الترخيص. \n-&gt; السبب: {error_message}</string>
@@ -538,7 +535,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">مرحباً!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">شكرًا لاستخدامك {app_name}! سيرشدك هذا الإعداد السريع خلال الخطوات المطلوبة لاستخدام {app_name} على جهازك.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سياسة الخصوصية</string>
     <string name="setup__footer__repository" comment="Repository label for URL">المستودع</string>
     <string name="setup__enable_ime__title">تفعيل {app_name}</string>
     <string name="setup__enable_ime__description">يتطلب نظام Android تمكين كل لوحة مفاتيح مخصصة بشكل منفصل قبل أن تتمكن من استخدامها. افتح النظام <i> اعدادات اللغة و الأدخال </i> وتمكين \"{app_name}\".</string>
@@ -1042,10 +1038,6 @@
     <string name="about__based_on_floris__title">مبني على FlorisBoard</string>
     <string name="about__based_on_floris__summary">نسخة معدّلة من FlorisBoard من إعداد Patrick Goldinger والمساهمين، برخصة Apache 2.0. انقر لفتحه.</string>
     <string name="about__made_by">صُنع بـ ❤️ بواسطة DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">الملاحظات والدعم</string>
-    <string name="about__feedback__summary">أرسل بريدًا إلكترونيًا بأسئلة أو أخطاء أو أفكار</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">اختر كيف يُفرِّغ Dictate كلامك</string>
     <string name="setup__provider__choice_own_title">استخدام مزوّد ذكاء اصطناعي خاص بك</string>
     <string name="setup__provider__choice_own_body">أنشئ مفتاحًا لدى مزوّد تختاره — Groq مجاني للإملاء اليومي. تحتفظ بحسابك وتدفع للمزوّد مباشرة بأسعاره. يستغرق نحو دقيقتين.</string>
@@ -1228,9 +1220,7 @@
     <string name="dictate__action_yes">نعم</string>
     <string name="dictate__action_no">لا، شكرًا</string>
     <string name="dictate__promo_rate_message">هل يعجبك Dictate؟</string>
-    <string name="dictate__promo_donate_message">هل تدعم Dictate؟</string>
     <string name="dictate__promo_rate_action">قيّم</string>
-    <string name="dictate__promo_donate_action">تبرّع</string>
     <string name="dictate__promo_changelog_message">تم تحديث Dictate</string>
     <string name="dictate__promo_changelog_action">التفاصيل</string>
     <string name="dictate__title">Dictate</string>
@@ -1586,7 +1576,6 @@
     <string name="changelog__view_all">عرض جميع التغييرات</string>
     <string name="changelog__intro">تم تحديث Dictate. إليك ما الجديد:</string>
     <string name="changelog__version_header">الإصدار {version}</string>
-    <string name="changelog__donate">هل يعجبك Dictate؟ انقر هنا لدعم التطوير ♥</string>
     <string name="changelog__current">• لوحة مفاتيح جديدة كليًا: يأتي Dictate الآن كلوحة مفاتيح متعددة اللغات كاملة التخطيط مع مفتاح ميكروفون مخصّص يفتح لوحة الصوت.\n• استخدم ذكاءك الاصطناعي الخاص: اختر أي مزوّد متوافق مع OpenAI وأدخِل مفتاح API الخاص بك ضمن الإعدادات ← Dictate.\n• تنسيق وإعادة صياغة ذكيان بدعم من النموذج الذي تختاره.\n• تُستورَد إعداداتك من تطبيق Dictate السابق تلقائيًا.</string>
     <string name="changelog__v4_1_0">• جديد: ابحث عن الرموز التعبيرية مباشرة من لوحة المفاتيح.\n• مزوّد تفريغ صوتي جديد: Soniox.\n• أعد إدراج آخر إملاء، واستعد التسجيلات التي انقطعت عند إغلاق لوحة المفاتيح.\n• يتم الآن تحديث شريط المطالبات مباشرةً: اضغط مطوّلاً على مطالبة لتعديلها.\n• تعرض الآن شاشة مزوّدي الذكاء الاصطناعي مزوّد التفريغ الصوتي ومزوّد إعادة الصياغة النشطين معًا.\n• زر تسجيل أكبر وأسهل في الضغط عليه.\n• إصلاحات: كان من الممكن أن يعلق إشعار الدعم ويحجب الشريط في بعض اللغات؛ لم يعد النسخ الاحتياطي يفشل عند تحديد المطالبات أو لوحة المفاتيح أو السمة؛ تُحفظ مفاتيح API المخزّنة عند التحديث.</string>
     <string name="changelog__v4_1_1">• إصلاح: قد يظهر لون التمييز باللون الأخضر على بعض الأجهزة؛ عادت المفاتيح والأزرار إلى الأزرق الخاص بـ Dictate.</string>
@@ -1914,7 +1903,7 @@
     <string name="apptour51__more_body">الكثير من التحسينات الأصغر أيضاً: اختر لغة النسخ النشطة في الإعدادات، وزر الإيقاف يلغي الآن فعلاً أي طلب جارٍ، ومفتاح إظهار/إخفاء لمفاتيح API، والكتابة متعددة اللغات دون تصحيح تلقائي عبر اللغات — إضافةً إلى إصلاحات كثيرة في التخطيط الكلاسيكي ولوحة الأرقام وغيرها.</string>
     <string name="apptour51__outro_eyebrow">هذه هي 5.1</string>
     <string name="apptour51__outro_title">استمتع بالتحديث</string>
-    <string name="apptour51__outro_body">شكراً لاستخدامك Dictate! إن كان يساعدك كل يوم، فإن تبرعاً صغيراً يُبقي المشروع مستمراً. يمكنك إعادة مشاهدة أي من هذه الجولات في أي وقت من الإعدادات › حول.</string>
+    <string name="apptour51__outro_body">شكراً لاستخدامك Dictate! يمكنك إعادة مشاهدة أي من هذه الجولات في أي وقت من الإعدادات › حول.</string>
     <string name="apptour52__cta_try">جرّبه</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">أملِ في كل مكان</string>

@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.app.settings.about
 
-import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +29,7 @@ import androidx.compose.material.icons.filled.CallSplit
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Policy
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -187,30 +183,6 @@ fun AboutScreen() = FlorisScreen {
             title = stringRes(R.string.about__based_on_floris__title),
             summary = stringRes(R.string.about__based_on_floris__summary),
             onClick = { context.launchUrl(R.string.florisboard__upstream_repo_url) },
-        )
-        Preference(
-            icon = Icons.Outlined.Email,
-            modifier = Modifier.settingsSearchAnchor("about__feedback__title"),
-            title = stringRes(R.string.about__feedback__title),
-            summary = stringRes(R.string.about__feedback__summary),
-            onClick = {
-                val email = context.stringRes(R.string.about__feedback__email)
-                val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")).apply {
-                    putExtra(Intent.EXTRA_SUBJECT, context.stringRes(R.string.about__feedback__subject))
-                }
-                try {
-                    context.startActivity(intent)
-                } catch (e: Throwable) {
-                    Toast.makeText(context, email, Toast.LENGTH_LONG).show()
-                }
-            },
-        )
-        Preference(
-            icon = Icons.Outlined.Policy,
-            modifier = Modifier.settingsSearchAnchor("about__privacy_policy__title"),
-            title = stringRes(R.string.about__privacy_policy__title),
-            summary = stringRes(R.string.about__privacy_policy__summary),
-            onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
         )
         Preference(
             icon = Icons.Outlined.Description,
