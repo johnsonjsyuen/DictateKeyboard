@@ -286,7 +286,6 @@
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name}\'s app ikon</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Åpen kildekode-lisenser</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Persovernerklæring</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kildekode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Åpen kildekode-lisenser</string>
     <string name="about__version__title" comment="Preference title">Versjon</string>
@@ -296,8 +295,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Hva som er nytt</string>
     <string name="about__repository__title" comment="Preference title">Oppbevaringssted (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Kildekode, diskusjoner, saker og info</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Persovernerklæring</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Personvernærklæring for dette prosjektet</string>
     <string name="about__project_license__title" comment="Preference title">Prosjektlisens</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} er lisensiert under {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Feil: Fikk ikke til å laste lisenstekst.\n-&gt; Årsak: {error_message}</string>
@@ -307,7 +304,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Takk for at du bruker {app_name}! Dette hurtigoppsettet leder deg gjennom de nødvendige trinnene for å bruke {app_name} på enheten din.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Persovernerklæring</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Oppbevaringssted</string>
     <string name="setup__enable_ime__title">Aktiver {app_name}</string>
     <string name="setup__enable_ime__description">Android krever at alle egendefinerte tastatur er aktivert før du kan bruke de. Åpne System <i>Språk &amp; Inndata</i> Innstillingene, aktiver \"{app_name}\".</string>

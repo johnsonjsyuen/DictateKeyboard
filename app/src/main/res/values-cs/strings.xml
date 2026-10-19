@@ -633,7 +633,6 @@
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licence</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
     <string name="about__data_attributions__title">Licence dat a modelů</string>
@@ -645,8 +644,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
     <string name="about__repository__title" comment="Preference title">Repozitář (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Soukromí</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany soukromí tohoto projektu</string>
     <string name="about__project_license__title" comment="Preference title">Licence projektu</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} je licencován pod {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodařilo se načíst text licence.\n-&gt; Důvod: {error_message}</string>
@@ -656,7 +653,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vítejte!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Děkujeme za používání aplikace {app_name}! Toto rychlé nastavení vás provede kroky vyžadovanými k používání {app_name} na vašem zařízení.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Soukromí</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repozitář</string>
     <string name="setup__enable_ime__title">Povolit {app_name}</string>
     <string name="setup__enable_ime__description">Android vyžaduje, aby každá vlastní klávesnice byla ručně povolena, než ji budete moci použít. Otevřete systémové nastavení <i>Jazyk a vstup</i> a v něm povolte „{app_name}“.</string>
@@ -1203,10 +1199,6 @@
     <string name="about__based_on_floris__title">Založeno na FlorisBoard</string>
     <string name="about__based_on_floris__summary">Fork FlorisBoard od Patricka Goldingera a přispěvatelů, Apache 2.0. Klepnutím jej otevřete.</string>
     <string name="about__made_by">Vytvořeno s ❤️ od DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Zpětná vazba a podpora</string>
-    <string name="about__feedback__summary">Pošlete e-mail s dotazy, chybami nebo nápady</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Vyberte, jak má Dictate přepisovat</string>
     <string name="setup__provider__choose_intro">Dictate převádí vaši řeč na text pomocí služby AI. Většině lidí vyhoví jeden ze dvou způsobů — a pokud nechcete používat žádnou cloudovou službu, níže najdete další dva.</string>
     <string name="setup__provider__choice_cloud_title">Koupit kredit v aplikaci</string>
@@ -1393,9 +1385,7 @@
     <string name="dictate__action_yes">Ano</string>
     <string name="dictate__action_no">Ne, děkuji</string>
     <string name="dictate__promo_rate_message">Líbí se vám Dictate?</string>
-    <string name="dictate__promo_donate_message">Podpořit Dictate?</string>
     <string name="dictate__promo_rate_action">Ohodnotit</string>
-    <string name="dictate__promo_donate_action">Přispět</string>
     <string name="dictate__promo_changelog_message">Dictate byl aktualizován</string>
     <string name="dictate__promo_changelog_action">Podrobnosti</string>
     <string name="dictate__title">Dictate</string>
@@ -1751,7 +1741,6 @@
     <string name="changelog__view_all">Zobrazit všechny změny</string>
     <string name="changelog__intro">Dictate byl aktualizován. Co je nového:</string>
     <string name="changelog__version_header">Verze {version}</string>
-    <string name="changelog__donate">Líbí se vám Dictate? Klepnutím sem podpoříte vývoj ♥</string>
     <string name="changelog__current">• Zcela nová klávesnice: Dictate je nyní plnohodnotná vícejazyčná klávesnice s vyhrazenou klávesou mikrofonu, která otevírá hlasový panel.\n• Vlastní AI: vyberte libovolného poskytovatele kompatibilního s OpenAI a zadejte klíč API v Nastavení → Dictate.\n• Inteligentní formátování a přeformulování pomocí zvoleného modelu.\n• Nastavení z předchozí aplikace Dictate se importují automaticky.</string>
     <string name="changelog__v4_1_0">• Novinka: vyhledávejte emoji přímo z klávesnice.\n• Nový poskytovatel přepisu: Soniox.\n• Znovu vložte své poslední diktování a obnovte nahrávky přerušené při zavření klávesnice.\n• Lišta promptů se nyní aktualizuje živě: podržením promptu jej upravíte.\n• Obrazovka poskytovatelů AI nyní zobrazuje aktivního poskytovatele přepisu i přeformulování.\n• Větší tlačítko nahrávání, na které se snáze míří.\n• Opravy: výzva k podpoře mohla zůstat viset a zakrýt lištu v některých jazycích; záloha už neselhává při vybraných promptech, klávesnici nebo motivu; uložené klíče API zůstanou zachovány při aktualizaci.</string>
     <string name="changelog__v4_1_1">• Oprava: zvýrazňovací barva se na některých zařízeních mohla zobrazovat zeleně; klávesy a tlačítka jsou opět v modré barvě Dictate.</string>
@@ -2077,7 +2066,7 @@
     <string name="apptour51__more_body">Spousta menších vylepšení také: v nastavení zvolte aktivní jazyk přepisu, tlačítko zastavení teď skutečně zruší běžící požadavek, přepínač zobrazení/skrytí API klíčů a vícejazyčné psaní bez automatických oprav mezi jazyky — plus řada oprav v klasickém rozvržení, číselné klávesnici a dál.</string>
     <string name="apptour51__outro_eyebrow">To je 5.1</string>
     <string name="apptour51__outro_title">Užijte si aktualizaci</string>
-    <string name="apptour51__outro_body">Děkujeme, že používáte Dictate! Pokud vám pomáhá každý den, drobný příspěvek udrží projekt v chodu. Kteroukoli z těchto prohlídek si můžete kdykoli znovu projít v Nastavení › O aplikaci.</string>
+    <string name="apptour51__outro_body">Děkujeme, že používáte Dictate! Kteroukoli z těchto prohlídek si můžete kdykoli znovu projít v Nastavení › O aplikaci.</string>
     <string name="apptour52__cta_try">Vyzkoušet</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Diktujte všude</string>

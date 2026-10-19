@@ -625,7 +625,6 @@
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name} uygulama simgesi</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Açık kaynak lisansları</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
     <string name="about__data_attributions__title">Veri ve model lisansları</string>
@@ -637,8 +636,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Yenilikler</string>
     <string name="about__repository__title" comment="Preference title">Depo (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Kaynak kodu, tartışmalar, sorunlar ve bilgiler</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Gizlilik politikası</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Bu projenin gizlilik politikası</string>
     <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}, {license_name} altında lisanslanmıştır</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata: Lisans metni yüklenemedi.\n-&gt; Neden: {error_message}</string>
@@ -648,7 +645,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hoş geldiniz!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} kullandığınız için teşekkürler! Bu hızlı kurulum, cihazınızda {app_name} kullanmak için gerekli adımlarda size rehberlik eder.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Gizlilik politikası</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
     <string name="setup__enable_ime__title">{app_name} uygulamasını etkinleştirin</string>
     <string name="setup__enable_ime__description">Android, kullanabilmeniz için her özel klavyenin ayrı ayrı etkinleştirilmesini gerektirir. Sistem <i>Dil ve Giriş</i> Ayarlarını açın, orada \"{app_name}\" öğesini etkinleştirin.</string>
@@ -1166,10 +1162,6 @@
     <string name="about__based_on_floris__title">FlorisBoard tabanlıdır</string>
     <string name="about__based_on_floris__summary">Patrick Goldinger ve katkıda bulunanların FlorisBoard çatalı, Apache 2.0. Açmak için dokunun.</string>
     <string name="about__made_by">❤️ ile yapan: DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Geri bildirim ve destek</string>
-    <string name="about__feedback__summary">Sorular, hatalar veya fikirlerle bir e-posta gönderin</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Dictate\'in nasıl yazıya dökeceğini seçin</string>
     <string name="setup__provider__choose_intro">Dictate, konuşmanızı bir yapay zekâ hizmetiyle metne dönüştürür. Çoğu kişiye yukarıdaki iki yoldan biri uyar — hiç bulut hizmeti kullanmak istemiyorsanız aşağıda iki yol daha var.</string>
     <string name="setup__provider__choice_cloud_title">Uygulamada kontör satın alın</string>
@@ -1356,9 +1348,7 @@
     <string name="dictate__action_yes">Evet</string>
     <string name="dictate__action_no">Hayır, teşekkürler</string>
     <string name="dictate__promo_rate_message">Dictate\'ten memnun musunuz?</string>
-    <string name="dictate__promo_donate_message">Dictate\'i destekleyin mi?</string>
     <string name="dictate__promo_rate_action">Puan ver</string>
-    <string name="dictate__promo_donate_action">Bağış yap</string>
     <string name="dictate__promo_changelog_message">Dictate güncellendi</string>
     <string name="dictate__promo_changelog_action">Ayrıntılar</string>
     <string name="dictate__title">Dictate</string>
@@ -1714,7 +1704,6 @@
     <string name="changelog__view_all">Tüm değişiklikleri görüntüle</string>
     <string name="changelog__intro">Dictate güncellendi. İşte yenilikler:</string>
     <string name="changelog__version_header">Sürüm {version}</string>
-    <string name="changelog__donate">Dictate\'ten memnun musunuz? Geliştirmeyi desteklemek için buraya dokunun ♥</string>
     <string name="changelog__current">• Yepyeni bir klavye: Dictate artık, ses panelini açan özel bir mikrofon tuşuna sahip, tam donanımlı çok dilli bir düzen klavyesi olarak geliyor.\n• Kendi yapay zekânızı getirin: OpenAI uyumlu herhangi bir sağlayıcı seçin ve API anahtarınızı Ayarlar → Dictate altında girin.\n• Seçtiğiniz modelle desteklenen akıllı biçimlendirme ve yeniden ifade etme.\n• Önceki Dictate uygulamasındaki ayarlarınız otomatik olarak içe aktarılır.</string>
     <string name="changelog__v4_1_0">• Yeni: doğrudan klavyeden emoji arayın.\n• Yeni transkripsiyon sağlayıcısı: Soniox.\n• Son dikte ettiğinizi yeniden ekleyin ve klavye kapandığında kesilen kayıtları geri getirin.\n• İstem çubuğu artık canlı olarak yenileniyor: düzenlemek için bir isteme uzun basın.\n• Yapay zekâ sağlayıcıları ekranı artık hem etkin transkripsiyon hem de yeniden ifade sağlayıcınızı gösteriyor.\n• Daha büyük, daha kolay dokunulan kayıt düğmesi.\n• Düzeltmeler: bir destek bildirimi bazı dillerde takılıp çubuğu kapatabiliyordu; istemler, klavye veya tema seçiliyken yedekleme artık başarısız olmuyor; kaydedilen API anahtarları güncellemede korunuyor.</string>
     <string name="changelog__v4_1_1">• Düzeltme: vurgu rengi bazı cihazlarda yeşil görünebiliyordu; tuşlar ve düğmeler yeniden Dictate mavisinde.</string>
@@ -2038,7 +2027,7 @@
     <string name="apptour51__more_body">Birçok küçük yükseltme de var: ayarlardan etkin transkripsiyon dilini seç, durdurma düğmesi artık çalışan bir isteği gerçekten iptal eder, API anahtarları için bir göster/gizle geçişi ve diller arası otomatik düzeltme olmadan çok dilli yazım — ayrıca klasik düzen, sayı tuş takımı ve ötesinde birçok düzeltme.</string>
     <string name="apptour51__outro_eyebrow">İşte 5.1</string>
     <string name="apptour51__outro_title">Güncellemenin keyfini çıkar</string>
-    <string name="apptour51__outro_body">Dictate’i kullandığın için teşekkürler! Her gün işine yarıyorsa, küçük bir bağış projeyi ayakta tutar. Bu turların herhangi birine istediğin zaman Ayarlar › Hakkında altından yeniden göz atabilirsin.</string>
+    <string name="apptour51__outro_body">Dictate’i kullandığın için teşekkürler! Bu turların herhangi birine istediğin zaman Ayarlar › Hakkında altından yeniden göz atabilirsin.</string>
     <string name="apptour52__cta_try">Dene</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Her yerde dikte et</string>

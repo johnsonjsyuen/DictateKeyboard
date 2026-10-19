@@ -556,7 +556,6 @@
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source-licenties</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacybeleid</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Broncode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source-licenties</string>
     <string name="about__data_attributions__title">Licenties van gegevens en modellen</string>
@@ -568,8 +567,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Wat is er nieuw</string>
     <string name="about__repository__title" comment="Preference title">Opslagplaats (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Broncode, discussies, problemen en info</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privacybeleid</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Het privacybeleid voor dit project</string>
     <string name="about__project_license__title" comment="Preference title">Projectlicentie</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} heeft een licentie onder {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Fout: kan licentietekst niet laden.\n-&gt; Reden: {error_message}</string>
@@ -579,7 +576,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welkom!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Bedankt voor het gebruik van {app_name}! Deze snelle installatie leidt u door de vereiste stappen om {app_name} op uw apparaat te gebruiken.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacybeleid</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Opslagplaats</string>
     <string name="setup__enable_ime__title">{app_name} inschakelen</string>
     <string name="setup__enable_ime__description">Android vereist dat elk aangepast toetsenbord afzonderlijk is ingeschakeld voordat u het kunt gebruiken. Open het systeem<i> Taal</i> Instellingen, activeer daar \"{app_name}\".</string>
@@ -1087,10 +1083,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="about__based_on_floris__title">Gebaseerd op FlorisBoard</string>
     <string name="about__based_on_floris__summary">Een fork van FlorisBoard door Patrick Goldinger en bijdragers, Apache 2.0. Tik om te openen.</string>
     <string name="about__made_by">Gemaakt met ❤️ door DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Feedback en ondersteuning</string>
-    <string name="about__feedback__summary">Stuur een e-mail met vragen, bugs of ideeën</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Kies hoe Dictate transcribeert</string>
     <string name="setup__provider__choose_intro">Dictate zet je spraak om in tekst met een AI-dienst. Voor de meeste mensen voldoet een van deze twee manieren — en wil je helemaal geen clouddienst gebruiken, dan staan er hieronder nog twee.</string>
     <string name="setup__provider__choice_cloud_title">Tegoed kopen in de app</string>
@@ -1277,9 +1269,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__action_yes">Ja</string>
     <string name="dictate__action_no">Nee, bedankt</string>
     <string name="dictate__promo_rate_message">Vind je Dictate leuk?</string>
-    <string name="dictate__promo_donate_message">Dictate steunen?</string>
     <string name="dictate__promo_rate_action">Beoordelen</string>
-    <string name="dictate__promo_donate_action">Doneren</string>
     <string name="dictate__promo_changelog_message">Dictate is bijgewerkt</string>
     <string name="dictate__promo_changelog_action">Details</string>
     <string name="dictate__title">Dictate</string>
@@ -1635,7 +1625,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="changelog__view_all">Alle wijzigingen bekijken</string>
     <string name="changelog__intro">Dictate is bijgewerkt. Dit is er nieuw:</string>
     <string name="changelog__version_header">Versie {version}</string>
-    <string name="changelog__donate">Vind je Dictate leuk? Tik hier om de ontwikkeling te steunen ♥</string>
     <string name="changelog__current">• Gloednieuw toetsenbord: Dictate is nu een volwaardig meertalig lay-outtoetsenbord met een eigen microfoontoets die het spraakpaneel opent.\n• Gebruik je eigen AI: kies een willekeurige OpenAI-compatibele aanbieder en voer je API-sleutel in via Instellingen → Dictate.\n• Slimme opmaak en herformulering met het model van jouw keuze.\n• Je instellingen van de vorige Dictate-app worden automatisch geïmporteerd.</string>
     <string name="changelog__v4_1_0">• Nieuw: zoek emoji\'s rechtstreeks vanaf het toetsenbord.\n• Nieuwe transcriptieprovider: Soniox.\n• Voeg je laatste dictaat opnieuw in en herstel opnames die werden onderbroken toen het toetsenbord sloot.\n• De promptbalk wordt nu live bijgewerkt: houd een prompt ingedrukt om die te bewerken.\n• Het scherm met AI-providers toont nu zowel je actieve transcriptie- als herformuleringsprovider.\n• Grotere opnameknop die makkelijker te raken is.\n• Oplossingen: een ondersteuningsmelding kon blijven hangen en de balk blokkeren in sommige talen; back-up mislukt niet meer wanneer prompts, toetsenbord of thema zijn geselecteerd; opgeslagen API-sleutels blijven behouden bij het updaten.</string>
     <string name="changelog__v4_1_1">• Oplossing: de accentkleur kon op sommige apparaten groen lijken; toetsen en knoppen zijn weer Dictate-blauw.</string>
@@ -1959,7 +1948,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="apptour51__more_body">Ook talloze kleinere verbeteringen: kies de actieve transcriptietaal in de instellingen, de stopknop annuleert nu echt een lopend verzoek, een schakelaar om API-sleutels te tonen/verbergen en meertalig typen zonder autocorrectie tussen talen — plus vele oplossingen in de klassieke indeling, het numerieke toetsenblok en daarbuiten.</string>
     <string name="apptour51__outro_eyebrow">Dat is 5.1</string>
     <string name="apptour51__outro_title">Veel plezier met de update</string>
-    <string name="apptour51__outro_body">Bedankt dat je Dictate gebruikt! Als het je elke dag helpt, houdt een kleine donatie het project draaiende. Je kunt al deze rondleidingen altijd opnieuw bekijken via Instellingen › Over.</string>
+    <string name="apptour51__outro_body">Bedankt dat je Dictate gebruikt! Je kunt al deze rondleidingen altijd opnieuw bekijken via Instellingen › Over.</string>
     <string name="apptour52__cta_try">Proberen</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Overal dicteren</string>

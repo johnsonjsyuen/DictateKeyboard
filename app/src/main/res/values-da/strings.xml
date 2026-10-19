@@ -393,7 +393,6 @@
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Omkring</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licenser</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Source kode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source licenser</string>
     <string name="about__version__title" comment="Preference title">Version</string>
@@ -403,12 +402,9 @@
     <string name="about__changelog__summary" comment="Preference summary">Nyheder</string>
     <string name="about__repository__title" comment="Preference title">Projektarkiv (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Kildekode, diskussioner, problemer og information</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privatlivspolitik</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privatlivspolitik</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Projektarkiv</string>
     <string name="setup__enable_ime__title">Aktivér {app_name}</string>
     <string name="setup__select_ime__title">Vælg {app_name}</string>

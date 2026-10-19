@@ -204,7 +204,7 @@ fun HomeScreen() = FlorisScreen {
             }
         }
 
-        // Milestone celebrations are shown on the keyboard (Smartbar nudge), consistent with rate/donate
+        // Milestone celebrations are shown on the keyboard (Smartbar nudge), consistent with rate
         // (issue #142) — see DictateController.showMilestoneNudge. Not surfaced here.
 
         /*Card(modifier = Modifier.padding(8.dp)) {

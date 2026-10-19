@@ -201,7 +201,6 @@
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Lîsansên çavkaniya vekirî</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Polîtîkaya nepenîtiyê</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Koda çavkanî</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lîsansên çavkaniya vekirî</string>
     <string name="about__version__title" comment="Preference title">Guherto</string>
@@ -211,8 +210,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Çi nû ye</string>
     <string name="about__repository__title" comment="Preference title">Depo (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Koda çavkanî, nîqaş, mijar û agahî</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Polîtîqa Taybetîyê</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Polîtîkaya nepenîtiyê ya ji bo vê projeyê</string>
     <string name="about__project_license__title" comment="Preference title">Lîsansa projeyê</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} di binê lîsansê de ye {license_name}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Lîsansên partiya sêyem</string>
@@ -220,7 +217,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hûn bi xêr hatin!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Spas ji bo bikaranîna {app_name}! Ev sazkirina bilez, ji bo bikarînana {app_name} di cîhaza xwe da gavên pêwîst rê dide we.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Polîtîkaya nepenîtiyê</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
     <string name="setup__enable_ime__title">Çalak kirin {app_name}</string>
     <string name="setup__enable_ime__description">Android berîya ku hûn bikarin wê bi kar bînin, hewce dike ku her klavyeya taybet cuda çalak bibe. Pergala <i>Ziman û Têketin</i> Mîhengan veke, çalak bike \"{app_name}\".</string>

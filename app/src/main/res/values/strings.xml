@@ -887,7 +887,6 @@
     <string name="about__title" comment="Title of About activity">About</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App icon of {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licenses</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacy policy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Source code</string>
 
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenses</string>
@@ -973,7 +972,7 @@
     <string name="apptour51__more_body">Plenty of smaller upgrades too: choose the active transcription language in settings, the stop button now truly cancels a running request, a show/hide toggle for API keys, and multilingual typing without cross-language autocorrect — plus many fixes across the classic layout, the number pad and beyond.</string>
     <string name="apptour51__outro_eyebrow">That’s 5.1</string>
     <string name="apptour51__outro_title">Enjoy the update</string>
-    <string name="apptour51__outro_body">Thanks for using Dictate! If it helps you every day, a small donation keeps the project going. You can revisit any of these tours anytime under Settings › About.</string>
+    <string name="apptour51__outro_body">Thanks for using Dictate! You can revisit any of these tours anytime under Settings › About.</string>
     <!-- What's new tour 5.2 -->
     <string name="apptour52__cta_try" comment="Button on a 5.2 tour page to jump straight to that feature">Try it</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
@@ -1209,12 +1208,6 @@
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Based on FlorisBoard</string>
     <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">A fork of FlorisBoard by Patrick Goldinger and contributors, Apache 2.0. Tap to open it.</string>
     <string name="about__made_by" comment="Personal signature shown under the app name in the About header" translatable="false">Made with ❤️ by DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title" comment="Preference title">Feedback &amp; support</string>
-    <string name="about__feedback__summary" comment="Preference summary">Send an email with questions, bugs or ideas</string>
-    <string name="about__feedback__email" translatable="false">contact@devemperor.net</string>
-    <string name="about__feedback__subject" comment="Default subject line of the feedback email" translatable="false">Dictate Feedback</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privacy policy</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">The privacy policy for this project</string>
     <string name="about__project_license__title" comment="Preference title">Project license</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} is licensed under {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Failed to load license text.\n-&gt; Reason: {error_message}</string>
@@ -1227,7 +1220,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Welcome to {app_name}! Let\'s get you ready to dictate in just a few quick steps — no technical knowledge needed.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
     <string name="setup__nav_back" comment="Setup wizard: go to the previous step">Back</string>
     <string name="setup__nav_next" comment="Setup wizard: go to the next, already-reached step">Next</string>
@@ -2059,12 +2051,10 @@
     <string name="smartbar__a11y_show_suggestions" comment="Spoken by a screen reader for the arrow at the edge of the Smartbar while it shows the action buttons: tapping it brings the word suggestions back">Show suggestions</string>
     <string name="smartbar__a11y_show_more_actions" comment="Spoken by a screen reader for the Smartbar toggle that opens a second row of action buttons">Show more actions</string>
     <string name="smartbar__a11y_hide_more_actions" comment="Spoken by a screen reader for the Smartbar toggle while the second row of action buttons is open: tapping it closes that row">Hide more actions</string>
-    <string name="dictate__action_yes" comment="Content description for the accept button of the rate/donate nudge">Yes</string>
-    <string name="dictate__action_no" comment="Content description for the decline button of the rate/donate nudge">No, thanks</string>
+    <string name="dictate__action_yes" comment="Content description for the accept button of the rate nudge">Yes</string>
+    <string name="dictate__action_no" comment="Content description for the decline button of the rate nudge">No, thanks</string>
     <string name="dictate__promo_rate_message" comment="Smartbar nudge asking the user to rate the app after enough usage. Kept short to fit the single-line Smartbar.">Enjoying Dictate?</string>
-    <string name="dictate__promo_donate_message" comment="Smartbar nudge asking the user to donate after enough usage. Kept short to fit the single-line Smartbar.">Support Dictate?</string>
     <string name="dictate__promo_rate_action" comment="Label of the accent pill button that opens the Play Store to rate the app">Rate</string>
-    <string name="dictate__promo_donate_action" comment="Label of the accent pill button that opens PayPal to donate">Donate</string>
     <string name="dictate__promo_changelog_message" comment="Smartbar nudge shown after an app update. Kept short to fit the single-line Smartbar.">Dictate was updated</string>
     <string name="dictate__promo_changelog_action" comment="Short label of the accent pill button that opens the app's What's new changelog dialog. Must stay short to fit the single-line Smartbar.">Details</string>
     <string name="dictate__promo_floating_button_message" comment="Smartbar spotlight message introducing the floating dictation button. Keep short for one line.">New: dictate in any app</string>
@@ -2729,7 +2719,6 @@
     <string name="changelog__view_all" comment="Button that opens the full changelog/releases page online">View all changes</string>
     <string name="changelog__intro" comment="Brief intro line at the top of the what's-new dialog, before the per-version notes">Dictate has been updated. Here\'s what\'s new:</string>
     <string name="changelog__version_header" comment="Header shown above one release's notes. {version} is e.g. 4.0.0">Version {version}</string>
-    <string name="changelog__donate" comment="Tappable invitation to donate, shown at the bottom of the what's-new dialog">Enjoying Dictate? Tap here to support development ♥</string>
     <!-- Per-release notes. To announce a new version, add a changelog__vX_Y_Z string here and a matching
          entry in DictateChangelog.kt. changelog__current holds the notes for the initial 4.0.0 release. -->
     <string name="changelog__current" comment="What's-new text for the 4.0.0 release. One change per line.">• Brand-new keyboard: Dictate now ships as a full multi-language layout keyboard with a dedicated mic key that opens the voice panel.\n• Bring your own AI: pick any OpenAI-compatible provider and enter your API key under Settings → Dictate.\n• Smart formatting and rewording powered by your chosen model.\n• Your settings from the previous Dictate app are imported automatically.</string>

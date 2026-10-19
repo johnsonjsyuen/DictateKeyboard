@@ -633,7 +633,6 @@
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A {app_name} alkalmazásikonja</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Nyílt forráskódú licencek</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Adatvédelmi irányelvek</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
     <string name="about__data_attributions__title">Adat- és modelllicencek</string>
@@ -645,8 +644,6 @@
     <string name="about__changelog__summary" comment="Preference summary">Újdonságok</string>
     <string name="about__repository__title" comment="Preference title">Tároló (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Forráskód, megbeszélések, hibák és információ</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Adatvédelmi irányelvek</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">A projekt adatvédelmi irányelvei</string>
     <string name="about__project_license__title" comment="Preference title">Projekt licence</string>
     <string name="about__project_license__summary" comment="Preference summary">A {app_name} {license_name} licenc alatt érhető el</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hiba: A licenc szövegének betöltése sikertelen.\n-&gt; Ok: {error_message}</string>
@@ -656,7 +653,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Üdvözöljük!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Köszönjük, hogy a {app_name}ot használja. Ez a gyors beállítás végigvezeti a {app_name} eszközön való használatához szükséges lépéseken.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Adatvédelmi irányelvek</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Tároló</string>
     <string name="setup__enable_ime__title">{app_name} engedélyezése</string>
     <string name="setup__enable_ime__description">Az Android megköveteli, hogy minden egyéni billentyűzet külön engedélyezve legyen, mielőtt használhatná. Nyissa meg a rendszerbeállítások <i>Nyelvek és bevitel</i> lapját, azon belül pedig engedélyezze ezt: „{app_name}”.</string>
@@ -1186,10 +1182,6 @@
     <string name="about__based_on_floris__title">A FlorisBoard alapján</string>
     <string name="about__based_on_floris__summary">A FlorisBoard elágazása Patrick Goldingertől és közreműködőktől, Apache 2.0. Koppintson a megnyitáshoz.</string>
     <string name="about__made_by">Készítette ❤️-vel DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Visszajelzés és támogatás</string>
-    <string name="about__feedback__summary">Küldjön e-mailt kérdésekkel, hibákkal vagy ötletekkel</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Válassza ki, hogyan írjon át a Dictate</string>
     <string name="setup__provider__choose_intro">A Dictate egy MI-szolgáltatás segítségével alakítja a beszédet szöveggé. A legtöbbeknek megfelel a két fenti mód valamelyike — ha pedig egyáltalán nem szeretne felhőszolgáltatást használni, alább van még kettő.</string>
     <string name="setup__provider__choice_cloud_title">Egyenleg vásárlása az alkalmazásban</string>
@@ -1376,9 +1368,7 @@
     <string name="dictate__action_yes">Igen</string>
     <string name="dictate__action_no">Nem, köszönöm</string>
     <string name="dictate__promo_rate_message">Tetszik a Dictate?</string>
-    <string name="dictate__promo_donate_message">Támogatja a Dictate-et?</string>
     <string name="dictate__promo_rate_action">Értékelés</string>
-    <string name="dictate__promo_donate_action">Adományozás</string>
     <string name="dictate__promo_changelog_message">A Dictate frissült</string>
     <string name="dictate__promo_changelog_action">Részletek</string>
     <string name="dictate__title">Dictate</string>
@@ -1734,7 +1724,6 @@
     <string name="changelog__view_all">Összes változás megtekintése</string>
     <string name="changelog__intro">A Dictate frissült. Íme az újdonságok:</string>
     <string name="changelog__version_header">{version} verzió</string>
-    <string name="changelog__donate">Tetszik a Dictate? Koppintson ide a fejlesztés támogatásához ♥</string>
     <string name="changelog__current">• Vadonatúj billentyűzet: a Dictate mostantól teljes értékű, többnyelvű elrendezésű billentyűzetként érkezik, dedikált mikrofongombbal, amely megnyitja a hangpanelt.\n• Hozza a saját MI-jét: válasszon bármilyen OpenAI-kompatibilis szolgáltatót, és adja meg az API-kulcsát a Beállítások → Dictate menüpontban.\n• Intelligens formázás és átfogalmazás az Ön által választott modell segítségével.\n• A korábbi Dictate alkalmazás beállításai automatikusan importálódnak.</string>
     <string name="changelog__v4_1_0">• Új: emodzsik keresése közvetlenül a billentyűzetről.\n• Új átírási szolgáltató: Soniox.\n• Szúrd be újra a legutóbbi diktálást, és állítsd vissza a billentyűzet bezárásakor megszakadt felvételeket.\n• A promptsáv mostantól élőben frissül: tartsd nyomva egy promptot a szerkesztéséhez.\n• Az AI-szolgáltatók képernyője mostantól az aktív átírási és átfogalmazási szolgáltatót is megjeleníti.\n• Nagyobb, könnyebben eltalálható felvétel gomb.\n• Javítások: egy támogatási üzenet beragadhatott, és eltakarhatta a sávot néhány nyelven; a biztonsági mentés már nem hiúsul meg, ha promptok, billentyűzet vagy téma van kiválasztva; a mentett API-kulcsok megmaradnak frissítéskor.</string>
     <string name="changelog__v4_1_1">• Javítás: a kiemelőszín egyes eszközökön zöldnek tűnhetett; a billentyűk és gombok ismét a Dictate kék színében jelennek meg.</string>
@@ -2058,7 +2047,7 @@
     <string name="apptour51__more_body">Rengeteg apróbb fejlesztés is: a beállításokban kiválaszthatod az aktív átírási nyelvet, a leállítás gomb mostantól valóban megszakítja a futó kérést, egy megjelenítés/elrejtés kapcsoló az API-kulcsokhoz, és többnyelvű gépelés a nyelvek közötti automatikus javítás nélkül — plusz számos javítás a klasszikus elrendezésben, a számbillentyűzeten és azon túl is.</string>
     <string name="apptour51__outro_eyebrow">Ez az 5.1</string>
     <string name="apptour51__outro_title">Jó szórakozást a frissítéshez</string>
-    <string name="apptour51__outro_body">Köszönjük, hogy a Dictate-et használod! Ha nap mint nap segít, egy kis adomány életben tartja a projektet. Ezeket a túrákat bármikor újranézheted a Beállítások › Névjegy alatt.</string>
+    <string name="apptour51__outro_body">Köszönjük, hogy a Dictate-et használod! Ezeket a túrákat bármikor újranézheted a Beállítások › Névjegy alatt.</string>
     <string name="apptour52__cta_try">Kipróbálom</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Diktálj bárhol</string>

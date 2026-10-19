@@ -8,6 +8,3 @@ contact_links:
       Anything that could be used against someone's device or data — a leaked API key, another app
       reading what you type, a way to get Dictate Cloud credit for free. Reported privately, not in
       a public issue. See SECURITY.md.
-  - name: 💬 Questions, ideas and feedback
-    url: https://github.com/DevEmperor/DictateKeyboard/discussions
-    about: Not sure it is a bug? Ask in Discussions — that is also where feature ideas are discussed.

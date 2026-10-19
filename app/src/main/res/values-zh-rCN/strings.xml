@@ -633,7 +633,6 @@
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name} 的应用图标</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">开源协议</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">隐私政策</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">源代码</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">开源协议</string>
     <string name="about__data_attributions__title">数据与模型许可</string>
@@ -645,8 +644,6 @@
     <string name="about__changelog__summary" comment="Preference summary">新版本变化</string>
     <string name="about__repository__title" comment="Preference title">源码库（GitHub）</string>
     <string name="about__repository__summary" comment="Preference summary">源代码、讨论、问题和信息</string>
-    <string name="about__privacy_policy__title" comment="Preference title">隐私政策</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">本项目的隐私政策</string>
     <string name="about__project_license__title" comment="Preference title">项目开源协议</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} 在 {license_name} 下进行授权</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">错误：无法加载许可证文本。\n-&gt; 原因：{error_message}</string>
@@ -656,7 +653,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">欢迎！</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">感谢您使用 {app_name}！这个快速设定将引导您完成在您的设备上使用 {app_name} 所需的步骤。</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">隐私政策</string>
     <string name="setup__footer__repository" comment="Repository label for URL">源码库</string>
     <string name="setup__enable_ime__title">启用 {app_name}</string>
     <string name="setup__enable_ime__description">安卓要求每个自定义键盘必须由您分别启用才能被使用。打开系统<i>语言和输入法</i>设置，在那里启用“{app_name}”。</string>
@@ -1182,10 +1178,6 @@
     <string name="about__based_on_floris__title">基于 FlorisBoard</string>
     <string name="about__based_on_floris__summary">由 Patrick Goldinger 及贡献者开发的 FlorisBoard 分支，Apache 2.0。点按可打开。</string>
     <string name="about__made_by">由 DevEmperor 用 ❤️ 制作\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">反馈与支持</string>
-    <string name="about__feedback__summary">发送电子邮件提出问题、漏洞或建议</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">选择 Dictate 的转写方式</string>
     <string name="setup__provider__choose_intro">Dictate 借助 AI 服务把语音转成文字。上面两种方式适合大多数人；如果你完全不想用云服务，下面还有两种。</string>
     <string name="setup__provider__choice_cloud_title">在应用内购买额度</string>
@@ -1372,9 +1364,7 @@
     <string name="dictate__action_yes">是</string>
     <string name="dictate__action_no">不用了，谢谢</string>
     <string name="dictate__promo_rate_message">喜欢 Dictate 吗？</string>
-    <string name="dictate__promo_donate_message">支持 Dictate？</string>
     <string name="dictate__promo_rate_action">评分</string>
-    <string name="dictate__promo_donate_action">捐赠</string>
     <string name="dictate__promo_changelog_message">Dictate 已更新</string>
     <string name="dictate__promo_changelog_action">详情</string>
     <string name="dictate__title">Dictate</string>
@@ -1730,7 +1720,6 @@
     <string name="changelog__view_all">查看所有更改</string>
     <string name="changelog__intro">Dictate 已更新。以下是新功能：</string>
     <string name="changelog__version_header">版本 {version}</string>
-    <string name="changelog__donate">喜欢 Dictate 吗？点按此处支持开发 ♥</string>
     <string name="changelog__current">• 全新键盘：Dictate 现在作为完整的多语言布局键盘提供，带有专用麦克风键以打开语音面板。\n• 自带 AI：选择任何兼容 OpenAI 的服务商，并在设置 → Dictate 中输入您的 API 密钥。\n• 由您选择的模型驱动的智能格式化和改写。\n• 您在旧版 Dictate 应用中的设置会自动导入。</string>
     <string name="changelog__v4_1_0">• 新增：直接从键盘搜索表情符号。\n• 新的转录服务商：Soniox。\n• 重新插入上一次的听写，并恢复键盘关闭时中断的录音。\n• 提示词栏现在会实时刷新：长按某个提示词即可编辑。\n• AI 服务商界面现在会同时显示当前启用的转录服务商和改写服务商。\n• 录音按钮更大，更容易点按。\n• 修复：在某些语言下，支持提示可能卡住并遮挡操作栏；选择了提示词、键盘或主题时备份不再失败；升级后会保留已保存的 API 密钥。</string>
     <string name="changelog__v4_1_1">• 修复：在某些设备上强调色可能显示为绿色；按键和按钮已恢复为 Dictate 蓝色。</string>
@@ -2052,7 +2041,7 @@
     <string name="apptour51__more_body">还有许多较小的升级：在设置中选择当前的转录语言，停止按钮现在能真正取消正在运行的请求，API 密钥的显示/隐藏开关，以及不会跨语言自动更正的多语言输入——此外还有经典布局、数字键盘等诸多修复。</string>
     <string name="apptour51__outro_eyebrow">这就是 5.1</string>
     <string name="apptour51__outro_title">尽情享受此次更新</string>
-    <string name="apptour51__outro_body">感谢你使用 Dictate！如果它每天都在帮助你，一笔小额捐赠就能让项目继续下去。你随时可以在「设置 › 关于」中重新查看这些导览。</string>
+    <string name="apptour51__outro_body">感谢你使用 Dictate！你随时可以在「设置 › 关于」中重新查看这些导览。</string>
     <string name="apptour52__cta_try">试试</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">随处口述</string>

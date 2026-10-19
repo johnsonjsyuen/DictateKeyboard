@@ -109,7 +109,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.FlorisBulletSpacer
 import org.florisboard.lib.compose.FlorisStep
 import org.florisboard.lib.compose.FlorisStepLayout
 import org.florisboard.lib.compose.FlorisStepLayoutScope
@@ -333,11 +332,6 @@ private fun footer(context: Context) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
-        TextButton(onClick = { context.launchUrl(privacyPolicyUrl) }) {
-            Text(text = stringRes(R.string.setup__footer__privacy_policy))
-        }
-        FlorisBulletSpacer()
         val repositoryUrl = stringRes(R.string.florisboard__repo_url)
         TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
             Text(text = stringRes(R.string.setup__footer__repository))

@@ -382,7 +382,6 @@
     <string name="about__title" comment="Title of About activity">دەربارە</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">پیشاندانی ئایکۆنی بەرنامەکە</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">مەرج و مۆڵەتی سەرچاوەکان</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">تایبەتمەندێتی ڕامیاری</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">کۆدی سەرچاوەکراوە</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مەرج و مۆڵەتی سەرچاوەکان</string>
     <string name="about__version__title" comment="Preference title">وەشان</string>
@@ -392,8 +391,6 @@
     <string name="about__changelog__summary" comment="Preference summary">نوێکارییەکان</string>
     <string name="about__repository__title" comment="Preference title">کۆدی سەرچاوە (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">کۆدی بەرنامەکە، فێرکاری و زانیاری</string>
-    <string name="about__privacy_policy__title" comment="Preference title">تایبەتمەندێتی ڕامیاری</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">زانیاری تایبەتمەندێتی بەرنامەکە</string>
     <string name="about__project_license__title" comment="Preference title">مۆڵەتی پڕۆژە</string>
     <string name="about__project_license__summary" comment="Preference summary">بەرنامەکە مۆڵەتی {license_name} هەیە</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">هەڵە ڕوویدا: نەتوانرا زانیاری مۆڵەت بکرێتەوە.\n-&gt; هۆکار: {error_message}</string>
@@ -403,7 +400,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">بەخێربێیت!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">سوپاس بۆ بەکارهێنانی {app_name}! ئەم فێرکارییە یارمەتیت دەدات بۆ چالاککردن و ڕێکخستنی {app_name} لەسەر مۆبایلەکەت.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">تایبەتمەندێتی ڕامیاری</string>
     <string name="setup__footer__repository" comment="Repository label for URL">کۆگا</string>
     <string name="setup__enable_ime__title">چالاککردنی {app_name}</string>
     <string name="setup__enable_ime__description">پێویستە  \"{app_name}\"  چالاک بکەیت لە ڕێکخستنەکانی مۆبایلەکەتدا، تا بتوانی پێی بنوسی و بەکاری بهێنیت.</string>

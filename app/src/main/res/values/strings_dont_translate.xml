@@ -15,7 +15,6 @@
     <!-- Upstream project Dictate is forked from (attribution); stays pointed at the original FlorisBoard repo. -->
     <string name="florisboard__upstream_repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/DevEmperor/Dictate/issues</string>
-    <string name="florisboard__privacy_policy_url" translatable="false">https://github.com/DevEmperor/Dictate/blob/main/PRIVACY_POLICY.md</string>
     <string name="florisboard__changelog_url" translatable="false">https://github.com/DevEmperor/Dictate/releases</string>
     <string name="florisboard__commit_by_hash_url" translatable="false">https://github.com/DevEmperor/Dictate/commit/{hash}</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/DevEmperor/Dictate</string>
