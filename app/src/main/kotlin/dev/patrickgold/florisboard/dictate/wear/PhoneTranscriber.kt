@@ -35,7 +35,13 @@ import java.io.File
  */
 object PhoneTranscriber {
 
-    suspend fun transcribe(context: Context, prefs: FlorisPreferenceModel, audio: File): String {
+    /** @param onRewording called once the transcript is in and rewording starts, so the watch can say so. */
+    suspend fun transcribe(
+        context: Context,
+        prefs: FlorisPreferenceModel,
+        audio: File,
+        onRewording: () -> Unit = {},
+    ): String {
         val id = prefs.dictate.transcriptionProviderId.get()
         val account = prefs.dictate.providerAccounts.get().getOrEmpty(id)
         val preset = presetFor(account)
@@ -65,18 +71,23 @@ object PhoneTranscriber {
                 account.apiKey,
                 baseUrlOverride = if (account.isCustom || preset.allowsCustomBaseUrl) account.customBaseUrl.takeIf { it.isNotBlank() } else null,
                 proxy = prefs.dictate.dictateProxyConfig(),
-                trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+                trustUserCerts = account.trustUserCerts,
                 timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
             )
             client.transcribe(request).text.trim()
         }
         // Auto-reword the tethered dictation here on the phone (#130), so the watch receives finished text
         // exactly like the phone produces — but only when the user kept auto-rewording on for the watch.
-        return maybeReword(context, prefs, transcript)
+        return maybeReword(context, prefs, transcript, onRewording)
     }
 
     /** Runs the shared rewording chain on [transcript] when the user enabled watch auto-rewording. */
-    private suspend fun maybeReword(context: Context, prefs: FlorisPreferenceModel, transcript: String): String {
+    private suspend fun maybeReword(
+        context: Context,
+        prefs: FlorisPreferenceModel,
+        transcript: String,
+        onRewording: () -> Unit,
+    ): String {
         if (transcript.isBlank()) return transcript
         if (!prefs.dictate.wearAutoRewordingEnabled.get()) return transcript
         if (!prefs.dictate.rewordingEnabled.get()) return transcript
@@ -94,13 +105,13 @@ object PhoneTranscriber {
             apiKey,
             baseUrlOverride = if (rewordingAccount.isCustom || rewordingPreset.allowsCustomBaseUrl) rewordingAccount.customBaseUrl.takeIf { it.isNotBlank() } else null,
             proxy = prefs.dictate.dictateProxyConfig(),
-            trustUserCerts = prefs.dictate.trustUserCertificates.get(),
+            trustUserCerts = rewordingAccount.trustUserCerts,
             timeoutSeconds = prefs.dictate.requestTimeout.get().toLong(),
         )
         val autoApply = withContext(Dispatchers.IO) {
             PromptsDatabaseHelper.getInstance(context).getAll()
                 .filter { it.autoApply }
-                .mapNotNull { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { DictateRewording.Prompt(it, p.requiresSelection) } }
+                .mapNotNull { p -> p.prompt?.takeIf { it.isNotBlank() }?.let { DictateRewording.Prompt(it) } }
         }
         val languageName = DictateLanguages.englishNameFor(prefs.dictate.activeInputLanguage.get())
         val systemPrompt = when (prefs.dictate.systemPromptSelection.get()) {
@@ -108,6 +119,8 @@ object PhoneTranscriber {
             DictatePromptDefaults.SELECTION_CUSTOM -> prefs.dictate.systemPromptCustom.get()
             else -> ""
         }.takeIf { it.isNotBlank() }
+        if (!prefs.dictate.autoFormattingEnabled.get() && autoApply.isEmpty()) return transcript
+        onRewording()
         return DictateRewording.apply(
             client = client,
             chatModel = chatModel,
@@ -116,6 +129,7 @@ object PhoneTranscriber {
             languageName = languageName,
             systemPrompt = systemPrompt,
             autoApplyPrompts = autoApply,
+            reasoningEffort = rewordingPreset.reasoningEffortWhenOff(chatModel),
         )
     }
 

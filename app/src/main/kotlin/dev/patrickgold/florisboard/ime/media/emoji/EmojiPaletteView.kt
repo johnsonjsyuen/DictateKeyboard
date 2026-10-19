@@ -110,6 +110,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import kotlin.math.abs
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -135,6 +136,44 @@ data class EmojiMappingForView(
     val simple: List<EmojiSet>,
 )
 
+/**
+ * The palette's emojis minus those this device cannot draw, kept for as long as what decides it stays
+ * the same (issue #433).
+ *
+ * Deciding it asks EmojiCompat, and the system font for whatever EmojiCompat does not know, about each of
+ * the palette's emojis — on the main thread, while the panel is being built. The panel is taken down
+ * whenever the keyboard goes back to letters, so every switch to the emojis paid for all of it again,
+ * although the answer only changes with the EmojiCompat instance, the emoji data or the app's metadata
+ * version. Compared by identity: the data is one instance per load, and comparing it by value would walk
+ * the whole palette to save walking the whole palette.
+ */
+private object DrawableEmojiCache {
+    private var compat: EmojiCompat? = null
+    private var data: EmojiData? = null
+    private var metadataVersion = 0
+    private var value: Map<EmojiCategory, List<EmojiSet>>? = null
+
+    fun get(
+        compat: EmojiCompat?,
+        data: EmojiData,
+        metadataVersion: Int,
+        compute: () -> Map<EmojiCategory, List<EmojiSet>>,
+    ): Map<EmojiCategory, List<EmojiSet>> {
+        // The empty set the panel shows for the moment the real data takes to arrive costs nothing to
+        // filter. Kept, it would push the real one out on every opening, and the cache would never hit.
+        if (data === EmojiData.Fallback) return compute()
+        value?.let { cached ->
+            if (compat === this.compat && data === this.data && metadataVersion == this.metadataVersion) return cached
+        }
+        return compute().also {
+            this.compat = compat
+            this.data = data
+            this.metadataVersion = metadataVersion
+            value = it
+        }
+    }
+}
+
 @Composable
 fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
@@ -155,12 +194,14 @@ fun EmojiPaletteView(
     val replaceAll = activeEditorInfo.emojiCompatReplaceAll
     val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
     val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
-        fullEmojiMappings.byCategory.mapValues { (_, emojiSetList) ->
-            emojiSetList.mapNotNull { emojiSet ->
-                emojiSet.emojis.filter { emoji ->
-                    emojiCompatInstance?.getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
-                        systemFontPaint.hasGlyph(emoji.value)
-                }.let { if (it.isEmpty()) null else EmojiSet(it) }
+        DrawableEmojiCache.get(emojiCompatInstance, fullEmojiMappings, metadataVersion) {
+            fullEmojiMappings.byCategory.mapValues { (_, emojiSetList) ->
+                emojiSetList.mapNotNull { emojiSet ->
+                    emojiSet.emojis.filter { emoji ->
+                        emojiCompatInstance?.getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
+                            systemFontPaint.hasGlyph(emoji.value)
+                    }.let { if (it.isEmpty()) null else EmojiSet(it) }
+                }
             }
         }
     }
@@ -353,23 +394,41 @@ fun EmojiPaletteView(
             pagerState.animateScrollToPage(0)
         }
 
+        // The tab row follows the pager — once, here. It used to be collected inside every composed page,
+        // so each page change set the category and re-read the history three times over (issue #394).
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                activeCategory = pageNumberToCategory(page)
+                recentlyUsedVersion++
+            }
+        }
+
         EmojiCategoriesTabRow(
             activeCategory = activeCategory,
             onCategoryChange = { category ->
                 activeCategory = category
-                scope.launch { pagerState.animateScrollToPage(categoryToPageNumber(activeCategory)) }
+                val target = categoryToPageNumber(category)
+                scope.launch {
+                    // A neighbour slides in; anything further is jumped to (issue #394). Animating to a
+                    // far tab scrolled through every page in between: each built its grid of emoji views
+                    // for a frame or two, and each passing page moved the tab highlight, so the row at
+                    // the top stuttered across the categories before landing on the one tapped.
+                    if (abs(target - pagerState.currentPage) <= 1) {
+                        pagerState.animateScrollToPage(target)
+                    } else {
+                        pagerState.scrollToPage(target)
+                    }
+                }
             },
         )
         HorizontalPager(pagerState, beyondViewportPageCount = 1) { page ->
             // Every page needs its own lazyGridState in order to scroll correctly
             val lazyGridState = rememberLazyGridState()
 
-            // Update the lazyGridState and active category on scroll
+            // A page comes back at its top, wherever it was left.
             LaunchedEffect(pagerState) {
-                snapshotFlow { pagerState.currentPage }.collect { page ->
+                snapshotFlow { pagerState.currentPage }.collect {
                     lazyGridState.scrollToItem(0)
-                    activeCategory = pageNumberToCategory(page)
-                    recentlyUsedVersion++
                 }
             }
 
@@ -462,6 +521,12 @@ fun EmojiPaletteView(
     }
 }
 
+/**
+ * One emoji cell. [modifier] is its shape — square, as the palette's grid wants it, unless the caller
+ * sizes the cell itself (the recent-emoji row: full row height, narrower than tall). [fontSize] is the
+ * glyph's; the row draws smaller glyphs than the palette (issue #394). [showPopupIndicator] draws the
+ * corner mark that says a long-press has more to offer.
+ */
 @Composable
 internal fun EmojiKey(
     emojiSet: EmojiSet,
@@ -471,6 +536,9 @@ internal fun EmojiKey(
     isRecent: Boolean,
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
+    modifier: Modifier = Modifier.aspectRatio(1f),
+    fontSize: TextUnit = EmojiDefaultFontSize,
+    showPopupIndicator: Boolean = true,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
@@ -478,8 +546,7 @@ internal fun EmojiKey(
     var showVariantsBox by remember { mutableStateOf(false) }
 
     SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
-        modifier = Modifier
-            .aspectRatio(1f)
+        modifier = modifier
             .pointerInput(Unit) {
                 detectTapGestures(
                     // Fire the key-press haptic on the confirmed tap, not on the initial press:
@@ -502,8 +569,9 @@ internal fun EmojiKey(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
             emojiCompatInstance = emojiCompatInstance,
+            fontSize = fontSize,
         )
-        if (variations.isNotEmpty() || isPinned || isRecent) {
+        if (showPopupIndicator && (variations.isNotEmpty() || isPinned || isRecent)) {
             val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
             val shape = when (LocalLayoutDirection.current) {
                 LayoutDirection.Ltr -> VariantsTriangleShapeLtr
@@ -705,29 +773,28 @@ fun EmojiText(
     color: Color = Color.Black,
     fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
+    // `onReset` lets a scrolling grid hand a cell's view on to the next emoji instead of inflating a new
+    // one for every cell that scrolls into view (issue #394) — a view per emoji is what these grids are
+    // made of. Size and colour are set on every update, since a reused view may come from another cell.
     if (emojiCompatInstance != null) {
         AndroidView(
             modifier = modifier,
-            factory = { context ->
-                EmojiTextView(context).also {
-                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(color.toArgb())
-                }
-            },
+            factory = { context -> EmojiTextView(context) },
+            onReset = { },
             update = { view ->
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                view.setTextColor(color.toArgb())
                 view.text = text
             },
         )
     } else {
         AndroidView(
             modifier = modifier,
-            factory = { context ->
-                TextView(context).also {
-                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(color.toArgb())
-                }
-            },
+            factory = { context -> TextView(context) },
+            onReset = { },
             update = { view ->
+                view.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                view.setTextColor(color.toArgb())
                 view.text = text
             },
         )

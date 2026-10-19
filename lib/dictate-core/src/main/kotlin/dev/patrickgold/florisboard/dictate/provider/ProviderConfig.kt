@@ -44,6 +44,9 @@ data class ProviderConfig(
      * audio on a mobile connection, and then a model reading ten minutes of speech. Worse, a timeout
      * counts as retryable, so the same bytes went up four times before the failure appeared.
      *
+     * It is also how long a request goes on being retried: once it has been going for one call's budget,
+     * no further attempt starts (#438).
+     *
      * Null keeps the old behaviour: the call budget is [timeoutSeconds]. Only the file import raises
      * it, and only because it runs on a screen with visible progress and a cancel button.
      */
@@ -144,6 +147,18 @@ enum class TranscriptionApi {
      * language rather than one per response. See [OpenAiCompatibleClient].
      */
     AZURE_FAST_TRANSCRIPTION,
+
+    /**
+     * xAI Grok Voice Transcribe (issue #435): one `multipart/form-data` POST to `stt` with a Bearer key,
+     * the transcript in `text`.
+     *
+     * Not [OPENAI_MULTIPART] under another path, for three reasons that each change the request: the
+     * vocabulary travels as repeated `keyterm` fields rather than a free-text `prompt`, which the
+     * endpoint does not have; `language` only switches on number formatting — recognition is
+     * multilingual regardless — and needs `format=true` beside it; and the `file` part has to come
+     * **last**, because xAI streams the upload and may ignore fields that arrive after it.
+     */
+    XAI_STT,
 
     /**
      * On-device transcription (issue #104): no network call at all. Handled by

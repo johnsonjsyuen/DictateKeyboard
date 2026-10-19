@@ -127,6 +127,10 @@
     <string name="settings__home__title" comment="Title of the Home screen">Bem-vindo a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when Dictate Keyboard is not enabled in the system">{app_name} não está ativo no sistema, logo não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when Dictate Keyboard is not selected as the default keyboard">{app_name} não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
+    <string name="dictate__settings_unreadable_card">Não foi possível ler as suas definições, por isso o Dictate iniciou com os valores predefinidos. Toque aqui para as recuperar.</string>
+    <string name="dictate__settings_unreadable_title">Restaurar?</string>
+    <string name="dictate__settings_unreadable_message">Ao iniciar, o Dictate não conseguiu ler o seu ficheiro de definições. Guardou-o intacto e iniciou com os valores predefinidos. «Restaurar» recupera os seus fornecedores, chaves, prompts e definições tal como estavam. «Eliminar» apaga o ficheiro antigo.</string>
+    <string name="dictate__settings_restore_failed">As definições antigas continuam sem poder ser lidas.</string>
     <string name="settings__search__title" comment="Title of the settings search screen">Pesquisar nas definições</string>
     <string name="settings__search__placeholder" comment="Placeholder in the settings search field">Pesquisar nas definições…</string>
     <string name="settings__search__recent" comment="Header above recently used search terms">Pesquisas recentes</string>
@@ -438,6 +442,28 @@
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar linha de números na parte superior do teclado</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Indicador de números</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Indicador de símbolos</string>
+    <string name="settings__custom_symbols__title">Símbolos personalizados</string>
+    <string name="pref__keyboard__custom_symbols__label">Usar símbolos personalizados</string>
+    <string name="custom_symbols__edit_key">Editar tecla</string>
+    <string name="custom_symbols__key">Símbolo</string>
+    <string name="custom_symbols__currency">Moeda do idioma</string>
+    <string name="custom_symbols__long_press">Ao manter premido</string>
+    <string name="custom_symbols__add_placeholder">Adicionar, p. ex. ✔ ☑ ✅</string>
+    <string name="custom_symbols__insert_as">Inserir como</string>
+    <string name="custom_symbols__target_key">Tecla</string>
+    <string name="custom_symbols__target_long_press">Manter premido</string>
+    <string name="custom_symbols__palette_math">Matemática</string>
+    <string name="custom_symbols__palette_arrows">Setas</string>
+    <string name="custom_symbols__palette_currencies">Moedas</string>
+    <string name="custom_symbols__palette_punctuation">Pontuação</string>
+    <string name="custom_symbols__palette_shapes">Formas</string>
+    <string name="custom_symbols__palette_greek">Grego</string>
+    <string name="custom_symbols__palette_scripts">Expoente e índice</string>
+    <string name="custom_symbols__reset_all">Repor todas as teclas</string>
+    <string name="custom_symbols__reset_all_confirm">Repor todas as teclas para o padrão?</string>
+    <string name="custom_symbols__import_confirm">Substituir os seus símbolos pelos deste ficheiro?</string>
+    <string name="custom_symbols__import_done">Símbolos importados</string>
+    <string name="custom_symbols__import_invalid">Isto não é um ficheiro de símbolos</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar tecla utilitária</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra uma tecla utilitária ao lado da barra de espaço</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ação da tecla utilitária</string>
@@ -470,6 +496,11 @@
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Recolher/expandir automaticamente</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Recolhe ou expande automaticamente a linha de ação tendo por base o estado atual</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Posicionamento da linha de ação</string>
+    <string name="settings__smartbar__second_actions__title" comment="Title of the Smartbar second actions screen">Ações secundárias</string>
+    <string name="settings__smartbar__second_actions__summary" comment="Preference summary">Mantenha premido um botão da Smartbar para executar uma ação secundária</string>
+    <string name="settings__smartbar__second_actions__note" comment="Header of the screen while nothing is being paired: says what to do">Toque num botão e depois na ação que ele deve executar quando for mantido premido. Ambos mantêm o seu próprio botão — oculte um deles no editor de ações do teclado para libertar o espaço.</string>
+    <string name="settings__smartbar__second_actions__hint_pick_second" comment="Header while a button is selected; {action} is that button's name">O que deve {action} executar quando for mantido premido?</string>
+    <string name="settings__smartbar__second_actions__section_child_only" comment="Heading above the buttons that cannot carry a second action">Apenas como ação secundária — estes botões repetem-se quando mantidos premidos ou já têm a sua própria função de manter</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Digitação</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
@@ -484,6 +515,8 @@
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Espaço automático após pontuação</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Inserir um espaço automaticamente após uma pontuação</string>
+    <string name="pref__correction__tighten_punctuation_spacing__label" comment="Preference title">Sem espaço antes da pontuação</string>
+    <string name="pref__correction__tighten_punctuation_spacing__summary" comment="Preference summary">Remover um espaço escrito antes de . , ? !</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Memorizar estado do CapsLock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock quando se muda para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Toque duplo na barra de espaços</string>
@@ -702,6 +735,7 @@
     <string name="clipboard__group_pinned">Fixado</string>
     <string name="clipboard__group_recent">Recente</string>
     <string name="clipboard__group_other">Outro</string>
+    <string name="pref__clipboard__history_pinned_on_top__label">Itens fixados no topo</string>
     <string name="clipboard__item_description_email">Email</string>
     <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_phone">Telefone</string>
@@ -727,6 +761,7 @@
     <string name="pref__clipboard__trim_on_copy__label" comment="Preference title, keep short">Cortar ao copiar</string>
     <string name="pref__clipboard__trim_on_copy__summary" comment="Preference summary, keep short (one line)">Remove espaços e quebras de linha nas extremidades</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugerir conteúdo da área de transferência copiado anteriormente</string>
+    <string name="pref__clipboard__suggestion_show_extracted__label" comment="Preference title (switch) in the group Clipboard suggestions, keep short (one line): whether the links, email addresses and phone numbers found inside a copied text are also offered as suggestions of their own, next to the whole text">Ligações, e-mails e números</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Número de colunas da grelha</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limitar as sugestões da área de transferência a</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Itens copiados nos últimos {v} s</string>
@@ -1119,6 +1154,10 @@
     <!-- Dictate strings -->
     <string name="quick_action__ime_ui_mode_editing">Edição de texto</string>
     <string name="quick_action__ime_ui_mode_editing__tooltip">Mover o cursor, selecionar e editar texto</string>
+    <string name="quick_action__ime_ui_mode_scan">Digitalizar texto</string>
+    <string name="quick_action__ime_ui_mode_scan__tooltip">Fotografar texto impresso e inseri-lo</string>
+    <string name="quick_action__translate">Traduzir</string>
+    <string name="quick_action__translate__tooltip">Traduzir durante a escrita, neste dispositivo</string>
     <string name="quick_action__ime_ui_mode_dictate">Dictate</string>
     <string name="quick_action__ime_ui_mode_dictate__tooltip">Toque para ditar, toque novamente para transcrever</string>
     <string name="quick_action__dictate_live_prompt">Instrução em direto</string>
@@ -1195,10 +1234,16 @@
     <string name="dictate__floating_button_disclosure_continue">Abrir definições</string>
     <string name="dictate__floating_button_mic_title">Acesso ao microfone</string>
     <string name="dictate__floating_button_mic_summary">Necessário para gravar a sua voz · toque para conceder</string>
-    <string name="dictate__floating_button_show_with_keyboard_title">Mostrar com o teclado Dictate</string>
-    <string name="dictate__floating_button_show_with_keyboard_summary_on">O botão também aparece enquanto o teclado Dictate está ativo.</string>
-    <string name="dictate__floating_button_show_with_keyboard_summary_off">Oculto enquanto o teclado Dictate está ativo, pois este já tem uma tecla de microfone.</string>
+    <string name="dictate__floating_button_show_when_title">Quando mostrar</string>
+    <string name="dictate__floating_button_show_when_field">Assim que um campo de texto é selecionado</string>
+    <string name="dictate__floating_button_show_when_keyboard">Só com o teclado aberto</string>
+    <string name="dictate__floating_button_show_when_dictate_keyboard">Também com o teclado Dictate</string>
     <string name="dictate__action_continue_recording">Continuar gravação</string>
+    <string name="dictate__a11y_mic_hold_local">Transcrever no dispositivo</string>
+    <string name="smartbar__a11y_show_actions">Mostrar ações</string>
+    <string name="smartbar__a11y_show_suggestions">Mostrar sugestões</string>
+    <string name="smartbar__a11y_show_more_actions">Mostrar mais ações</string>
+    <string name="smartbar__a11y_hide_more_actions">Ocultar mais ações</string>
     <string name="dictate__floating_button_auto_dim_summary_off">Permanece sempre totalmente visível.</string>
     <string name="dictate__floating_button_auto_dim_summary_on">Reduz-se a um pequeno ponto após alguns segundos; toque para restaurar.</string>
     <string name="dictate__floating_button_auto_dim_title">Esmaecer quando inativo</string>
@@ -1242,8 +1287,10 @@
     <string name="dictate__floating_button_snap_summary_on">O botão encaixa no lado mais próximo depois de o arrastar.</string>
     <string name="dictate__floating_button_snap_title">Encaixar na margem</string>
     <string name="dictate__interrupted_recording">Interrompido ({time})</string>
+    <string name="dictate__transcription_stopped">Parado, gravação guardada</string>
+    <string name="dictate__transcription_stopped_in_history">Parado, gravação no Histórico</string>
     <string name="dictate__providers_summary_both">Transcrição: {transcription} · Reformulação: {rewording}</string>
-    <string name="dictate__remember_last_dictation_summary">Guarda o seu último ditado para o reinserir com o botão Reinserir da Smartbar.</string>
+    <string name="dictate__remember_last_dictation_summary">Mantém o seu último ditado para que o botão flutuante o possa anular e o esquema clássico o possa reinserir.</string>
     <string name="dictate__remember_last_dictation_title">Memorizar último ditado</string>
     <string name="changelog__v4_2_0">• NOVO: botão de ditado flutuante — dite diretamente em qualquer app, mesmo com outro teclado ativo. Escolha entre três estilos (Cápsula, Anel, Esfera), veja uma forma de onda ao vivo enquanto fala, arraste-o para qualquer lugar com encaixe nas margens, defina a cor e o tamanho e mantenha premido para reformular. Ative-o em Definições ▸ Dictate ▸ Botão flutuante.\n• NOVO: Google Gemini — use a sua própria chave de API do AI Studio para transcrição e reformulação.\n• Os prompts agora aparecem por predefinição numa linha fixa acima das teclas.\n• Inserção de texto mais fiável entre apps, incluindo navegadores e outros teclados.</string>
     <string name="dictate__promo_floating_button_message">Novo: dite em qualquer app</string>
@@ -1328,6 +1375,7 @@
     <string name="dictate__model_default_summary">Predefinição do fornecedor</string>
     <string name="dictate__custom_server_title">Servidor personalizado</string>
     <string name="dictate__base_url_title">URL base</string>
+    <string name="dictate__base_url_cleartext_warning">Sem encriptação: a chave de API e as suas gravações circulam como texto simples. Na sua própria rede não há problema, mas em qualquer outra rede Wi-Fi outra pessoa pode lê-las.</string>
     <string name="dictate__base_url_placeholder">https://o-seu-servidor/v1/</string>
     <string name="dictate__base_url_required">Obrigatório para o fornecedor personalizado</string>
     <string name="dictate__value_not_set">Não configurado</string>
@@ -1344,9 +1392,20 @@
     <string name="dictate__providers_cap_chat">Reformulação</string>
     <string name="dictate__providers_add_custom">Adicionar o teu próprio servidor</string>
     <string name="dictate__providers_add_custom_summary">Alojado por ti ou qualquer endpoint compatível com OpenAI — para reconhecimento de voz e reformulação</string>
+    <string name="dictate__providers_add">Adicionar fornecedor</string>
+    <string name="dictate__providers_search">Pesquisar fornecedores</string>
+    <string name="dictate__providers_filter_eu">UE</string>
+    <string name="dictate__providers_add_none">Nenhum fornecedor corresponde</string>
     <string name="dictate__providers_azure_endpoint">O endpoint fica ao lado da chave na página «Keys and Endpoint» do portal. O MAI-Transcribe só funciona em East US, West US, West US 2, North Europe, Southeast Asia e Central India.</string>
     <string name="dictate__providers_ollama_no_stt">O Ollama não tem endpoint de reconhecimento de voz, por isso só consegue reformular. Para ditar através de um servidor teu, põe a correr um servidor de voz (por exemplo Speaches, faster-whisper-server ou whisper.cpp) e adiciona-o em «Adicionar o teu próprio servidor» — ou usa o motor no dispositivo, que não precisa de servidor nenhum.</string>
+    <string name="dictate__providers_region_title">Região</string>
+    <string name="dictate__providers_region_us">Estados Unidos</string>
+    <string name="dictate__providers_region_eu">União Europeia</string>
+    <string name="dictate__providers_region_jp">Japão</string>
+    <string name="dictate__providers_region_in">Índia</string>
+    <string name="dictate__providers_region_global">Todo o mundo</string>
     <string name="dictate__providers_custom_title">Servidor personalizado</string>
+    <string name="dictate__providers_get_key">Obter uma chave de API</string>
     <string name="dictate__providers_field_name">Nome</string>
     <string name="dictate__providers_field_transcription_model">Modelo de transcrição</string>
     <string name="dictate__providers_field_chat_model">Modelo de reformulação</string>
@@ -1412,8 +1471,10 @@
     <string name="dictate__recording_animation_static_description">Mantém-se um ponto vermelho fixo durante a gravação</string>
     <string name="dictate__recording_animation_pulse_label">Pulsante</string>
     <string name="dictate__recording_animation_pulse_description">Pulsa a um ritmo constante</string>
-    <string name="dictate__recording_animation_level_label">Segue a sua voz</string>
+    <string name="dictate__recording_animation_level_label">Segue a sua voz (ponto)</string>
     <string name="dictate__recording_animation_level_description">Reage ao nível do microfone, mostrando que o está a captar</string>
+    <string name="dictate__recording_animation_wave_label">Segue a sua voz (onda)</string>
+    <string name="dictate__recording_animation_wave_description">Desenha os últimos segundos como uma onda ao vivo, para ver quando ficou em silêncio</string>
     <string name="dictate__skip_silent_title">Ignorar gravações silenciosas</string>
     <string name="dictate__skip_silent_summary">Evita texto alucinado e chamadas de API desnecessárias em áudio silencioso</string>
     <string name="dictate__trim_silent_gaps_title">Cortar pausas longas</string>
@@ -1450,7 +1511,7 @@
     <string name="dictate__providers_field_realtime_model">Modelo em tempo real</string>
     <string name="dictate__providers_custom_realtime">Transmissão em tempo real</string>
     <string name="dictate__providers_custom_realtime_summary">Este servidor usa o protocolo realtime da OpenAI em /v1/realtime</string>
-    <string name="dictate__providers_custom_warm_up">Acordar antes de reformular</string>
+    <string name="dictate__providers_custom_warm_up">Acordar com antecedência</string>
     <string name="dictate__providers_custom_warm_up_summary">Contacta o servidor cedo para que uma máquina adormecida tenha tempo de arrancar</string>
     <string name="dictate__providers_realtime_model_default">Predefinido</string>
     <string name="dictate__instant_recording_title">Gravação instantânea</string>
@@ -1477,7 +1538,13 @@
     <string name="dictate__languages_title">Idiomas de transcrição</string>
     <string name="dictate__languages_summary">Escolha os idiomas em que dita. Alterne rapidamente entre eles na barra de gravação.</string>
     <string name="dictate__language_detect">Detetar automaticamente</string>
+    <string name="dictate__languages_selected_title">Idiomas selecionados</string>
     <string name="dictate__languages_active_title">Idioma ativo</string>
+    <string name="dictate__languages_follow_keyboard">Seguir o idioma do teclado</string>
+    <string name="dictate__languages_follow_keyboard_summary">Muda também o ditado, se o idioma estiver selecionado</string>
+    <string name="quick_action__dictate_switch_provider">Fornecedor de transcrição</string>
+    <string name="quick_action__dictate_switch_provider__tooltip">Mudar de fornecedor de transcrição</string>
+    <string name="enum__space_bar_mode__transcription_provider">Fornecedor de transcrição</string>
     <string name="dictate__prompt_selection_none">Nenhum</string>
     <string name="dictate__prompt_selection_predefined">Predefinido</string>
     <string name="dictate__prompt_selection_custom">Personalizado</string>
@@ -1524,6 +1591,12 @@
     <string name="dictate__manage_prompts_title">Gerir prompts</string>
     <string name="dictate__manage_prompts_summary">{count} prompts</string>
     <string name="dictate__manage_prompts_summary_loading">Adicione, edite e remova os seus prompts</string>
+    <string name="dictate__command_word_title">Palavra de comando</string>
+    <string name="dictate__command_word_off">Desligado</string>
+    <string name="dictate__command_word_summary">Os ditados que começam por «{word}» são executados como instrução em direto</string>
+    <string name="dictate__command_word_placeholder">Jarvis</string>
+    <string name="dictate__command_word_info_title">Acerca da palavra de comando</string>
+    <string name="dictate__command_word_info_description">Normalmente o Dictate escreve o que diz. Se definir uma palavra de comando, um ditado que comece por ela passa a ser uma instrução: a palavra é removida e o resto é enviado à IA, juntamente com o texto selecionado, se existir.\n\n«Jarvis, torna isto mais formal» reescreve a seleção. «Jarvis, qual é a capital do Japão» escreve a resposta no campo. É o botão de instrução em direto, alcançado dizendo o seu nome em vez de lhe tocar.\n\nA palavra só conta no início do ditado e apenas como palavra inteira, por isso escolha algo com que raramente comece uma frase.</string>
     <string name="dictate__auto_formatting_title">Formatação automática</string>
     <string name="dictate__auto_formatting_summary">Converter indicações de formatação faladas em Markdown (títulos, listas, …)</string>
     <string name="dictate__system_prompt_title">Instrução de reformulação</string>
@@ -1668,6 +1741,12 @@
     <string name="dictate__local_model_none_selected">Ainda não foi transferido nenhum modelo</string>
     <string name="dictate__local_model_delete_confirm">Eliminar «{model}»? Pode transferi-lo novamente mais tarde.</string>
     <string name="dictate__local_model_not_installed_error">Nenhum modelo local transferido</string>
+    <string name="dictate__local_model_family_installed">{count} de {total} instalados</string>
+    <string name="dictate__local_model_family_open">Mostrar variantes</string>
+    <plurals name="dictate__local_model_languages">
+        <item quantity="one">{count} idioma</item>
+        <item quantity="other">{count} idiomas</item>
+    </plurals>
     <string name="dictate__local_fallback_title">Alternativa offline</string>
     <string name="dictate__local_fallback_summary">Sem ligação, transcreve no dispositivo com o modelo transferido após falha do fornecedor</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Prompts de reformulação guardados</string>
@@ -1675,6 +1754,8 @@
     <string name="dictate__floating_button_copy_to_clipboard_title">Copiar cada ditado para a área de transferência</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_on">Cada ditado também é copiado para a área de transferência, para que possa colá-lo manualmente se a inserção falhar. Pode mostrar um aviso da área de transferência em alguns telemóveis.</string>
     <string name="dictate__floating_button_copy_to_clipboard_summary_off">Os ditados são apenas inseridos, não copiados para a área de transferência.</string>
+    <string name="dictate__floating_button_menu_group">Menu ao manter premido</string>
+    <string name="dictate__floating_button_menu_settings_title">Definições do Dictate</string>
     <string name="dictate__floating_button_undo_summary_off">Não é mostrado nenhum botão para anular.</string>
     <string name="dictate__floating_button_undo_summary_on">Após um ditado, surge um botão para anular junto ao botão, para remover o texto inserido com um só toque.</string>
     <string name="dictate__floating_button_undo_title">Botão para anular</string>
@@ -1708,6 +1789,8 @@
     <string name="dictate__mappings_wholeword_summary">Substituir apenas palavras isoladas, não correspondências dentro de palavras maiores.</string>
     <string name="dictate__mappings_wholeword_title">Apenas palavra inteira</string>
     <string name="dictate__wear_standalone_summary">Envia a tua chave API para o relógio para ditar sem o telemóvel por perto.</string>
+    <string name="dictate__wear_tether_notif_channel_name">Ditado do relógio</string>
+    <string name="dictate__wear_tether_notif_title">A transcrever para o relógio…</string>
     <string name="dictate__wear_standalone_title">Sincronizar chave com o relógio</string>
     <string name="emoji__search__hint">Pesquisar emoji</string>
     <string name="emoji__row__open_panel">Abrir todos os emojis</string>
@@ -1739,7 +1822,6 @@
     <string name="dictate__audio_source_voice_recognition_summary">Otimizado para fala com menos processamento — experimenta se a transcrição for imprecisa</string>
     <string name="dictate__audio_source_unprocessed">Sem processamento (bruto)</string>
     <string name="dictate__audio_source_unprocessed_summary">Sem qualquer processamento; recorre ao Reconhecimento de voz se o telemóvel não o suportar</string>
-    <string name="dictate__security_group">Segurança</string>
     <string name="dictate__trust_user_certs_title">Confiar em certificados do utilizador</string>
     <string name="dictate__trust_user_certs_summary">Confia em certificados de AC que instalou, para endpoints auto-hospedados atrás de uma AC privada.</string>
     <string name="dictate__stats_title">Estatísticas</string>
@@ -2112,6 +2194,79 @@
     <string name="apptour62__outro_eyebrow">Isto é a 6.2</string>
     <string name="apptour62__outro_title">O mesmo teclado, mais dele teu</string>
     <string name="apptour62__outro_body">Nada muda na forma como ditas — a tua chave, o teu servidor ou um modelo no dispositivo. Encontras todas as visitas guiadas em Definições › Acerca de.</string>
+    <string name="apptour63__cta_try">Experimentar</string>
+    <string name="apptour63__intro_eyebrow">Dictate 6.3</string>
+    <string name="apptour63__intro_title">Mais teclado, sem sair dele</string>
+    <string name="apptour63__intro_body">Aponta a câmara a um texto impresso e ele aparece no campo. O cursor, a seleção e a área de transferência partilham finalmente um painel. Qualquer botão da Smartbar pode levar uma segunda ação com um toque longo. E o ditado sem ligação já tem modelos que cabem mesmo num telemóvel.</string>
+    <string name="apptour63__scan_eyebrow">Novo: digitalizar texto</string>
+    <string name="apptour63__scan_title">O impresso, direto para o campo</string>
+    <string name="apptour63__scan_body">O IBAN de uma carta, o número de série de uma caixa, a morada de uma encomenda: aponta a câmara e o texto chega onde estavas a escrever, em vez de ser copiado à mão. O reconhecimento acontece neste dispositivo — nada é enviado e nenhum fornecedor está envolvido. O Dictate também nunca pede a permissão de câmara: a câmara do sistema tira a foto e devolve apenas essa imagem, que é apagada assim que for lida.</string>
+    <string name="apptour63__editing_eyebrow">Novo: painel de edição</string>
+    <string name="apptour63__editing_title">Cursor, seleção e área de transferência num só sítio</string>
+    <string name="apptour63__editing_body">Já existia tudo, espalhado por onze teclas que era preciso conhecer. Agora é um painel: mover por carácter, palavra ou linha, selecionar, copiar, colar, desfazer. Uma tecla mantida repete-se em vez de exigir onze toques. E o teclado numérico pode agora ser pedido explicitamente, em vez de só se chegar lá por um gesto que ninguém tinha atribuído.</string>
+    <string name="apptour63__second_eyebrow">Novo: manter para uma segunda ação</string>
+    <string name="apptour63__second_title">Duas ações num lugar da Smartbar</string>
+    <string name="apptour63__second_body">Emparelhas tu próprio uma segunda ação com um botão e o toque longo executa-a. Só cinco ou seis botões estão visíveis de cada vez: é a diferença entre ter uma função e ter espaço para ela. Uma pequena marca no canto mostra que botões levam uma.</string>
+    <string name="apptour63__floating_eyebrow">Botão flutuante</string>
+    <string name="apptour63__floating_title">Um menu ao manter, e só onde o queres</string>
+    <string name="apptour63__floating_body">Mantém o botão flutuante premido para um menu curto; transcrever um ficheiro é a primeira entrada. Também lhe podes dizer em que aplicações é bem-vindo, em vez de te seguir para todas. Parar fica agora exatamente onde iniciar estava, e a cápsula abre suavemente em qualquer lado do ecrã.</string>
+    <string name="apptour63__offline_eyebrow">Ditado sem ligação</string>
+    <string name="apptour63__offline_title">Modelos que cabem num telemóvel</string>
+    <string name="apptour63__offline_body">Inglês, alemão e russo podem agora ser ditados sem ligação com modelos de algumas centenas de megabytes, e não só com os de 670 MB. O Dolphin acrescenta quarenta línguas orientais a que o catálogo só respondia mal. E a lista está ordenada pelo que as pessoas descarregam mesmo, em vez de por arquitetura: dez linhas em vez de vinte e quatro, com os detalhes a um toque.</string>
+    <string name="apptour63__more_eyebrow">Além disso</string>
+    <string name="apptour63__more_title">Muitas coisas pequenas</string>
+    <string name="apptour63__more_body">A tua lista de palavras pode agora chegar como ficheiro, e sair como ficheiro. A barra de gravação desenha uma forma de onda, por isso vê-se quando a tua voz parou. Uma conta de fornecedor pode escolher a região onde ficam os seus dados, e o servidor de streaming acompanha. Um ditado sobrevive ao desaparecimento do microfone em que estava a gravar. O teste de ligação só diz o que verificou mesmo, a página de chaves do fornecedor está a um toque do campo onde a chave entra, e uma instalação nova abre com aquilo para que o teclado serve, e não com a ordem em que as funções foram aparecendo.</string>
+    <string name="apptour63__outro_eyebrow">Isto é a 6.3</string>
+    <string name="apptour63__outro_title">Menos desvios, o mesmo teclado</string>
+    <string name="apptour63__outro_body">Nada muda na forma como ditas — a tua chave, o teu servidor ou um modelo no dispositivo. Encontras todas as visitas guiadas em Definições › Acerca de.</string>
+    <string name="apptour64__cta_languages">Escolher idiomas</string>
+    <string name="apptour64__cta_providers">Ver fornecedores</string>
+    <string name="apptour64__intro_eyebrow">Dictate 6.4</string>
+    <string name="apptour64__intro_title">Traduzido no telemóvel, símbolos à tua medida</string>
+    <string name="apptour64__intro_body">Escreve num idioma e o campo enche-se noutro, traduzido neste dispositivo. As duas páginas de símbolos podem levar as teclas que escolheres. Há ainda novos fornecedores e um modelo sem ligação muito melhor, uma palavra que, ao dizê-la, transforma um ditado numa instrução, e uma revisão de privacidade e segurança de toda a aplicação.</string>
+    <string name="apptour64__translate_eyebrow">Novo: traduzir</string>
+    <string name="apptour64__translate_title">Uma tradução que nunca sai do telemóvel</string>
+    <string name="apptour64__translate_body">Toca em Traduzir na Smartbar e escreve no campo por cima — o campo da aplicação vai-se enchendo com a tradução à medida que escreves. Os modelos da Mozilla fazem o trabalho neste dispositivo, em 49 idiomas, e nada do que escreves é enviado para lado nenhum. O Enter insere a tradução terminada antes de enviar, por isso uma mensagem nunca sai meio traduzida. Cada idioma é transferido uma única vez, e a lista mostra o tamanho antes de o transferires.</string>
+    <string name="apptour64__symbols_eyebrow">Novo: os teus próprios símbolos</string>
+    <string name="apptour64__symbols_title">Os símbolos que usas, onde os queres</string>
+    <string name="apptour64__symbols_body">Em Teclado › Símbolos personalizados, as duas páginas de símbolos passam a ser tuas, em todos os idiomas. Toca numa tecla na imagem da página, escolhe o que ela escreve e o que o toque longo oferece, e arrasta-os para a ordem que quiseres. Uma paleta reúne os símbolos que o teu teclado ainda não tem. Enquanto não alterares nenhuma tecla, as páginas ficam exatamente iguais às predefinidas, e um esquema terminado pode ser exportado para partilhar.</string>
+    <string name="apptour64__providers_eyebrow">Fornecedores e modelos sem ligação</string>
+    <string name="apptour64__providers_title">Novos fornecedores e um modelo sem ligação melhor</string>
+    <string name="apptour64__providers_body">O Grok da xAI agora também transcreve, como ficheiro e em direto, com a mesma chave com que reformula. A Scaleway e a OVHcloud mantêm o áudio e o texto dentro da UE. Sem ligação, o Parakeet Ultra substitui o Parakeet TDT 0.6B v3: os mesmos 670 MB e os mesmos 25 idiomas, com menos 29% de erros em alemão. Se usas o v3, transfere o Ultra na lista de modelos no dispositivo e apaga o antigo — até lá, o v3 continua a funcionar. E a lista de fornecedores mostra agora só os que usas; todos os outros estão em «Adicionar fornecedor», com pesquisa.</string>
+    <string name="apptour64__command_eyebrow">Novo: palavra de comando</string>
+    <string name="apptour64__command_title">Diz a palavra e o ditado torna-se uma instrução</string>
+    <string name="apptour64__command_body">Escolhe uma palavra em Reformulação — «Jarvis», por exemplo. Um ditado que comece por ela é executado como instrução em direto: sobre o texto selecionado, ou como pergunta quando nada está selecionado. Só conta a primeira palavra, por isso uma frase que apenas a mencione é escrita normalmente. Os prompts automáticos também funcionam agora como deviam: recebem sempre o ditado sobre o qual atuam, e um que seja só [texto entre parênteses retos] é acrescentado no fim tal e qual, em vez de ir para o modelo.</string>
+    <string name="apptour64__privacy_eyebrow">Privacidade e segurança</string>
+    <string name="apptour64__privacy_title">A aplicação inteira, verificada</string>
+    <string name="apptour64__privacy_body">Cada parte do Dictate foi revista quanto a privacidade e segurança, e o que apareceu foi corrigido. Um ditado num campo de palavra-passe ou PIN fica fora do histórico, agora também através do botão flutuante. A cópia de segurança na nuvem do Android só leva as tuas chaves de API encriptadas ponto a ponto. E «Confiar em certificados do utilizador» define-se agora por conta de fornecedor, em vez de para todas de uma vez.</string>
+    <string name="apptour64__more_eyebrow">Além disso</string>
+    <string name="apptour64__more_title">Tudo o resto da 6.4</string>
+    <string name="apptour64__more_body">As alterações mais pequenas, para quem quer os pormenores. Se não for o teu caso, passa à frente.</string>
+    <string name="apptour64__more_typing">Escrita</string>
+    <string name="apptour64__more_typing_slips">As sugestões percebem os deslizes: uma letra na tecla errada, duas letras trocadas, um erro numa palavra escrita a meio. A palavra que querias aparece muito mais vezes, e cada toque numa tecla é mais rápido.</string>
+    <string name="apptour64__more_typing_autocorrect">Com a correção automática desligada, as correções continuam a aparecer na barra de sugestões. O interruptor só decide se a barra de espaço troca a palavra.</string>
+    <string name="apptour64__more_typing_glide">Digitar ao deslizar encontra agora palavras que começam ou acabam numa letra acentuada — em húngaro, russo, finlandês, polaco, turco e outros idiomas.</string>
+    <string name="apptour64__more_typing_swipe">Deslizar para o lado sobre as letras já não muda o idioma, o que acontecia sobretudo sem querer. A tecla do globo continua a fazê-lo, e em «Gestos e deslize» podes recuperar o deslize.</string>
+    <string name="apptour64__more_typing_punctuation">Um sinal de pontuação logo a seguir a uma correção automática fica no lugar do espaço dela, e deslizar na barra de espaço já não sai da sua linha.</string>
+    <string name="apptour64__more_typing_calculator">A calculadora responde antes do «=», e um toque no resultado completa a linha.</string>
+    <string name="apptour64__more_typing_size">O teclado lembra-se do tamanho para cada idioma.</string>
+    <string name="apptour64__more_typing_languages">O africanês passou a ser um idioma de teclado completo. Para um novo esquema basta escolher o idioma — os outros campos preenchem-se sozinhos.</string>
+    <string name="apptour64__more_dictation">Ditado</string>
+    <string name="apptour64__more_dictation_stop">Parar um ditado que ainda espera pelo servidor mantém a gravação, pronta a enviar de novo.</string>
+    <string name="apptour64__more_dictation_timeout">Uma ligação que encrava desiste ao fim de um só tempo limite em vez de quatro, e um pedido que o fornecedor recusou não é enviado de novo.</string>
+    <string name="apptour64__more_dictation_live">Uma palavra que apagas durante um ditado em direto fica apagada, e dois ditados seguidos levam um espaço entre eles.</string>
+    <string name="apptour64__more_dictation_hold">Ao manter o micro premido para falar: um toque lento continua a ser um toque, e manter menos de um segundo é descartado.</string>
+    <string name="apptour64__more_dictation_talkback">O TalkBack consegue encontrar e premir o micro, e diz o que o ditado está a fazer.</string>
+    <string name="apptour64__more_clipboard">Área de transferência e emojis</string>
+    <string name="apptour64__more_clipboard_pins">Os itens fixados ficam agora em baixo, com separadores para saltar entre os grupos. «Itens fixados no topo» repõe a ordem antiga.</string>
+    <string name="apptour64__more_clipboard_chips">Os chips de ligações, e-mails e números junto a um texto copiado podem ser desligados.</string>
+    <string name="apptour64__more_clipboard_emoji">A fila de emojis desliza e responde ao toque longo, e a pesquisa de emojis mostra duas filas.</string>
+    <string name="apptour64__more_elsewhere">Botão flutuante e relógio</string>
+    <string name="apptour64__more_elsewhere_bubble">O botão flutuante pode esperar que haja um teclado aberto antes de aparecer, e escreve no campo web em que tocaste.</string>
+    <string name="apptour64__more_elsewhere_watch">No relógio, um ditado termina como o seu campo pede — enviar, pesquisar ou um visto —, com envio automático se quiseres, e a espera mostra os segundos.</string>
+    <string name="apptour64__outro_eyebrow">Isto é a 6.4</string>
+    <string name="apptour64__outro_title">Mais no telemóvel, mais à tua medida</string>
+    <string name="apptour64__outro_body">A tradução e o novo modelo sem ligação funcionam sem rede, e tudo o resto continua a funcionar como o configuraste — a tua chave, o teu servidor ou um modelo no dispositivo. Encontras todas as visitas guiadas em Definições › Acerca de.</string>
     <string name="changelog__v5_0_0">• NOVO: Escrita por deslize — deslize pelas teclas para escrever palavras inteiras, com dicionários por idioma transferidos a pedido. 👆\n• NOVO: Sugestões de palavras e correção automática — os erros são corrigidos automaticamente e a palavra que escreveu fica a um toque. ✨\n• NOVO: Transcrição em tempo real — veja as suas palavras a aparecer enquanto fala, com OpenAI, Deepgram, Soniox, AssemblyAI e ElevenLabs. ⚡\n• NOVO: Mais três fornecedores de transcrição — ElevenLabs Scribe, Deepgram e AssemblyAI. ☁️\n• NOVO: Esquema de ditado clássico — o ecrã de voz sem teclado do Dictate 3 está de volta, fixo ou a um simples deslize. 🎙️\n• NOVO: Biblioteca de prompts da comunidade — explore e partilhe prompts de reformulação. 📚\n• NOVO: Estatísticas de ditado com marcos. 📊\n• NOVO: Modelo offline NVIDIA Parakeet, além de um filtro de silêncio que ignora as gravações vazias. 📴\n• Mais: um botão flutuante mais estável, controlo do esforço de raciocínio, resposta tátil, um novo tema E-Reader e dezenas de correções. 🛠️</string>
     <string name="media__tab__gifs">GIFs</string>
     <string name="prefs__media__gif__title">GIFs</string>
@@ -2126,6 +2281,11 @@
     <string name="prefs__media__gif_setup__step3">Copie a sua chave e cole-a no campo abaixo.</string>
     <string name="prefs__media__gif_setup__open_klipy">Abrir Painel de Parceiro KLIPY</string>
     <string name="prefs__media__gif_setup__key_label">Chave de API KLIPY</string>
+    <string name="prefs__media__gif_content_filter">Pesquisa segura</string>
+    <string name="prefs__media__gif_content_filter__high">Rigorosa</string>
+    <string name="prefs__media__gif_content_filter__medium">Moderada</string>
+    <string name="prefs__media__gif_content_filter__low">Ligeira</string>
+    <string name="prefs__media__gif_content_filter__off">Desativada</string>
     <string name="prefs__media__gif_setup__privacy_note">Os seus termos de pesquisa só são enviados para a KLIPY enquanto o painel de GIFs está aberto — nunca durante o ditado.</string>
     <string name="gif__search_placeholder">Pesquisar KLIPY</string>
     <string name="gif__powered_by">Com tecnologia KLIPY</string>
@@ -2318,4 +2478,35 @@
     <string name="sticker__source_threema">Threema</string>
     <string name="sticker__source_signal">Signal</string>
     <string name="sticker__source_stickers_folder">Pasta de autocolantes</string>
+    <string name="scan__take_photo">Tirar foto</string>
+    <string name="scan__pick_image">Escolher imagem</string>
+    <string name="scan__retake">Tentar novamente</string>
+    <string name="scan__empty_hint">Fotografe texto impresso e toque na parte que quiser.</string>
+    <string name="scan__latin_only">Apenas alfabeto latino</string>
+    <string name="scan__reading">A ler a foto…</string>
+    <string name="scan__no_text">Nenhum texto encontrado na foto.</string>
+    <string name="scan__failed">Não foi possível ler a foto.</string>
+    <string name="scan__no_camera">Nenhuma aplicação de câmara encontrada.</string>
+    <string name="scan__select_all">Selecionar tudo</string>
+    <string name="scan__discard">Descartar</string>
+    <string name="scan__approve">Aceitar</string>
+
+    <!-- On-device translation (issue #424) -->
+    <string name="settings__translation__title">Tradução</string>
+    <string name="translate__settings_intro">Traduz diretamente no telemóvel e nada do que escreves sai dele. Abre-se com «Traduzir» na barra inteligente.</string>
+    <string name="translate__group_installed">Transferidos</string>
+    <string name="translate__group_available">Disponíveis</string>
+    <string name="translate__english_included">Sempre incluído</string>
+    <string name="translate__size_installed">{size} no dispositivo</string>
+    <string name="translate__size_download">Transferência de {download} · {size} no dispositivo</string>
+    <string name="translate__hint">Escreve para traduzir</string>
+    <string name="translate__detect">Detetar idioma</string>
+    <string name="translate__detected">{language} (detetado)</string>
+    <string name="translate__swap">Trocar idiomas</string>
+    <string name="translate__no_languages">Ainda não há idiomas transferidos</string>
+    <string name="translate__get_languages">Transferir idiomas</string>
+    <string name="translate__more_languages">Mais idiomas</string>
+    <string name="translate__missing">Falta transferir {language}</string>
+    <string name="translate__failed">Falha na tradução</string>
+    <string name="translate__unsupported">A tradução não está disponível neste dispositivo</string>
 </resources>

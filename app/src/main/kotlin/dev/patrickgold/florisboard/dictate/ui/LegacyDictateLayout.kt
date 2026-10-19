@@ -92,11 +92,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -108,6 +109,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
+import androidx.compose.ui.window.PopupProperties
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -132,6 +134,7 @@ import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withTimeoutOrNull
+import org.florisboard.lib.compose.onAccent
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -298,7 +301,8 @@ fun LegacyDictateLayout(
                     }
                 }
 
-                // Row 2: editing actions (select-all first, so it sits in the row below the strip).
+                // Row 2: editing actions (select-all first, so it sits in the row below the strip). One
+                // row, or two once the user has picked more buttons than fit across (#226).
                 LegacyEditRow(
                     keyboardManager = keyboardManager,
                     onEmoji = { keyboardManager.activeState.imeUiMode = ImeUiMode.MEDIA },
@@ -381,10 +385,15 @@ private fun ThemedIconKey(
 }
 
 /**
- * Editing-action row. The buttons are user-configurable (issue #183/#194): the ordered set comes from
+ * Editing-action rows. The buttons are user-configurable (issue #183/#194): the ordered set comes from
  * [dev.patrickgold.florisboard.app.AppPrefs.Dictate.legacyActionRow] and is arranged in Settings. The
  * default row is select-all · undo · redo · cut · copy · paste · emoji · numbers, but any of the actions
  * in [LegacyEditAction] (also language, history, reinsert, GIF) can be placed here.
+ *
+ * Past [LegacyEditAction.MAX_PER_ROW] buttons they wrap onto a second row (issue #226), split by
+ * [LegacyEditAction.rows]. Both rows use **one** slot width — that of the longer row — so the keys line
+ * up in columns and a 6+5 split doesn't render five oversized keys under six normal ones; the shorter
+ * row is centred under the longer one with the leftover half-slot on either side.
  */
 @Composable
 private fun LegacyEditRow(
@@ -399,26 +408,34 @@ private fun LegacyEditRow(
     val hasSelection = content.selection.isSelectionMode
 
     val actionRaw by prefs.dictate.legacyActionRow.collectAsState()
-    val actions = remember(actionRaw) { LegacyEditAction.parse(actionRaw) }
-    if (actions.isEmpty()) return
+    val rows = remember(actionRaw) { LegacyEditAction.rows(LegacyEditAction.parse(actionRaw)) }
+    if (rows.isEmpty()) return
+    val slots = rows.maxOf { it.size }
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(EditRowHeight),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        val keyMod = Modifier.weight(1f).fillMaxHeight()
-        actions.forEachIndexed { index, action ->
-            key(index, action) {
-                LegacyActionKey(
-                    action = action,
-                    modifier = keyMod,
-                    keyboardManager = keyboardManager,
-                    hasSelection = hasSelection,
-                    onEmoji = onEmoji,
-                    onNumbers = onNumbers,
-                )
+    rows.forEachIndexed { rowIndex, row ->
+        key(rowIndex) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(EditRowHeight),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val keyMod = Modifier.weight(1f).fillMaxHeight()
+                val padding = (slots - row.size) / 2f
+                if (padding > 0f) Spacer(modifier = Modifier.weight(padding))
+                row.forEachIndexed { index, action ->
+                    key(index, action) {
+                        LegacyActionKey(
+                            action = action,
+                            modifier = keyMod,
+                            keyboardManager = keyboardManager,
+                            hasSelection = hasSelection,
+                            onEmoji = onEmoji,
+                            onNumbers = onNumbers,
+                        )
+                    }
+                }
+                if (padding > 0f) Spacer(modifier = Modifier.weight(padding))
             }
         }
     }
@@ -507,6 +524,11 @@ private fun LegacyActionKey(
         LegacyEditAction.EDITING -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
             keyboardManager.activeState.imeUiMode = ImeUiMode.EDITING
         }
+        // Scan text (issue #390), opened the same direct way. The panel asks for the photo itself, so
+        // this is only ever a way in, never a shutter.
+        LegacyEditAction.SCAN -> ThemedIconKey(KeyCode.NOOP, action.icon, label, modifier) {
+            keyboardManager.activeState.imeUiMode = ImeUiMode.SCAN
+        }
     }
 }
 
@@ -535,7 +557,12 @@ private fun LegacyLanguageKey(modifier: Modifier) {
                 Text(active.shortCode, color = fg, fontWeight = FontWeight.SemiBold)
             }
         }
-        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+        // Not focusable, like the Smartbar chip's menu: a focusable one hides the keyboard (#284).
+        DropdownMenu(
+            expanded = menuOpen,
+            onDismissRequest = { menuOpen = false },
+            properties = PopupProperties(focusable = false),
+        ) {
             selection.forEach { lang ->
                 DropdownMenuItem(
                     text = {
@@ -570,7 +597,7 @@ private fun LegacyRecordRow(
     val rewording = dictateState as? DictateController.UiState.Rewording
     // The button is non-interactive while the audio is being transcribed or reworded.
     val busy = dictateState is DictateController.UiState.Transcribing || rewording != null
-    val onAccent = if (accent.luminance() > 0.5f) Color.Black else Color.White
+    val onAccent = accent.onAccent()
     val sideKey = Modifier.fillMaxHeight().aspectRatio(1f)
 
     // Long-form segmented dictation (#170): whether the "Next segment" button replaces pause and how many
@@ -587,6 +614,17 @@ private fun LegacyRecordRow(
     }
     // Realtime streaming (#128): tapping the record button ends the live stream — hint that with a send glyph.
     val realtime = recording != null && DictateController.isRealtimeRecording()
+    // What a screen reader reads for the record key (#159). Its visible text is the timer while recording
+    // and the status while busy, neither of which says what a tap does. Stop and cancel are named as on the
+    // Smartbar mic.
+    val recordA11yName = stringRes(
+        when {
+            recording != null -> R.string.dictate__legacy_stop
+            busy -> R.string.action__cancel
+            else -> R.string.dictate__legacy_record
+        },
+    )
+    val recordA11yHoldName = stringRes(R.string.dictate__import_menu)
 
     Row(
         modifier = modifier,
@@ -619,7 +657,9 @@ private fun LegacyRecordRow(
         // thumb, so the same factors that read well on a 12 dp dot would be jarring here.
         val animation by prefs.dictate.recordingAnimation.collectAsState()
         val isRecording = recording != null && !recording.paused
-        val level = if (animation == DictateRecordingAnimation.LEVEL && isRecording) {
+        // WAVE has no home on a button the size of a thumb, so here it is treated as LEVEL (#371) — the
+        // waveform belongs to the Smartbar's bar, this key keeps following the voice by size.
+        val level = if (animation.followsVoice && isRecording) {
             DictateController.audioLevel.collectAsState().value
         } else {
             0f
@@ -631,7 +671,7 @@ private fun LegacyRecordRow(
             animationSpec = infiniteRepeatable(tween(PULSE_DURATION_MS), RepeatMode.Reverse),
             label = "recordPulse",
         )
-        val recordScale = if (animation == DictateRecordingAnimation.LEVEL) 1f + 0.03f * level else pulse
+        val recordScale = if (animation.followsVoice) 1f + 0.03f * level else pulse
         val interaction = remember { MutableInteractionSource() }
         val feedback = LocalInputFeedbackController.current
         Box(
@@ -657,11 +697,13 @@ private fun LegacyRecordRow(
                         Modifier.combinedClickable(
                             interactionSource = interaction,
                             indication = ripple(),
+                            onLongClickLabel = recordA11yHoldName,
                             onClick = { feedback.keyPress(); DictateController.onMicClick(context) },
                             onLongClick = { feedback.keyPress(); DictateController.startFileTranscription(context) },
                         )
                     },
-                ),
+                )
+                .semantics { contentDescription = recordA11yName },
             contentAlignment = Alignment.Center,
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -933,7 +975,7 @@ private fun EnterCharPopup(
     selectedIndex: Int,
     accent: Color,
 ) {
-    val onAccent = if (accent.luminance() > 0.5f) Color.Black else Color.White
+    val onAccent = accent.onAccent()
     val positionProvider = remember {
         object : PopupPositionProvider {
             override fun calculatePosition(

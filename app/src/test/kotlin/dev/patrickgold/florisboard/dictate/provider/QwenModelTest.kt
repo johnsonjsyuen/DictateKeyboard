@@ -27,6 +27,7 @@ class QwenModelTest {
         assertEquals(1_490_915_200L, weights.sizeBytes)
         assertEquals("ec197cef7ccc589fdcae1becc3f4a3de119d0a41e790b898b519b1a048dad8d4", weights.sha256)
         assertTrue(weights.url.contains("/674df5d44b50a63e7102a18895ed20e3f91de301/"))
-        assertTrue(spec.description.contains("Q8"))
+        assertTrue(spec.displayName.contains("Q4_K"))
+        assertTrue(spec.languages.isNotEmpty() && spec.credit != null)
     }
 }

@@ -10,6 +10,7 @@
 
 package dev.patrickgold.florisboard.dictate
 
+import java.text.Collator
 import java.util.Locale
 
 /**
@@ -23,17 +24,17 @@ data class DictateLanguage(val code: String, val englishName: String) {
         get() = code.substringBefore('-').uppercase(Locale.ROOT)
 
     /**
-     * Human-readable name, localized to the device language when possible and falling back to the
-     * bundled English name. [DictateLanguages.DETECT] is special-cased by callers (globe icon), so
-     * this returns its English label.
+     * Human-readable name, localized to [locale] (the device language unless a caller asks for another)
+     * when possible and falling back to the bundled English name. [DictateLanguages.DETECT] is
+     * special-cased by callers (globe icon), so this returns its English label.
      */
-    fun displayName(): String {
+    fun displayName(locale: Locale = Locale.getDefault()): String {
         if (code == DictateLanguages.DETECT) return englishName
-        val localized = Locale.forLanguageTag(code).getDisplayName(Locale.getDefault())
+        val localized = Locale.forLanguageTag(code).getDisplayName(locale)
         // A code Android has no name for comes back as the code itself, which would put "Jw" or "Haw" in
         // the picker. Anything that short is the tag, not a language.
         val usable = localized.takeIf { it.isNotBlank() && !it.equals(code, ignoreCase = true) }
-        return (usable ?: englishName).replaceFirstChar { it.uppercase(Locale.getDefault()) }
+        return (usable ?: englishName).replaceFirstChar { it.uppercase(locale) }
     }
 }
 
@@ -158,6 +159,24 @@ object DictateLanguages {
     fun of(code: String): DictateLanguage = byCode[code] ?: all.first()
 
     /**
+     * [languages] in the order someone reading [locale] looks for them: by the name the list shows, not by
+     * the English one this catalog is kept in. Sorted by the English name, a German list files "Deutsch"
+     * between Georgisch and Griechisch, and a Hindi one is in no recognisable order at all. [DETECT] stays
+     * on top, since it is not a language but leaving the choice to the model.
+     *
+     * For showing a list only. A stored selection keeps catalog order, which is the order the recording
+     * bar cycles through, so it does not change with the language the phone happens to be set to.
+     */
+    fun sortedForDisplay(languages: List<DictateLanguage>, locale: Locale = Locale.getDefault()): List<DictateLanguage> {
+        val collator = Collator.getInstance(locale)
+        val (detect, rest) = languages.partition { it.code == DETECT }
+        return detect + rest
+            .map { it to it.displayName(locale) }
+            .sortedWith { a, b -> collator.compare(a.second, b.second) }
+            .map { it.first }
+    }
+
+    /**
      * Finds the dictation language matching a device [locale] (e.g. the system language), or `null`
      * when none of the supported languages correspond to it. The full BCP-47 tag is tried first so
      * regional variants such as `zh-CN` / `zh-TW` resolve correctly, then the base language is used
@@ -171,6 +190,60 @@ object DictateLanguages {
         return all.firstOrNull {
             it.code != DETECT && it.code.substringBefore('-').lowercase(Locale.ROOT) == base
         }
+    }
+
+    /**
+     * Keyboard language codes that this catalog spells differently: Norwegian keyboards are Bokmål (`nb`)
+     * where the catalog says `no`, Filipino (`fil`) is its Tagalog, and the catalog keeps Whisper's `jw`
+     * for Javanese rather than ISO's `jv`.
+     */
+    private val KEYBOARD_ALIASES = mapOf("nb" to "no", "fil" to "tl", "jv" to "jw")
+
+    /**
+     * The dictation language to switch to now that the keyboard's language is [locale] (issue #431), or
+     * `null` to leave the active one where it is.
+     *
+     * Only ever one of the user's own languages ([selectionRaw]). The active language always is one of
+     * them — the settings and the recording bar both hold to that — and a keyboard language outside the
+     * list says nothing about what is being spoken: a German layout kept for umlauts, say. Picking from
+     * the list also means turning this on never edits the list itself, which is the half of #347 that
+     * would have tied two lists the user curates to each other.
+     *
+     * The full tag wins first, so `zh-TW` finds Mandarin (TW) even with (CN) selected too; then the bare
+     * language, so an `en-GB` keyboard finds English and a Hindi transliteration layout finds Hindi.
+     * [DETECT] is never the answer: no keyboard language means "work it out".
+     */
+    fun forKeyboard(locale: Locale, selectionRaw: String): DictateLanguage? {
+        val selected = parseSelection(selectionRaw).filter { it.code != DETECT }
+        // toLanguageTag, not language: Android's Locale still answers "iw" and "in" for Hebrew and
+        // Indonesian there, where the tag has the modern codes this catalog uses.
+        val tag = locale.toLanguageTag().lowercase(Locale.ROOT)
+        selected.firstOrNull { it.code.lowercase(Locale.ROOT) == tag }?.let { return it }
+        val base = tag.substringBefore('-').let { KEYBOARD_ALIASES[it] ?: it }
+        if (base.isEmpty() || base == "und") return null
+        return selected.firstOrNull { it.code.substringBefore('-').lowercase(Locale.ROOT) == base }
+    }
+
+    /**
+     * The user's own name for a bare language [code], for a place that names a *model's* coverage
+     * rather than a dictation pick — "Deutsch", "Chinesisch", "Hawaiianisch".
+     *
+     * Deliberately not `of(code).displayName()`. [of] answers with "Detect automatically" for anything
+     * it does not know, and a model's language list carries bare codes (`zh`, `yue`) where this catalog
+     * carries regional tags (`zh-CN`, `yue-HK`), so half of them would come back as the globe. It also
+     * asks Android for the *language* name rather than the locale's, so `zh` reads "Chinese" instead of
+     * "Chinese (China)" — a model speaks a language, not a region.
+     */
+    fun displayNameOf(code: String): String {
+        val localized = Locale.forLanguageTag(code).getDisplayLanguage(Locale.getDefault())
+        // Android hands back the tag itself for a code it has no name for, which would put "Jw" or "Haw"
+        // in front of the user. The bundled English names cover several of those.
+        localized.takeIf { it.isNotBlank() && !it.equals(code, ignoreCase = true) }?.let { name ->
+            return name.replaceFirstChar { it.uppercase(Locale.getDefault()) }
+        }
+        val bundled = byCode[code]?.englishName
+            ?: all.firstOrNull { it.code != DETECT && it.code.substringBefore('-') == code }?.englishName
+        return bundled ?: code.uppercase(Locale.ROOT)
     }
 
     /**

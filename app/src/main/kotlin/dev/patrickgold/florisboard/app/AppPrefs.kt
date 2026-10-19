@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonAppScope
 import dev.patrickgold.florisboard.dictate.DictateFloatingButtonDesign
+import dev.patrickgold.florisboard.dictate.DictateFloatingButtonShowWhen
 import dev.patrickgold.florisboard.dictate.DictateLongformMode
 import dev.patrickgold.florisboard.dictate.audio.AudioSpeedUp
 import dev.patrickgold.florisboard.dictate.audio.DictateAudioSource
@@ -53,7 +54,6 @@ import dev.patrickgold.florisboard.ime.keyboard.DoubleSpaceAction
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
@@ -65,6 +65,7 @@ import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionSecondActions
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -132,6 +133,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__suggestion_timeout",
             default = 60,
         )
+        // The links, email addresses and phone numbers pulled out of a copied text as chips of their own,
+        // beside the clip itself (issue #429). On by default because that is how it always behaved; off
+        // leaves the clip as the only thing offered, which is also what Gboard's equivalent switch does.
+        val suggestionShowExtracted = boolean(
+            key = "clipboard__suggestion_show_extracted",
+            default = true,
+        )
         val historyEnabled = boolean(
             key = "clipboard__history_enabled",
             default = false,
@@ -153,6 +161,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 historyNumGridColumnsLandscape
             }
         }
+        // Off by default since issue #395: pins only ever grow, so on top they pushed what was just
+        // copied further down with every one added. The header tabs keep them one tap away below.
+        val historyPinnedOnTop = boolean(
+            key = "clipboard__history_pinned_on_top",
+            default = false,
+        )
         val historyAutoCleanOldEnabled = boolean(
             key = "clipboard__history_auto_clean_old_enabled",
             default = false,
@@ -358,6 +372,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__proxy_password",
             default = "",
         )
+        /**
+         * DEPRECATED: the app-wide switch, now [dev.patrickgold.florisboard.dictate.provider.ProviderAccount.trustUserCerts]
+         * per account (#383). Read once by the migrator, which turns it off; never for a live call.
+         */
         val trustUserCertificates = boolean(
             key = "dictate__trust_user_certificates",
             default = false,
@@ -371,6 +389,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
          * adjustable at all is the self-hosted end of the range, where a model on a slow machine can
          * think for longer than that before it answers. Uploads are not capped by this: while bytes are
          * moving, every one of them starts the clock again.
+         *
+         * It also ends the automatic retries: once a request has been going this long, it fails rather
+         * than starting another attempt, which the resend chip leaves to the user (#438).
          *
          * The file import ignores anything lower than its own, more generous limits — a screen with a
          * cancel button on it is not the place to give up early.
@@ -424,6 +445,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // layout's record button (issue #238). Defaults to LEVEL (mic-reactive), which doubles as
         // feedback that the microphone is hearing something; PULSE restores the pre-rewrite look and
         // STATIC removes the movement entirely for anyone who finds it distracting while speaking.
+        // WAVE (issue #371) swaps the Smartbar dot for a scrolling waveform, which is the only one of
+        // the four that shows whether the *last* second was quiet.
         val recordingAnimation = enum(
             key = "dictate__recording_animation",
             default = DictateRecordingAnimation.LEVEL,
@@ -538,12 +561,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__floating_button_enabled",
             default = false,
         )
-        // Whether the floating button also shows while the Dictate keyboard itself is the active input
-        // method. Default off: when our own keyboard is up it already has a mic key, so the bubble would
-        // be redundant; turning this on shows it everywhere regardless of the active keyboard.
-        val floatingButtonShowWithDictateKeyboard = boolean(
-            key = "dictate__floating_button_show_with_dictate_keyboard",
-            default = false,
+        // When the floating button comes up (issue #439): as soon as a field is selected, only while a
+        // keyboard is open, or also over the Dictate keyboard. Replaces the boolean
+        // `dictate__floating_button_show_with_dictate_keyboard`, which migrate() carries over.
+        val floatingButtonShowWhen = enum(
+            key = "dictate__floating_button_show_when",
+            default = DictateFloatingButtonShowWhen.FIELD_SELECTED,
         )
         // Visual style of the floating button: a compact ring (RING) or a bubble that expands into a pill
         // with a timer + live waveform while active (PILL). See DictateFloatingButtonDesign.
@@ -622,6 +645,22 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // some OEMs like Samsung).
         val floatingButtonCopyToClipboard = boolean(
             key = "dictate__floating_button_copy_to_clipboard",
+            default = false,
+        )
+        // Extra entries in the menu the hold opens (issue #408), below the prompts. All off by default:
+        // for a Gboard + bubble user that menu is the only route to their prompts, so nothing joins it
+        // unasked. The hold is also the only free gesture the button has — #357 is why these are menu
+        // entries and not a second gesture.
+        val floatingButtonMenuTranscribeFile = boolean(
+            key = "dictate__floating_button_menu_transcribe_file",
+            default = false,
+        )
+        val floatingButtonMenuHistory = boolean(
+            key = "dictate__floating_button_menu_history",
+            default = false,
+        )
+        val floatingButtonMenuSettings = boolean(
+            key = "dictate__floating_button_menu_settings",
             default = false,
         )
         // Whether the user has opened the floating-button screen at least once (clears the "New" badge).
@@ -855,6 +894,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__active_input_language",
             default = "detect",
         )
+        // Switching the keyboard's language also switches the dictation language, when that language is
+        // one of inputLanguages (issue #431). Off by default: #347 settled that a layout says nothing
+        // about the spoken language for most people, so this is for the ones for whom it does. Acts on
+        // the switch only — never on opening the keyboard — so a language picked by hand stays picked.
+        val languageFollowsKeyboard = boolean(
+            key = "dictate__language_follows_keyboard",
+            default = false,
+        )
         // Guard so the one-time seeding of the device/system dictation language (added on top of the
         // default detect,en) runs only once on a fresh install. See
         // DictateLegacyMigrator.seedDeviceLanguageIfNeeded.
@@ -867,13 +914,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__legacy_imported",
             default = false,
         )
-        // Guard for the one-time injection of the live-prompt Smartbar action into arrangements that
-        // were saved before the action existed (otherwise upgrading users never see it).
-        val livePromptActionMigrated = boolean(
-            key = "dictate__live_prompt_action_migrated",
-            default = false,
-        )
-        // Same one-time injection for the AI prompt-panel Smartbar action (DICTATE_PROMPTS).
+        // Guard for the one-time injection of the AI prompt-panel Smartbar action (DICTATE_PROMPTS) into
+        // arrangements saved before it existed.
         val promptsActionMigrated = boolean(
             key = "dictate__prompts_action_migrated",
             default = false,
@@ -908,6 +950,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val rewordingEnabled = boolean(
             key = "dictate__rewording_enabled",
             default = true,
+        )
+        // The spoken command word (issue #139): a dictation opening with it runs as a live prompt
+        // instead of being inserted. Blank (the default) switches the whole recognition off — there is
+        // no word everyone says rarely enough to be a safe default, so the user picks their own.
+        val commandTriggerWord = string(
+            key = "dictate__command_trigger_word",
+            default = "",
         )
         // Reasoning effort sent as OpenAI-compatible `reasoning_effort` on rewording chat calls for
         // reasoning models (issue #141). OFF omits the field, so non-reasoning models are unaffected.
@@ -1051,10 +1100,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "emoji__preferred_skin_tone",
             default = EmojiSkinTone.DEFAULT,
         )
-        val preferredHairStyle = enum(
-            key = "emoji__preferred_hair_style",
-            default = EmojiHairStyle.DEFAULT,
-        )
         val historyEnabled = boolean(
             key = "emoji__history_enabled",
             default = true,
@@ -1145,6 +1190,21 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    // On-device translation bar (issue #424). Both are catalog codes ("de", "zh_hant", "en"); the source
+    // may also be empty, which means "detect it". The target is empty until the bar is first opened, when
+    // it is set to the likeliest choice (see TranslateBarController.initialTarget) and then remembered.
+    val translation = Translation()
+    inner class Translation {
+        val sourceLanguage = string(
+            key = "translation__source_language",
+            default = "",
+        )
+        val targetLanguage = string(
+            key = "translation__target_language",
+            default = "",
+        )
+    }
+
     val sticker = Sticker()
     inner class Sticker {
         // The folder the user picked, as a SAF tree URI we hold a persisted read permission on.
@@ -1200,13 +1260,17 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "gestures__swipe_down",
             default = SwipeAction.HIDE_KEYBOARD,
         )
+        // Off by default (issue #418), where FlorisBoard switched the language. That default was harmless
+        // while a swipe hardly ever fired; since the swipe commits under the finger (#327) it fires every
+        // time, so a thumb sliding sideways over the letters changed the language by accident. Anyone with
+        // two or more languages has the globe on the utility key anyway.
         val swipeLeft = enum(
             key = "gestures__swipe_left",
-            default = SwipeAction.SWITCH_TO_NEXT_SUBTYPE,
+            default = SwipeAction.NO_ACTION,
         )
         val swipeRight = enum(
             key = "gestures__swipe_right",
-            default = SwipeAction.SWITCH_TO_PREV_SUBTYPE,
+            default = SwipeAction.NO_ACTION,
         )
         // Up and down default to a cursor move, where up used to do nothing at all (issue #364): the
         // vertical glide they switch on is the other half of the one left/right have had all along, and a
@@ -1437,6 +1501,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__hinted_symbols_mode",
             default = KeyHintMode.SMART_PRIORITY,
         )
+        /**
+         * Whether both symbol pages are the user's own (issue #342), in every language. What is on them
+         * is not a preference but a file of its own, see [dev.patrickgold.florisboard.dictate.symbols.CustomSymbolsStore].
+         */
+        val customSymbolsEnabled = boolean(
+            key = "keyboard__custom_symbols_enabled",
+            default = false,
+        )
         val utilityKeyEnabled = boolean(
             key = "keyboard__utility_key_enabled",
             default = true,
@@ -1591,6 +1663,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = QuickActionArrangement.Default,
             serializer = QuickActionArrangement.Serializer,
         )
+        // Which action each Smartbar button runs when it is held (issue #385). Its own preference
+        // rather than a field on the arrangement above: a pairing moves nothing, so the arrangement's
+        // three lists — and everything that migrates them — stay exactly as they were.
+        val actionSecondActions = custom(
+            key = "smartbar__action_second_actions",
+            default = QuickActionSecondActions.Default,
+            serializer = QuickActionSecondActions.Serializer,
+        )
         val flipToggles = boolean(
             key = "smartbar__flip_toggles",
             default = false,
@@ -1704,8 +1784,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = false,
         )
         // On by default (issue #329), unlike the learning above: this one keeps no record, changes
-        // nothing on its own, and only ever appears when somebody has literally typed a sum and then an
-        // equals sign. Tapping it is the only way anything reaches the field.
+        // nothing on its own, and only ever appears on a sum somebody has literally typed — with an
+        // equals sign, or with an operator that cannot mean anything else (issue #440). Tapping it is the
+        // only way anything reaches the field.
         val mathSuggestions = boolean(
             key = "suggestion__math_suggestions",
             default = true,
@@ -1965,6 +2046,16 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 } else {
                     entry.keepAsIs()
                 }
+            }
+
+            // The floating button's "Show with Dictate keyboard" switch became one of three entries of
+            // floatingButtonShowWhen (issue #439). Runs on load and on a backup import alike.
+            "dictate__floating_button_show_with_dictate_keyboard" -> {
+                entry.transform(
+                    type = PreferenceType.string(),
+                    key = "dictate__floating_button_show_when",
+                    rawValue = DictateFloatingButtonShowWhen.fromShowWithDictateKeyboard(entry.rawValue).name,
+                )
             }
 
             // Default: keep entry

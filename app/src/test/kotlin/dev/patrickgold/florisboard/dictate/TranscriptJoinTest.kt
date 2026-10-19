@@ -64,9 +64,97 @@ class TranscriptJoinTest : FunSpec({
         out.toString() shouldBe "Hey"
     }
 
+    test("tighten takes the space out from in front of a mark inside one piece") {
+        // Verbatim from NVIDIA's German FastConformer, whose vocabulary spells `▁,` and `▁.` — "space,
+        // then the mark" — as its two most frequent tokens, so this is what it genuinely predicts.
+        TranscriptJoin.tighten("Alles hat ein Ende , nur die Wurst hat zwei .") shouldBe
+            "Alles hat ein Ende, nur die Wurst hat zwei."
+        TranscriptJoin.tighten("Hast du die Datei schon abgeschickt ?") shouldBe
+            "Hast du die Datei schon abgeschickt?"
+    }
+
+    test("tighten leaves a transcript that was already spaced correctly untouched") {
+        // The English Parakeet and GigaAM write their marks against the word; this must be a no-op there.
+        val clean = "Well, I don't wish to see it any more. It is very like the old portrait."
+        TranscriptJoin.tighten(clean) shouldBe clean
+        TranscriptJoin.tighten("") shouldBe ""
+    }
+
+    test("tighten obeys the same set, so French keeps the space before ? and !") {
+        val french = ".,"
+        TranscriptJoin.tighten("Ça va ?", french) shouldBe "Ça va ?"
+        TranscriptJoin.tighten("Ça va , vraiment .", french) shouldBe "Ça va, vraiment."
+        // An empty set is a caller saying "no mark binds backwards here" and must change nothing.
+        TranscriptJoin.tighten("Ça va ?", "") shouldBe "Ça va ?"
+    }
+
+    test("tighten closes a whole run of spaces in front of a mark, and consecutive marks too") {
+        TranscriptJoin.tighten("Moment   , bitte") shouldBe "Moment, bitte"
+        TranscriptJoin.tighten("Warte .  .  .") shouldBe "Warte..."
+    }
+
+    test("tighten reflows nothing else — only the space in front of a mark is its business") {
+        // Spacing *after* a mark is left exactly as the model wrote it. Collapsing that too would mean
+        // rewriting whitespace nobody complained about, on every transcript, to fix one tokenizer.
+        TranscriptJoin.tighten("Moment   ,  bitte") shouldBe "Moment,  bitte"
+        TranscriptJoin.tighten("zwei  Wörter") shouldBe "zwei  Wörter"
+    }
+
     test("the default set is the conservative rule, not a superset invented here") {
         // Mirrors the "default" punctuation rule in the localization extension; a caller that can reach
         // the active rule passes it instead.
         TranscriptJoin.DEFAULT_TIGHTENING_SYMBOLS shouldBe ".,;:?!‽"
+    }
+
+    test("a dictation after a finished sentence gets the space it was missing (issue #443's video)") {
+        // `Testing 1, 2, 3.Testing one-two-three.` — the second dictation glued to the first.
+        TranscriptJoin.separatorBefore("1, 2, 3.", "Testing one-two-three.") shouldBe " "
+        TranscriptJoin.separatorBefore("Hey there", "how are you") shouldBe " "
+        TranscriptJoin.separatorBefore("Wait,", "what") shouldBe " "
+        TranscriptJoin.separatorBefore("(see above)", "Then") shouldBe " "
+    }
+
+    test("whitespace already in the field, or at the head of the dictation, is the separator") {
+        TranscriptJoin.separatorBefore("Hey there ", "how") shouldBe ""
+        TranscriptJoin.separatorBefore("First line\n", "Second") shouldBe ""
+        TranscriptJoin.separatorBefore("Hey there", " how") shouldBe ""
+    }
+
+    test("the start of a field, an unreadable field and an empty dictation get nothing") {
+        TranscriptJoin.separatorBefore("", "Hello") shouldBe ""
+        // Null is "could not read", not "empty" — a stray space at the start of a field would be ours.
+        TranscriptJoin.separatorBefore(null, "Hello") shouldBe ""
+        TranscriptJoin.separatorBefore("Hello", "") shouldBe ""
+    }
+
+    test("a dictation opening with a mark that binds backwards goes straight against the word") {
+        TranscriptJoin.separatorBefore("Hey there", ".") shouldBe ""
+        TranscriptJoin.separatorBefore("Hey there", ", and then") shouldBe ""
+        TranscriptJoin.separatorBefore("Hey there", "?") shouldBe ""
+    }
+
+    test("opening marks on the left and closing marks on the right are not word edges") {
+        TranscriptJoin.separatorBefore("Note (", "see above") shouldBe ""
+        TranscriptJoin.separatorBefore("\"", "Hello") shouldBe ""
+        TranscriptJoin.separatorBefore("Hey", ")") shouldBe ""
+        // …while an opening mark at the head of the dictation still starts a new word.
+        TranscriptJoin.separatorBefore("Hey there.", "(Aside)") shouldBe " "
+        TranscriptJoin.separatorBefore("Hola.", "¿Qué tal?") shouldBe " "
+    }
+
+    test("scripts written without spaces never get one, on either side of the seam") {
+        TranscriptJoin.separatorBefore("你好", "我很好") shouldBe ""
+        TranscriptJoin.separatorBefore("こんにちは", "元気です") shouldBe ""
+        TranscriptJoin.separatorBefore("สวัสดี", "ครับ") shouldBe ""
+        TranscriptJoin.separatorBefore("OK", "你好") shouldBe ""
+        TranscriptJoin.separatorBefore("你好。", "OK") shouldBe ""
+        // Korean spaces its words, so it is treated like any other spaced script.
+        TranscriptJoin.separatorBefore("안녕하세요.", "반갑습니다") shouldBe " "
+    }
+
+    test("the marks come from the caller, so a rule without opening marks spaces fewer seams") {
+        TranscriptJoin.separatorBefore("Hey there.", "(Aside)", followingSymbols = "") shouldBe ""
+        TranscriptJoin.separatorBefore("50%", "of it", precedingSymbols = "") shouldBe ""
+        TranscriptJoin.separatorBefore("50%", "of it") shouldBe " "
     }
 })

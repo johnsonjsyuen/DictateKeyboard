@@ -16,9 +16,9 @@ import dev.patrickgold.florisboard.ime.nlp.latin.DictFold
  * Word → emoji, derived from the CLDR annotations the app already ships (issue #338).
  *
  * The point of building this rather than shipping a curated word list: `assets/ime/media/emoji/
- * annotations/` holds **50 languages**, ~1900 emoji each, and the file for the active locale is parsed
+ * annotations/` holds **51 languages**, ~1900 emoji each, and the file for the active locale is parsed
  * at preload anyway. Inverting it costs one more pass over data already in memory, and the feature
- * starts in every one of those languages at once instead of in English with 49 translation debts.
+ * starts in every one of those languages at once instead of in English with 50 translation debts.
  *
  * Inverting it *naively* is a trap, though, and the trap is worth writing down: CLDR keywords never
  * repeat the emoji's own name, so a keyword-only index answers `pizza` with 🍄 (the brown mushroom
@@ -344,14 +344,24 @@ class EmojiSuggestionIndex private constructor(private val byWord: Map<String, L
          * no composing word any more, and the emoji should still be offered for what was just written.
          * Returns empty while the cursor sits directly after a word character, because then the word is
          * still being typed and the ordinary current-word path already covers it.
+         *
+         * **Only spaces may stand between the word and the cursor (issue #394).** Anything else — a comma,
+         * a full stop, a line break, an emoji — means the writer has moved on from that word, and every
+         * other keyboard drops its emoji there. Skipping all of it used to keep 👋 for "Hello" standing on
+         * the next line, where it also held the strip that the clipboard offer falls back into.
          */
         internal fun completedWordBefore(textBeforeSelection: String): String {
             var end = textBeforeSelection.length
-            while (end > 0 && !DictFold.isWordChar(textBeforeSelection[end - 1])) end--
-            if (end == textBeforeSelection.length) return "" // still inside a word
+            while (end > 0 && textBeforeSelection[end - 1].isHorizontalSpace()) end--
+            if (end == textBeforeSelection.length) return "" // still inside a word, or right after a mark
+            if (end == 0 || !DictFold.isWordChar(textBeforeSelection[end - 1])) return ""
             var start = end
             while (start > 0 && DictFold.isWordChar(textBeforeSelection[start - 1])) start--
             return textBeforeSelection.substring(start, end)
         }
+
+        /** A space within a line — a line break is not one of them, it ends the thought like a mark does. */
+        private fun Char.isHorizontalSpace(): Boolean =
+            this == '\t' || Character.getType(this) == Character.SPACE_SEPARATOR.toInt()
     }
 }

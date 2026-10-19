@@ -86,6 +86,39 @@ class DictateAccessibilityService : AccessibilityService() {
     }
 
     /**
+     * Until when [AccessibilityEvent.TYPE_WINDOWS_CHANGED] events are the bubble's own doing.
+     *
+     * When a recording starts or stops, the bubble resizes its touch window and adds or removes its side
+     * buttons, and the window manager answers with a show animation on the window (400 ms on the A55),
+     * every frame of which arrives here as a windows-changed event. Each one used to cost a synchronous
+     * focused-node fetch from the app in front — two round trips of ~14 ms on the main thread — and the
+     * burst starved the pill's own opening animation of frames for ~100 ms (traced 2026-09-17). Nothing
+     * about the user's focus changes while our own windows are churning, so those events are ignored.
+     */
+    @Volatile
+    private var ownWindowChangeUntil = 0L
+
+    /** Called by the bubble right before it adds, removes or resizes one of its own windows. */
+    fun noteOwnWindowChange() {
+        ownWindowChangeUntil = SystemClock.uptimeMillis() + OWN_WINDOW_CHANGE_MS
+    }
+
+    /**
+     * Whether a windows-changed event can have moved the input focus at all. A window merely moving,
+     * resizing, changing its z-order or its title cannot, and while our own windows are changing (see
+     * [ownWindowChangeUntil]) nothing is worth a node fetch. The bounds test alone would already have cut
+     * the burst, since a show animation changes nothing but bounds; the quiet period also covers the add
+     * and the remove that start and end it.
+     */
+    private fun windowsChangedMayMoveFocus(event: AccessibilityEvent): Boolean {
+        if (SystemClock.uptimeMillis() < ownWindowChangeUntil) return false
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return true
+        val changes = event.windowChanges
+        // No detail at all is read as "anything could have changed".
+        return changes == 0 || (changes and GEOMETRY_ONLY_WINDOW_CHANGES.inv()) != 0
+    }
+
+    /**
      * The package named by the last window-state change, kept only as [currentAppPackage]'s fallback.
      *
      * A field rather than a parameter because the read can also come from the debounced runnable, which
@@ -151,8 +184,12 @@ class DictateAccessibilityService : AccessibilityService() {
             // transition on top of the accessibility framework's notification timeout (#222).
             AccessibilityEvent.TYPE_VIEW_FOCUSED,
             AccessibilityEvent.TYPE_VIEW_CLICKED,
-            AccessibilityEvent.TYPE_WINDOWS_CHANGED,
             -> updateEditableFocusImmediately()
+            // Only when the change could have moved the focus — see [windowsChangedMayMoveFocus] for the
+            // burst that made the distinction necessary.
+            AccessibilityEvent.TYPE_WINDOWS_CHANGED -> {
+                if (windowsChangedMayMoveFocus(event)) updateEditableFocusImmediately()
+            }
             // Same handling, but this is the one event that names the app it came from even when that
             // app's nodes are out of reach — which is what [currentAppPackage] falls back on (#392).
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
@@ -208,12 +245,22 @@ class DictateAccessibilityService : AccessibilityService() {
     private fun focusedEditableNode(): AccessibilityNodeInfo? =
         editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
 
-    /** [targetUnderFocus] over accessibility nodes, with this service's editability heuristic. */
-    private fun editableUnderFocus(focused: AccessibilityNodeInfo?): AccessibilityNodeInfo? =
+    /**
+     * [targetUnderFocus] over accessibility nodes, with this service's editability heuristic.
+     *
+     * [preferFocused] is for writing: it looks past the first field for the one that reports focus, which
+     * can mean walking more of the tree. Deciding whether to show the bubble only needs to know that there
+     * is a field at all, and runs on every focus event, so it keeps the first one.
+     */
+    private fun editableUnderFocus(
+        focused: AccessibilityNodeInfo?,
+        preferFocused: Boolean = false,
+    ): AccessibilityNodeInfo? =
         targetUnderFocus(
             focused = focused,
             editable = { it.isLikelyEditable() },
             children = { node -> (0 until node.childCount).mapNotNull { node.getChild(it) } },
+            hasFocus = if (preferFocused) ({ it.isFocused }) else null,
         )
 
     /**
@@ -315,8 +362,13 @@ class DictateAccessibilityService : AccessibilityService() {
         )
         // Show the bubble whenever there is somewhere to dictate: either an editable field holds focus, or a
         // soft keyboard is physically out (covers apps whose fields don't report an accessible editable focus).
+        // The keyboard is asked first because it is already known and settles the question without IPC. When
+        // the user wants the button only with a keyboard up (#439), a field alone cannot bring it, so the
+        // app's tree is not fetched to find one — the bubble controller applies the same rule over its flows,
+        // which is what reacts to the setting itself; this one only spares the node fetch.
         val imeShown = isImeWindowShown()
-        val focused = !blocked && (focusedEditableNode() != null || imeShown)
+        val keyboardRequired = prefs.dictate.floatingButtonShowWhen.get().keyboardRequired
+        val focused = !blocked && (imeShown || (!keyboardRequired && focusedEditableNode() != null))
         if (_editableFocused.value != focused) {
             _editableFocused.value = focused
             flogDebug { "editable field focused = $focused" }
@@ -559,10 +611,19 @@ class DictateAccessibilityService : AccessibilityService() {
      * needs no node at all — it writes to whatever the system holds as the input target, which is exactly
      * the field the user tapped — so a browser whose web field this cannot name is still served correctly.
      * Only if that path fails too does the caller fall back to the clipboard.
+     *
+     * Beneath a focused container, the field that reports focus itself is the one the user is in. In a
+     * WebView, input focus names the WebView and every form field sits beneath it. The first field there
+     * is rarely the one tapped, and [commitTextIntoFocused] focused whatever this returned before writing,
+     * so a dictation into a page's password field landed in its first text field instead. The password
+     * check that keeps it out of the history asked the same wrong field.
      */
     private fun dictationTarget(): AccessibilityNodeInfo? =
-        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
-            ?: editableUnderFocus(rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT))
+        editableUnderFocus(findFocus(AccessibilityNodeInfo.FOCUS_INPUT), preferFocused = true)
+            ?: editableUnderFocus(
+                rootInActiveWindow?.findFocus(AccessibilityNodeInfo.FOCUS_INPUT),
+                preferFocused = true,
+            )
 
     /**
      * Whether [node] lives in a soft-keyboard window, i.e. a text field belonging to the IME itself —
@@ -714,14 +775,39 @@ class DictateAccessibilityService : AccessibilityService() {
      * abandoned. `getSurroundingText` asks the app's own editor instead, and arrived with API 33, which
      * is the same floor the write path already has.
      */
-    private fun readBeforeCursor(sentLength: Int): String? {
+    private fun readBeforeCursor(sentLength: Int): String? = readBeforeSelection(sentLength + VERIFY_WINDOW_PAD)
+
+    /** Up to [length] characters in front of the selection, through the input connection; null if unreadable. */
+    private fun readBeforeSelection(length: Int): String? {
         if (!inputConnectionUsable()) return null
         val connection = inputMethod?.currentInputConnection ?: return null
         return runCatching {
-            val window = connection.getSurroundingText(sentLength + VERIFY_WINDOW_PAD, 0, 0) ?: return null
+            val window = connection.getSurroundingText(length, 0, 0) ?: return null
             val text = window.text ?: return null
             val end = window.selectionStart.coerceIn(0, text.length)
             text.subSequence(0, end).toString()
+        }.getOrNull()
+    }
+
+    /**
+     * Up to [length] characters in front of the cursor of the field a dictation would go into, or null when
+     * they cannot be told — what a dictation is spaced against (issue #443).
+     *
+     * Same precedence as the commit itself: the input connection first, because the editor has no notion
+     * of a placeholder and reports the real caret; the node only without one, and only with a caret it
+     * actually reports. A node showing its hint is an empty field, which is a fact. A caret of -1 is not,
+     * and guessing "the end" there would space a dictation against text it may not be next to.
+     */
+    private fun textBeforeCursorOfFocused(length: Int): String? {
+        readBeforeSelection(length)?.let { return it }
+        val node = dictationTarget() ?: return null
+        return runCatching {
+            if (!node.refresh()) return null
+            val text = node.editableText()
+            if (text.isEmpty()) return ""
+            val caret = minOf(node.textSelectionStart, node.textSelectionEnd)
+            if (caret < 0 || caret > text.length) return null
+            text.substring(0, caret).takeLast(length)
         }.getOrNull()
     }
 
@@ -989,14 +1075,14 @@ class DictateAccessibilityService : AccessibilityService() {
     private var lastPreviewMs = 0L
 
     /** Returns whether the field took the new tail, so callers only advance [previewShown] when it did. */
-    private fun applyPreviewDiff(old: String, new: String): Boolean {
+    private fun applyPreviewDiff(old: String, new: String, verify: Boolean = false): Boolean {
         if (old == new) return true
         val cp = old.commonPrefixWith(new).length
         if (cp < old.length) deleteLastTextFromFocused(old.substring(cp))
         if (cp >= new.length) return true
         // Streaming writes a tail many times a second; a read-back per update would double the IPC and
-        // fight the app's own rendering. The final commit is verified instead.
-        return commitTextIntoFocused(new.substring(cp), verify = false)
+        // fight the app's own rendering. The final commit is verified instead — see the caller.
+        return commitTextIntoFocused(new.substring(cp), verify = verify)
     }
 
     /**
@@ -1024,8 +1110,17 @@ class DictateAccessibilityService : AccessibilityService() {
         lastPreviewMs = now
     }
 
+    /**
+     * The finished realtime transcript, unthrottled and **verified** like a batch insert.
+     *
+     * The comment in [applyPreviewDiff] always promised that the final commit is the verified one, but it
+     * went through that same unverified write. Over the floating button that write is the whole dictation
+     * — the preview is always held back there — so an input connection that swallowed it (seen in AOSP
+     * Messaging, issue #443's investigation) ended in a green check over an unchanged field, while a batch
+     * dictation into the same field noticed and recovered through the node.
+     */
     private fun commitPreviewFinalOnFocused(finalText: String): Boolean {
-        val landed = applyPreviewDiff(previewShown, finalText)   // no throttle — final result always lands
+        val landed = applyPreviewDiff(previewShown, finalText, verify = true)
         previewShown = ""
         lastPreviewMs = 0L
         return landed
@@ -1036,6 +1131,12 @@ class DictateAccessibilityService : AccessibilityService() {
         previewShown = ""
         lastPreviewMs = 0L
     }
+
+    /**
+     * Whether the field a dictation goes into is a password field (#383), so that it stays out of the
+     * history. The node says so itself; a field this service cannot name answers no.
+     */
+    private fun focusedFieldIsPasswordNow(): Boolean = dictationTarget()?.isPassword == true
 
     /** The selected text in the focused editable field, or empty when nothing is selected. */
     private fun selectedTextOfFocused(): String {
@@ -1337,27 +1438,45 @@ class DictateAccessibilityService : AccessibilityService() {
          * wrapped UIs routinely give focus to a container that merely holds the editable view. Everything
          * it returns is inside the focused subtree, so it can only ever name a field the user is already
          * in. [maxDepth] bounds the walk, since a deep tree is walked over IPC one node at a time.
+         *
+         * With [hasFocus], a field beneath the container that reports focus itself wins over the first
+         * one. A WebView form is the case: the WebView holds input focus, and the field the user tapped is
+         * any of the fields beneath it. Without a focused field the first one is still the answer, as
+         * before.
          */
         internal fun <N : Any> targetUnderFocus(
             focused: N?,
             editable: (N) -> Boolean,
             children: (N) -> List<N>,
             maxDepth: Int = MAX_EDITABLE_SEARCH_DEPTH,
+            hasFocus: ((N) -> Boolean)? = null,
         ): N? {
             val node = focused ?: return null
             if (editable(node)) return node
+            var firstEditable: N? = null
             fun descend(from: N, depth: Int): N? {
                 if (depth >= maxDepth) return null
                 for (child in children(from)) {
-                    if (editable(child)) return child
+                    if (editable(child)) {
+                        if (hasFocus == null || hasFocus(child)) return child
+                        if (firstEditable == null) firstEditable = child
+                    }
                     descend(child, depth + 1)?.let { return it }
                 }
                 return null
             }
-            return descend(node, 0)
+            return descend(node, 0) ?: firstEditable
         }
         // Debounce window for focus re-checks so a typing burst triggers at most one focused-node fetch.
         private const val FOCUS_UPDATE_DEBOUNCE_MS = 150L
+        // How long after the bubble changed one of its own windows a windows-changed event still counts
+        // as its own doing. The window manager's show animation runs 400 ms on the A55; this covers it.
+        private const val OWN_WINDOW_CHANGE_MS = 500L
+        // Window changes that cannot move the input focus: geometry and cosmetics.
+        private val GEOMETRY_ONLY_WINDOW_CHANGES = AccessibilityEvent.WINDOWS_CHANGE_BOUNDS or
+            AccessibilityEvent.WINDOWS_CHANGE_LAYER or
+            AccessibilityEvent.WINDOWS_CHANGE_TITLE or
+            AccessibilityEvent.WINDOWS_CHANGE_ACCESSIBILITY_FOCUSED
         // Real-time overlay preview (#128): min gap between accessibility writes while streaming, so live
         // typing into another app doesn't flood the accessibility channel. It used to be 0 — every single
         // update written through — which is a lot of writes into a foreign app for no visible gain over a
@@ -1412,8 +1531,14 @@ class DictateAccessibilityService : AccessibilityService() {
         /** The full text of the focused field, or empty when the service is unavailable. */
         fun fullText(): String = instance?.fullTextOfFocused() ?: ""
 
+        /** Whether the focused field is a password field; false when the service is unavailable. */
+        fun focusedFieldIsPassword(): Boolean = instance?.focusedFieldIsPasswordNow() ?: false
+
         /** Selects the whole focused field; false when the service is unavailable. */
         fun selectAll(): Boolean = instance?.selectAllInFocused() ?: false
+
+        /** Text in front of the focused field's cursor; null when it cannot be read or there is no service. */
+        fun textBeforeCursor(length: Int): String? = instance?.textBeforeCursorOfFocused(length)
 
         /** Presses Enter / the editor action on the focused field; false when unavailable. */
         fun performEnter(): Boolean = instance?.performEnterOnFocused() ?: false

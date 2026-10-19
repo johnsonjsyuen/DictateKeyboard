@@ -11,6 +11,8 @@
 package dev.patrickgold.florisboard.dictate.provider
 
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
+import dev.patrickgold.florisboard.dictate.data.prompts.snippetBodyOf
+import dev.patrickgold.florisboard.dictate.field.seamSeparator
 
 /**
  * The post-transcription rewording chain, shared by the phone (`DictateController`, and the tethered
@@ -22,13 +24,19 @@ import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
  */
 object DictateRewording {
 
-    /** One auto-apply prompt: its [instruction], and whether it operates on the running [text]. */
-    data class Prompt(val instruction: String, val requiresSelection: Boolean)
+    /**
+     * One automatic prompt: an [instruction] for the model, which always gets the running text with it, or
+     * a `[snippet]` ([snippetBodyOf]), which is appended as written, behind a space where two dictations
+     * would get one ([seamSeparator]).
+     */
+    data class Prompt(val instruction: String)
 
     /**
      * Runs auto-formatting (when [autoFormatting]) and then [autoApplyPrompts] over [transcript], using
      * [client]'s chat model [chatModel]. [languageName] is the readable language for the auto-formatting
      * hint; [systemPrompt] is the rewording system prompt (be-precise / custom) appended to each prompt.
+     * [reasoningEffort] goes out with every request, null omitting it — these paths have no reasoning
+     * setting of their own, so callers pass [ProviderPreset.reasoningEffortWhenOff].
      * Returns the final text (or [transcript] unchanged when nothing applies / everything fails).
      */
     suspend fun apply(
@@ -39,6 +47,7 @@ object DictateRewording {
         languageName: String?,
         systemPrompt: String?,
         autoApplyPrompts: List<Prompt>,
+        reasoningEffort: String? = null,
     ): String {
         if (transcript.isBlank()) return transcript
         var text = transcript
@@ -46,20 +55,27 @@ object DictateRewording {
         if (autoFormatting) {
             val formatPrompt = DictatePromptDefaults.buildAutoFormattingPrompt(languageName, text)
             text = runCatching {
-                client.complete(ChatRequest.ofUser(chatModel, formatPrompt)).text.trim().ifBlank { text }
+                client.complete(ChatRequest.ofUser(chatModel, formatPrompt, reasoningEffort))
+                    .text.trim().ifBlank { text }
             }.getOrDefault(text)
         }
 
         for (prompt in autoApplyPrompts) {
             if (prompt.instruction.isBlank()) continue
+            val snippet = snippetBodyOf(prompt.instruction)
+            if (snippet != null) {
+                text += seamSeparator(text, snippet) + snippet
+                continue
+            }
             val content = buildString {
                 append(prompt.instruction)
                 if (!systemPrompt.isNullOrBlank()) append("\n\n").append(systemPrompt)
-                // Only feed the running text to prompts that operate on a selection (matches the phone).
-                if (prompt.requiresSelection && text.isNotBlank()) append("\n\n").append(text)
+                // Always the running text, as on the phone (see promptRequiresSelection): without it the
+                // model answers the bare instruction, and that answer would replace the dictation.
+                append("\n\n").append(text)
             }
             text = runCatching {
-                client.complete(ChatRequest.ofUser(chatModel, content)).text.trim().ifBlank { text }
+                client.complete(ChatRequest.ofUser(chatModel, content, reasoningEffort)).text.trim().ifBlank { text }
             }.getOrDefault(text)
         }
         return text
