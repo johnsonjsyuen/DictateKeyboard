@@ -207,7 +207,7 @@ object DictateController {
          */
         data class Interrupted(val seconds: Long) : UiState
         /**
-         * A one-time Smartbar nudge (roadmap 9.7/9.8). [message] overrides the kind's static text for
+         * A one-time Smartbar nudge. [message] overrides the kind's static text for
          * nudges whose text is dynamic (the [PromoKind.MILESTONE] celebration, issue #142).
          */
         data class Promo(val kind: PromoKind, val message: String? = null) : UiState
@@ -244,11 +244,11 @@ object DictateController {
     }
 
     /**
-     * Which one-time nudge is being shown. RATE is usage-gated (see [maybePromptForReview]);
-     * CHANGELOG is shown right after an app update (see [maybePromptChangelog]) and opens the in-app
-     * "What's new" dialog instead of a web page.
+     * Which one-time nudge is being shown. CHANGELOG is shown right after an app update (see
+     * [maybePromptChangelog]) and opens the in-app "What's new" dialog; FLOATING_BUTTON spotlights the
+     * floating button (see [maybePromptFloatingButton]); MILESTONE celebrates a stats milestone.
      */
-    enum class PromoKind { RATE, CHANGELOG, FLOATING_BUTTON, MILESTONE }
+    enum class PromoKind { CHANGELOG, FLOATING_BUTTON, MILESTONE }
 
     /**
      * Where the active dictation's output goes: the keyboard editor ([OutputTarget.IME]) or the
@@ -744,15 +744,11 @@ object DictateController {
     /** Shortest gap between two wake-up pokes at the same sleeping server (#189). */
     private const val WARM_UP_THROTTLE_MS = 60_000L
 
-    /** Cumulative recorded audio (seconds) after which the rate nudge appears (roadmap 9.7). */
-
     /** How long the discarded mic takes to reach the bin; the bar outlives the recording by this much. */
     const val PUSH_TO_TALK_FLIGHT_MS = 950L
 
     /** How long the key shows a lock after latching, before dissolving into its ordinary icon. */
     const val PUSH_TO_TALK_LOCK_FLASH_MS = 600L
-
-    private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
 
     /**
      * Single entry point for the mic button: starts recording, or stops and transcribes. [target]
@@ -1725,8 +1721,8 @@ object DictateController {
         recorder = null
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
-        // Capture the recorded length before leaving the Recording state, to credit the usage counter
-        // that gates the rate nudge (roadmap 9.7). Includes any carried-over seconds.
+        // Capture the recorded length before leaving the Recording state, for the stats and history
+        // entry. Includes any carried-over seconds.
         val recordedSeconds = recordedSecondsOf(_state.value)
         val recorderStopStartedNanos = SystemClock.elapsedRealtimeNanos()
         val audioFile = activeRecorder?.stop()
@@ -2448,7 +2444,6 @@ object DictateController {
                 rememberLastDictation(appContext, outputText)
                 if (capture?.isReplay != true) {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
-                    if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
                 }
                 recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = isLive)
                 discardRetainedAudio()
@@ -2466,21 +2461,17 @@ object DictateController {
         lastDictationLead = lead
         if (capture?.isReplay != true) {
             DictateStats.recordDictation(prefs, dictated, recordedSeconds)
-            if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
         }
         recordHistory(appContext, dictated, originalForHistory, recordedSeconds, capture, reworded = isLive)
         discardRetainedAudio()
         if (reportSwallowedRewording(appContext)) return
         _state.value = UiState.Idle
-        // Both nudges are Smartbar chips: they can only be seen, tapped and dismissed on the keyboard.
-        // Arming one after a dictation that did not come from the keyboard parked the state machine in a
-        // state nothing outside the keyboard can clear — which, for the floating button, meant it read
-        // "a dictation is running" and stayed on screen over every app for good (#339). The nudges are
-        // not lost: the keyboard asks for them again on every open, and a milestone stays pending until
-        // it is actually shown.
-        if (outputTarget == OutputTarget.IME && !showMilestoneNudge(appContext)) {
-            maybePromptForReview()
-        }
+        // The milestone nudge is a Smartbar chip: it can only be seen, tapped and dismissed on the
+        // keyboard. Arming it after a dictation that did not come from the keyboard parked the state
+        // machine in a state nothing outside the keyboard can clear — which, for the floating button,
+        // meant it read "a dictation is running" and stayed on screen over every app for good (#339).
+        // The milestone is not lost: it stays pending until it is actually shown.
+        if (outputTarget == OutputTarget.IME) showMilestoneNudge(appContext)
     }
 
     /** Copies [text] to the system clipboard — the floating-button always-copy safety net (issue #214). */
@@ -4019,23 +4010,7 @@ object DictateController {
         )
     }
 
-    // --- Rate nudge (roadmap 9.7) ---------------------------------------------------------------
-
-    /**
-     * Shows a one-time rate nudge in the Smartbar once the user has accumulated more than
-     * [RATE_THRESHOLD_SECONDS] of transcribed audio, mirroring the legacy app. It is shown until acted
-     * on (a flag is then set). No-op unless idle.
-     * Called when the keyboard appears so it never interrupts an in-flight recording/transcription.
-     */
-    fun maybePromptForReview() {
-        if (_state.value !is UiState.Idle) return
-        val total = prefs.dictate.totalAudioSeconds.get()
-        val kind = when {
-            total > RATE_THRESHOLD_SECONDS && !prefs.dictate.hasRated.get() -> PromoKind.RATE
-            else -> return
-        }
-        _state.value = UiState.Promo(kind)
-    }
+    // --- Smartbar nudges ------------------------------------------------------------------------
 
     /**
      * If a saved-time / dictation-count milestone is pending (issue #142), shows it as a one-time Smartbar
@@ -4093,16 +4068,14 @@ object DictateController {
     }
 
     /**
-     * Acts on the active promo and marks it done: RATE opens the Play Store page,
-     * CHANGELOG opens the app (which then shows the "What's new" dialog), FLOATING_BUTTON deep-links to its
-     * settings screen. No-op otherwise.
+     * Acts on the active promo and marks it done: CHANGELOG opens the app (which then shows the "What's
+     * new" dialog), FLOATING_BUTTON deep-links to its settings screen, MILESTONE opens the stats screen.
+     * No-op otherwise.
      */
     fun acceptPromo(context: Context) {
         val kind = (_state.value as? UiState.Promo)?.kind ?: return
         runCatching {
             val intent = when (kind) {
-                PromoKind.RATE -> Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=net.devemperor.dictate"))
                 PromoKind.CHANGELOG -> Intent(context, FlorisAppActivity::class.java)
                 PromoKind.FLOATING_BUTTON -> Intent(
                     Intent.ACTION_VIEW,
@@ -4134,7 +4107,6 @@ object DictateController {
     private fun markPromoDone(kind: PromoKind) {
         scope.launch {
             when (kind) {
-                PromoKind.RATE -> prefs.dictate.hasRated.set(true)
                 // Remember this version so the keyboard nudge shows only once per update. The in-app
                 // dialog stays governed by versionLastChangelog, so tapping/dismissing here never hides it.
                 PromoKind.CHANGELOG -> prefs.dictate.changelogNudgeVersion.set(BuildConfig.VERSION_NAME)
@@ -4144,14 +4116,6 @@ object DictateController {
                 PromoKind.MILESTONE -> Unit
             }
         }
-    }
-
-    /**
-     * Adds [seconds] to the cumulative audio counter that gates the nudges. Suspends until the new value
-     * is written to the in-memory cache, so a [maybePromptForReview] called right after sees the update.
-     */
-    private suspend fun creditAudioSeconds(seconds: Long) {
-        prefs.dictate.totalAudioSeconds.set(prefs.dictate.totalAudioSeconds.get() + seconds)
     }
 
     // --- Rewording / GPT engine (roadmap section 4) ---------------------------------------------
@@ -4307,7 +4271,7 @@ object DictateController {
      * dictation is safe in the field, so this is a notice and not a failure: themed rather than red, no
      * action, gone by itself after a moment, and carrying the provider's own message for anyone who taps
      * it. Returns whether it took over the state (the caller then skips the idle nudges: a dictation that
-     * half-worked is not the moment to ask for a Play rating).
+     * half-worked is not the moment for a celebration).
      *
      * Not shown for the system voice input (issue #67): there is no Smartbar in front of that user, and
      * the calling app already has its text.

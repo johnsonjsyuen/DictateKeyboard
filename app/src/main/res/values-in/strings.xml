@@ -1316,8 +1316,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__action_dismiss">Tutup</string>
     <string name="dictate__action_yes">Ya</string>
     <string name="dictate__action_no">Tidak, terima kasih</string>
-    <string name="dictate__promo_rate_message">Suka dengan Dictate?</string>
-    <string name="dictate__promo_rate_action">Beri nilai</string>
     <string name="dictate__promo_changelog_message">Dictate telah diperbarui</string>
     <string name="dictate__promo_changelog_action">Detail</string>
     <string name="dictate__title">Dictate</string>

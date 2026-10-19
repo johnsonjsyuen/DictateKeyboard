@@ -1340,8 +1340,6 @@
     <string name="dictate__action_dismiss">Kapat</string>
     <string name="dictate__action_yes">Evet</string>
     <string name="dictate__action_no">Hayır, teşekkürler</string>
-    <string name="dictate__promo_rate_message">Dictate\'ten memnun musunuz?</string>
-    <string name="dictate__promo_rate_action">Puan ver</string>
     <string name="dictate__promo_changelog_message">Dictate güncellendi</string>
     <string name="dictate__promo_changelog_action">Ayrıntılar</string>
     <string name="dictate__title">Dictate</string>

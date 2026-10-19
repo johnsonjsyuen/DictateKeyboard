@@ -67,7 +67,6 @@ data class DictateLegacySettings(
     val systemPromptCustomText: String?,
 
     val lastVersionCode: Int,
-    val hasRatedInPlaystore: Boolean,
 ) {
     /** Effective transcription API key for the active provider, with legacy global key fallback. */
     fun effectiveTranscriptionApiKey(): String? = when (transcriptionProvider) {

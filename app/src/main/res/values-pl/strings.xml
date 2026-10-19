@@ -1378,8 +1378,6 @@
     <string name="dictate__action_dismiss">Odrzuć</string>
     <string name="dictate__action_yes">Tak</string>
     <string name="dictate__action_no">Nie, dziękuję</string>
-    <string name="dictate__promo_rate_message">Podoba Ci się Dictate?</string>
-    <string name="dictate__promo_rate_action">Oceń</string>
     <string name="dictate__promo_changelog_message">Dictate został zaktualizowany</string>
     <string name="dictate__promo_changelog_action">Szczegóły</string>
     <string name="dictate__title">Dictate</string>

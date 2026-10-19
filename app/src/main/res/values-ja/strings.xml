@@ -1293,8 +1293,6 @@
     <string name="dictate__action_dismiss">閉じる</string>
     <string name="dictate__action_yes">はい</string>
     <string name="dictate__action_no">いいえ、結構です</string>
-    <string name="dictate__promo_rate_message">Dictateはいかがですか？</string>
-    <string name="dictate__promo_rate_action">評価する</string>
     <string name="dictate__promo_changelog_message">Dictateが更新されました</string>
     <string name="dictate__promo_changelog_action">詳細</string>
     <string name="dictate__title">Dictate</string>

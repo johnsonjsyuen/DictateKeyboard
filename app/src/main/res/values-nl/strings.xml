@@ -1261,8 +1261,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__action_dismiss">Negeren</string>
     <string name="dictate__action_yes">Ja</string>
     <string name="dictate__action_no">Nee, bedankt</string>
-    <string name="dictate__promo_rate_message">Vind je Dictate leuk?</string>
-    <string name="dictate__promo_rate_action">Beoordelen</string>
     <string name="dictate__promo_changelog_message">Dictate is bijgewerkt</string>
     <string name="dictate__promo_changelog_action">Details</string>
     <string name="dictate__title">Dictate</string>

@@ -64,7 +64,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material.icons.filled.WarningAmber
@@ -856,8 +855,9 @@ private fun errorIcon(
 
 /**
  * One-time Smartbar nudge: a tinted icon, a short message and accept (✓) / decline (✗) buttons.
- * Accepting opens the Play Store (rate, 9.7) or the in-app "What's new" dialog
- * (changelog after an update, 11.9); both buttons mark the nudge as handled so it never reappears.
+ * Accepting opens the in-app "What's new" dialog (changelog after an update, 11.9), the floating-button
+ * settings (spotlight) or the stats screen (milestone); both buttons mark the nudge as handled so it
+ * never reappears.
  * Shown only when idle, replacing the normal Smartbar.
  */
 @Composable
@@ -867,20 +867,17 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
     val rowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarSharedActionsRow.elementName)
     val accent by prefs.theme.accentColor.collectAsState() // follows the user's keyboard accent.
     val leadingIcon = when (kind) {
-        DictateController.PromoKind.RATE -> Icons.Default.Star
         DictateController.PromoKind.CHANGELOG -> Icons.Default.NewReleases
         DictateController.PromoKind.FLOATING_BUTTON -> Icons.Default.Adjust
         DictateController.PromoKind.MILESTONE -> Icons.Default.EmojiEvents
     }
     // Milestone text is dynamic (which milestone), so it arrives via [message]; the rest map to a res.
     val messageRes = when (kind) {
-        DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_message
         DictateController.PromoKind.CHANGELOG -> R.string.dictate__promo_changelog_message
         DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_message
         DictateController.PromoKind.MILESTONE -> R.string.dictate__stats_milestone_title
     }
     val actionRes = when (kind) {
-        DictateController.PromoKind.RATE -> R.string.dictate__promo_rate_action
         DictateController.PromoKind.CHANGELOG -> R.string.dictate__promo_changelog_action
         DictateController.PromoKind.FLOATING_BUTTON -> R.string.dictate__promo_floating_button_action
         DictateController.PromoKind.MILESTONE -> R.string.dictate__promo_milestone_action
@@ -907,7 +904,7 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
                 scaleY = s
             },
     ) {
-        // Tinted leading icon (star = rate, badge = update/changelog).
+        // Tinted leading icon (badge = update/changelog, target = floating button, trophy = milestone).
         Icon(
             imageVector = leadingIcon,
             contentDescription = null,
@@ -916,8 +913,8 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
         )
         Spacer(modifier = Modifier.width(8.dp))
         // Plain Text (not SnyggText) constrained with weight + single line + ellipsis: long localized
-        // messages (e.g. German "Gefällt dir Dictate?") must shrink/ellipsize instead of wrapping and
-        // pushing the accept/dismiss controls off-screen, which would leave the nudge un-dismissable.
+        // messages (e.g. a milestone celebration) must shrink/ellipsize instead of wrapping and pushing
+        // the accept/dismiss controls off-screen, which would leave the nudge un-dismissable.
         // fill = false keeps the row compact and centered for short locales.
         Text(
             text = message ?: stringRes(messageRes),
@@ -928,7 +925,7 @@ private fun PromoContent(kind: DictateController.PromoKind, message: String? = n
             modifier = Modifier.weight(1f, fill = false),
         )
         Spacer(modifier = Modifier.width(10.dp))
-        // Filled accent pill = primary action (opens Play Store / the in-app changelog).
+        // Filled accent pill = primary action (opens the in-app changelog / settings / stats).
         Text(
             text = stringRes(actionRes),
             color = Color.White,

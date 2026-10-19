@@ -1231,8 +1231,6 @@
     <string name="dictate__action_dismiss">Descarta</string>
     <string name="dictate__action_yes">Sí</string>
     <string name="dictate__action_no">No, gràcies</string>
-    <string name="dictate__promo_rate_message">T\'agrada el Dictate?</string>
-    <string name="dictate__promo_rate_action">Valora</string>
     <string name="dictate__promo_changelog_message">El Dictate s\'ha actualitzat</string>
     <string name="dictate__promo_changelog_action">Detalls</string>
     <string name="dictate__title">Dictate</string>

@@ -1341,8 +1341,6 @@
     <string name="dictate__action_dismiss">Dispensar</string>
     <string name="dictate__action_yes">Sim</string>
     <string name="dictate__action_no">Não, obrigado</string>
-    <string name="dictate__promo_rate_message">Gosta do Dictate?</string>
-    <string name="dictate__promo_rate_action">Avaliar</string>
     <string name="dictate__promo_changelog_message">O Dictate foi atualizado</string>
     <string name="dictate__promo_changelog_action">Detalhes</string>
     <string name="dictate__title">Dictate</string>

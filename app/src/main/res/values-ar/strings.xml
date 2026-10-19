@@ -1219,8 +1219,6 @@
     <string name="dictate__action_dismiss">تجاهل</string>
     <string name="dictate__action_yes">نعم</string>
     <string name="dictate__action_no">لا، شكرًا</string>
-    <string name="dictate__promo_rate_message">هل يعجبك Dictate؟</string>
-    <string name="dictate__promo_rate_action">قيّم</string>
     <string name="dictate__promo_changelog_message">تم تحديث Dictate</string>
     <string name="dictate__promo_changelog_action">التفاصيل</string>
     <string name="dictate__title">Dictate</string>

@@ -1356,8 +1356,6 @@
     <string name="dictate__action_dismiss">关闭</string>
     <string name="dictate__action_yes">是</string>
     <string name="dictate__action_no">不用了，谢谢</string>
-    <string name="dictate__promo_rate_message">喜欢 Dictate 吗？</string>
-    <string name="dictate__promo_rate_action">评分</string>
     <string name="dictate__promo_changelog_message">Dictate 已更新</string>
     <string name="dictate__promo_changelog_action">详情</string>
     <string name="dictate__title">Dictate</string>

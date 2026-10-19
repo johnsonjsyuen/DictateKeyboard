@@ -185,11 +185,6 @@ object DictateLegacyMigrator {
                 proxy.username?.let { prefs.dictate.proxyUsername.set(it) }
                 proxy.password?.let { prefs.dictate.proxyPassword.set(it) }
             }
-
-            // --- Rate nudge (roadmap 9.7): carry over the "handled" flag so users who already
-            // rated in the legacy app are never asked again. The old usage DB that tracked total
-            // audio time was dropped, so the new counter simply starts at 0. ---
-            prefs.dictate.hasRated.set(s.hasRatedInPlaystore)
         }
 
         prefs.dictate.legacyImported.set(true)
@@ -303,24 +298,6 @@ object DictateLegacyMigrator {
         if (prefs.dictate.promptsActionMigrated.get()) return
         ensureActionPresent(TextKeyData.DICTATE_PROMPTS, KeyCode.DICTATE_PROMPTS)
         prefs.dictate.promptsActionMigrated.set(true)
-    }
-
-    /**
-     * One-time re-engagement reset for the 4.0.0 relaunch: re-offers the rate nudge to existing
-     * users. Many of them already acted on (or were long past) this prompt in an earlier version, so
-     * the "handled" flag was set and/or their audio counter sat well beyond the threshold – meaning
-     * the nudge would never appear again. As the app has changed substantially, we clear
-     * [Dictate.hasRated] and reset [Dictate.totalAudioSeconds] so the rate prompt (after the
-     * [DictateController] RATE threshold) surfaces once more as the user dictates with the new
-     * version. For a brand-new install this is a no-op (everything is already at its default).
-     * Idempotent via `prefs.dictate.promoReengagementDone`, so it fires exactly once.
-     */
-    suspend fun reofferRateIfNeeded() {
-        val prefs by FlorisPreferenceStore
-        if (prefs.dictate.promoReengagementDone.get()) return
-        prefs.dictate.hasRated.set(false)
-        prefs.dictate.totalAudioSeconds.set(0L)
-        prefs.dictate.promoReengagementDone.set(true)
     }
 
     /**

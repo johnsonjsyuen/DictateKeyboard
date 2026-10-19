@@ -1360,8 +1360,6 @@
     <string name="dictate__action_dismiss">Elvetés</string>
     <string name="dictate__action_yes">Igen</string>
     <string name="dictate__action_no">Nem, köszönöm</string>
-    <string name="dictate__promo_rate_message">Tetszik a Dictate?</string>
-    <string name="dictate__promo_rate_action">Értékelés</string>
     <string name="dictate__promo_changelog_message">A Dictate frissült</string>
     <string name="dictate__promo_changelog_action">Részletek</string>
     <string name="dictate__title">Dictate</string>

@@ -1306,8 +1306,6 @@
     <string name="dictate__action_dismiss">Aizvērt</string>
     <string name="dictate__action_yes">Jā</string>
     <string name="dictate__action_no">Nē, paldies</string>
-    <string name="dictate__promo_rate_message">Vai jums patīk Dictate?</string>
-    <string name="dictate__promo_rate_action">Novērtēt</string>
     <string name="dictate__promo_changelog_message">Dictate tika atjaunināts</string>
     <string name="dictate__promo_changelog_action">Detaļas</string>
     <string name="dictate__title">Dictate</string>

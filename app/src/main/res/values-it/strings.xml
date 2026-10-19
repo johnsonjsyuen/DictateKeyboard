@@ -1144,8 +1144,6 @@
     <string name="dictate__action_dismiss">Ignora</string>
     <string name="dictate__action_yes">Sì</string>
     <string name="dictate__action_no">No, grazie</string>
-    <string name="dictate__promo_rate_message">Ti piace Dictate?</string>
-    <string name="dictate__promo_rate_action">Valuta</string>
     <string name="dictate__promo_changelog_message">Dictate è stato aggiornato</string>
     <string name="dictate__promo_changelog_action">Dettagli</string>
     <string name="dictate__title">Dictate</string>

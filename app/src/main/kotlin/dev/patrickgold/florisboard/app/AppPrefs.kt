@@ -757,7 +757,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__interrupted_audio_pending",
             default = false,
         )
-        // Recorded seconds of the interrupted audio, re-credited towards the rate nudge on send.
+        // Recorded seconds of the interrupted audio, shown on the offer and carried into the dictation
+        // (stats/history) on send.
         val interruptedAudioSeconds = long(
             key = "dictate__interrupted_audio_seconds",
             default = 0L,
@@ -825,8 +826,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = 0L,
         )
         // --- Lifetime dictation statistics (issue #142) ------------------------------------------
-        // Never auto-reset (unlike totalAudioSeconds below, which the rate nudge clears); only the user
-        // can reset them from the stats screen. Updated centrally after each successful dictation.
+        // Never auto-reset; only the user can reset them from the stats screen. Updated centrally after
+        // each successful dictation.
         val statsDictations = long(key = "dictate__stats_dictations", default = 0L)
         val statsWords = long(key = "dictate__stats_words", default = 0L)
         val statsChars = long(key = "dictate__stats_chars", default = 0L)
@@ -848,19 +849,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // A crossed-but-not-yet-shown milestone, consumed on next app open: "time:<min>" | "count:<n>".
         val statsPendingMilestone = string(key = "dictate__stats_pending_milestone", default = "")
 
-        // --- Rate nudge (roadmap 9.7) ------------------------------------------------------------
-        // Cumulative seconds of successfully transcribed *recorded* audio, used to gate the one-time
-        // rate prompt. Replaces the legacy usage DB (which was dropped); only this counter
-        // remains. Incremented after each successful mic transcription.
-        val totalAudioSeconds = long(
-            key = "dictate__total_audio_seconds",
-            default = 0L,
-        )
-        // Set once the user has acted on the rate prompt (accepted or declined), so it never reappears.
-        val hasRated = boolean(
-            key = "dictate__has_rated",
-            default = false,
-        )
         // The app version whose "Dictate was updated" changelog nudge has already been shown on the
         // keyboard (Smartbar). Set when the user taps or dismisses that nudge, so it appears only once
         // per update. Empty until the first post-update nudge. Independent of the in-app dialog's
@@ -919,15 +907,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // back any time. See DictateLegacyMigrator.migratePromptsLayoutToRowIfNeeded.
         val promptsLayoutRowMigrated = boolean(
             key = "dictate__prompts_layout_row_migrated",
-            default = false,
-        )
-        // Guard for the one-time re-engagement reset shipped with the 4.0.0 relaunch: existing users
-        // (who had already rated, or whose audio counter was long past the threshold) are
-        // given the rate nudge one more time so they can react to the new app. Clears
-        // hasRated and resets totalAudioSeconds exactly once. See
-        // DictateLegacyMigrator.reofferRateIfNeeded.
-        val promoReengagementDone = boolean(
-            key = "dictate__promo_reengagement_done",
             default = false,
         )
 

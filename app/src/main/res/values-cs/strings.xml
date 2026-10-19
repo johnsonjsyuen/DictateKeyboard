@@ -1377,8 +1377,6 @@
     <string name="dictate__action_dismiss">Zavřít</string>
     <string name="dictate__action_yes">Ano</string>
     <string name="dictate__action_no">Ne, děkuji</string>
-    <string name="dictate__promo_rate_message">Líbí se vám Dictate?</string>
-    <string name="dictate__promo_rate_action">Ohodnotit</string>
     <string name="dictate__promo_changelog_message">Dictate byl aktualizován</string>
     <string name="dictate__promo_changelog_action">Podrobnosti</string>
     <string name="dictate__title">Dictate</string>

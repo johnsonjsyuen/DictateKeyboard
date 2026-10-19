@@ -1367,8 +1367,6 @@
     <string name="dictate__action_dismiss">Закрыть</string>
     <string name="dictate__action_yes">Да</string>
     <string name="dictate__action_no">Нет, спасибо</string>
-    <string name="dictate__promo_rate_message">Нравится Dictate?</string>
-    <string name="dictate__promo_rate_action">Оценить</string>
     <string name="dictate__promo_changelog_message">Dictate обновлён</string>
     <string name="dictate__promo_changelog_action">Подробнее</string>
     <string name="dictate__title">Dictate</string>

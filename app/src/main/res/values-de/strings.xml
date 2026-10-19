@@ -1286,8 +1286,6 @@
     <string name="smartbar__a11y_hide_more_actions">Weitere Aktionen ausblenden</string>
     <string name="dictate__action_yes">Ja</string>
     <string name="dictate__action_no">Nein, danke</string>
-    <string name="dictate__promo_rate_message">Gefällt dir Dictate?</string>
-    <string name="dictate__promo_rate_action">Bewerten</string>
     <string name="dictate__promo_changelog_message">Dictate wurde aktualisiert</string>
     <string name="dictate__promo_changelog_action">Details</string>
     <string name="dictate__promo_floating_button_message">Neu: in jeder App diktieren</string>
