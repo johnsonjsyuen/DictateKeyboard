@@ -20,7 +20,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class GifItem(
-    /** Provider-specific id/slug, used for optional share/usage ranking pings. */
+    /** Provider-specific id/slug; identifies the GIF in the grid, the history and the media cache. */
     val id: String,
     val title: String?,
     /** A small animated preview (GIF or WebP) shown in the results grid. */
@@ -73,12 +73,6 @@ interface GifProvider {
 
     /** Search GIFs for [query], [page] is 1-based. Throws on network/HTTP/parse errors. */
     suspend fun search(query: String, page: Int): GifPage
-
-    /**
-     * Best-effort "this GIF was used/shared" ping to improve ranking. Never throws — failures are
-     * swallowed, since this is purely advisory.
-     */
-    suspend fun registerShare(id: String)
 
     companion object {
         const val PER_PAGE = 24

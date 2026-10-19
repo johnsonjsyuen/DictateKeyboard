@@ -17,7 +17,6 @@ import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.PrivateSession
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.File
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,16 +27,15 @@ import okhttp3.Request
  * Ties the GIF backend together for the UI: builds the (provider-agnostic) [GifProvider] from the
  * user's settings, downloads a chosen GIF to a cache the app's FileProvider can serve, and inserts it
  * into the current editor via [EditorInstance.commitMedia] (with a clipboard fallback). Also records
- * usage in [GifHistory] and pings the provider for ranking.
+ * usage in [GifHistory]. Nothing is reported back to the provider when a GIF is used.
  */
 object GifManager {
     private val prefs by FlorisPreferenceStore
 
-    /** The active provider. Reads the API key / customer id lazily on each call, so it stays valid
+    /** The active provider. Reads the API key lazily on each call, so it stays valid
      *  even after the user changes their key in settings. */
     val provider: GifProvider = KlipyGifProvider(
         apiKeyProvider = { prefs.gif.klipyApiKey.get() },
-        customerIdProvider = { prefs.gif.customerId.get() },
         contentFilterProvider = { prefs.gif.contentFilter.get() },
     )
 
@@ -47,13 +45,6 @@ object GifManager {
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
-    }
-
-    /** Generates and persists a stable per-install id for KLIPY relevance/localization, if not set yet. */
-    suspend fun ensureCustomerId() {
-        if (prefs.gif.customerId.get().isBlank()) {
-            prefs.gif.customerId.set(UUID.randomUUID().toString())
-        }
     }
 
     /**
@@ -82,7 +73,7 @@ object GifManager {
 
     /**
      * Downloads [item] and inserts it into the current editor. On success (inserted or copied to the
-     * clipboard) the GIF is recorded in the history and a best-effort share ping is sent.
+     * clipboard) the GIF is recorded in the history.
      */
     suspend fun insertGif(context: Context, item: GifItem): EditorInstance.MediaCommitResult {
         val file = download(context, item) ?: return EditorInstance.MediaCommitResult.FAILED
@@ -93,7 +84,6 @@ object GifManager {
         }
         if (result != EditorInstance.MediaCommitResult.FAILED) {
             GifHistoryHelper.addInsertedGif(prefs, PrivateSession.isActive(context), item)
-            provider.registerShare(item.id)
         }
         return result
     }

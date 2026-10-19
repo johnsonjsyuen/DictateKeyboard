@@ -20,8 +20,8 @@ import kotlinx.serialization.Serializable
  * persists in `prompts.db` (name/prompt/requiresSelection/autoApply) plus browse-only metadata
  * ([id], [category], [language], [author], [description]) that never gets written to the database.
  *
- * The on-the-wire shape is the library JSON hosted on the project's own repository (see
- * [PromptLibraryCatalog]); it is intentionally a strict extension of the prompt export format
+ * The on-disk shape is the library JSON bundled with the app (`assets/prompt-library.json`, read by
+ * [PromptLibraryManager]); it is intentionally a strict extension of the prompt export format
  * (`{"version":1,"prompts":[…]}`) so an exported user file could be dropped straight into the library
  * with only metadata added.
  */
@@ -64,7 +64,7 @@ data class PromptLibraryEntry(
     )
 }
 
-/** Root document of the hosted library file: `{"version":1,"prompts":[…]}`. */
+/** Root document of the bundled library file: `{"version":1,"prompts":[…]}`. */
 @Serializable
 data class PromptLibraryDocument(
     val version: Int = 1,

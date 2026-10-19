@@ -240,10 +240,8 @@
     <string name="ext__validation__enter_title">Introduz un títulu</string>
     <string name="ext__validation__enter_valid_number">Introduz nun númberu válidu</string>
     <string name="ext__validation__enter_positive_number">Introduz un númberu positivu (&gt;=0)</string>
-    <string name="ext__update_box__search_for_updates">Buscar anovamientos</string>
     <string name="ext__addon_management_box__addon_manager_info">Pues remanar toles xeres rellacionaes cola importación, esportación, creación, personalización y desaniciu d\'estensiones pente\'l xestor de complementos centralizáu.</string>
     <string name="ext__addon_management_box__go_to_page">Dir a «{ext_home_title}»</string>
-    <string name="ext__home__visit_store">Visitar la tienda de complementos</string>
     <!-- Action strings -->
     <string name="action__add">Amestar</string>
     <string name="action__apply">Aplicar</string>

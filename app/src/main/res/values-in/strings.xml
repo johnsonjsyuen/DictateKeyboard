@@ -693,7 +693,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Laporan kesalahan Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Maaf atas ketidaknyamanan ini, tetapi Dictate mogok karena kesalahan yang tidak terduga.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Jika Anda ingin melaporkan kesalahan ini, periksa dulu pelacak masalah di GitHub jika crash Anda belum dilaporkan.\nJika belum, salin log crash yang dihasilkan dan buka masalah baru. Gunakan template \"%s\" dan isi deskripsi, langkah-langkah untuk mereproduksi, dan tempel log crash yang dihasilkan di bagian akhir. Ini membantu membuat Dictate lebih baik dan lebih stabil untuk semuanya. Terima kasih!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Salin ke papan klip sistem</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Disalin ke papan klip sistem</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Tidak bisa salin ke papan klip sistem: Instansi pengelola papan klip tidak ditemukan</string>
@@ -876,16 +875,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__validation__enter_percent_size">Harap masukkan ukuran persen</string>
     <string name="ext__validation__enter_number_between_0_100">Harap masukkan bilangan positif antara 0 dan 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Nilai apa pun di atas 50% akan berperilaku seolah-olah Anda menetapkan 50%, pertimbangkan untuk menurunkan ukuran persen Anda</string>
-    <string name="ext__update_box__internet_permission_hint">Karena aplikasi ini tidak memiliki izin Internet, pembaruan untuk ekstensi yang diinstal harus diperiksa secara manual.</string>
-    <string name="ext__update_box__search_for_updates">Cari Pembaruan</string>
     <string name="ext__addon_management_box__managing_placeholder">Kelola {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Semua tugas yang terkait dengan mengimpor, mengekspor, membuat, menyesuaikan, dan menghapus ekstensi dapat ditangani melalui manajer addon terpusat.</string>
     <string name="ext__addon_management_box__go_to_page">Ke {ext_home_title}</string>
-    <string name="ext__home__info">Anda dapat mengunduh dan menginstal ekstensi dari Dictate Addons Store atau mengimpor file ekstensi apa pun yang telah Anda unduh dari internet.</string>
-    <string name="ext__home__visit_store">Kunjungi Add-ons Store</string>
     <string name="ext__home__manage_extensions">Kelola ekstensi terpasang</string>
     <string name="ext__list__view_details">Lihat rincian</string>
-    <string name="ext__check_updates__title">Periksa Pembaruan</string>
     <!-- Action strings -->
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
@@ -1161,7 +1155,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__provider__other_provider">Gunakan penyedia AI lain</string>
     <string name="setup__provider__other_provider_hint">Lanjutan: pilih layanan lain daripada Groq. Anda memerlukan kunci API dari penyedia tersebut.</string>
     <string name="setup__finish_up__add_key_hint">Tips: Anda belum menambahkan kunci AI. Tambahkan kapan saja di Pengaturan → Dictate → Penyedia AI untuk mulai mendikte.</string>
-    <string name="crash_dialog__bug_report_template">Laporan kerusakan</string>
     <string name="enum__swipe_action__toggle_compact_layout">Alihkan tata letak ringkas</string>
     <string name="unit__hours__symbol">{v} j</string>
     <string name="unit__minutes__symbol">{v} mnt</string>
@@ -1615,8 +1608,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_library_added">Ditambahkan</string>
     <string name="dictate__prompt_library_add_again">Tambahkan lagi</string>
     <string name="dictate__prompt_library_empty">Tidak ada perintah yang cocok dengan pencarian Anda.</string>
-    <string name="dictate__prompt_library_error">Tidak dapat memuat pustaka komunitas. Periksa koneksi Anda dan coba lagi.</string>
-    <string name="dictate__prompt_library_retry">Coba lagi</string>
     <string name="dictate__prompt_library_close">Tutup</string>
     <string name="dictate__prompt_library_author">oleh {author}</string>
     <string name="dictate__file_preparing">Menyiapkan berkas…</string>
@@ -2169,7 +2160,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour64__command_body">Pilih sebuah kata di Penyusunan ulang — misalnya “Jarvis”. Dikte yang diawali kata itu dijalankan sebagai perintah suara: pada teks yang dipilih, atau sebagai pertanyaan jika tidak ada yang dipilih. Hanya kata pertama yang dihitung, jadi kalimat yang sekadar menyebutnya tetap ditulis seperti biasa. Prompt otomatis kini juga bekerja sebagaimana mestinya: selalu mendapat dikte yang menjadi bahannya, dan prompt yang hanya berisi [teks dalam kurung siku] ditambahkan ke akhir apa adanya, bukan dikirim ke model.</string>
     <string name="apptour64__privacy_eyebrow">Privasi dan keamanan</string>
     <string name="apptour64__privacy_title">Seluruh aplikasi, diperiksa</string>
-    <string name="apptour64__privacy_body">Setiap bagian Dictate ditinjau dari sisi privasi dan keamanan, dan apa yang ditemukan sudah diperbaiki. Dikte ke kolom kata sandi atau PIN tidak masuk riwayat, kini juga lewat tombol mengambang. Cadangan cloud Android hanya membawa kunci API-mu dalam keadaan terenkripsi end-to-end. Dan “Percayai sertifikat pengguna” kini diatur per akun penyedia, bukan untuk semuanya sekaligus.</string>
     <string name="apptour64__more_eyebrow">Selain itu</string>
     <string name="apptour64__more_title">Semua hal lain di 6.4</string>
     <string name="apptour64__more_body">Perubahan yang lebih kecil, untuk yang ingin tahu detailnya. Lewati saja kalau tidak.</string>

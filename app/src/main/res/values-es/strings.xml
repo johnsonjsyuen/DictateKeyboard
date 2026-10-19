@@ -699,7 +699,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe de errores de Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Lamentamos los inconvenientes, pero Dictate se ha cerrado inesperadamente por un error.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si deseas reportar este fallo, primero comprueba si ya ha sido reportado en el Issue Tracker en GitHub.\nSi no, copie el log del error generado y abre un Issue. Usa la plantilla \"%s\" y rellenala con tu descripción, los pasos para reproducirlo, y pega el log generado al final. Esto ayudará a mejorar Dictate y hacerlo más estable para todo el mundo. ¡Gracias!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar al portapapeles del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiado al portapapeles del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No se puede copiar al portapapeles del sistema: Instancia del administrador de portapapeles no encontrada</string>
@@ -887,16 +886,11 @@
     <string name="ext__validation__enter_percent_size">Por favor, introduce un porcentaje</string>
     <string name="ext__validation__enter_number_between_0_100">Por favor, introduce un número entre 0 y 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Cualquier valor superior al 50% se comportará como si fuese el 50%, considere la posibilidad de disminuir el porcentaje</string>
-    <string name="ext__update_box__internet_permission_hint">Ya que esta aplicación no tiene permisos para acceder a Internet, las actualizaciones de las extensiones instaladas deben verificarse manualmente.</string>
-    <string name="ext__update_box__search_for_updates">Buscar actualizaciones</string>
     <string name="ext__addon_management_box__managing_placeholder">Gestionando {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Todas las tareas relacionadas con la importación, exportación, creación, personalización y eliminación de extensiones pueden ser manejadas a través del administrador de complementos centralizado.</string>
     <string name="ext__addon_management_box__go_to_page">Ir a {ext_home_title}</string>
-    <string name="ext__home__info">Puede descargar e instalar extensiones de la tienda Dictate Addons o importar cualquier archivo de extensión que haya descargado de internet.</string>
-    <string name="ext__home__visit_store">Visita la tienda de complementos</string>
     <string name="ext__home__manage_extensions">Administrar las extensiones instaladas</string>
     <string name="ext__list__view_details">Ver detalles</string>
-    <string name="ext__check_updates__title">Verificar actualizaciones</string>
     <!-- Action strings -->
     <string name="action__add">Añadir</string>
     <string name="action__apply">Aplicar</string>
@@ -1188,7 +1182,6 @@
     <string name="setup__provider__other_provider">Usar otro proveedor de IA</string>
     <string name="setup__provider__other_provider_hint">Avanzado: elige otro servicio en lugar de Groq. Necesitarás una clave de API de ese proveedor.</string>
     <string name="setup__finish_up__add_key_hint">Consejo: aún no has añadido una clave de IA. Añade una cuando quieras en Ajustes → Dictate → Proveedores de IA para empezar a dictar.</string>
-    <string name="crash_dialog__bug_report_template">Informe de fallo</string>
     <string name="enum__swipe_action__toggle_compact_layout">Alternar diseño compacto</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1642,8 +1635,6 @@
     <string name="dictate__prompt_library_added">Añadido</string>
     <string name="dictate__prompt_library_add_again">Añadir otra vez</string>
     <string name="dictate__prompt_library_empty">Ningún prompt coincide con tu búsqueda.</string>
-    <string name="dictate__prompt_library_error">No se pudo cargar la biblioteca de la comunidad. Comprueba tu conexión e inténtalo de nuevo.</string>
-    <string name="dictate__prompt_library_retry">Reintentar</string>
     <string name="dictate__prompt_library_close">Cerrar</string>
     <string name="dictate__prompt_library_author">de {author}</string>
     <string name="dictate__file_preparing">Preparando archivo…</string>
@@ -2197,7 +2188,6 @@
     <string name="apptour64__command_body">Elige una palabra en Reformulación, por ejemplo «Jarvis». Un dictado que empiece por ella se ejecuta como instrucción en vivo: sobre el texto seleccionado, o como pregunta si no hay nada seleccionado. Solo cuenta la primera palabra, así que una frase que simplemente la mencione se escribe como siempre. Los prompts automáticos también funcionan ya como deben: siempre reciben el dictado sobre el que actúan, y uno que solo contenga [texto entre corchetes] se añade al final tal cual, en lugar de ir al modelo.</string>
     <string name="apptour64__privacy_eyebrow">Privacidad y seguridad</string>
     <string name="apptour64__privacy_title">Toda la aplicación, revisada</string>
-    <string name="apptour64__privacy_body">Se ha revisado cada parte de Dictate en cuanto a privacidad y seguridad, y lo que salió a la luz está corregido. Un dictado en un campo de contraseña o PIN no entra en el historial, ahora también a través del botón flotante. La copia de seguridad en la nube de Android solo se lleva tus claves de API cifradas de extremo a extremo. Y «Confiar en certificados de usuario» se ajusta ahora por cuenta de proveedor, en lugar de para todas a la vez.</string>
     <string name="apptour64__more_eyebrow">Además</string>
     <string name="apptour64__more_title">Todo lo demás en la 6.4</string>
     <string name="apptour64__more_body">Los cambios más pequeños, para quien quiera los detalles. Si no, sigue adelante.</string>

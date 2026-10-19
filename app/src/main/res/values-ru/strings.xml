@@ -703,7 +703,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в Dictate произошёл сбой из-за непредвиденной ошибки.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Если хотите сообщить об этой ошибке, сначала проверьте трекер проблем на GitHub, не сообщалось ли уже о вашем сбое.\nЕсли нет, скопируйте сгенерированный журнал ошибки и откройте новую проблему. Используйте шаблон \"%s\" и заполните описание, шаги для воспроизведения ошибки и вставьте сгенерированный журнал в конце. Это поможет сделать Dictate лучше и стабильнее для всех. Спасибо!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копировать в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Скопировано в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Невозможно скопировать в системный буфер обмена: компонент менеджера буфера обмена не найден</string>
@@ -891,16 +890,11 @@
     <string name="ext__validation__enter_percent_size">Укажите размер в процентах</string>
     <string name="ext__validation__enter_number_between_0_100">Укажите положительное число от 0 до 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Любое значение выше 50% будет работать так же, как и 50%, попробуйте уменьшить размер в процентах</string>
-    <string name="ext__update_box__internet_permission_hint">Так как это приложение не имеет доступа к Интернету, обновления для установленных расширений придётся проверять вручную.</string>
-    <string name="ext__update_box__search_for_updates">Проверить обновления</string>
     <string name="ext__addon_management_box__managing_placeholder">Управление {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Все задачи, связанные с импортом, экспортом, созданием, персонализацией и удалением расширений могут быть выполнены через централизованный менеджер расширений.</string>
     <string name="ext__addon_management_box__go_to_page">Перейти к {ext_home_title}</string>
-    <string name="ext__home__info">Вы можете скачать и установить расширения через магазин расширений Dictate или импортировать любые файлы расширений, скачанные из интернета.</string>
-    <string name="ext__home__visit_store">Магазин расширений</string>
     <string name="ext__home__manage_extensions">Установленные расширения</string>
     <string name="ext__list__view_details">Подробности</string>
-    <string name="ext__check_updates__title">Проверить обновления</string>
     <!-- Action strings -->
     <string name="action__add">Добавить</string>
     <string name="action__apply">Применить</string>
@@ -1212,7 +1206,6 @@
     <string name="setup__provider__other_provider">Использовать другого поставщика ИИ</string>
     <string name="setup__provider__other_provider_hint">Дополнительно: выберите другой сервис вместо Groq. Вам понадобится ключ API этого поставщика.</string>
     <string name="setup__finish_up__add_key_hint">Совет: вы ещё не добавили ключ ИИ. Добавьте его в любой момент в Настройки → Dictate → Поставщики ИИ, чтобы начать диктовать.</string>
-    <string name="crash_dialog__bug_report_template">Отчёт о сбое</string>
     <string name="enum__swipe_action__toggle_compact_layout">Переключить компактную раскладку</string>
     <string name="unit__hours__symbol">{v} ч</string>
     <string name="unit__minutes__symbol">{v} мин</string>
@@ -1666,8 +1659,6 @@
     <string name="dictate__prompt_library_added">Добавлено</string>
     <string name="dictate__prompt_library_add_again">Добавить снова</string>
     <string name="dictate__prompt_library_empty">Нет промптов, соответствующих вашему запросу.</string>
-    <string name="dictate__prompt_library_error">Не удалось загрузить библиотеку сообщества. Проверьте подключение и повторите попытку.</string>
-    <string name="dictate__prompt_library_retry">Повторить</string>
     <string name="dictate__prompt_library_close">Закрыть</string>
     <string name="dictate__prompt_library_author">от {author}</string>
     <string name="dictate__file_preparing">Подготовка файла…</string>
@@ -2223,7 +2214,6 @@
     <string name="apptour64__command_body">Выберите слово в разделе «Переформулирование» — скажем, «Джарвис». Диктовка, которая с него начинается, выполняется как голосовая инструкция: над выделенным текстом или как вопрос, если ничего не выделено. Считается только первое слово, поэтому фраза, где оно просто упоминается, записывается как обычно. И автоматические промпты теперь работают как задумано: они всегда получают диктовку, к которой применяются, а промпт, в котором есть только [текст в квадратных скобках], добавляется в конец как есть, вместо того чтобы уходить модели.</string>
     <string name="apptour64__privacy_eyebrow">Конфиденциальность и безопасность</string>
     <string name="apptour64__privacy_title">Проверено всё приложение</string>
-    <string name="apptour64__privacy_body">Каждую часть Dictate проверили на конфиденциальность и безопасность, и всё найденное исправлено. Диктовка в поле пароля или PIN-кода не попадает в историю — теперь и через плавающую кнопку. Облачное резервное копирование Android сохраняет ваши API-ключи только со сквозным шифрованием. А «Доверять сертификатам пользователя» теперь задаётся для каждой учётной записи провайдера отдельно, а не для всех сразу.</string>
     <string name="apptour64__more_eyebrow">А ещё</string>
     <string name="apptour64__more_title">Всё остальное в 6.4</string>
     <string name="apptour64__more_body">Мелкие изменения — для тех, кому интересны подробности. Если нет, просто листайте дальше.</string>

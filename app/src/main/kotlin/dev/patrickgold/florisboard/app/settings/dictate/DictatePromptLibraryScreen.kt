@@ -33,14 +33,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -73,7 +70,6 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.florisDialogScroll
 import org.florisboard.lib.compose.stringRes
@@ -81,10 +77,10 @@ import org.florisboard.lib.compose.stringRes
 /**
  * Browse the community prompt library and import prompts into the user's own list (issue #105).
  *
- * The library is a static JSON file hosted on the project's own repository ([PromptLibraryCatalog]);
- * it is fetched on first open and cached on disk (see [PromptLibraryManager]), so re-opening is instant
- * and works offline. Adding a prompt writes it into the same `prompts.db` the [DictatePromptsScreen]
- * manages, so imported prompts immediately show up in the user's list and on the keyboard chips.
+ * The library is a static JSON file bundled with the app (see [PromptLibraryManager]); nothing is
+ * fetched from the network. Adding a prompt writes it into the same `prompts.db` the
+ * [DictatePromptsScreen] manages, so imported prompts immediately show up in the user's list and on
+ * the keyboard chips.
  */
 @Composable
 fun DictatePromptLibraryScreen() = FlorisScreen {
@@ -102,11 +98,8 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
     // column existed. Rebuilt on every (re)load and after each add — so a prompt that is gone stops
     // being marked as added, however it left the list.
     var installed by remember { mutableStateOf(PromptLibraryMarks.Installed(emptySet(), emptySet())) }
-    // Full-screen spinner: only while we have nothing to show yet. The background network refresh uses
-    // [refreshing] (a thin top bar) instead, so a warm cache never blanks the screen on open.
+    // Full-screen spinner while the bundled library is read and parsed on open.
     var loading by remember { mutableStateOf(true) }
-    var refreshing by remember { mutableStateOf(false) }
-    var loadError by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
     var activeCategory by remember { mutableStateOf<String?>(null) }
     var preview by remember { mutableStateOf<PromptLibraryEntry?>(null) }
@@ -132,32 +125,13 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
 
     fun isAdded(entry: PromptLibraryEntry): Boolean = PromptLibraryMarks.isAdded(installed, entry)
 
-    // Always fetches from the network (used on open and by the refresh button). Keeps whatever is
-    // already shown visible while it runs; only swaps the list in once a result arrives.
-    suspend fun refreshFromNetwork() {
-        refreshing = true
-        val result = PromptLibraryManager.load(context, forceRefresh = true)
-        if (result.entries.isNotEmpty() || entries.isEmpty()) {
-            entries.clear()
-            entries.addAll(result.entries)
-        }
-        refreshInstalled()
-        loadError = entries.isEmpty() && result.error != null
-        loading = false
-        refreshing = false
-    }
-
-    // On open: paint the cached library instantly (no spinner) if we have one, then always refresh in
-    // the background so the page is up to date every time it is opened.
+    // On open: read the library bundled with the app.
     suspend fun openLoad() {
-        val cached = PromptLibraryManager.cachedOnly(context) ?: PromptLibraryManager.bundled(context)
-        if (cached != null) {
-            entries.clear()
-            entries.addAll(cached)
-            refreshInstalled()
-            loading = false
-        }
-        refreshFromNetwork()
+        val bundled = PromptLibraryManager.load(context)
+        entries.clear()
+        entries.addAll(bundled)
+        refreshInstalled()
+        loading = false
     }
 
     fun addEntry(entry: PromptLibraryEntry) {
@@ -168,13 +142,6 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
             DictateController.refreshPrompts(context)
             Toast.makeText(context, R.string.dictate__prompt_library_added, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    actions {
-        FlorisIconButton(
-            onClick = { scope.launch { refreshFromNetwork() } },
-            icon = Icons.Default.Refresh,
-        )
     }
 
     content {
@@ -195,10 +162,6 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            // Thin bar while a background refresh runs over already-shown content (not the first load).
-            if (refreshing && !loading) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            }
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -236,25 +199,6 @@ fun DictatePromptLibraryScreen() = FlorisScreen {
 
             when {
                 loading -> CenteredBox { CircularProgressIndicator() }
-                loadError -> CenteredBox {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            Icons.Default.CloudOff,
-                            contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Spacer(Modifier.height(12.dp))
-                        Text(
-                            text = stringRes(R.string.dictate__prompt_library_error),
-                            modifier = Modifier.padding(horizontal = 32.dp),
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        TextButton(onClick = { scope.launch { refreshFromNetwork() } }) {
-                            Text(stringRes(R.string.dictate__prompt_library_retry))
-                        }
-                    }
-                }
                 filtered.isEmpty() -> CenteredBox {
                     Text(
                         text = stringRes(R.string.dictate__prompt_library_empty),

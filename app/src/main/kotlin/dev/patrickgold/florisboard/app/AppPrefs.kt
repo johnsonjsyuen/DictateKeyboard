@@ -1143,11 +1143,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "gif__content_filter",
             default = GifContentFilter.HIGH,
         )
-        // Stable per-install id sent to KLIPY for relevance/localization (generated on first use).
-        val customerId = string(
-            key = "gif__customer_id",
-            default = "",
-        )
         // Recently searched terms + recently inserted GIFs, for quick re-access.
         val history = custom(
             key = "gif__history",

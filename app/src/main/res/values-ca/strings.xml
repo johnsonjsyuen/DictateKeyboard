@@ -601,7 +601,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe d\'errors de Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Disculpa les molèsties, però Dictate ha fallat a conseqüència d\'un error inesperat.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vols informar d\'aquest error, mira\'t primer si ja s\'ha informat al rastrejador d\'incidències de GitHub.\nSi no, copia el registre de l\'error i obre una incidència nova. Usa la plantilla %s i emplena-la amb la descripció, els passos per reproduir-lo i enganxa el registre d\'error generat al final. Això ens ajuda a millorar Dictate i fer-lo més estable per a tothom. Gràcies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">S\'ha copiat al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No es pot copiar al porta-retalls del sistema: No s\'ha trobat la instància d\'administració del porta-retalls</string>
@@ -784,16 +783,11 @@
     <string name="ext__validation__enter_percent_size">Introdueix un percentatge</string>
     <string name="ext__validation__enter_number_between_0_100">Introdueix un nombre positiu entre 0 i 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Qualsevol valor superior al 50% es comportarà com si fos el 50%, considera de disminuir-ne el percentatge</string>
-    <string name="ext__update_box__internet_permission_hint">Com que aquesta aplicació no té permisos per accedir a internet, les actualitzacions de les extensions instal·lades s\'han de comprovar manualment.</string>
-    <string name="ext__update_box__search_for_updates">Cerca actualitzacions</string>
     <string name="ext__addon_management_box__managing_placeholder">Gestionant {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Totes les tasques referides a la importació, exportació, creació, personalització i supressió d\'extensions es poden gestionar a través de l\'administrador de complements centralitzat.</string>
     <string name="ext__addon_management_box__go_to_page">Ves a {ext_home_title}</string>
-    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de Dictate o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
-    <string name="ext__home__visit_store">Visita la botiga de complements</string>
     <string name="ext__home__manage_extensions">Administra les extensions instal·lades</string>
     <string name="ext__list__view_details">Visualitza els detalls</string>
-    <string name="ext__check_updates__title">Comprova les actualitzacions</string>
     <!-- Action strings -->
     <string name="action__add">Afegeix</string>
     <string name="action__apply">Aplica</string>
@@ -1076,7 +1070,6 @@
     <string name="setup__provider__other_provider">Usa un altre proveïdor d\'IA</string>
     <string name="setup__provider__other_provider_hint">Avançat: tria un altre servei en lloc de Groq. Necessitaràs una clau d\'API d\'aquest proveïdor.</string>
     <string name="setup__finish_up__add_key_hint">Consell: encara no has afegit cap clau d\'IA. Afegeix-ne una quan vulguis a Configuració → Dictate → Proveïdors d\'IA per començar a dictar.</string>
-    <string name="crash_dialog__bug_report_template">Informe de fallada</string>
     <string name="enum__swipe_action__toggle_compact_layout">Commuta la disposició compacta</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1530,8 +1523,6 @@
     <string name="dictate__prompt_library_added">Afegit</string>
     <string name="dictate__prompt_library_add_again">Torna a afegir</string>
     <string name="dictate__prompt_library_empty">Cap prompt coincideix amb la teva cerca.</string>
-    <string name="dictate__prompt_library_error">No s\'ha pogut carregar la biblioteca de la comunitat. Comprova la connexió i torna-ho a provar.</string>
-    <string name="dictate__prompt_library_retry">Torna-ho a provar</string>
     <string name="dictate__prompt_library_close">Tanca</string>
     <string name="dictate__prompt_library_author">de {author}</string>
     <string name="dictate__file_preparing">Preparant el fitxer…</string>
@@ -2085,7 +2076,6 @@
     <string name="apptour64__command_body">Tria una paraula a Reformulació, per exemple «Jarvis». Un dictat que comenci amb aquesta paraula s’executa com una instrucció en directe: sobre el text seleccionat, o com una pregunta si no hi ha res seleccionat. Només compta la primera paraula, així que una frase que simplement la mencioni s’escriu com sempre. Els prompts automàtics també funcionen ara com cal: sempre reben el dictat sobre el qual actuen, i un que només contingui [text entre claudàtors] s’afegeix al final tal qual en lloc d’anar al model.</string>
     <string name="apptour64__privacy_eyebrow">Privacitat i seguretat</string>
     <string name="apptour64__privacy_title">Tota l’aplicació, revisada</string>
-    <string name="apptour64__privacy_body">S’ha revisat cada part del Dictate pel que fa a la privacitat i la seguretat, i el que ha sortit s’ha corregit. Un dictat en un camp de contrasenya o PIN es queda fora de l’historial, ara també amb el botó flotant. La còpia de seguretat al núvol d’Android només s’emporta les teves claus d’API xifrades d’extrem a extrem. I «Confia en els certificats d’usuari» ara es configura per a cada compte de proveïdor en lloc de per a tots alhora.</string>
     <string name="apptour64__more_eyebrow">A més</string>
     <string name="apptour64__more_title">Tota la resta de la 6.4</string>
     <string name="apptour64__more_body">Els canvis més petits, per a qui vulgui els detalls. Si no t’interessen, passa endavant.</string>

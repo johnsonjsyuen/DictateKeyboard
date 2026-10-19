@@ -697,7 +697,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictate hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Verdiğimiz rahatsızlıktan dolayı özür dileriz, ancak Dictate beklenmedik bir hata nedeniyle çöktü.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Bu hatayı bildirmek isterseniz, önce GitHub\'daki sorun izleyiciyi kontrol ederek çökmenizin daha önce bildirilip bildirilmediğini kontrol edin.\nBildirilmediyse, oluşturulan çökme günlüğünü kopyalayın ve yeni bir sorun açın. \"%s\" şablonunu kullanın ve açıklamayı, yeniden oluşturma adımlarını doldurun ve oluşturulan çökme günlüğünü sonuna yapıştırın. Bu, Dictate\'un herkes için daha iyi ve daha kararlı hale gelmesine yardımcı olur. Teşekkür ederiz!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Sistem panosuna kopyala</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Sistem panosuna kopyalandı</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Sistem panosuna kopyalanamıyor: Pano yöneticisi örneği bulunamadı</string>
@@ -885,16 +884,11 @@
     <string name="ext__validation__enter_percent_size">Lütfen bir yüzde boyutu girin</string>
     <string name="ext__validation__enter_number_between_0_100">Lütfen 0 ile 100 arasında pozitif bir sayı girin</string>
     <string name="ext__validation__hint_value_above_50_percent">%50\'nin üzerindeki herhangi bir değer %50 olarak ayarlanmış gibi davranacaktır, yüzde boyutunuzu düşürmeyi düşünün</string>
-    <string name="ext__update_box__internet_permission_hint">Bu uygulama İnternet iznine sahip olmadığı için, yüklü eklentilerin güncellemeleri manuel olarak kontrol edilmelidir.</string>
-    <string name="ext__update_box__search_for_updates">Güncellemeleri Ara</string>
     <string name="ext__addon_management_box__managing_placeholder">{extensions} Yönetiliyor</string>
     <string name="ext__addon_management_box__addon_manager_info">Eklentileri içe aktarma, dışa aktarma, oluşturma, özelleştirme ve kaldırma ile ilgili tüm görevler merkezi eklenti yöneticisi aracılığıyla halledilebilir.</string>
     <string name="ext__addon_management_box__go_to_page">{ext_home_title} sayfasına git</string>
-    <string name="ext__home__info">Dictate Eklenti Mağazası\'ndan eklentiler indirebilir ve yükleyebilir veya internetten indirdiğiniz herhangi bir eklenti dosyasını içe aktarabilirsiniz.</string>
-    <string name="ext__home__visit_store">Eklenti Mağazasını Ziyaret Et</string>
     <string name="ext__home__manage_extensions">Yüklü eklentileri yönet</string>
     <string name="ext__list__view_details">Ayrıntıları görüntüle</string>
-    <string name="ext__check_updates__title">Güncellemeleri Kontrol Et</string>
     <!-- Action strings -->
     <string name="action__add">Ekle</string>
     <string name="action__apply">Uygula</string>
@@ -1185,7 +1179,6 @@
     <string name="setup__provider__other_provider">Farklı bir yapay zekâ sağlayıcısı kullan</string>
     <string name="setup__provider__other_provider_hint">Gelişmiş: Groq yerine başka bir hizmet seçin. Bu sağlayıcıdan bir API anahtarına ihtiyacınız olacak.</string>
     <string name="setup__finish_up__add_key_hint">İpucu: Henüz bir yapay zekâ anahtarı eklemediniz. Dikte etmeye başlamak için Ayarlar → Dictate → Yapay zekâ sağlayıcıları bölümünden istediğiniz zaman bir tane ekleyebilirsiniz.</string>
-    <string name="crash_dialog__bug_report_template">Çökme raporu</string>
     <string name="enum__swipe_action__toggle_compact_layout">Kompakt düzeni aç/kapat</string>
     <string name="unit__hours__symbol">{v} sa</string>
     <string name="unit__minutes__symbol">{v} dk</string>
@@ -1639,8 +1632,6 @@
     <string name="dictate__prompt_library_added">Eklendi</string>
     <string name="dictate__prompt_library_add_again">Tekrar ekle</string>
     <string name="dictate__prompt_library_empty">Aramanızla eşleşen komut yok.</string>
-    <string name="dictate__prompt_library_error">Topluluk kütüphanesi yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
-    <string name="dictate__prompt_library_retry">Yeniden dene</string>
     <string name="dictate__prompt_library_close">Kapat</string>
     <string name="dictate__prompt_library_author">{author} tarafından</string>
     <string name="dictate__file_preparing">Dosya hazırlanıyor…</string>
@@ -2194,7 +2185,6 @@
     <string name="apptour64__command_body">Yeniden ifade etme bölümünde bir kelime seç — örneğin “Jarvis”. Onunla başlayan bir dikte canlı komut olarak çalışır: seçili metin üzerinde ya da hiçbir şey seçili değilse bir soru olarak. Yalnızca ilk kelime sayılır; o kelimeden sadece bahseden bir cümle her zamanki gibi yazılır. Otomatik komutlar da artık amaçlandığı gibi çalışıyor: her zaman üzerinde çalıştıkları dikteyi alıyorlar ve yalnızca [köşeli parantez içinde metin] olan bir komut, modele gitmek yerine olduğu gibi sona ekleniyor.</string>
     <string name="apptour64__privacy_eyebrow">Gizlilik ve güvenlik</string>
     <string name="apptour64__privacy_title">Uygulamanın tamamı denetlendi</string>
-    <string name="apptour64__privacy_body">Dictate’in her parçası gizlilik ve güvenlik açısından gözden geçirildi ve bulunan her şey düzeltildi. Parola ya da PIN alanına yapılan bir dikte geçmişe girmiyor — artık yüzen düğme üzerinden yapıldığında da. Android’in bulut yedeklemesi API anahtarlarını artık yalnızca uçtan uca şifrelenmiş olarak alıyor. Ve “Kullanıcı sertifikalarına güven” artık hepsi için birden değil, her sağlayıcı hesabı için ayrı ayarlanıyor.</string>
     <string name="apptour64__more_eyebrow">Ayrıca</string>
     <string name="apptour64__more_title">6.4’teki diğer her şey</string>
     <string name="apptour64__more_body">Ayrıntıları merak edenler için küçük değişiklikler. İstemiyorsan atlayıp geçebilirsin.</string>

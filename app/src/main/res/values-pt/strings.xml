@@ -697,7 +697,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erros do Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Desculpe o inconveniente mas a aplicação encerrou devido a um problema desconhecido.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Se quiser reportar este erro, analise o registo de erros reportados no GitHub e verifique se este problema já foi reportado.\nSe não o encontrar, copie o relatório de erro e abra uma ocorrência. Utilize o modelo \"%s\", preencha a descrição, os passos necessários para reproduzir o erro e cole o relatório no final. Desta forma, pode ajudar a melhorar o Floriboard. Obrigado!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar para a área de transferência</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiado para a área de transferência</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Não foi possível copiar. Não existe um gestor para a área de transferência.</string>
@@ -885,16 +884,11 @@
     <string name="ext__validation__enter_percent_size">Por favor, introduza uma percentagem</string>
     <string name="ext__validation__enter_number_between_0_100">Por favor, introduza um número positivo entre 0 e 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Qualquer valor acima de 50% se comportará como se você definisse 50%, considere diminuir o tamanho da percentagem</string>
-    <string name="ext__update_box__internet_permission_hint">Como esta aplicação não tem permissão de Internet, as atualizações das extensões instaladas devem ser verificadas manualmente.</string>
-    <string name="ext__update_box__search_for_updates">Procurar atualizações</string>
     <string name="ext__addon_management_box__managing_placeholder">Gestão de {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Todas as tarefas relacionadas à importação, exportação, criação, personalização e remoção de extensões podem ser realizadas pela central de gestão de complementos.</string>
     <string name="ext__addon_management_box__go_to_page">Ir para {ext_home_title}</string>
-    <string name="ext__home__info">Pode descarregar e instalar extensões na Dictate Addons Store ou importar qualquer ficheiro de extensão que tenha transferido da internet.</string>
-    <string name="ext__home__visit_store">Visita loja de complementos</string>
     <string name="ext__home__manage_extensions">Gerir extensões instaladas</string>
     <string name="ext__list__view_details">Ver detalhes</string>
-    <string name="ext__check_updates__title">Verificar atualizações</string>
     <!-- Action strings -->
     <string name="action__add">Adicionar</string>
     <string name="action__apply">Aplicar</string>
@@ -1186,7 +1180,6 @@
     <string name="setup__provider__other_provider">Usar outro fornecedor de IA</string>
     <string name="setup__provider__other_provider_hint">Avançado: escolha outro serviço em vez do Groq. Vai precisar de uma chave de API desse fornecedor.</string>
     <string name="setup__finish_up__add_key_hint">Dica: ainda não adicionou uma chave de IA. Adicione uma a qualquer momento em Definições → Dictate → Fornecedores de IA para começar a ditar.</string>
-    <string name="crash_dialog__bug_report_template">Relatório de falha</string>
     <string name="enum__swipe_action__toggle_compact_layout">Alternar esquema compacto</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1640,8 +1633,6 @@
     <string name="dictate__prompt_library_added">Adicionado</string>
     <string name="dictate__prompt_library_add_again">Adicionar novamente</string>
     <string name="dictate__prompt_library_empty">Nenhum prompt corresponde à sua pesquisa.</string>
-    <string name="dictate__prompt_library_error">Não foi possível carregar a biblioteca da comunidade. Verifique a sua ligação e tente novamente.</string>
-    <string name="dictate__prompt_library_retry">Tentar novamente</string>
     <string name="dictate__prompt_library_close">Fechar</string>
     <string name="dictate__prompt_library_author">por {author}</string>
     <string name="dictate__file_preparing">A preparar o ficheiro…</string>
@@ -2195,7 +2186,6 @@
     <string name="apptour64__command_body">Escolhe uma palavra em Reformulação — «Jarvis», por exemplo. Um ditado que comece por ela é executado como instrução em direto: sobre o texto selecionado, ou como pergunta quando nada está selecionado. Só conta a primeira palavra, por isso uma frase que apenas a mencione é escrita normalmente. Os prompts automáticos também funcionam agora como deviam: recebem sempre o ditado sobre o qual atuam, e um que seja só [texto entre parênteses retos] é acrescentado no fim tal e qual, em vez de ir para o modelo.</string>
     <string name="apptour64__privacy_eyebrow">Privacidade e segurança</string>
     <string name="apptour64__privacy_title">A aplicação inteira, verificada</string>
-    <string name="apptour64__privacy_body">Cada parte do Dictate foi revista quanto a privacidade e segurança, e o que apareceu foi corrigido. Um ditado num campo de palavra-passe ou PIN fica fora do histórico, agora também através do botão flutuante. A cópia de segurança na nuvem do Android só leva as tuas chaves de API encriptadas ponto a ponto. E «Confiar em certificados do utilizador» define-se agora por conta de fornecedor, em vez de para todas de uma vez.</string>
     <string name="apptour64__more_eyebrow">Além disso</string>
     <string name="apptour64__more_title">Tudo o resto da 6.4</string>
     <string name="apptour64__more_body">As alterações mais pequenas, para quem quer os pormenores. Se não for o teu caso, passa à frente.</string>

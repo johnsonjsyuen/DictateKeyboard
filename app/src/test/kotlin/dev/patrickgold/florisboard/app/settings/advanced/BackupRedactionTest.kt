@@ -169,7 +169,6 @@ class BackupRedactionTest {
             "s;dictate__proxy_username;\"admin\"",
             "s;dictate__proxy_password;\"hunter2\"",
             "s;gif__klipy_api_key;\"klipy-secret\"",
-            "s;gif__customer_id;\"cust-42\"",
             "s;dictate__api_key;\"legacy\"",
             "s;dictate__rewording_api_key;\"legacy-reword\"",
             "b;dictate__provider_accounts_migrated;true",
@@ -178,7 +177,7 @@ class BackupRedactionTest {
 
         val redacted = BackupRedaction.redact(document)
 
-        for (gone in listOf("admin", "hunter2", "klipy-secret", "cust-42", "legacy", "legacy-reword")) {
+        for (gone in listOf("admin", "hunter2", "klipy-secret", "legacy", "legacy-reword")) {
             assertFalse(redacted.contains(gone), "redacted document still contains $gone")
         }
         // A key that merely starts with or contains a dropped name is a different preference.

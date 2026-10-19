@@ -708,7 +708,6 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictate 错误报告</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">很抱歉给您带来不便，但 Dictate 因意外错误而崩溃。</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">如果您希望报告此错误，请先查看 GitHub 上的问题跟踪器（如果尚未报告您的崩溃）。\n如果没有，请复制生成的崩溃日志并打开一个新问题。使用“%s”模板，填写描述、重现崩溃的步骤，最后粘贴生成的崩溃日志。这有助于让 Dictate 对每个用户都更好、更稳定。谢谢！</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">复制到系统剪贴板</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">已复制到系统剪贴板</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">无法复制到系统剪贴板：找不到剪贴板管理器实例</string>
@@ -903,16 +902,11 @@
     <string name="ext__validation__enter_percent_size">请输入百分比大小</string>
     <string name="ext__validation__enter_number_between_0_100">请输入值为0～100的正数</string>
     <string name="ext__validation__hint_value_above_50_percent">任何高于50%的数值都会表现得像设置为50%一样，建议降低你的百分比大小</string>
-    <string name="ext__update_box__internet_permission_hint">由于此应用程序没有互联网权限，无法自行获取更新，因此必须要您手动检查已安装扩展的更新。</string>
-    <string name="ext__update_box__search_for_updates">搜索更新</string>
     <string name="ext__addon_management_box__managing_placeholder">管理 {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">所有与导入、导出、创建、自定义和删除扩展相关的任务都可以通过集中的插件管理器来处理。</string>
     <string name="ext__addon_management_box__go_to_page">跳转到{ext_home_title}</string>
-    <string name="ext__home__info">您可以从 Dictate 插件商店下载并安装扩展，或者导入您从互联网上下载的任何匹配和兼容的扩展文件。</string>
-    <string name="ext__home__visit_store">访问插件商店</string>
     <string name="ext__home__manage_extensions">管理已安装的扩展</string>
     <string name="ext__list__view_details">查看详细信息</string>
-    <string name="ext__check_updates__title">检查更新</string>
     <!-- Action strings -->
     <string name="action__add">添加</string>
     <string name="action__apply">应用</string>
@@ -1201,7 +1195,6 @@
     <string name="setup__provider__other_provider">使用其他 AI 服务商</string>
     <string name="setup__provider__other_provider_hint">高级：选择 Groq 以外的其他服务。您需要该服务商的 API 密钥。</string>
     <string name="setup__finish_up__add_key_hint">提示：您尚未添加 AI 密钥。可随时在设置 → Dictate → AI 服务商中添加，即可开始听写。</string>
-    <string name="crash_dialog__bug_report_template">崩溃报告</string>
     <string name="enum__swipe_action__toggle_compact_layout">切换紧凑布局</string>
     <string name="unit__hours__symbol">{v} 小时</string>
     <string name="unit__minutes__symbol">{v} 分</string>
@@ -1655,8 +1648,6 @@
     <string name="dictate__prompt_library_added">已添加</string>
     <string name="dictate__prompt_library_add_again">再次添加</string>
     <string name="dictate__prompt_library_empty">没有与搜索匹配的提示词。</string>
-    <string name="dictate__prompt_library_error">无法加载社区库。请检查网络连接后重试。</string>
-    <string name="dictate__prompt_library_retry">重试</string>
     <string name="dictate__prompt_library_close">关闭</string>
     <string name="dictate__prompt_library_author">作者：{author}</string>
     <string name="dictate__file_preparing">正在准备文件…</string>
@@ -2208,7 +2199,6 @@
     <string name="apptour64__command_body">在「改写」中选一个词，比如「贾维斯」。以它开头的听写会作为实时指令执行：有选中的文本就作用于它，什么都没选就作为提问。只有第一个词算数，所以只是顺带提到它的句子会照常写下来。自动提示词现在也按预期工作了：它们总能拿到自己要处理的那段听写；而只由[方括号]括起来的文本构成的提示词，会原样追加到末尾，不再发给模型。</string>
     <string name="apptour64__privacy_eyebrow">隐私与安全</string>
     <string name="apptour64__privacy_title">整个应用，全面检查</string>
-    <string name="apptour64__privacy_body">Dictate 的每个部分都做了隐私与安全审查，发现的问题均已修复。在密码或 PIN 输入框里听写的内容不会进入历史记录，现在通过悬浮按钮也是如此。Android 的云备份只会以端到端加密的形式带走你的 API 密钥。「信任用户证书」现在按服务商账户分别设置，而不是一次对所有账户生效。</string>
     <string name="apptour64__more_eyebrow">此外</string>
     <string name="apptour64__more_title">6.4 的其他改动</string>
     <string name="apptour64__more_body">一些较小的改动，写给想了解细节的人。不感兴趣的话，直接跳过即可。</string>

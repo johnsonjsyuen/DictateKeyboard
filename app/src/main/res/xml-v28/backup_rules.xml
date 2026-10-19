@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 9 to 11 (API 28-30). The settings (jetpref_datastore, which holds the API keys) only go along
+  on a device-to-device transfer, never into the cloud backup. See xml/data_extraction_rules.xml.
+-->
+<full-backup-content>
+    <include
+        domain="root"
+        path="jetpref_datastore"
+        requireFlags="deviceToDeviceTransfer"/>
+    <include
+        domain="file"
+        path="ime"/>
+    <include
+        domain="database"
+        path="floris_user_dictionary"/>
+</full-backup-content>

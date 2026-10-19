@@ -54,7 +54,6 @@ class CrashDialogActivity : ComponentActivity() {
     private val prefs by SafePreferenceInstanceWrapper()
 
     private val stacktrace by lazy { findViewById<TextView>(R.id.stacktrace) }
-    private val reportInstructions by lazy { findViewById<TextView>(R.id.report_instructions) }
     private val copyToClipboard by lazy { findViewById<Button>(R.id.copy_to_clipboard) }
     private val close by lazy { findViewById<Button>(R.id.close) }
 
@@ -97,11 +96,6 @@ class CrashDialogActivity : ComponentActivity() {
             }
         }
         stacktrace.text = errorReport
-
-        reportInstructions.text =
-            reportInstructions.text.toString().format(
-                resources.getString(R.string.crash_dialog__bug_report_template)
-            )
 
         copyToClipboard.setOnClickListener {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
