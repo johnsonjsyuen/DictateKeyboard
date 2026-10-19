@@ -978,7 +978,7 @@ object LocalModelCatalog {
     )
 
     /**
-     * ~1.29 GB. Cohere Transcribe 03-2026 (2B, Open ASR average 5.42; 2.37 % on LibriSpeech other
+     * ~1.51 GB. Cohere Transcribe 03-2026 (2B, Open ASR average 5.42; 2.37 % on LibriSpeech other
      * against Qwen3-ASR 1.7B's 3.38 %). Like Canary it must be *told* its language and has no
      * detection: the chosen input language is passed on every decode, and anything it does not know —
      * including auto-detect — falls back to English (crispasr_engines.cpp).
@@ -996,8 +996,10 @@ object LocalModelCatalog {
         files = listOf(
             LocalModelFile(
                 "https://huggingface.co/cstr/cohere-transcribe-03-2026-GGUF/resolve/77234fcd7f77d271e5fc57f14fb05f260275558c/cohere-transcribe-q4_k.gguf",
-                LocalTranscriptionProvider.GGUF, 1_289_178_240L,
-                "116f4c4f7ff1b03997100d3a097e13fecd84350555b9979867b241cd6803e4f5",
+                // Size and hash from the LFS pointer at the pinned commit itself; the repo's own card
+                // still quotes an older, smaller q4_k (1.21 GB), which is not what this commit serves.
+                LocalTranscriptionProvider.GGUF, 1_510_363_008L,
+                "237261c543dc9124a3f08f95b48c9c672896ef0d79dc8cadce3fb4ddc09a2ef8",
             ),
             VAD_FILE,
         ),
