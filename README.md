@@ -41,17 +41,8 @@ This is [johnsonjsyuen/DictateKeyboard](https://github.com/johnsonjsyuen/Dictate
 [DevEmperor/DictateKeyboard](https://github.com/DevEmperor/DictateKeyboard). It tracks upstream
 (currently v6.4.0), so everything below about Dictate still applies. What is different for you as a user:
 
-- **More on-device (offline) speech models.** Under **Settings → AI providers → On-device (offline)**
-  you can download, in addition to everything upstream offers:
-  - **Granite Speech 4.1 2B** (IBM, ~2.3 GB): the most accurate English model here, also French,
-    German, Spanish, Portuguese and Japanese, with punctuation.
-  - **Cohere Transcribe** (~1.3 GB): very accurate in 14 languages, but it cannot detect the
-    language. Set your input language, or it assumes English.
-  - **Qwen3-ASR 1.7B** in two sizes (Q4_K ~1.5 GB, Q5_K ~1.7 GB, slightly more accurate) and
-    **Qwen3-ASR 0.6B** (~0.6 GB, faster): 30 languages, detected automatically.
-  - **Parakeet Unified English** (NVIDIA, ~0.7 GB): near-top English accuracy at Parakeet speed.
-  - **Moonshine Medium** (~0.2 GB): a small, fast English model.
-  - **Nemotron 3.5 Streaming** (NVIDIA, ~0.7 GB): **live** transcription while you speak, in 28 languages.
+- **More on-device (offline) speech models.** They are under **Settings → AI providers → On-device
+  (offline)**, next to everything upstream offers (see the table below).
 - **Most of the new models need a 64-bit ARM phone.** Granite, Cohere, Qwen3 and Moonshine run on a
   separate native engine that only exists for ARM64. They are hidden on other devices. Parakeet
   Unified and Nemotron run everywhere upstream's models do.
@@ -64,15 +55,92 @@ This is [johnsonjsyuen/DictateKeyboard](https://github.com/johnsonjsyuen/Dictate
   RAM while transcribing. Speed depends heavily on the phone, so try a smaller one first if a large
   one feels slow.
 - **Downloads come from Hugging Face.** The new models are fetched from their Hugging Face
-  repositories (pinned versions, checked by size and SHA-256), not from upstream's GitHub mirror.
-  Upstream's privacy policy does not mention this. As with every on-device model, your audio never
-  leaves the phone.
-- **Installable test builds, not the Play Store.** This fork is not on Google Play. Every update to
-  `main` publishes a debug APK on the [Releases page](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
-  It installs as a separate app (`net.devemperor.dictate.debug`) next to the official one, so the
-  two don't share settings or history. These are development builds signed with a public test key.
+  repositories, not from upstream's GitHub mirror. Upstream's privacy policy does not mention this.
+  As with every on-device model, your audio never leaves the phone. If you want the whole dictation
+  workflow offline, also disable any cloud rewording you have configured.
+- **Installable test builds, not the Play Store.** This fork is not on Google Play; see
+  [Getting the APK](#getting-the-apk) below.
 
-Build instructions and technical details are in [Fork details](#fork-details-on-device-models-and-builds) at the end.
+### Models in this fork
+
+Each is downloaded separately from the APK. Model files and native runtime revisions are pinned
+(Hugging Face commits, CrispASR v0.8.43), and every file is verified by size and SHA-256 before
+installation. After that, transcription runs without a network connection.
+
+| Model | Download | Languages | Notes |
+|---|---|---|---|
+| Granite Speech 4.1 2B (IBM) | ~2.27 GB | en, fr, de, es, pt, ja | Highest English accuracy here (Open ASR avg 5.33); punctuated output. ARM64. |
+| Cohere Transcribe | ~1.29 GB | 14 | Open ASR avg 5.42. Cannot detect the language: set your input language, or it assumes English. ARM64. |
+| Qwen3-ASR 1.7B (Q5_K / Q4_K) | ~1.74 / 1.49 GB | 30 | Detects the language itself; Q5_K is slightly more accurate. ARM64. |
+| Qwen3-ASR 0.6B (Q4_K) | ~0.63 GB | 30 | About a third of the 1.7B's compute. ARM64. |
+| Parakeet Unified English (NVIDIA) | ~0.66 GB | en | Open ASR avg 5.91 at Parakeet speed (sherpa-onnx). |
+| Moonshine Medium | ~0.19 GB | en | Small and fast. ARM64. |
+| Nemotron 3.5 Streaming (NVIDIA, live) | ~0.68 GB | 28 | Live transcription while you speak (sherpa-onnx). |
+
+All except Nemotron are batch models: they return text after recording stops. Working RAM exceeds
+the download size; latency and memory use depend on the phone.
+
+### Getting the APK
+
+**Download:** [main debug builds](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
+Each successful push to `main` publishes a separate prerelease with `DictateKeyboard-debug.apk` and
+its SHA-256 checksum. Open the newest main debug build and download the APK from its assets. A push
+containing several commits builds the tip commit.
+
+These are debuggable development builds, signed with a fixed public CI-only key. They install as
+`net.devemperor.dictate.debug` alongside the official app, so the two don't share settings or
+history, and each CI build can update the previous one. If you already have a locally signed debug
+build, uninstall it first (this deletes its app data).
+
+Pull requests targeting `main` build their head commit. PRs from this repository also create a
+clearly labeled **PR prerelease**, and CI downloads its APK to check publication before merging. Fork
+PRs are build-only, and PR prereleases never become the latest stable release. The
+[workflow](.github/workflows/android-apk.yml) runs once it is on `main` and GitHub Actions is
+enabled; repository policy must allow its release job `contents: write` permission.
+
+### Building it yourself
+
+The GGUF models (Granite, Cohere, Qwen3, Moonshine) run on a native CrispASR/ggml runtime that is
+built twice: a baseline armv8-a library and an ARMv8.2 dot-product + fp16 one, which the app loads
+when `/proc/cpuinfo` shows every core supports it.
+
+Build prerequisites:
+- JDK 21: a standard OpenJDK (GraalVM's jlink failed the Android SDK image transform).
+- Android SDK and build-tools 36.
+- NDK 27.0.12077973 for the standalone native build. Gradle uses the project's own NDK declaration
+  independently; the native library is prebuilt with the pinned NDK below.
+- CMake 3.22+, a C/C++ compiler, Git and Python 3.
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
+# Set JAVA_HOME to a standard installed JDK 21.
+tools/fetch-sherpa-onnx.sh
+tools/build-qwen-native.sh android
+./gradlew :app:testDebugUnitTest :app:assembleDebug --no-configuration-cache --max-workers=2 \
+  -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process
+```
+
+`tools/build-qwen-native.sh` downloads the pinned CrispASR source into the ignored
+`build/qwen-native/source`. It builds only the Qwen3-ASR, Granite Speech, Cohere and Moonshine
+backends and their CPU dependencies, then copies both ARM64 libraries (`libdictate-crispasr.so`,
+`libdictate-crispasr-dotprod.so`) into `jniLibs`. `CRISPASR_SOURCE` may point to a clean checkout of
+the exact pinned revision. The libraries statically link ggml and the C++ runtime and use 16 KB ELF
+alignment, and the build fails clearly if they are missing. Other ABIs keep the existing engines and
+do not offer the GGUF models.
+
+Native host regression tests: `tools/test-qwen-native.sh`.
+- **Qwen check:** with a downloaded model and a little-endian float32 mono 16 kHz fixture,
+  `tools/test-qwen-native.sh MODEL.gguf AUDIO.f32` runs two transcriptions with the same loaded
+  model. The JFK smoke test was validated on the build host.
+- **Any backend:** `build/qwen-native/host/crispasr-smoke BACKEND MODEL.gguf AUDIO.f32 [language]`.
+- **On a phone:** the Android ARM64 library is cross-compiled, so inference on a physical device is
+  a separate acceptance check.
+
+The local debug APK is `app/build/outputs/apk/debug/app-debug.apk` (package
+`net.devemperor.dictate.debug`). It updates an existing debug installation only when the signing
+certificate matches. Runtime and model attributions and licenses are in [NOTICE](NOTICE) and the
+APK's `assets/licenses/qwen-native.txt`.
 
 ---
 
@@ -376,57 +444,3 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
   <a href="https://github.com/4kaimar"><img src="https://github.com/4kaimar.png" width="72" alt="4kaimar" title="4kaimar"></a>
 </p>
 <!-- SPONSORS:END -->
-
-
-## Fork details: on-device models and builds
-
-**Download an APK:** [main debug builds](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
-Each successful push to `main` publishes a separate prerelease with
-`DictateKeyboard-debug.apk` and its SHA-256 checksum. Open the newest main debug
-build and download the APK directly from its assets. A push containing several
-commits builds the tip commit. Pull requests targeting `main` build their head commit.
-PRs from this repository also create a clearly labeled **PR prerelease** and download its APK
-to verify release creation, publication, and assets before merging. Fork PRs are
-build-only. PR prereleases never become the latest stable release.
-
-These are debuggable development builds, signed with a fixed public CI-only key;
-no signing secrets are needed. They install as `net.devemperor.dictate.debug`
-alongside the regular app and can update earlier CI builds. If you already have
-a locally signed debug build, uninstall it first (this deletes its app data).
-The [workflow](.github/workflows/android-apk.yml) runs automatically once it is on
-`main` and GitHub Actions is enabled; repository policy must allow its release job
-`contents: write` permission.
-
-This fork adds these on-device models under **Settings → AI providers → On-device (offline)**, next to everything upstream ships. Each is downloaded separately from the APK, verified by size and SHA-256, and then runs without a network connection:
-
-| Model | Download | Languages | Notes |
-|---|---|---|---|
-| Granite Speech 4.1 2B | ~2.27 GB | en, fr, de, es, pt, ja | Highest English accuracy here (Open ASR avg 5.33); punctuated output. ARM64. |
-| Cohere Transcribe | ~1.29 GB | 14 | Open ASR avg 5.42. Must be told its language: set the input language, or it assumes English. ARM64. |
-| Qwen3-ASR 1.7B (Q5_K / Q4_K) | ~1.74 / 1.49 GB | 30 | Detects the language itself. ARM64. |
-| Qwen3-ASR 0.6B (Q4_K) | ~0.63 GB | 30 | About a third of the 1.7B's compute. ARM64. |
-| Parakeet Unified English | ~0.66 GB | en | Open ASR avg 5.91 at Parakeet speed (sherpa-onnx). |
-| Moonshine Medium | ~0.19 GB | en | Small and fast. ARM64. |
-| Nemotron 3.5 Streaming (live) | ~0.68 GB | 28 | Live transcription while you speak (sherpa-onnx). |
-
-The GGUF models (Granite, Cohere, Qwen3, Moonshine) run on a native CrispASR/ggml runtime that is built twice: a baseline armv8-a library and an ARMv8.2 dot-product + fp16 one, which the app loads when `/proc/cpuinfo` shows every core supports it. Batch models return text after recording stops. Working RAM exceeds the download size; phone latency and memory use must be measured on the device.
-
-Model files and native runtime revisions are pinned (Hugging Face commits, CrispASR v0.8.43). No recording is sent to a server by this provider. Disable any separately configured cloud rewording if you want the entire dictation workflow to remain offline.
-
-Build prerequisites: JDK 21 (standard OpenJDK; the local GraalVM jlink failed the Android SDK image transform), Android SDK/build-tools 36, NDK 27.0.12077973 for the standalone native build, CMake 3.22+, C/C++ compiler, Git and Python 3. Gradle uses the existing project NDK declaration independently; the Qwen library is prebuilt using the pinned NDK below.
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
-# Set JAVA_HOME to a standard installed JDK 21.
-tools/fetch-sherpa-onnx.sh
-tools/build-qwen-native.sh android
-./gradlew :app:testDebugUnitTest :app:assembleDebug --no-configuration-cache --max-workers=2 \
-  -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process
-```
-
-`tools/build-qwen-native.sh` downloads the pinned CrispASR source into ignored `build/qwen-native/source`, builds only the Qwen3-ASR, Granite Speech, Cohere and Moonshine backends and their CPU dependencies, and copies both ARM64 libraries (`libdictate-crispasr.so`, `libdictate-crispasr-dotprod.so`) into the existing `jniLibs` directory. `CRISPASR_SOURCE` may point to a clean checkout of the exact pinned revision. The library statically links ggml and the C++ runtime and uses 16 KB ELF alignment. Build fails clearly if it is missing. Other ABIs retain the existing engines and do not offer the GGUF models.
-
-Native host regression tests: `tools/test-qwen-native.sh`. Any backend can be smoke-tested on the host with `build/qwen-native/host/crispasr-smoke BACKEND MODEL.gguf AUDIO.f32 [language]`. With a downloaded model and little-endian float32 mono 16 kHz fixture: `tools/test-qwen-native.sh MODEL.gguf AUDIO.f32`. This executes two transcriptions with the same loaded model; the JFK smoke test was validated on the build host. The Android ARM64 library is cross-compiled, but physical-device inference is a separate acceptance check.
-
-The installable debug output is `app/build/outputs/apk/debug/app-debug.apk`, package `net.devemperor.dictate.debug`. It updates an existing debug installation only when the signing certificate matches; it installs alongside the release package. Runtime/model attribution and licenses are in [NOTICE](NOTICE) and the APK's `assets/licenses/qwen-native.txt`.
