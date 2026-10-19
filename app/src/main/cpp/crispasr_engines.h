@@ -23,7 +23,7 @@ enum class Backend : int {
     GraniteSpeech = 1,
     Cohere = 2,
     MoonshineStreaming = 3,
-    /** Granite Speech 4.1: same runtime as 4.0, but IBM's control-token chat template. */
+    /** Granite Speech 4.1: same runtime and template as 4.0, asked for punctuated, truecased output. */
     GraniteSpeech41 = 4,
 };
 
