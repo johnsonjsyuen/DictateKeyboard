@@ -70,7 +70,7 @@ installation. After that, transcription runs without a network connection.
 | Model | Download | Languages | Notes |
 |---|---|---|---|
 | Granite Speech 4.1 2B (IBM) | ~2.27 GB | en, fr, de, es, pt, ja | Highest English accuracy here (Open ASR avg 5.33); punctuated output. ARM64. |
-| Cohere Transcribe | ~1.29 GB | 14 | Open ASR avg 5.42. Cannot detect the language: set your input language, or it assumes English. ARM64. |
+| Cohere Transcribe | ~1.51 GB | 14 | Open ASR avg 5.42. Cannot detect the language: set your input language, or it assumes English. ARM64. |
 | Qwen3-ASR 1.7B (Q5_K / Q4_K) | ~1.74 / 1.49 GB | 30 | Detects the language itself; Q5_K is slightly more accurate. ARM64. |
 | Qwen3-ASR 0.6B (Q4_K) | ~0.63 GB | 30 | About a third of the 1.7B's compute. ARM64. |
 | Parakeet Unified English (NVIDIA) | ~0.66 GB | en | Open ASR avg 5.91 at Parakeet speed (sherpa-onnx). |
