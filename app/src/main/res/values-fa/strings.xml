@@ -225,10 +225,6 @@
     <string name="about__version__title" comment="Preference title">نسخه</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">نسخه در کلیپ‌بورد کپی شد</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">اوه! مشکلی پیش آمد: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">لیست تغییرات</string>
-    <string name="about__changelog__summary" comment="Preference summary">تغییرات جدید</string>
-    <string name="about__repository__title" comment="Preference title">رپو (گیت هاب)</string>
-    <string name="about__repository__summary" comment="Preference summary">کد منبع، مباحثه ها، مشکلات و اطلاعات</string>
     <string name="about__project_license__title" comment="Preference title">گواهی های پروژه</string>
     <string name="about__project_license__summary" comment="Preference summary">فلوریس بورد زیر نظر {license_name} دارای گواهی می باشد</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطا: ناتوانی در بارگذاری متن گواهی.\n-&gt; دلیل: {error_message}</string>
@@ -245,7 +241,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی به کلیپبورد سیستم</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">به کلیپبورد سیستم کپی شد</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">نمی توان به کلیپبورد سیستم کپی کرد: نمایه مدیرت کلیپبورد یافت نشد</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">بازکردن ایرادات ردیابی شده (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">فلوریس بورد کار خود را متوقف کرده است…</string>

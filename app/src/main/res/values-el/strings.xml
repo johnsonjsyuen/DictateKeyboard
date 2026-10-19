@@ -193,10 +193,6 @@
     <string name="about__version__title" comment="Preference title">Έκδοση</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Η έκδοση αντιγράφηκε στο πρόχειρο</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Κάτι πήγε στραβά: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Κατάλογος αλλαγών</string>
-    <string name="about__changelog__summary" comment="Preference summary">Τι νέο υπάρχει</string>
-    <string name="about__repository__title" comment="Preference title">Αποθετήριο (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Πηγαίος κώδικας, συζητήσεις, θέματα και πληροφορίες</string>
     <string name="about__project_license__title" comment="Preference title">Άδεια πρότζεκτ</string>
     <string name="about__project_license__summary" comment="Preference summary">Το {app_name} είναι αδειοδοτημένο υπό την άδεια {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Σφάλμα: Αποτυχία φόρτωσης κειμένου άδειας.\n-&gt; Λόγος: {error_message}</string>
@@ -205,7 +201,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Καλώς ήλθατε!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Ευχαριστώ που χρησιμοποιείτε το {app_name}! Αυτή η σύντομη αρχική ρύθμιση θα σας καθοδηγήσει στα απαιτούμενα βήματα για να χρησιμοποιήσετε το {app_name} στη συσκευή σας.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Αποθετήριο</string>
     <string name="setup__enable_ime__title">Ενεργοποίηση {app_name}</string>
     <string name="setup__enable_ime__description">Το Android απαιτεί κάθε ειδικό πληκτρολόγιο να ενεργοποιείται χειροκίνητα πριν τη χρήση. Ανοίξτε τις Ρυθμίσεις Συστήματος <i>Γλώσσα &amp; Εισαγωγή</i>, κι εκεί ενεργοποιήστε το \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Άνοιγμα Ρυθμίσεων Συστήματος</string>
@@ -229,7 +224,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Αντιγραφή στο πρόχειρο συστήματος</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Αντιγράφηκε στο πρόχειρο συστήματος</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Αδυναμία αντιγραφής στο πρόχειρο συστήματος: Η πραγμάτωση διαχειριστή προχείρου δε βρέθηκε</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Άνοιγμα παρακολούθησης θεμάτων (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Κλείσιμο</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το Dictate έχει σταματήσει να λειτουργεί…</string>

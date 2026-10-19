@@ -10,24 +10,14 @@ A powerful AI keyboard for dictation, real-time transcription and typing — wit
 more speech engines, in the cloud or on your phone.
 
 <p>
-  <a href="https://dictatekeyboard.com"><img alt="Website" src="https://img.shields.io/badge/website-dictatekeyboard.com-30B7E6?labelColor=1b1e2b&logo=googlechrome&logoColor=white"></a>
-  <a href="https://github.com/DevEmperor/DictateKeyboard/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b&label=release"></a>
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-30B7E6?labelColor=1b1e2b"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Android%206%2B-30B7E6?labelColor=1b1e2b">
-  <a href="https://github.com/DevEmperor/DictateKeyboard/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b"></a>
-  <a href="https://github.com/DevEmperor/DictateKeyboard/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/DevEmperor/DictateKeyboard?style=social"></a>
 </p>
 
 <p>
   <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white">
   <img alt="Jetpack Compose" src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white">
 </p>
-
-<table align="center">
-  <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dbadge%26utm_campaign%3Dreadme"><img alt="Get it on Google Play" width="300" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a></td>
-  </tr>
-</table>
 
 </div>
 
@@ -145,8 +135,7 @@ APK's `assets/licenses/qwen-native.txt`.
 > [!NOTE]
 > This is a complete rebuild of Dictate as a full, standalone keyboard on top of
 > [**FlorisBoard**](https://github.com/florisboard/florisboard), replacing the original Java
-> app that powered Dictate v1–v3. The previous Java codebase is preserved on the
-> [`legacy-java`](https://github.com/DevEmperor/Dictate/tree/legacy-java) branch.
+> app that powered Dictate v1–v3.
 
 ---
 
@@ -189,13 +178,7 @@ APK's `assets/licenses/qwen-native.txt`.
 
 ## 📲 Installation
 
-**The app is available on [Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro%26utm_campaign%3Dreadme)**
-(for a small fee that supports continued development), giving you easy installation and free
-lifetime updates. Just tap the badge above or [this link](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro_link%26utm_campaign%3Dreadme).
-
-> [!TIP]
-> **Existing users:** the new keyboard keeps the same app identity and signing key, so your
-> settings carry over on update — no reinstall, no lost configuration.
+Install the APK from this fork's releases — see [Getting the APK](#getting-the-apk) above.
 
 <br>
 
@@ -353,13 +336,13 @@ see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for full attribution.
 
 ## 🤝 Contributing
 
-The best way to help right now is to **[open an issue](https://github.com/DevEmperor/DictateKeyboard/issues)**
+The best way to help right now is to **open an issue** in this repository
 with bug reports, ideas or feedback. Full contribution and community guidelines will be
 published as the project matures. Thank you! 🙏
 
-**Found a security problem?** Please don't open a public issue for it — use
-[GitHub's private advisory form](https://github.com/DevEmperor/DictateKeyboard/security/advisories/new).
-[`SECURITY.md`](SECURITY.md) says what is in scope, what isn't, and what to expect.
+**Found a security problem?** Please don't open a public issue for it — report it privately as
+described in [`SECURITY.md`](SECURITY.md), which also says what is in scope, what isn't, and what
+to expect.
 
 <br>
 

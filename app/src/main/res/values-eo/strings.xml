@@ -359,17 +359,12 @@
     <string name="about__version__title" comment="Preference title">Versio</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versio kopiita al tondujo</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Io misis: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Ŝanĝojn registro</string>
-    <string name="about__changelog__summary" comment="Preference summary">Kio estas nova</string>
-    <string name="about__repository__title" comment="Preference title">Deponejo (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Fontkodo, diskutoj, problemoj kaj informoj</string>
     <string name="about__project_license__title" comment="Preference title">Projekton permesilo</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Eraro: Fiaskis elŝuti la permesilan tekston.\n-&gt; Kaŭzo: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Tria-partaj permesiloj</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Permesiloj de la tria-partaj bibliotekoj enhavata en tiu ĉi apo</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bonvenon!</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Deponejo</string>
     <string name="setup__enable_ime__open_settings_btn">Malfermi sistemajn agordojn</string>
     <string name="setup__select_ime__switch_keyboard_btn">Ŝanĝi klavaron</string>
     <string name="setup__grant_notification_permission__title">Permesi kraŝajn raportajn sciigojn</string>

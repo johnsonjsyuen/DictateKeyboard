@@ -632,10 +632,6 @@
     <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Bir şeyler ters gitti: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Değişiklik günlüğü</string>
-    <string name="about__changelog__summary" comment="Preference summary">Yenilikler</string>
-    <string name="about__repository__title" comment="Preference title">Depo (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Kaynak kodu, tartışmalar, sorunlar ve bilgiler</string>
     <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}, {license_name} altında lisanslanmıştır</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata: Lisans metni yüklenemedi.\n-&gt; Neden: {error_message}</string>
@@ -645,7 +641,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hoş geldiniz!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} kullandığınız için teşekkürler! Bu hızlı kurulum, cihazınızda {app_name} kullanmak için gerekli adımlarda size rehberlik eder.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
     <string name="setup__enable_ime__title">{app_name} uygulamasını etkinleştirin</string>
     <string name="setup__enable_ime__description">Android, kullanabilmeniz için her özel klavyenin ayrı ayrı etkinleştirilmesini gerektirir. Sistem <i>Dil ve Giriş</i> Ayarlarını açın, orada \"{app_name}\" öğesini etkinleştirin.</string>
     <string name="setup__enable_ime__open_settings_btn">Sistem Ayarlarını Aç</string>
@@ -706,7 +701,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Sistem panosuna kopyala</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Sistem panosuna kopyalandı</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Sistem panosuna kopyalanamıyor: Pano yöneticisi örneği bulunamadı</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Sorun izleyiciyi aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate hata raporları</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate çalışmayı durdurdu…</string>
@@ -1649,12 +1643,6 @@
     <string name="dictate__prompt_library_retry">Yeniden dene</string>
     <string name="dictate__prompt_library_close">Kapat</string>
     <string name="dictate__prompt_library_author">{author} tarafından</string>
-    <string name="dictate__prompt_share_title">Toplulukla paylaş</string>
-    <string name="dictate__prompt_share_message">Bu, komutunuz gönderim olarak önceden doldurulmuş şekilde tarayıcınızda GitHub\'ı açar. Onu topluluk kütüphanesine ekleyen bir çekme isteği (pull request) açmak için oturum açıp onaylayın. Ücretsiz bir GitHub hesabı gereklidir; GitHub\'da onaylayana kadar hiçbir şey yüklenmez.</string>
-    <string name="dictate__prompt_share_continue">GitHub\'ı aç</string>
-    <string name="dictate__prompt_share_category">Kategori (isteğe bağlı)</string>
-    <string name="dictate__prompt_share_description">Açıklama (isteğe bağlı)</string>
-    <string name="dictate__prompt_share_description_placeholder">örn. Anlamı değiştirmeden dil bilgisini düzeltir</string>
     <string name="dictate__file_preparing">Dosya hazırlanıyor…</string>
     <string name="dictate__file_too_large">Dosya çok büyük – sağlayıcı en fazla 25 MB kabul eder.</string>
     <string name="dictate__file_read_error">Seçilen dosya okunamadı.</string>
@@ -1692,7 +1680,6 @@
     <string name="setup__grant_mic_permission__description">Dictate, sesinizi yazıya dökmek üzere kaydetmek için mikrofon erişimine ihtiyaç duyar.</string>
     <string name="setup__grant_mic_permission__btn">Mikrofon iznini ver</string>
     <string name="changelog__dialog_title">Yenilikler</string>
-    <string name="changelog__view_all">Tüm değişiklikleri görüntüle</string>
     <string name="changelog__intro">Dictate güncellendi. İşte yenilikler:</string>
     <string name="changelog__version_header">Sürüm {version}</string>
     <string name="changelog__current">• Yepyeni bir klavye: Dictate artık, ses panelini açan özel bir mikrofon tuşuna sahip, tam donanımlı çok dilli bir düzen klavyesi olarak geliyor.\n• Kendi yapay zekânızı getirin: OpenAI uyumlu herhangi bir sağlayıcı seçin ve API anahtarınızı Ayarlar → Dictate altında girin.\n• Seçtiğiniz modelle desteklenen akıllı biçimlendirme ve yeniden ifade etme.\n• Önceki Dictate uygulamasındaki ayarlarınız otomatik olarak içe aktarılır.</string>
@@ -1785,8 +1772,6 @@
     <string name="dictate__providers_rewording_single_call_note">Şu anda kullanılmıyor — yazıya dökme sağlayıcınız yeniden ifadeyi tek çağrısında yapıyor.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Eşleştirilmiş saatten dikte seçenekleri</string>
-    <string name="dictate__wear_install_title">Dictate\'i saatinize yükleyin</string>
-    <string name="dictate__wear_install_summary">Play Store\'u açar — eşleşmiş Wear OS 3+ saatte saatinizi hedef olarak seçin.</string>
     <string name="dictate__wear_auto_rewording_title">Saat diktelerini otomatik yeniden ifade et</string>
     <string name="dictate__wear_auto_rewording_summary">Saat diktelerini telefondaki gibi yeniden ifade et.</string>
     <string name="quick_action__system_prev_input_method">Klavye değiştir</string>
@@ -1977,7 +1962,6 @@
     <string name="apptour__legacy_cta">Bir düzen seç</string>
     <string name="apptour__library_eyebrow">Topluluk</string>
     <string name="apptour__library_title">İstem kütüphanesi</string>
-    <string name="apptour__library_body">Toplulukça paylaşılan yeniden ifade komutlarına göz at ve tek dokunuşla kur — ya da kendi komutlarını başkaları kullansın diye yayımla.</string>
     <string name="apptour__library_cta">Kütüphaneyi aç</string>
     <string name="apptour__stats_eyebrow">İçgörüler</string>
     <string name="apptour__stats_title">Dikte istatistikleriniz</string>
@@ -2295,7 +2279,6 @@
     <string name="dictate__legacy_prompt_rows_title">İstem satırları</string>
     <string name="dictate__legacy_prompt_rows_one">Tek satır</string>
     <string name="dictate__legacy_prompt_rows_two">İki satır</string>
-    <string name="about__website__title">Web sitesi</string>
     <string name="prefs__media__sticker__title">Çıkartmalar</string>
     <string name="prefs__media__sticker_folder__title">Çıkartma klasörü</string>
     <string name="prefs__media__sticker_folder__summary_unset">Kendi görsellerinizin bulunduğu bir klasör seçin</string>

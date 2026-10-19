@@ -569,10 +569,6 @@
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copiée vers le presse-papier</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Quelque chose s\'est mal passé : {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Journal de modifications</string>
-    <string name="about__changelog__summary" comment="Preference summary">Quoi de neuf</string>
-    <string name="about__repository__title" comment="Preference title">Dépôt (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Code source, discussions, problèmes et informations</string>
     <string name="about__project_license__title" comment="Preference title">Licence du projet</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} est sous licence {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Erreur : Impossible de charger le texte de la licence.\n-&gt; Raison : {error_message}</string>
@@ -582,7 +578,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bienvenue !</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Merci d\'utiliser {app_name} ! Cette configuration rapide vous guide à travers les étapes nécessaires pour utiliser {app_name} sur votre appareil.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Dépôt</string>
     <string name="setup__enable_ime__title">Activer {app_name}</string>
     <string name="setup__enable_ime__description">Android exige que chaque clavier personnalisé soit activé séparément avant que vous puissiez l\'utiliser. Ouvrez les paramètres système <i>Langues et saisie</i>, et activez \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Ouvrir paramètres système</string>
@@ -641,7 +636,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copier vers le presse-papier système</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copié vers le presse-papier système</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Impossible de copier vers le presse-papier système : Instance du gestionnaire de presse-papier introuvable</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Ouvrir le tracker d\'erreur (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermer</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Rapports d\'erreur de Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate a cessé de fonctionner…</string>
@@ -1548,12 +1542,6 @@
     <string name="dictate__prompt_library_retry">Réessayer</string>
     <string name="dictate__prompt_library_close">Fermer</string>
     <string name="dictate__prompt_library_author">par {author}</string>
-    <string name="dictate__prompt_share_title">Partager avec la communauté</string>
-    <string name="dictate__prompt_share_message">Cela ouvre GitHub dans votre navigateur avec votre prompt pré-rempli en tant que soumission. Connectez-vous et confirmez pour ouvrir une pull request qui l\'ajoute à la bibliothèque communautaire. Un compte GitHub gratuit est requis ; rien n\'est envoyé tant que vous n\'avez pas confirmé sur GitHub.</string>
-    <string name="dictate__prompt_share_continue">Ouvrir GitHub</string>
-    <string name="dictate__prompt_share_category">Catégorie (facultatif)</string>
-    <string name="dictate__prompt_share_description">Description (facultatif)</string>
-    <string name="dictate__prompt_share_description_placeholder">p. ex. Corrige la grammaire sans changer le sens</string>
     <string name="dictate__file_preparing">Préparation du fichier…</string>
     <string name="dictate__file_too_large">Le fichier est trop volumineux – le fournisseur accepte 25 Mo au maximum.</string>
     <string name="dictate__file_read_error">Impossible de lire le fichier sélectionné.</string>
@@ -1591,7 +1579,6 @@
     <string name="setup__grant_mic_permission__description">Dictate a besoin d\'accéder au microphone pour enregistrer votre voix et la transcrire.</string>
     <string name="setup__grant_mic_permission__btn">Accorder l\'autorisation du microphone</string>
     <string name="changelog__dialog_title">Nouveautés</string>
-    <string name="changelog__view_all">Voir tous les changements</string>
     <string name="changelog__intro">Dictate a été mis à jour. Voici les nouveautés :</string>
     <string name="changelog__version_header">Version {version}</string>
     <string name="changelog__current">• Tout nouveau clavier : Dictate est désormais un clavier de disposition complet et multilingue, doté d\'une touche micro dédiée qui ouvre le panneau vocal.\n• Votre propre IA : choisissez n\'importe quel fournisseur compatible OpenAI et saisissez votre clé d\'API dans Paramètres → Dictate.\n• Mise en forme et reformulation intelligentes grâce au modèle de votre choix.\n• Vos paramètres de l\'ancienne application Dictate sont importés automatiquement.</string>
@@ -1682,8 +1669,6 @@
     <string name="dictate__providers_rewording_single_call_note">Non utilisé actuellement — votre fournisseur de transcription effectue la reformulation dans son appel unique.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Options pour dicter depuis une montre associée</string>
-    <string name="dictate__wear_install_title">Installer Dictate sur votre montre</string>
-    <string name="dictate__wear_install_summary">Ouvre le Play Store — sur une montre Wear OS 3+ associée, choisissez votre montre comme cible.</string>
     <string name="dictate__wear_auto_rewording_title">Reformuler automatiquement les dictées de la montre</string>
     <string name="dictate__wear_auto_rewording_summary">Reformulez les dictées de la montre, comme sur le téléphone.</string>
     <string name="quick_action__system_prev_input_method">Changer de clavier</string>
@@ -1874,7 +1859,6 @@
     <string name="apptour__legacy_cta">Choisir une interface</string>
     <string name="apptour__library_eyebrow">Communauté</string>
     <string name="apptour__library_title">Bibliothèque de prompts</string>
-    <string name="apptour__library_body">Parcourez les invites de reformulation partagées par la communauté et installez-les d’une seule touche — ou publiez les vôtres pour que d’autres les utilisent.</string>
     <string name="apptour__library_cta">Ouvrir la bibliothèque</string>
     <string name="apptour__stats_eyebrow">Analyses</string>
     <string name="apptour__stats_title">Vos statistiques de dictée</string>
@@ -2192,7 +2176,6 @@
     <string name="dictate__legacy_prompt_rows_title">Lignes de prompt</string>
     <string name="dictate__legacy_prompt_rows_one">Une ligne</string>
     <string name="dictate__legacy_prompt_rows_two">Deux lignes</string>
-    <string name="about__website__title">Site web</string>
     <string name="prefs__media__sticker__title">Autocollants</string>
     <string name="prefs__media__sticker_folder__title">Dossier d\'autocollants</string>
     <string name="prefs__media__sticker_folder__summary_unset">Choisissez un dossier contenant vos propres images</string>

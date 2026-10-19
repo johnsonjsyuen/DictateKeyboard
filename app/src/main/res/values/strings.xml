@@ -897,8 +897,6 @@
     <string name="about__whats_new__title" comment="Section/search label for the What\'s new tours">What’s new</string>
     <string name="about__whats_new__versioned" comment="Preference title reopening a specific version\'s tour; {version} e.g. 5.1">What’s new in {version}</string>
     <string name="about__whats_new__summary" comment="Preference summary">Take the feature tour again</string>
-    <string name="about__changelog__title" comment="Preference title">Changelog</string>
-    <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
     <!-- What's-new tour (in-app 5.0 feature carousel) -->
     <string name="apptour__skip" comment="Button to dismiss the What\'s new tour">Skip</string>
     <string name="apptour__next" comment="Button to advance to the next tour page">Next</string>
@@ -930,7 +928,7 @@
     <string name="apptour__legacy_cta">Choose a layout</string>
     <string name="apptour__library_eyebrow">Community</string>
     <string name="apptour__library_title">Prompt library</string>
-    <string name="apptour__library_body">Browse rewording prompts shared by the community and install them with one tap — or publish your own for others to use.</string>
+    <string name="apptour__library_body">Browse rewording prompts shared by the community and install them with one tap.</string>
     <string name="apptour__library_cta">Open the library</string>
     <string name="apptour__stats_eyebrow">Insights</string>
     <string name="apptour__stats_title">Your dictation stats</string>
@@ -1198,9 +1196,6 @@
     <string name="apptour64__outro_eyebrow">That is 6.4</string>
     <string name="apptour64__outro_title">More on the phone, more your own</string>
     <string name="apptour64__outro_body">Translation and the new offline model work without a connection, and everything else still runs the way you set it up — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
-    <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
-    <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Based on FlorisBoard</string>
     <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">A fork of FlorisBoard by Patrick Goldinger and contributors, Apache 2.0. Tap to open it.</string>
     <string name="about__made_by" comment="Personal signature shown under the app name in the About header" translatable="false">Made with ❤️ by DevEmperor\nSoli deo gloria ✝️</string>
@@ -1216,7 +1211,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Welcome to {app_name}! Let\'s get you ready to dictate in just a few quick steps — no technical knowledge needed.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
     <string name="setup__nav_back" comment="Setup wizard: go to the previous step">Back</string>
     <string name="setup__nav_next" comment="Setup wizard: go to the next, already-reached step">Next</string>
 
@@ -1339,7 +1333,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copy to system clipboard</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copied to system clipboard</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Cannot copy to system clipboard: Clipboard manager instance not found</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Open issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Close</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate error reports</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate has stopped working…</string>
@@ -2144,8 +2137,6 @@
 
     <string name="dictate__wear_title" comment="Title of the Wear OS companion settings screen">Wear OS</string>
     <string name="dictate__wear_summary" comment="Summary of the Wear OS settings entry on the main Dictate screen">Options for dictating from a paired watch</string>
-    <string name="dictate__wear_install_title" comment="Title of the button that opens the Play Store to install the Wear OS app">Install Dictate on your watch</string>
-    <string name="dictate__wear_install_summary" comment="Summary explaining the install button opens the Play Store listing where a paired watch can be chosen">Opens the Play Store — on a paired Wear OS 3+ watch, pick your watch as the target.</string>
     <string name="dictate__wear_auto_rewording_title" comment="Title of the toggle that auto-rewords watch dictations">Auto-reword watch dictations</string>
     <string name="dictate__wear_auto_rewording_summary" comment="Short summary for the auto-rewording-on-watch toggle">Reword dictations made from the watch, like on the phone.</string>
     <string name="dictate__wear_standalone_title" comment="Title of the toggle that lets a paired Wear OS watch transcribe on its own">Sync key to watch</string>
@@ -2585,14 +2576,6 @@
     <string name="dictate__prompt_library_close" comment="Button that closes the prompt preview dialog">Close</string>
     <string name="dictate__prompt_library_author" comment="Attribution line in the prompt preview; {author} is the author name">by {author}</string>
 
-    <!-- Dictate: contribute one of your own prompts back to the community library (issue #105) -->
-    <string name="dictate__prompt_share_title" comment="Action/dialog title for contributing a prompt to the community">Share to community</string>
-    <string name="dictate__prompt_share_message" comment="Explains what happens when the user contributes a prompt">This opens GitHub in your browser with your prompt pre-filled as a submission. Sign in and confirm to open a pull request that adds it to the community library. A free GitHub account is required; nothing is uploaded until you confirm on GitHub.</string>
-    <string name="dictate__prompt_share_continue" comment="Confirm button that opens GitHub to submit the prompt">Open GitHub</string>
-    <string name="dictate__prompt_share_category" comment="Label above the category chips in the share dialog">Category (optional)</string>
-    <string name="dictate__prompt_share_description" comment="Label for the optional description field in the share dialog">Description (optional)</string>
-    <string name="dictate__prompt_share_description_placeholder" comment="Placeholder for the share description field">e.g. Cleans up grammar without changing the meaning</string>
-
     <!-- Dictate file transcription (long-press the mic to pick an audio/video file) -->
     <string name="dictate__file_preparing" comment="Toast shown while the picked file is copied to the cache">Preparing file…</string>
     <string name="dictate__file_too_large" comment="Toast when the chosen file exceeds the provider upload limit">File is too large – the provider accepts at most 25 MB.</string>
@@ -2640,7 +2623,6 @@
 
     <!-- ============================== Changelog ============================== -->
     <string name="changelog__dialog_title" comment="Title of the what's-new dialog shown after an update">What\'s new</string>
-    <string name="changelog__view_all" comment="Button that opens the full changelog/releases page online">View all changes</string>
     <string name="changelog__intro" comment="Brief intro line at the top of the what's-new dialog, before the per-version notes">Dictate has been updated. Here\'s what\'s new:</string>
     <string name="changelog__version_header" comment="Header shown above one release's notes. {version} is e.g. 4.0.0">Version {version}</string>
     <!-- Per-release notes. To announce a new version, add a changelog__vX_Y_Z string here and a matching
