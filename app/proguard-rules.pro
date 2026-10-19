@@ -59,5 +59,5 @@
 -keep class * implements com.google.firebase.components.ComponentRegistrar { <init>(); }
 -keepnames class com.google.firebase.components.ComponentRegistrar
 
-# Qwen GGUF JNI methods are resolved by their stable class and method names.
--keep class dev.patrickgold.florisboard.dictate.provider.QwenNative { *; }
+# CrispASR (GGUF) JNI methods are resolved by their stable class and method names.
+-keep class dev.patrickgold.florisboard.dictate.provider.CrispAsrNative { *; }

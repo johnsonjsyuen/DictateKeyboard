@@ -93,3 +93,17 @@ Native runtime: CrispASR and ggml, MIT License, Copyright (c) 2023-2026 The ggml
 https://github.com/CrispStrobe/CrispASR
 https://github.com/CrispStrobe/ggml
 The bundled license text is app/src/main/assets/licenses/qwen-native.txt.
+
+Additional GGUF models on the same native runtime (weights downloaded separately)
+---------------------------------------------------------------------------------
+Qwen/Qwen3-ASR-0.6B, Qwen Team / Alibaba Cloud, Apache License 2.0.
+ibm-granite/granite-speech-4.1-2b and ibm-granite/granite-4.0-1b-speech, IBM, Apache License 2.0.
+CohereLabs/cohere-transcribe-03-2026, Cohere Labs, Apache License 2.0.
+moonshine-ai/moonshine-streaming-medium, Moonshine AI (Useful Sensors), MIT License.
+GGUF conversions by cstr (CrispStrobe): https://huggingface.co/cstr
+
+Additional sherpa-onnx models (weights downloaded separately)
+-------------------------------------------------------------
+nvidia/parakeet-unified-en-0.6b, NVIDIA, NVIDIA Open Model License.
+nvidia/nemotron-3.5-asr-streaming-0.6b, NVIDIA, OpenMDW-1.1.
+int8 ONNX exports by the sherpa-onnx / k2-fsa project, Apache License 2.0.
