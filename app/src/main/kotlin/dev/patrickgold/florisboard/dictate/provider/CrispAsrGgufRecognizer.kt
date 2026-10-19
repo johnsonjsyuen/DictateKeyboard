@@ -12,7 +12,7 @@ enum class CrispAsrBackend(val nativeId: Int, val label: String) {
     GRANITE_SPEECH(1, "Granite Speech"),
     COHERE(2, "Cohere Transcribe"),
     MOONSHINE_STREAMING(3, "Moonshine"),
-    /** Same runtime as [GRANITE_SPEECH], prompted with IBM's 4.1 chat template for punctuated output. */
+    /** Same runtime and prompt template as [GRANITE_SPEECH], asked for punctuated, truecased output. */
     GRANITE_SPEECH_4_1(4, "Granite Speech"),
 }
 
