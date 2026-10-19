@@ -953,8 +953,11 @@ object LocalModelCatalog {
      * 0.7 GB under the all-F32-encoder `q4_k` (2.94 GB) for no measurable loss. The smaller `q4_k-mini`
      * quantises the encoder too and regresses on harder audio, so it is not offered.
      *
-     * Prompted with IBM's chat template and its "proper punctuation and capitalization" instruction
-     * (see crispasr_engines.cpp); the model finds the language itself.
+     * Prompted as `USER: <|audio|>…\n ASSISTANT:` — the base model's own template; IBM's
+     * `<|start_of_role|>` one belongs to the "plus" variant and makes the base model answer with nothing
+     * — with the card's "proper punctuation and capitalization" instruction, falling back to the plain
+     * transcription request if that yields no text (see crispasr_engines.cpp). It finds the language
+     * itself.
      */
     val GRANITE_SPEECH_4_1 = LocalModelSpec(
         id = "granite-speech-4.1-2b",

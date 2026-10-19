@@ -58,12 +58,16 @@ private:
 
 /**
  * IBM Granite Speech 4.0-1B and 4.1-2B. The library's granite_speech_transcribe is a stub, so this
- * drives the building blocks the same way CrispASR's own session API does: mel → conformer encoder →
- * Q-Former projector → splice the audio tokens into the chat prompt → KV prefill → greedy decode.
+ * drives the building blocks the way CrispASR's CLI does: mel → conformer encoder → Q-Former
+ * projector → splice the audio tokens into the prompt → KV prefill → greedy decode.
+ *
+ * Both base models are prompted as `USER: <|audio|>…\n ASSISTANT:`. CrispASR checked that against
+ * transformers' apply_chat_template for granite-speech-4.1-2b: only the "plus" variant uses IBM's
+ * `<|start_of_role|>` template, and giving the base model that one makes it stop at once.
  */
 class GraniteEngine final : public Engine {
 public:
-    GraniteEngine(const std::string& path, int threads, bool chat_template) : chat_template_(chat_template) {
+    GraniteEngine(const std::string& path, int threads, bool punctuated) : punctuated_(punctuated) {
         auto params = granite_speech_context_default_params();
         params.n_threads = threads;
         params.verbosity = 0;
@@ -90,39 +94,40 @@ public:
         if (audio_token < 0) audio_token = 100352;
         if (eos < 0) eos = 100257;
 
-        const std::string name = granite_language_name(language);
-        std::vector<int32_t> prefix, suffix;
-        if (chat_template_ || audio_token < 50000) {
-            // IBM's control-token chat template, byte for byte what transformers' apply_chat_template
-            // emits for granite-speech 4.1 (default system turn included). Its model card gives this
-            // instruction for punctuated, truecased output in every supported language — the prompt
-            // itself must stay English — whereas the plain "written format" request returns a raw,
-            // unpunctuated transcript, the wrong default for a keyboard.
-            prefix = tokenize(ctx_, "<|start_of_role|>system<|end_of_role|>You are a helpful assistant. Please "
-                                    "ensure responses are professional, accurate, and safe.<|end_of_text|>\n"
-                                    "<|start_of_role|>user<|end_of_role|>");
-            suffix = tokenize(ctx_, std::string(kGranitePunctuatedPrompt) +
-                "<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>");
-        } else {
-            // granite-4.0-1b was trained on "USER: …\n ASSISTANT:" with this pre-tokenized default
-            // request; a known language steers it the way CrispASR's own session API does.
-            prefix = {6584, 25, 220};
-            if (name.empty()) {
-                suffix = {4919, 499, 1380, 3191, 279, 8982, 1139, 264, 5439, 3645, 30, 198, 36660, 3931, 2891, 25};
-            } else {
-                suffix = tokenize(ctx_, "can you transcribe the speech into " + name + "?\nASSISTANT:");
-            }
+        // Instructions in order of preference; the first that yields text wins. The last is always the
+        // pre-tokenized default request the models were trained on ("can you transcribe the speech into
+        // a written format?"), so a model that ignores a richer instruction still transcribes.
+        std::vector<std::vector<int32_t>> requests;
+        if (punctuated_) {
+            // 4.1's model card: this exact instruction gives punctuated, truecased output in every
+            // supported language (the prompt itself must stay English).
+            requests.push_back(tokenize(ctx_, std::string(kGranitePunctuatedPrompt) + kGraniteAssistant));
+        } else if (const std::string name = granite_language_name(language); !name.empty()) {
+            requests.push_back(tokenize(ctx_, "can you transcribe the speech into " + name + "?" + kGraniteAssistant));
         }
-        if (prefix.empty() || suffix.empty()) throw std::runtime_error("Prompt tokenization failed");
+        requests.push_back({4919, 499, 1380, 3191, 279, 8982, 1139, 264, 5439, 3645, 30, 198, 36660, 3931, 2891, 25});
 
+        for (const auto& suffix : requests) {
+            if (suffix.empty()) continue;
+            auto text = run(audio.get(), audio_count, dim, audio_token, eos, suffix);
+            if (!text.empty()) return text;
+        }
+        return {};
+    }
+
+private:
+    static constexpr const char* kGraniteAssistant = "\n ASSISTANT:";
+
+    std::string run(const float* audio, int audio_count, int dim, int audio_token, int eos,
+                    const std::vector<int32_t>& suffix) {
+        static const std::vector<int32_t> prefix = {6584, 25, 220}; // "USER: "
         std::vector<int32_t> prompt(prefix);
         prompt.insert(prompt.end(), size_t(audio_count), audio_token);
         prompt.insert(prompt.end(), suffix.begin(), suffix.end());
         const int prompt_count = int(prompt.size());
         auto embeds = owned(granite_speech_embed_tokens(ctx_, prompt.data(), prompt_count), "Prompt embedding failed");
         for (int i = 0; i < audio_count; ++i)
-            std::memcpy(embeds.get() + size_t(prefix.size() + i) * dim, audio.get() + size_t(i) * dim, size_t(dim) * sizeof(float));
-        audio.reset();
+            std::memcpy(embeds.get() + size_t(prefix.size() + i) * dim, audio + size_t(i) * dim, size_t(dim) * sizeof(float));
 
         constexpr int limit = 512;
         if (!granite_speech_kv_init(ctx_, std::max(4096, prompt_count + limit + 16)))
@@ -154,9 +159,8 @@ public:
         return trimmed(core_ngram::fix_loops(text.get()));
     }
 
-private:
     granite_speech_context* ctx_ = nullptr;
-    bool chat_template_;
+    bool punctuated_;
 };
 
 /** Cohere Transcribe: encoder-decoder that must be told its language (it cannot detect one). */
