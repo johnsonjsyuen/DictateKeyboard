@@ -356,11 +356,21 @@ The [workflow](.github/workflows/android-apk.yml) runs automatically once it is 
 `main` and GitHub Actions is enabled; repository policy must allow its release job
 `contents: write` permission.
 
-This build adds **Qwen3-ASR 1.7B (Q4_K)** under **Settings → AI providers → On-device (offline)** on ARM64 devices, including OPPO Find N6. Download and select it there. The approximately 1.49 GB download is separate from the APK; after installation, speech recognition runs on the phone without a network connection. Qwen detects the language automatically and returns text after recording stops.
+This fork adds these on-device models under **Settings → AI providers → On-device (offline)**, next to everything upstream ships. Each is downloaded separately from the APK, verified by size and SHA-256, and then runs without a network connection:
 
-The decoder uses Q4_K weights; the audio encoder retains Q8_0 weights for accuracy. This is mixed-precision GGUF, not FP4. Existing streaming models remain available; Qwen is a batch model. Working RAM exceeds the download size. Phone latency and memory usage must be measured on the device.
+| Model | Download | Languages | Notes |
+|---|---|---|---|
+| Granite Speech 4.1 2B | ~2.27 GB | en, fr, de, es, pt, ja | Highest English accuracy here (Open ASR avg 5.33); punctuated output. ARM64. |
+| Cohere Transcribe | ~1.29 GB | 14 | Open ASR avg 5.42. Must be told its language: set the input language, or it assumes English. ARM64. |
+| Qwen3-ASR 1.7B (Q5_K / Q4_K) | ~1.74 / 1.49 GB | 30 | Detects the language itself. ARM64. |
+| Qwen3-ASR 0.6B (Q4_K) | ~0.63 GB | 30 | About a third of the 1.7B's compute. ARM64. |
+| Parakeet Unified English | ~0.66 GB | en | Open ASR avg 5.91 at Parakeet speed (sherpa-onnx). |
+| Moonshine Medium | ~0.19 GB | en | Small and fast. ARM64. |
+| Nemotron 3.5 Streaming (live) | ~0.68 GB | 28 | Live transcription while you speak (sherpa-onnx). |
 
-The [model artifact](https://huggingface.co/cstr/qwen3-asr-1.7b-GGUF/tree/674df5d44b50a63e7102a18895ed20e3f91de301) and native runtime revisions are pinned. The downloader verifies file size and SHA-256 before installation. No recording is sent to a server by this provider. Disable any separately configured cloud rewording if you want the entire dictation workflow to remain offline.
+The GGUF models (Granite, Cohere, Qwen3, Moonshine) run on a native CrispASR/ggml runtime that is built twice: a baseline armv8-a library and an ARMv8.2 dot-product + fp16 one, which the app loads when `/proc/cpuinfo` shows every core supports it. Batch models return text after recording stops. Working RAM exceeds the download size; phone latency and memory use must be measured on the device.
+
+Model files and native runtime revisions are pinned (Hugging Face commits, CrispASR v0.8.43). No recording is sent to a server by this provider. Disable any separately configured cloud rewording if you want the entire dictation workflow to remain offline.
 
 Build prerequisites: JDK 21 (standard OpenJDK; the local GraalVM jlink failed the Android SDK image transform), Android SDK/build-tools 36, NDK 27.0.12077973 for the standalone native build, CMake 3.22+, C/C++ compiler, Git and Python 3. Gradle uses the existing project NDK declaration independently; the Qwen library is prebuilt using the pinned NDK below.
 
@@ -374,8 +384,8 @@ tools/build-qwen-native.sh android
   -Dorg.gradle.jvmargs=-Xmx2048m -Pkotlin.compiler.execution.strategy=in-process
 ```
 
-`tools/build-qwen-native.sh` downloads the pinned CrispASR source into ignored `build/qwen-native/source`, builds only the Qwen decoder and its CPU dependencies, and copies the ARM64 library into the existing `jniLibs` directory. `CRISPASR_SOURCE` may point to a clean checkout of the exact pinned revision. The library statically links ggml and the C++ runtime and uses 16 KB ELF alignment. Build fails clearly if it is missing. Other ABIs retain the existing engines and do not offer Qwen.
+`tools/build-qwen-native.sh` downloads the pinned CrispASR source into ignored `build/qwen-native/source`, builds only the Qwen3-ASR, Granite Speech, Cohere and Moonshine backends and their CPU dependencies, and copies both ARM64 libraries (`libdictate-crispasr.so`, `libdictate-crispasr-dotprod.so`) into the existing `jniLibs` directory. `CRISPASR_SOURCE` may point to a clean checkout of the exact pinned revision. The library statically links ggml and the C++ runtime and uses 16 KB ELF alignment. Build fails clearly if it is missing. Other ABIs retain the existing engines and do not offer the GGUF models.
 
-Native host regression tests: `tools/test-qwen-native.sh`. With a downloaded model and little-endian float32 mono 16 kHz fixture: `tools/test-qwen-native.sh MODEL.gguf AUDIO.f32`. This executes two transcriptions with the same loaded model; the JFK smoke test was validated on the build host. The Android ARM64 library is cross-compiled, but physical-device inference is a separate acceptance check.
+Native host regression tests: `tools/test-qwen-native.sh`. Any backend can be smoke-tested on the host with `build/qwen-native/host/crispasr-smoke BACKEND MODEL.gguf AUDIO.f32 [language]`. With a downloaded model and little-endian float32 mono 16 kHz fixture: `tools/test-qwen-native.sh MODEL.gguf AUDIO.f32`. This executes two transcriptions with the same loaded model; the JFK smoke test was validated on the build host. The Android ARM64 library is cross-compiled, but physical-device inference is a separate acceptance check.
 
 The installable debug output is `app/build/outputs/apk/debug/app-debug.apk`, package `net.devemperor.dictate.debug`. It updates an existing debug installation only when the signing certificate matches; it installs alongside the release package. Runtime/model attribution and licenses are in [NOTICE](NOTICE) and the APK's `assets/licenses/qwen-native.txt`.
