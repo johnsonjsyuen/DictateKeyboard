@@ -2049,7 +2049,32 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             // otherwise resolve to the fallback preset and send that account's stored token to the wrong
             // server, so the selection goes back to the default instead.
             "dictate__transcription_provider_id", "dictate__rewording_provider_id" -> {
-                if (entry.rawValue == "cloud") entry.reset() else entry.keepAsIs()
+                if (entry.rawValue == "cloud") {
+                    dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                    entry.reset()
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+
+            // Saved Dictate Cloud data is wiped, on load and on a backup import alike. The keyring loses its
+            // "cloud" account — the wallet token sat in its apiKey, next to the wallet id, recovery code and
+            // balance cache — and the low-credit nudge latch, the only Cloud-only preference, is dropped.
+            // JetPref only writes the file when a value is set, so startup forces one rewrite when anything
+            // was found here (DictateLegacyMigrator.purgeRemovedProviderDataIfNeeded); an import persists
+            // by itself.
+            "dictate__provider_accounts" -> {
+                val cleaned = ProviderAccounts.Serializer.withoutRemovedProvidersOrNull(entry.rawValue)
+                if (cleaned != null) {
+                    dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                    entry.transform(rawValue = cleaned)
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+            "dictate__cloud_low_credit_nudged" -> {
+                dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                entry.reset()
             }
 
             // Default: keep entry

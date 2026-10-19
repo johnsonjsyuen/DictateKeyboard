@@ -267,6 +267,18 @@ data class ProviderAccounts(
     fun edit(providerId: String, block: (ProviderAccount) -> ProviderAccount): ProviderAccounts =
         put(block(getOrEmpty(providerId)))
 
+    /** Whether this keyring still holds an account of a provider that no longer exists. */
+    val hasRemovedProviders: Boolean
+        get() = accounts.any { (id, account) -> isRemoved(id, account) }
+
+    /** This keyring without the accounts of [REMOVED_PROVIDER_IDS]; `this` when it holds none. */
+    fun withoutRemovedProviders(): ProviderAccounts = if (!hasRemovedProviders) this else copy(
+        accounts = accounts.filterNot { (id, account) -> isRemoved(id, account) },
+    )
+
+    private fun isRemoved(id: String, account: ProviderAccount): Boolean =
+        id in REMOVED_PROVIDER_IDS || account.providerId in REMOVED_PROVIDER_IDS
+
     object Serializer : PreferenceSerializer<ProviderAccounts> {
         private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
@@ -284,8 +296,29 @@ data class ProviderAccounts(
          * must be able to tell "no accounts" from "could not read this", because writing `Empty` back over
          * an unreadable blob would destroy every key it failed to parse. Same parser, same config, so the
          * two can never drift apart.
+         *
+         * Accounts of a removed provider ([REMOVED_PROVIDER_IDS]) never come out of here. Every reader of
+         * the keyring goes through this function — the live preference, the backup redaction and the
+         * restore merge — so a stored or restored "cloud" account cannot reach any of them.
          */
-        fun deserializeOrNull(value: String): ProviderAccounts? = try {
+        fun deserializeOrNull(value: String): ProviderAccounts? = decodeOrNull(value)?.withoutRemovedProviders()
+
+        /**
+         * [value] re-encoded without the accounts of [REMOVED_PROVIDER_IDS], or null when there is nothing
+         * to remove (or it is not a keyring at all, which is left to [deserialize]).
+         *
+         * For the preference migration (`FlorisPreferenceModel.migrate`), which runs on every load and
+         * every backup import, so the stored line itself — the account's token included — is replaced
+         * rather than merely filtered on its way into memory. Fields this version no longer declares (the
+         * old wallet and balance fields) are dropped by the same re-encoding.
+         */
+        fun withoutRemovedProvidersOrNull(value: String): String? {
+            val stored = decodeOrNull(value) ?: return null
+            if (!stored.hasRemovedProviders) return null
+            return serialize(stored.withoutRemovedProviders())
+        }
+
+        private fun decodeOrNull(value: String): ProviderAccounts? = try {
             json.decodeFromString<ProviderAccounts>(value)
         } catch (e: Exception) {
             flogError { "Failed to deserialize ProviderAccounts: $e" }
@@ -295,5 +328,12 @@ data class ProviderAccounts(
 
     companion object {
         val Empty = ProviderAccounts(emptyMap())
+
+        /**
+         * Providers that were removed from the app, whose stored accounts are dropped wherever a keyring
+         * is read. "cloud" is Dictate Cloud, the in-app credit store: its account held the wallet's bearer
+         * token in [ProviderAccount.apiKey], plus a wallet id, recovery code and balance cache.
+         */
+        val REMOVED_PROVIDER_IDS: Set<String> = setOf("cloud")
     }
 }
