@@ -387,10 +387,6 @@
     <string name="about__version__title" comment="Preference title">وەشان</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">ژمارە و ناوی وەشان کۆپیکرا</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">ھەڵەیەک ڕوویدا: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">گۆڕانکارییەکان</string>
-    <string name="about__changelog__summary" comment="Preference summary">نوێکارییەکان</string>
-    <string name="about__repository__title" comment="Preference title">کۆدی سەرچاوە (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">کۆدی بەرنامەکە، فێرکاری و زانیاری</string>
     <string name="about__project_license__title" comment="Preference title">مۆڵەتی پڕۆژە</string>
     <string name="about__project_license__summary" comment="Preference summary">بەرنامەکە مۆڵەتی {license_name} هەیە</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">هەڵە ڕوویدا: نەتوانرا زانیاری مۆڵەت بکرێتەوە.\n-&gt; هۆکار: {error_message}</string>
@@ -400,7 +396,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">بەخێربێیت!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">سوپاس بۆ بەکارهێنانی {app_name}! ئەم فێرکارییە یارمەتیت دەدات بۆ چالاککردن و ڕێکخستنی {app_name} لەسەر مۆبایلەکەت.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">کۆگا</string>
     <string name="setup__enable_ime__title">چالاککردنی {app_name}</string>
     <string name="setup__enable_ime__description">پێویستە  \"{app_name}\"  چالاک بکەیت لە ڕێکخستنەکانی مۆبایلەکەتدا، تا بتوانی پێی بنوسی و بەکاری بهێنیت.</string>
     <string name="setup__enable_ime__open_settings_btn">چالاککردنی تەختەکلیل</string>
@@ -447,7 +442,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">لەبەرگرتنەوەی ڕاپۆرتی هەڵە</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">ڕاپۆرت لەبەریگیرایەوە</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">ناتوانرێ کۆپی بکرێت چونکە مۆبایلەکەت پشتگیری ناکات</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">ڕاگەیاندنی ڕاپۆرتی هەڵە لە (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">داخستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate ڕاپۆرتی هەڵەی</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">تەختەکلیلی Dictate لە کارکەوت…</string>

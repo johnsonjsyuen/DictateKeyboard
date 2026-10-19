@@ -523,10 +523,6 @@
     <string name="about__version__title" comment="Preference title">Версія</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Версію скопійовано до буфера обміну</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Щось пішло не так: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Журнал змін</string>
-    <string name="about__changelog__summary" comment="Preference summary">Що нового</string>
-    <string name="about__repository__title" comment="Preference title">Репозиторій (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Вихідний код, обговорення, проблеми та інформація</string>
     <string name="about__project_license__title" comment="Preference title">Ліцензія проєкту</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} має ліцензію {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Помилка: Не вдалося завантажити текст ліцензії.\n-&gt; Причина: {error_message}</string>
@@ -536,7 +532,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Ласкаво просимо!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Дякуємо за використання {app_name}! Це коротке налаштування допоможе вам виконати необхідні кроки для використання {app_name} на вашому пристрої.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Сховище</string>
     <string name="setup__enable_ime__title">Ввімкнути {app_name}</string>
     <string name="setup__enable_ime__description"><i> </i> {app_name}.</string>
     <string name="setup__enable_ime__open_settings_btn">Відкрити системні налаштування</string>
@@ -594,7 +589,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Зкопіювати в системний буфер обміну</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Зкопійовано в системний буфер обміну</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Не вдається скопіювати до системного буфера обміну: Не знайдено екземпляр диспетчера буфера обміну</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Відкрити відстеження проблем (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрити</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Звіти про помилки Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate перестав працювати…</string>
@@ -1517,12 +1511,6 @@
     <string name="dictate__prompt_library_retry">Повторити</string>
     <string name="dictate__prompt_library_close">Закрити</string>
     <string name="dictate__prompt_library_author">від {author}</string>
-    <string name="dictate__prompt_share_title">Поділитися зі спільнотою</string>
-    <string name="dictate__prompt_share_message">Це відкриє GitHub у вашому браузері з вашим промптом, уже заповненим як заявка. Увійдіть і підтвердьте, щоб відкрити пул-реквест, який додасть його до бібліотеки спільноти. Потрібен безкоштовний обліковий запис GitHub; нічого не завантажується, доки ви не підтвердите на GitHub.</string>
-    <string name="dictate__prompt_share_continue">Відкрити GitHub</string>
-    <string name="dictate__prompt_share_category">Категорія (необов’язково)</string>
-    <string name="dictate__prompt_share_description">Опис (необов’язково)</string>
-    <string name="dictate__prompt_share_description_placeholder">напр. Виправляє граматику, не змінюючи змісту</string>
     <string name="dictate__file_preparing">Підготовка файлу…</string>
     <string name="dictate__file_too_large">Файл занадто великий — постачальник приймає не більше ніж 25 МБ.</string>
     <string name="dictate__file_read_error">Не вдалося прочитати вибраний файл.</string>
@@ -1560,7 +1548,6 @@
     <string name="setup__grant_mic_permission__description">Dictate потрібен доступ до мікрофона, щоб записувати ваш голос для транскрибування.</string>
     <string name="setup__grant_mic_permission__btn">Надати дозвіл на доступ до мікрофона</string>
     <string name="changelog__dialog_title">Що нового</string>
-    <string name="changelog__view_all">Переглянути всі зміни</string>
     <string name="changelog__intro">Dictate оновлено. Ось що нового:</string>
     <string name="changelog__version_header">Версія {version}</string>
     <string name="changelog__current">• Цілком нова клавіатура: Dictate тепер повноцінна багатомовна клавіатура з розкладкою та окремою клавішею мікрофона, що відкриває голосову панель.\n• Власний ШІ: виберіть будь-якого постачальника, сумісного з OpenAI, і введіть ключ API в Налаштування → Dictate.\n• Розумне форматування та переформулювання з обраною вами моделлю.\n• Налаштування з попереднього застосунку Dictate імпортуються автоматично.</string>
@@ -1655,8 +1642,6 @@
     <string name="dictate__providers_rewording_single_call_note">Зараз не використовується — ваш постачальник транскрипції виконує переформулювання у своєму єдиному запиті.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Параметри диктування з парного годинника</string>
-    <string name="dictate__wear_install_title">Установіть Dictate на годинник</string>
-    <string name="dictate__wear_install_summary">Відкриває Play Store — на парному годиннику Wear OS 3+ виберіть годинник як ціль.</string>
     <string name="dictate__wear_auto_rewording_title">Авто-переформулювання диктувань з годинника</string>
     <string name="dictate__wear_auto_rewording_summary">Переформулюйте диктування з годинника, як на телефоні.</string>
     <string name="quick_action__system_prev_input_method">Змінити клавіатуру</string>
@@ -1847,7 +1832,6 @@
     <string name="apptour__legacy_cta">Обрати макет</string>
     <string name="apptour__library_eyebrow">Спільнота</string>
     <string name="apptour__library_title">Бібліотека промптів</string>
-    <string name="apptour__library_body">Переглядайте підказки для переформулювання, якими ділиться спільнота, і встановлюйте їх одним дотиком — або публікуйте власні для інших.</string>
     <string name="apptour__library_cta">Відкрити бібліотеку</string>
     <string name="apptour__stats_eyebrow">Аналітика</string>
     <string name="apptour__stats_title">Ваша статистика диктування</string>
@@ -2165,7 +2149,6 @@
     <string name="dictate__legacy_prompt_rows_title">Рядки підказок</string>
     <string name="dictate__legacy_prompt_rows_one">Один рядок</string>
     <string name="dictate__legacy_prompt_rows_two">Два рядки</string>
-    <string name="about__website__title">Вебсайт</string>
     <string name="prefs__media__sticker__title">Стікери</string>
     <string name="prefs__media__sticker_folder__title">Тека зі стікерами</string>
     <string name="prefs__media__sticker_folder__summary_unset">Виберіть теку з власними зображеннями</string>

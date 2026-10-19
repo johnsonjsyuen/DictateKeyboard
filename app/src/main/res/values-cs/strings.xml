@@ -640,10 +640,6 @@
     <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Něco se pokazilo: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Změny</string>
-    <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
-    <string name="about__repository__title" comment="Preference title">Repozitář (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
     <string name="about__project_license__title" comment="Preference title">Licence projektu</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} je licencován pod {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodařilo se načíst text licence.\n-&gt; Důvod: {error_message}</string>
@@ -653,7 +649,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vítejte!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Děkujeme za používání aplikace {app_name}! Toto rychlé nastavení vás provede kroky vyžadovanými k používání {app_name} na vašem zařízení.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repozitář</string>
     <string name="setup__enable_ime__title">Povolit {app_name}</string>
     <string name="setup__enable_ime__description">Android vyžaduje, aby každá vlastní klávesnice byla ručně povolena, než ji budete moci použít. Otevřete systémové nastavení <i>Jazyk a vstup</i> a v něm povolte „{app_name}“.</string>
     <string name="setup__enable_ime__open_settings_btn">Otevřít systémová nastavení</string>
@@ -717,7 +712,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Zkopírováno do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nepodařilo se zkopírovat do systémové schránky: Instance správce schránky nenalezena</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Nahlásit problém (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Chybová hlášení Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate přestal pracovat…</string>
@@ -1688,12 +1682,6 @@
     <string name="dictate__prompt_library_retry">Zkusit znovu</string>
     <string name="dictate__prompt_library_close">Zavřít</string>
     <string name="dictate__prompt_library_author">od {author}</string>
-    <string name="dictate__prompt_share_title">Sdílet s komunitou</string>
-    <string name="dictate__prompt_share_message">Tímto se ve vašem prohlížeči otevře GitHub s vaším promptem předvyplněným jako příspěvek. Přihlaste se a potvrďte otevření pull requestu, který jej přidá do komunitní knihovny. Je vyžadován bezplatný účet GitHub; nic se nenahraje, dokud to nepotvrdíte na GitHub.</string>
-    <string name="dictate__prompt_share_continue">Otevřít GitHub</string>
-    <string name="dictate__prompt_share_category">Kategorie (volitelné)</string>
-    <string name="dictate__prompt_share_description">Popis (volitelný)</string>
-    <string name="dictate__prompt_share_description_placeholder">např. Opraví gramatiku beze změny významu</string>
     <string name="dictate__file_preparing">Příprava souboru…</string>
     <string name="dictate__file_too_large">Soubor je příliš velký – poskytovatel přijímá nejvýše 25 MB.</string>
     <string name="dictate__file_read_error">Vybraný soubor nelze přečíst.</string>
@@ -1731,7 +1719,6 @@
     <string name="setup__grant_mic_permission__description">Dictate potřebuje přístup k mikrofonu, aby mohl nahrát váš hlas pro přepis.</string>
     <string name="setup__grant_mic_permission__btn">Udělit oprávnění k mikrofonu</string>
     <string name="changelog__dialog_title">Co je nového</string>
-    <string name="changelog__view_all">Zobrazit všechny změny</string>
     <string name="changelog__intro">Dictate byl aktualizován. Co je nového:</string>
     <string name="changelog__version_header">Verze {version}</string>
     <string name="changelog__current">• Zcela nová klávesnice: Dictate je nyní plnohodnotná vícejazyčná klávesnice s vyhrazenou klávesou mikrofonu, která otevírá hlasový panel.\n• Vlastní AI: vyberte libovolného poskytovatele kompatibilního s OpenAI a zadejte klíč API v Nastavení → Dictate.\n• Inteligentní formátování a přeformulování pomocí zvoleného modelu.\n• Nastavení z předchozí aplikace Dictate se importují automaticky.</string>
@@ -1826,8 +1813,6 @@
     <string name="dictate__providers_rewording_single_call_note">Momentálně se nepoužívá — váš poskytovatel přepisu provádí přeformulování ve svém jediném požadavku.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Možnosti diktování ze spárovaných hodinek</string>
-    <string name="dictate__wear_install_title">Nainstalovat Dictate do hodinek</string>
-    <string name="dictate__wear_install_summary">Otevře Play Store — na spárovaných hodinkách Wear OS 3+ vyberte jako cíl své hodinky.</string>
     <string name="dictate__wear_auto_rewording_title">Automaticky přeformulovat diktování z hodinek</string>
     <string name="dictate__wear_auto_rewording_summary">Přeformulujte diktování z hodinek, jako v telefonu.</string>
     <string name="quick_action__system_prev_input_method">Přepnout klávesnici</string>
@@ -2018,7 +2003,6 @@
     <string name="apptour__legacy_cta">Vybrat rozvržení</string>
     <string name="apptour__library_eyebrow">Komunita</string>
     <string name="apptour__library_title">Knihovna promptů</string>
-    <string name="apptour__library_body">Procházejte příkazy pro přeformulování sdílené komunitou a instalujte je jedním klepnutím — nebo zveřejněte vlastní, ať je používají ostatní.</string>
     <string name="apptour__library_cta">Otevřít knihovnu</string>
     <string name="apptour__stats_eyebrow">Přehledy</string>
     <string name="apptour__stats_title">Vaše statistiky diktování</string>
@@ -2336,7 +2320,6 @@
     <string name="dictate__legacy_prompt_rows_title">Řádky výzev</string>
     <string name="dictate__legacy_prompt_rows_one">Jeden řádek</string>
     <string name="dictate__legacy_prompt_rows_two">Dva řádky</string>
-    <string name="about__website__title">Webové stránky</string>
     <string name="prefs__media__sticker__title">Samolepky</string>
     <string name="prefs__media__sticker_folder__title">Složka se samolepkami</string>
     <string name="prefs__media__sticker_folder__summary_unset">Vyberte složku s vlastními obrázky</string>

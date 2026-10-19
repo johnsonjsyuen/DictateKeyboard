@@ -10,7 +10,6 @@
 
 package dev.patrickgold.florisboard.app.settings.dictate
 
-import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -19,8 +18,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,12 +43,10 @@ import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.SelectAll
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -85,7 +80,6 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.dictate.DictateController
 import dev.patrickgold.florisboard.dictate.DictateReasoningEffort
-import dev.patrickgold.florisboard.dictate.data.prompts.PromptLibraryContribution
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptsDatabaseHelper
 import dev.patrickgold.florisboard.dictate.data.prompts.promptRequiresSelection
@@ -132,8 +126,6 @@ fun DictatePromptsScreen(
     var editorTarget by remember { mutableStateOf<PromptModel?>(null) }
     // Prompts parsed from an import file, awaiting the user's replace-vs-add choice.
     var pendingImport by remember { mutableStateOf<List<PromptModel>?>(null) }
-    // A prompt the user chose to contribute to the community library, awaiting the "open GitHub" confirm.
-    var pendingShare by remember { mutableStateOf<PromptModel?>(null) }
 
     fun toast(resId: Int) = Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
 
@@ -356,11 +348,6 @@ fun DictatePromptsScreen(
                         it.id != target.id && it.trigger?.trim().orEmpty().equals(typed, ignoreCase = true)
                     }?.name
                 },
-                onShare = { name, text, requiresSelection, autoApply ->
-                    // No reasoning here on purpose — shared prompts stay reasoning-agnostic, and no
-                    // trigger either: a shared prompt must not claim a shortcut in someone else's typing.
-                    pendingShare = PromptModel(0, 0, name, text, requiresSelection, autoApply)
-                },
                 onSave = { name, text, requiresSelection, autoApply, reasoning, reasoningCustom, trigger ->
                     scope.launch {
                         withContext(Dispatchers.IO) {
@@ -423,74 +410,6 @@ fun DictatePromptsScreen(
                     }
                     pendingImport = null
                 },
-            )
-        }
-
-        val share = pendingShare
-        if (share != null) {
-            ShareConfirmDialog(
-                onDismiss = { pendingShare = null },
-                onConfirm = { category, description ->
-                    val url = PromptLibraryContribution.buildSubmissionUrl(share, category, description)
-                    runCatching {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            },
-                        )
-                    }.onFailure { toast(R.string.dictate__prompts_import_failed) }
-                    pendingShare = null
-                },
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun ShareConfirmDialog(
-    onDismiss: () -> Unit,
-    onConfirm: (category: String?, description: String?) -> Unit,
-) {
-    // Optional metadata the contributor supplies so the community library stays sorted and readable.
-    // Category is a fixed vocabulary (matching the library); description is a free one-liner.
-    var category by remember { mutableStateOf<String?>(null) }
-    var description by remember { mutableStateOf("") }
-
-    JetPrefAlertDialog(
-        scrollModifier = florisDialogScroll(),
-        title = stringRes(R.string.dictate__prompt_share_title),
-        confirmLabel = stringRes(R.string.dictate__prompt_share_continue),
-        onConfirm = { onConfirm(category, description.trim().ifBlank { null }) },
-        dismissLabel = stringRes(R.string.action__cancel),
-        onDismiss = onDismiss,
-        allowOutsideDismissal = true,
-    ) {
-        Column {
-            Text(text = stringRes(R.string.dictate__prompt_share_message))
-            Spacer(Modifier.height(16.dp))
-            Text(
-                text = stringRes(R.string.dictate__prompt_share_category),
-                style = MaterialTheme.typography.labelLarge,
-            )
-            Spacer(Modifier.height(4.dp))
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                PromptLibraryContribution.CATEGORIES.forEach { option ->
-                    FilterChip(
-                        selected = category == option,
-                        onClick = { category = if (category == option) null else option },
-                        label = { Text(option) },
-                    )
-                }
-            }
-            Spacer(Modifier.height(12.dp))
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = description,
-                onValueChange = { description = it },
-                label = { Text(stringRes(R.string.dictate__prompt_share_description)) },
-                placeholder = { Text(stringRes(R.string.dictate__prompt_share_description_placeholder)) },
-                singleLine = true,
             )
         }
     }
@@ -593,11 +512,6 @@ private fun PromptEditorDialog(
     onDismiss: () -> Unit,
     // Given a typed trigger, the name of the OTHER prompt already using it (or null if it is free).
     triggerOwner: (String) -> String?,
-    // Reasoning effort is intentionally NOT part of sharing — it's a local, per-user/per-server choice,
-    // so community contributions never carry it (recipients decide their own). Only onSave gets it.
-    // The typed trigger stays out of sharing for the same reason, plus a stronger one: a prompt from a
-    // stranger must never quietly claim a shortcut in someone else's typing.
-    onShare: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean) -> Unit,
     onSave: (name: String, prompt: String, requiresSelection: Boolean, autoApply: Boolean, reasoning: DictateReasoningEffort?, reasoningCustom: String?, trigger: String?) -> Unit,
     onDelete: (() -> Unit)?,
 ) {
@@ -747,35 +661,6 @@ private fun PromptEditorDialog(
                 custom = reasoningCustom,
                 onSelected = { effort, c -> reasoning = effort; reasoningCustom = c },
             )
-            Spacer(Modifier.height(12.dp))
-            // Contribute this prompt to the community library (issue #105) — a tonal button, only enabled
-            // once there is something worth sharing; the submission itself happens as a GitHub pull request.
-            val shareEnabled = name.isNotBlank() && text.isNotBlank()
-            Surface(
-                onClick = { onShare(name.trim(), text.trim(), requiresSelection, autoApply) },
-                enabled = shareEnabled,
-                shape = MaterialTheme.shapes.large,
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp),
-                    )
-                    Spacer(Modifier.width(10.dp))
-                    Text(
-                        text = stringRes(R.string.dictate__prompt_share_title),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                }
-            }
         }
     }
 }

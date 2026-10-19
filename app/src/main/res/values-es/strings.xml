@@ -631,10 +631,6 @@
     <string name="about__version__title" comment="Preference title">Versión</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versión copiada al portapapeles</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Algo salió mal: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Registro de cambios</string>
-    <string name="about__changelog__summary" comment="Preference summary">Qué hay de nuevo</string>
-    <string name="about__repository__title" comment="Preference title">Repositorio (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Código fuente, discusiones, problemas e informaciones</string>
     <string name="about__project_license__title" comment="Preference title">Licencia del proyecto</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} está licenciado bajo {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Fallo al cargar texto de licencia.\n-&gt; Razón: {error_message}</string>
@@ -644,7 +640,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">¡Bienvenido/a!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">¡Gracias por usar {app_name}! Esta configuración rápida lo guiará a través de los pasos necesarios para poder utilizar {app_name} en su dispositivo.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repositorio</string>
     <string name="setup__enable_ime__title">Habilitar {app_name}</string>
     <string name="setup__enable_ime__description">Android requiere que cada teclado personalizado esté habilitado separadamente antes de poder usarlo. Abra los ajustes de <i>Idiomas e introducción de texto</i> en Sistema y de ahí habilite \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Abrir ajustes del sistema</string>
@@ -708,7 +703,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar al portapapeles del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiado al portapapeles del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No se puede copiar al portapapeles del sistema: Instancia del administrador de portapapeles no encontrada</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Abrir issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Cerrar</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes de errores de Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate ha dejado de funcionar…</string>
@@ -1654,12 +1648,6 @@
     <string name="dictate__prompt_library_retry">Reintentar</string>
     <string name="dictate__prompt_library_close">Cerrar</string>
     <string name="dictate__prompt_library_author">de {author}</string>
-    <string name="dictate__prompt_share_title">Compartir con la comunidad</string>
-    <string name="dictate__prompt_share_message">Esto abre GitHub en tu navegador con tu prompt ya rellenado como propuesta. Inicia sesión y confirma para abrir una pull request que lo añade a la biblioteca de la comunidad. Se requiere una cuenta gratuita de GitHub; no se sube nada hasta que confirmes en GitHub.</string>
-    <string name="dictate__prompt_share_continue">Abrir GitHub</string>
-    <string name="dictate__prompt_share_category">Categoría (opcional)</string>
-    <string name="dictate__prompt_share_description">Descripción (opcional)</string>
-    <string name="dictate__prompt_share_description_placeholder">p. ej. Corrige la gramática sin cambiar el significado</string>
     <string name="dictate__file_preparing">Preparando archivo…</string>
     <string name="dictate__file_too_large">El archivo es demasiado grande: el proveedor acepta como máximo 25 MB.</string>
     <string name="dictate__file_read_error">No se pudo leer el archivo seleccionado.</string>
@@ -1697,7 +1685,6 @@
     <string name="setup__grant_mic_permission__description">Dictate necesita acceso al micrófono para grabar tu voz y transcribirla.</string>
     <string name="setup__grant_mic_permission__btn">Conceder permiso de micrófono</string>
     <string name="changelog__dialog_title">Novedades</string>
-    <string name="changelog__view_all">Ver todos los cambios</string>
     <string name="changelog__intro">Dictate se ha actualizado. Esto es lo nuevo:</string>
     <string name="changelog__version_header">Versión {version}</string>
     <string name="changelog__current">• Teclado completamente nuevo: Dictate ahora se ofrece como un teclado de diseño completo y multilingüe con una tecla de micrófono dedicada que abre el panel de voz.\n• Usa tu propia IA: elige cualquier proveedor compatible con OpenAI e introduce tu clave de API en Ajustes → Dictate.\n• Formato y reformulación inteligentes con el modelo que elijas.\n• Tus ajustes de la app Dictate anterior se importan automáticamente.</string>
@@ -1790,8 +1777,6 @@
     <string name="dictate__providers_rewording_single_call_note">Ahora mismo no se usa: tu proveedor de transcripción hace la reformulación en su llamada única.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opciones para dictar desde un reloj vinculado</string>
-    <string name="dictate__wear_install_title">Instala Dictate en tu reloj</string>
-    <string name="dictate__wear_install_summary">Abre la Play Store — en un reloj Wear OS 3+ vinculado, elige tu reloj como destino.</string>
     <string name="dictate__wear_auto_rewording_title">Reformular automáticamente los dictados del reloj</string>
     <string name="dictate__wear_auto_rewording_summary">Reformula los dictados hechos desde el reloj, como en el teléfono.</string>
     <string name="quick_action__system_prev_input_method">Cambiar teclado</string>
@@ -1982,7 +1967,6 @@
     <string name="apptour__legacy_cta">Elegir un diseño</string>
     <string name="apptour__library_eyebrow">Comunidad</string>
     <string name="apptour__library_title">Biblioteca de prompts</string>
-    <string name="apptour__library_body">Explora indicaciones de reformulación compartidas por la comunidad e instálalas con un toque — o publica las tuyas para que otros las usen.</string>
     <string name="apptour__library_cta">Abrir la biblioteca</string>
     <string name="apptour__stats_eyebrow">Estadísticas</string>
     <string name="apptour__stats_title">Tus estadísticas de dictado</string>
@@ -2300,7 +2284,6 @@
     <string name="dictate__legacy_prompt_rows_title">Filas de prompts</string>
     <string name="dictate__legacy_prompt_rows_one">Una fila</string>
     <string name="dictate__legacy_prompt_rows_two">Dos filas</string>
-    <string name="about__website__title">Sitio web</string>
     <string name="prefs__media__sticker__title">Adhesivos</string>
     <string name="prefs__media__sticker_folder__title">Carpeta de adhesivos</string>
     <string name="prefs__media__sticker_folder__summary_unset">Elige una carpeta con tus propias imágenes</string>

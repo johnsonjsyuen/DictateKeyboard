@@ -612,10 +612,6 @@
     <string name="about__version__title" comment="Preference title">バージョン</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">バージョンをクリップボードにコピーしました</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">問題が発生しました: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">変更履歴</string>
-    <string name="about__changelog__summary" comment="Preference summary">新機能</string>
-    <string name="about__repository__title" comment="Preference title">リポジトリ (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">ソースコード、ディスカッション、課題、情報</string>
     <string name="about__project_license__title" comment="Preference title">プロジェクトライセンス</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}は{license_name}の下でライセンスされています</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">エラー: ライセンステキストの読み込みに失敗しました。\n-&gt; 理由: {error_message}</string>
@@ -625,7 +621,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">ようこそ！</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name}をご利用いただきありがとうございます！このクイックセットアップでは、お使いのデバイスで{app_name}を使用するために必要な手順を案内します。</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">リポジトリ</string>
     <string name="setup__enable_ime__title">{app_name}を有効にする</string>
     <string name="setup__enable_ime__description">Androidでは、使用する前にすべてのカスタムキーボードを個別に有効にする必要があります。システムの<i>「言語と入力」</i>設定を開き、「{app_name}」を有効にしてください。</string>
     <string name="setup__enable_ime__open_settings_btn">システム設定を開く</string>
@@ -681,7 +676,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">システムクリップボードにコピー</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">システムクリップボードにコピーしました</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">システムクリップボードにコピーできません：クリップボードマネージャーのインスタンスが見つかりません</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">課題トラッカーを開く (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">閉じる</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictateエラーレポート</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictateの動作が停止しました…</string>
@@ -1604,12 +1598,6 @@
     <string name="dictate__prompt_library_retry">再試行</string>
     <string name="dictate__prompt_library_close">閉じる</string>
     <string name="dictate__prompt_library_author">作成者: {author}</string>
-    <string name="dictate__prompt_share_title">コミュニティに共有</string>
-    <string name="dictate__prompt_share_message">お使いのブラウザで GitHub が開き、あなたのプロンプトが投稿として事前入力されます。サインインして確認すると、それをコミュニティライブラリに追加するプルリクエストが開きます。無料の GitHub アカウントが必要です。GitHub で確認するまで、何もアップロードされません。</string>
-    <string name="dictate__prompt_share_continue">GitHub を開く</string>
-    <string name="dictate__prompt_share_category">カテゴリ（任意）</string>
-    <string name="dictate__prompt_share_description">説明（任意）</string>
-    <string name="dictate__prompt_share_description_placeholder">例：意味を変えずに文法を整えます</string>
     <string name="dictate__file_preparing">ファイルを準備中…</string>
     <string name="dictate__file_too_large">ファイルが大きすぎます – プロバイダーは最大25 MBまで受け付けます。</string>
     <string name="dictate__file_read_error">選択したファイルを読み取れませんでした。</string>
@@ -1647,7 +1635,6 @@
     <string name="setup__grant_mic_permission__description">Dictateは、文字起こしのために音声を録音するマイクへのアクセスが必要です。</string>
     <string name="setup__grant_mic_permission__btn">マイクの権限を許可</string>
     <string name="changelog__dialog_title">新着情報</string>
-    <string name="changelog__view_all">すべての変更を表示</string>
     <string name="changelog__intro">Dictateが更新されました。新着情報はこちら:</string>
     <string name="changelog__version_header">バージョン{version}</string>
     <string name="changelog__current">• まったく新しいキーボード: Dictateは、音声パネルを開く専用マイクキーを備えた本格的な多言語レイアウトキーボードとして提供されるようになりました。\n• 自分のAIを使用: OpenAI互換の任意のプロバイダーを選び、設定 → DictateでAPIキーを入力します。\n• 選択したモデルによるスマートな書式設定と言い換え。\n• 以前のDictateアプリの設定が自動的にインポートされます。</string>
@@ -1739,8 +1726,6 @@
     <string name="dictate__providers_rewording_single_call_note">現在は使用されていません。文字起こしプロバイダーがシングルコール内で書き換えを行います。</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">ペアリングした時計から音声入力するためのオプション</string>
-    <string name="dictate__wear_install_title">時計に Dictate をインストール</string>
-    <string name="dictate__wear_install_summary">Play Store を開きます — ペアリングした Wear OS 3+ の時計で、時計をインストール先に選びます。</string>
     <string name="dictate__wear_auto_rewording_title">時計の音声入力を自動で書き換える</string>
     <string name="dictate__wear_auto_rewording_summary">時計からの音声入力を、スマートフォンと同じように書き換えます。</string>
     <string name="quick_action__system_prev_input_method">キーボード切替</string>
@@ -1931,7 +1916,6 @@
     <string name="apptour__legacy_cta">レイアウトを選択</string>
     <string name="apptour__library_eyebrow">コミュニティ</string>
     <string name="apptour__library_title">プロンプトライブラリ</string>
-    <string name="apptour__library_body">コミュニティが共有した言い換えプロンプトを閲覧し、ワンタップでインストールできます。自分のものを公開して、みんなに使ってもらうこともできます。</string>
     <string name="apptour__library_cta">ライブラリを開く</string>
     <string name="apptour__stats_eyebrow">インサイト</string>
     <string name="apptour__stats_title">あなたの音声入力統計</string>
@@ -2249,7 +2233,6 @@
     <string name="dictate__legacy_prompt_rows_title">プロンプトの行数</string>
     <string name="dictate__legacy_prompt_rows_one">1行</string>
     <string name="dictate__legacy_prompt_rows_two">2行</string>
-    <string name="about__website__title">ウェブサイト</string>
     <string name="prefs__media__sticker__title">ステッカー</string>
     <string name="prefs__media__sticker_folder__title">ステッカーのフォルダ</string>
     <string name="prefs__media__sticker_folder__summary_unset">自分の画像が入ったフォルダを選択</string>

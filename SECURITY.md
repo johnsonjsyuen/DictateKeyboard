@@ -7,9 +7,8 @@ ask for, so a way to report a problem privately matters more here than it does f
 ## Reporting a vulnerability
 
 **Please do not open a public issue for anything that could be used against someone's device or
-data.** Use GitHub's private reporting instead:
-
-> **[→ Report a vulnerability privately](https://github.com/DevEmperor/DictateKeyboard/security/advisories/new)**
+data.** Use GitHub's private vulnerability reporting on this repository instead (the
+**Security** tab → **Report a vulnerability**).
 
 Only you and I can see the report, and it turns into a published advisory once a fix is out —
 with credit, unless you would rather not be named.

@@ -25,11 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.florisboard.lib.util.VersionName
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.florisDialogScroll
@@ -49,8 +47,7 @@ private const val DEBUG_FORCE_SHOW = false
  * dismissal so it does not reappear on the next launch.
  *
  * The body lists the notes for every release newer than the version the user last saw (so skipping a
- * few updates still surfaces all changes since the installed version), plus a link to the full online
- * changelog/releases page.
+ * few updates still surfaces all changes since the installed version).
  *
  * Note: for debug/CI builds the version name carries a suffix that [AppVersionUtils] cannot parse, so
  * the dialog only surfaces on proper release builds — matching the upstream behavior. Use
@@ -80,11 +77,6 @@ fun ChangelogDialog() {
         title = stringRes(R.string.changelog__dialog_title),
         confirmLabel = stringRes(R.string.action__ok),
         onConfirm = { markSeenAndClose() },
-        neutralLabel = stringRes(R.string.changelog__view_all),
-        onNeutral = {
-            context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME)
-            markSeenAndClose()
-        },
         onDismiss = { markSeenAndClose() },
     ) {
         Column {

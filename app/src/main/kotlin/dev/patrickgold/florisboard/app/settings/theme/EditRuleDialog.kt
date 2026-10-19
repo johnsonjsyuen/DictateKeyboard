@@ -525,10 +525,6 @@ private fun EditCodeValueDialog(
                         text = "Characters (unicode-table.com)",
                         url = stringRes(R.string.florisboard__character_key_codes_url),
                     )
-                    FlorisHyperlinkText(
-                        text = "Internal (github.com)",
-                        url = stringRes(R.string.florisboard__internal_key_codes_url),
-                    )
                 }
             }
             TextKeyDataPreviewBox(

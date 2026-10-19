@@ -398,14 +398,9 @@
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version kopieret til udklipsholderen</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Noget gik galt: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Ændringslog</string>
-    <string name="about__changelog__summary" comment="Preference summary">Nyheder</string>
-    <string name="about__repository__title" comment="Preference title">Projektarkiv (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Kildekode, diskussioner, problemer og information</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Projektarkiv</string>
     <string name="setup__enable_ime__title">Aktivér {app_name}</string>
     <string name="setup__select_ime__title">Vælg {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Skift tastatur</string>

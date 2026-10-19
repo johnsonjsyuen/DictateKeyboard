@@ -640,10 +640,6 @@
     <string name="about__version__title" comment="Preference title">Издание</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номера на изданието е копирано в междинната памет</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Нещо се обърка: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Дневник на промените</string>
-    <string name="about__changelog__summary" comment="Preference summary">Какво е новото</string>
-    <string name="about__repository__title" comment="Preference title">Хранилище (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Изходен код, обсъждане, дефекти и помощ</string>
     <string name="about__project_license__title" comment="Preference title">Лиценз на проекта</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} е лицензиран под {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Грешка при зареждане на текста на лиценза.\n-&gt; Причина: {error_message}</string>
@@ -653,7 +649,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добре дошли!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Благодарим ви, че използвате {app_name}! Този помощник ще ви преведе през задължителните стъпки, които трябва да предприемете, за да използвате {app_name}.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Хранилище</string>
     <string name="setup__enable_ime__title">Включване на {app_name}</string>
     <string name="setup__enable_ime__description">Android изисква всяка потребителска клавиатура да бъде включена отделно, преди да можете да я използвате. Отворете <i>Езици и въвеждане</i> от Системни настройки и включете „{app_name}“.</string>
     <string name="setup__enable_ime__open_settings_btn">Системни настройки</string>
@@ -715,7 +710,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копиране в системната междинна памет</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Копирано в системната междинна памет</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Грешка при копиране в системната междинна памет</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Система за дефекти (github)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Затваряне</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Доклади за грешки на Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate спря да работи…</string>
@@ -1672,12 +1666,6 @@
     <string name="dictate__prompt_library_retry">Опитай отново</string>
     <string name="dictate__prompt_library_close">Затвори</string>
     <string name="dictate__prompt_library_author">от {author}</string>
-    <string name="dictate__prompt_share_title">Споделяне с общността</string>
-    <string name="dictate__prompt_share_message">Това отваря GitHub във вашия браузър с предварително попълнена ваша подкана като заявка. Влезте и потвърдете, за да отворите заявка за изтегляне (pull request), която я добавя към библиотеката на общността. Изисква се безплатен акаунт в GitHub; нищо не се качва, докато не потвърдите в GitHub.</string>
-    <string name="dictate__prompt_share_continue">Отвори GitHub</string>
-    <string name="dictate__prompt_share_category">Категория (по избор)</string>
-    <string name="dictate__prompt_share_description">Описание (по избор)</string>
-    <string name="dictate__prompt_share_description_placeholder">напр. Изчиства граматиката, без да променя смисъла</string>
     <string name="dictate__file_preparing">Подготовка на файла…</string>
     <string name="dictate__file_too_large">Файлът е твърде голям – доставчикът приема най-много 25 MB.</string>
     <string name="dictate__file_read_error">Избраният файл не може да бъде прочетен.</string>
@@ -1715,7 +1703,6 @@
     <string name="setup__grant_mic_permission__description">Dictate се нуждае от достъп до микрофона, за да записва гласа ви за транскрибиране.</string>
     <string name="setup__grant_mic_permission__btn">Дай разрешение за микрофона</string>
     <string name="changelog__dialog_title">Какво е новото</string>
-    <string name="changelog__view_all">Виж всички промени</string>
     <string name="changelog__intro">Dictate беше обновен. Ето какво е новото:</string>
     <string name="changelog__version_header">Версия {version}</string>
     <string name="changelog__current">• Чисто нова клавиатура: Dictate вече се предлага като пълноценна многоезична клавиатура с подредба и специален микрофонен клавиш, който отваря гласовия панел.\n• Ваш собствен ИИ: изберете всеки съвместим с OpenAI доставчик и въведете API ключа си в Настройки → Dictate.\n• Интелигентно форматиране и преформулиране, задвижвани от избрания от вас модел.\n• Настройките ви от предишното приложение Dictate се импортират автоматично.</string>
@@ -1808,8 +1795,6 @@
     <string name="dictate__providers_rewording_single_call_note">В момента не се използва — вашият доставчик за транскрипция извършва преформулирането в своята единична заявка.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Опции за диктуване от сдвоен часовник</string>
-    <string name="dictate__wear_install_title">Инсталиране на Dictate на часовника ви</string>
-    <string name="dictate__wear_install_summary">Отваря Play Store — на сдвоен часовник с Wear OS 3+ изберете часовника си като цел.</string>
     <string name="dictate__wear_auto_rewording_title">Авт. преформулиране на диктовки от часовника</string>
     <string name="dictate__wear_auto_rewording_summary">Преформулирайте диктовките от часовника, както на телефона.</string>
     <string name="quick_action__system_prev_input_method">Смяна на клавиатура</string>
@@ -2000,7 +1985,6 @@
     <string name="apptour__legacy_cta">Изберете подредба</string>
     <string name="apptour__library_eyebrow">Общност</string>
     <string name="apptour__library_title">Библиотека с промптове</string>
-    <string name="apptour__library_body">Разглеждайте подсказки за преформулиране, споделени от общността, и ги инсталирайте с едно докосване — или публикувайте свои, за да ги ползват други.</string>
     <string name="apptour__library_cta">Отвори библиотеката</string>
     <string name="apptour__stats_eyebrow">Анализи</string>
     <string name="apptour__stats_title">Вашата статистика за диктовка</string>
@@ -2318,7 +2302,6 @@
     <string name="dictate__legacy_prompt_rows_title">Редове с подкани</string>
     <string name="dictate__legacy_prompt_rows_one">Един ред</string>
     <string name="dictate__legacy_prompt_rows_two">Два реда</string>
-    <string name="about__website__title">Уебсайт</string>
     <string name="prefs__media__sticker__title">Стикери</string>
     <string name="prefs__media__sticker_folder__title">Папка със стикери</string>
     <string name="prefs__media__sticker_folder__summary_unset">Изберете папка със свои изображения</string>

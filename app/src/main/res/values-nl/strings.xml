@@ -563,10 +563,6 @@
     <string name="about__version__title" comment="Preference title">Versie</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Appversie gekopieerd naar klembord</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Er is iets misgegaan: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Wijzigingenlogboek</string>
-    <string name="about__changelog__summary" comment="Preference summary">Wat is er nieuw</string>
-    <string name="about__repository__title" comment="Preference title">Opslagplaats (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Broncode, discussies, problemen en info</string>
     <string name="about__project_license__title" comment="Preference title">Projectlicentie</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} heeft een licentie onder {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Fout: kan licentietekst niet laden.\n-&gt; Reden: {error_message}</string>
@@ -576,7 +572,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welkom!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Bedankt voor het gebruik van {app_name}! Deze snelle installatie leidt u door de vereiste stappen om {app_name} op uw apparaat te gebruiken.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Opslagplaats</string>
     <string name="setup__enable_ime__title">{app_name} inschakelen</string>
     <string name="setup__enable_ime__description">Android vereist dat elk aangepast toetsenbord afzonderlijk is ingeschakeld voordat u het kunt gebruiken. Open het systeem<i> Taal</i> Instellingen, activeer daar \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Systeeminstellingen openen</string>
@@ -637,7 +632,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopieer naar systeemklembord</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Gekopieerd naar systeemklembord</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Kan niet kopiëren naar systeemklembord: Klembordbeheerinstantie niet gevonden</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Probleemtracker openen (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sluiten</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Foutenrapporten van Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate is gestopt met werken…</string>
@@ -1572,12 +1566,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__prompt_library_retry">Opnieuw proberen</string>
     <string name="dictate__prompt_library_close">Sluiten</string>
     <string name="dictate__prompt_library_author">door {author}</string>
-    <string name="dictate__prompt_share_title">Delen met de community</string>
-    <string name="dictate__prompt_share_message">Hiermee wordt GitHub in je browser geopend met je prompt al ingevuld als inzending. Meld je aan en bevestig om een pull request te openen die deze aan de communitybibliotheek toevoegt. Een gratis GitHub-account is vereist; er wordt niets geüpload totdat je op GitHub bevestigt.</string>
-    <string name="dictate__prompt_share_continue">GitHub openen</string>
-    <string name="dictate__prompt_share_category">Categorie (optioneel)</string>
-    <string name="dictate__prompt_share_description">Beschrijving (optioneel)</string>
-    <string name="dictate__prompt_share_description_placeholder">bijv. Corrigeert de grammatica zonder de betekenis te wijzigen</string>
     <string name="dictate__file_preparing">Bestand voorbereiden…</string>
     <string name="dictate__file_too_large">Bestand is te groot – de aanbieder accepteert maximaal 25 MB.</string>
     <string name="dictate__file_read_error">Kan het geselecteerde bestand niet lezen.</string>
@@ -1615,7 +1603,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="setup__grant_mic_permission__description">Dictate heeft toegang tot de microfoon nodig om je stem op te nemen voor transcriptie.</string>
     <string name="setup__grant_mic_permission__btn">Microfoontoestemming verlenen</string>
     <string name="changelog__dialog_title">Wat is er nieuw</string>
-    <string name="changelog__view_all">Alle wijzigingen bekijken</string>
     <string name="changelog__intro">Dictate is bijgewerkt. Dit is er nieuw:</string>
     <string name="changelog__version_header">Versie {version}</string>
     <string name="changelog__current">• Gloednieuw toetsenbord: Dictate is nu een volwaardig meertalig lay-outtoetsenbord met een eigen microfoontoets die het spraakpaneel opent.\n• Gebruik je eigen AI: kies een willekeurige OpenAI-compatibele aanbieder en voer je API-sleutel in via Instellingen → Dictate.\n• Slimme opmaak en herformulering met het model van jouw keuze.\n• Je instellingen van de vorige Dictate-app worden automatisch geïmporteerd.</string>
@@ -1708,8 +1695,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__providers_rewording_single_call_note">Wordt nu niet gebruikt — je transcriptieprovider doet de herformulering in zijn enkele aanroep.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opties voor dicteren vanaf een gekoppeld horloge</string>
-    <string name="dictate__wear_install_title">Dictate op je horloge installeren</string>
-    <string name="dictate__wear_install_summary">Opent de Play Store — kies op een gekoppeld Wear OS 3+-horloge je horloge als doel.</string>
     <string name="dictate__wear_auto_rewording_title">Horlogedictaten automatisch herformuleren</string>
     <string name="dictate__wear_auto_rewording_summary">Herformuleer dictaten vanaf het horloge, net als op de telefoon.</string>
     <string name="quick_action__system_prev_input_method">Toetsenbord wisselen</string>
@@ -1900,7 +1885,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="apptour__legacy_cta">Kies een indeling</string>
     <string name="apptour__library_eyebrow">Community</string>
     <string name="apptour__library_title">Promptbibliotheek</string>
-    <string name="apptour__library_body">Blader door herformuleringsprompts die de community deelt en installeer ze met één tik — of publiceer je eigen prompts voor anderen.</string>
     <string name="apptour__library_cta">Bibliotheek openen</string>
     <string name="apptour__stats_eyebrow">Inzichten</string>
     <string name="apptour__stats_title">Je dicteerstatistieken</string>
@@ -2218,7 +2202,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="dictate__legacy_prompt_rows_title">Promptrijen</string>
     <string name="dictate__legacy_prompt_rows_one">Eén rij</string>
     <string name="dictate__legacy_prompt_rows_two">Twee rijen</string>
-    <string name="about__website__title">Website</string>
     <string name="prefs__media__sticker__title">Stickers</string>
     <string name="prefs__media__sticker_folder__title">Stickermap</string>
     <string name="prefs__media__sticker_folder__summary_unset">Kies een map met je eigen afbeeldingen</string>

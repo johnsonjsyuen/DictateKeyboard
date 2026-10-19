@@ -593,10 +593,6 @@
     <string name="about__version__title" comment="Preference title">Laidiens</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Laidiena numurs ir ievietots starpliktuvē</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Kaut kas nogāja greizi: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Izmaiņu žurnāls</string>
-    <string name="about__changelog__summary" comment="Preference summary">Kas jauns?</string>
-    <string name="about__repository__title" comment="Preference title">Glabātava (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Pirmkods, apspriedes, nepilnības un uzziņa</string>
     <string name="about__project_license__title" comment="Preference title">Projekta licence</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} ir licencēts ar {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kļūda: neizdevās ielādēt licences saturu.\n-&gt; Iemesls: {error_message}</string>
@@ -606,7 +602,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Sveiciens!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Paldies par {app_name} izmantošanu! Ātrā uzstādīšana virza caur nepieciešamajiem soļiem, lai ierīcē izmantotu {app_name}.</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Glabātava</string>
     <string name="setup__enable_ime__title">Iespējot {app_name}</string>
     <string name="setup__enable_ime__description">Android ir nepieciešams pirms katras pielāgotās tastatūras izmantošanas to iespējot. Lai to izdarītu, jāatver sistēmas iestatījumi <i>Valoda un ievade</i> un tur jāiespējo \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Atvērt sistēmas iestatījumus</string>
@@ -670,7 +665,6 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ievietot sistēmas starpliktuvē</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Ievietots sistēmas starpliktuvē</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nav iespējams ievietot sistēmas starpliktuvē: nav atrasts starpliktuves pārvaldnieks</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Atvērt pieteikumu ceļrādi (GitHub.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate kļūdu ziņojumi</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate pārstāja darboties…</string>
@@ -1617,12 +1611,6 @@
     <string name="dictate__prompt_library_retry">Mēģināt vēlreiz</string>
     <string name="dictate__prompt_library_close">Aizvērt</string>
     <string name="dictate__prompt_library_author">autors: {author}</string>
-    <string name="dictate__prompt_share_title">Kopīgot ar kopienu</string>
-    <string name="dictate__prompt_share_message">Tas atver GitHub jūsu pārlūkā ar jūsu uzvedni, kas jau ir aizpildīta kā iesniegums. Piesakieties un apstipriniet, lai atvērtu vilkšanas pieprasījumu (pull request), kas to pievieno kopienas bibliotēkai. Nepieciešams bezmaksas GitHub konts; nekas netiek augšupielādēts, kamēr jūs neapstiprināt GitHub.</string>
-    <string name="dictate__prompt_share_continue">Atvērt GitHub</string>
-    <string name="dictate__prompt_share_category">Kategorija (neobligāti)</string>
-    <string name="dictate__prompt_share_description">Apraksts (neobligāti)</string>
-    <string name="dictate__prompt_share_description_placeholder">piem. Sakārto gramatiku, nemainot nozīmi</string>
     <string name="dictate__file_preparing">Sagatavo failu…</string>
     <string name="dictate__file_too_large">Fails ir pārāk liels – pakalpojuma sniedzējs pieņem ne vairāk kā 25 MB.</string>
     <string name="dictate__file_read_error">Neizdevās nolasīt atlasīto failu.</string>
@@ -1660,7 +1648,6 @@
     <string name="setup__grant_mic_permission__description">Dictate ir nepieciešama piekļuve mikrofonam, lai ierakstītu jūsu balsi transkribēšanai.</string>
     <string name="setup__grant_mic_permission__btn">Piešķirt mikrofona atļauju</string>
     <string name="changelog__dialog_title">Kas jauns</string>
-    <string name="changelog__view_all">Skatīt visas izmaiņas</string>
     <string name="changelog__intro">Dictate tika atjaunināts. Lūk, kas jauns:</string>
     <string name="changelog__version_header">Versija {version}</string>
     <string name="changelog__current">• Pavisam jauna tastatūra: Dictate tagad tiek piedāvāta kā pilnvērtīga daudzvalodu izkārtojuma tastatūra ar īpašu mikrofona taustiņu, kas atver balss paneli.\n• Izmantojiet savu MI: izvēlieties jebkuru ar OpenAI saderīgu pakalpojuma sniedzēju un ievadiet savu API atslēgu sadaļā Iestatījumi → Dictate.\n• Vieda formatēšana un pārformulēšana, ko nodrošina jūsu izvēlētais modelis.\n• Jūsu iestatījumi no iepriekšējās Dictate lietotnes tiek importēti automātiski.</string>
@@ -1754,8 +1741,6 @@
     <string name="dictate__providers_rewording_single_call_note">Pašlaik netiek izmantots — jūsu transkripcijas pakalpojums veic pārformulēšanu savā vienreizējā pieprasījumā.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Diktēšanas opcijas no savienota pulksteņa</string>
-    <string name="dictate__wear_install_title">Instalēt Dictate savā pulkstenī</string>
-    <string name="dictate__wear_install_summary">Atver Play Store — savienotā Wear OS 3+ pulkstenī izvēlies pulksteni kā mērķi.</string>
     <string name="dictate__wear_auto_rewording_title">Automātiski pārformulēt pulksteņa diktātus</string>
     <string name="dictate__wear_auto_rewording_summary">Pārformulējiet pulksteņa diktātus, tāpat kā tālrunī.</string>
     <string name="quick_action__system_prev_input_method">Mainīt tastatūru</string>
@@ -1946,7 +1931,6 @@
     <string name="apptour__legacy_cta">Izvēlēties izkārtojumu</string>
     <string name="apptour__library_eyebrow">Kopiena</string>
     <string name="apptour__library_title">Uzvednu bibliotēka</string>
-    <string name="apptour__library_body">Pārlūko kopienas kopīgotās pārfrāzēšanas uzvednes un instalē tās ar vienu pieskārienu — vai publicē savas, lai tās izmantotu citi.</string>
     <string name="apptour__library_cta">Atvērt bibliotēku</string>
     <string name="apptour__stats_eyebrow">Ieskati</string>
     <string name="apptour__stats_title">Tavas diktēšanas statistika</string>
@@ -2264,7 +2248,6 @@
     <string name="dictate__legacy_prompt_rows_title">Uzvednes rindas</string>
     <string name="dictate__legacy_prompt_rows_one">Viena rinda</string>
     <string name="dictate__legacy_prompt_rows_two">Divas rindas</string>
-    <string name="about__website__title">Vietne</string>
     <string name="prefs__media__sticker__title">Uzlīmes</string>
     <string name="prefs__media__sticker_folder__title">Uzlīmju mape</string>
     <string name="prefs__media__sticker_folder__summary_unset">Izvēlieties mapi ar saviem attēliem</string>

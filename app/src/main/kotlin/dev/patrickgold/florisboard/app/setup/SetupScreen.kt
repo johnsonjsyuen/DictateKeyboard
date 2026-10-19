@@ -315,26 +315,7 @@ private fun FlorisScreenScope.content(
                 context, navController, requestNotification, requestMic,
                 isProviderConfigured, onSkipProvider, onPassFloatingButton, accounts, scope,
             ),
-            footer = {
-                footer(context)
-            },
         )
-    }
-}
-
-@Composable
-private fun footer(context: Context) {
-    Spacer(modifier = Modifier.height(16.dp))
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        val repositoryUrl = stringRes(R.string.florisboard__repo_url)
-        TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
-            Text(text = stringRes(R.string.setup__footer__repository))
-        }
     }
 }
 
