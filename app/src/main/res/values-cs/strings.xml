@@ -633,7 +633,6 @@
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licence</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
     <string name="about__data_attributions__title">Licence dat a modelů</string>
@@ -641,12 +640,6 @@
     <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Něco se pokazilo: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Změny</string>
-    <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
-    <string name="about__repository__title" comment="Preference title">Repozitář (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Soukromí</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany soukromí tohoto projektu</string>
     <string name="about__project_license__title" comment="Preference title">Licence projektu</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} je licencován pod {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodařilo se načíst text licence.\n-&gt; Důvod: {error_message}</string>
@@ -656,8 +649,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vítejte!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Děkujeme za používání aplikace {app_name}! Toto rychlé nastavení vás provede kroky vyžadovanými k používání {app_name} na vašem zařízení.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Soukromí</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repozitář</string>
     <string name="setup__enable_ime__title">Povolit {app_name}</string>
     <string name="setup__enable_ime__description">Android vyžaduje, aby každá vlastní klávesnice byla ručně povolena, než ji budete moci použít. Otevřete systémové nastavení <i>Jazyk a vstup</i> a v něm povolte „{app_name}“.</string>
     <string name="setup__enable_ime__open_settings_btn">Otevřít systémová nastavení</string>
@@ -691,8 +682,6 @@
     <string name="backup_and_restore__back_up__files">Vyberte, co chcete zálohovat</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Předvolby</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">Klíče API a hesla</string>
-    <string name="backup_and_restore__back_up__credentials_warning">Tento archiv obsahuje tvoje klíče API a hesla v čitelné podobě i tvůj kredit Dictate Cloud — kdokoli ho dostane, může diktovat na tvůj účet. Nepředávej ho dál, a pokud jsi to už udělal, změň klíč u svého poskytovatele. Všechno ostatní zaškrtnuté níže jde s ním, včetně historie přepisů a schránky.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">Tento archiv neobsahuje žádné klíče API, hesla ani kredit Dictate Cloud, takže ho můžeš předat dál, ale tvoje také neobnoví. Všechno ostatní zaškrtnuté níže v něm zůstává, včetně historie přepisů a schránky.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Tento archiv neobsahuje klíče API ani hesla, ale obsahuje všechno zaškrtnuté níže: historii přepisů i s uchovanými nahrávkami, schránku, tvoje prompty a slova, která se klávesnice od tebe naučila.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšíření klávesnice</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozšíření kontroly pravopisu / slovníky</string>
@@ -709,7 +698,6 @@
     <string name="backup_and_restore__restore__metadata">Vybraný archiv zálohy</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Tento archiv zálohy byl vygenerován v jiné verzi, než jakou aktuálně používáte, což je většinou podporováno. Mějte ale prosím na vědomí, že se mohou vyskytnout menší problémy nebo se některé předvolby nemusí správně převést kvůli rozdílům ve funkcích.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Tento archiv zálohy byl vygenerován v aplikaci třetí strany, což většinou není podporováno. Mohou se vyskytnout ztráty dat, obnovte na vlastní nebezpečí!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">Tento záložní archiv neobsahuje klíče API ani hesla. Všechno ostatní se obnoví. Sloučení zachová klíče, které už v tomto zařízení jsou; přepsání je odstraní, včetně kódu pro obnovení Dictate Cloud, který nelze zadat znovu.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Tento archiv zálohy obsahuje neplatná metadata. Buď byl poškozen, nebo nesprávně upraven. Obnovení zálohy z tohoto archivu není možné, zvolte prosím jiný.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Tento archiv zálohy neobsahuje žádné soubory k obnovení, vyberte prosím jiný.</string>
     <string name="backup_and_restore__restore__mode">Obnovovací reřim</string>
@@ -720,11 +708,9 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě Dictateu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Omlouváme se za potíže, ale aplikace Dictate spadla kvůli neočekávané chybě.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Pokud chcete tuto chybu nahlásit, podívejte se nejprve do nástroje pro sledování problémů na GitHubu, pokud již nebyla chyba nahlášena.\nPokud tomu tak není, zkopírujte vygenerovaný záznam o chybě a otevřete nový problém. Použijte šablonu „%s“ a vyplňte popis, kroky k reprodukci a na konec vložte vygenerovaný záznam o pádu. Pomůžete tak k tomu, aby byl Dictate lepší a stabilnější pro všechny. Děkujeme!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Zkopírováno do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nepodařilo se zkopírovat do systémové schránky: Instance správce schránky nenalezena</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Nahlásit problém (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Chybová hlášení Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate přestal pracovat…</string>
@@ -916,16 +902,11 @@
     <string name="ext__validation__enter_percent_size">Zadejte prosím velikost v procentech</string>
     <string name="ext__validation__enter_number_between_0_100">Zadejte prosím kladné číslo mezi 0 a 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Jakákoli hodnota nad 50 % se bude chovat, jako kdybyste nastavili 50 %, zvažte snížení velikosti v procentech</string>
-    <string name="ext__update_box__internet_permission_hint">Jelikož tato aplikace nemá přístup k internetu, musíte aktualizace nainstalovaných rozšíření kontrolovat ručně.</string>
-    <string name="ext__update_box__search_for_updates">Vyhledat aktualizace</string>
     <string name="ext__addon_management_box__managing_placeholder">Správa {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Všechny úlohy spojené s importováním, exportováním, vytvářením, přizpůsobováním a odstraňováním rozšíření mohou být prováděny skrze centralizovaného správce doplňků.</string>
     <string name="ext__addon_management_box__go_to_page">Přejít na {ext_home_title}</string>
-    <string name="ext__home__info">Rozšíření můžete stahovat a instalovat z Obchodu s doplňky Dictate nebo importovat jakýkoli soubor rozšíření, který jste si stáhli z internetu.</string>
-    <string name="ext__home__visit_store">Navštívit Obchod s doplňky</string>
     <string name="ext__home__manage_extensions">Správa nainstalovaných doplňků</string>
     <string name="ext__list__view_details">Zobrazit podrobnosti</string>
-    <string name="ext__check_updates__title">Zkontrolovat aktualizace</string>
     <!-- Action strings -->
     <string name="action__add">Přidat</string>
     <string name="action__apply">Použít</string>
@@ -1203,15 +1184,7 @@
     <string name="about__based_on_floris__title">Založeno na FlorisBoard</string>
     <string name="about__based_on_floris__summary">Fork FlorisBoard od Patricka Goldingera a přispěvatelů, Apache 2.0. Klepnutím jej otevřete.</string>
     <string name="about__made_by">Vytvořeno s ❤️ od DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Zpětná vazba a podpora</string>
-    <string name="about__feedback__summary">Pošlete e-mail s dotazy, chybami nebo nápady</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Vyberte, jak má Dictate přepisovat</string>
-    <string name="setup__provider__choose_intro">Dictate převádí vaši řeč na text pomocí služby AI. Většině lidí vyhoví jeden ze dvou způsobů — a pokud nechcete používat žádnou cloudovou službu, níže najdete další dva.</string>
-    <string name="setup__provider__choice_cloud_title">Koupit kredit v aplikaci</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: nikde žádný účet, žádný klíč API. Minuty diktování kupujete přes Google Play a nikdy nevyprší. Pohodlná cesta — a o něco dražší než jít k poskytovateli přímo.</string>
-    <string name="setup__provider__choice_cloud_btn">Zobrazit balíčky kreditu</string>
     <string name="setup__provider__choice_own_title">Použít vlastního poskytovatele AI</string>
     <string name="setup__provider__choice_own_body">Vytvořte si klíč u poskytovatele podle svého výběru — Groq je pro běžné diktování zdarma. Zůstává vám vlastní účet a platíte přímo poskytovateli za jeho ceny. Zabere to asi dvě minuty.</string>
     <string name="setup__provider__choice_own_btn">Nastavit vlastní klíč</string>
@@ -1243,7 +1216,6 @@
     <string name="setup__provider__other_provider">Použít jiného poskytovatele AI</string>
     <string name="setup__provider__other_provider_hint">Pokročilé: zvolte jinou službu než Groq. Budete potřebovat klíč API od tohoto poskytovatele.</string>
     <string name="setup__finish_up__add_key_hint">Tip: zatím jste nepřidali klíč AI. Přidejte jej kdykoli v Nastavení → Dictate → Poskytovatelé AI a začněte diktovat.</string>
-    <string name="crash_dialog__bug_report_template">Hlášení o pádu</string>
     <string name="enum__swipe_action__toggle_compact_layout">Přepnout kompaktní rozložení</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1392,10 +1364,6 @@
     <string name="dictate__action_dismiss">Zavřít</string>
     <string name="dictate__action_yes">Ano</string>
     <string name="dictate__action_no">Ne, děkuji</string>
-    <string name="dictate__promo_rate_message">Líbí se vám Dictate?</string>
-    <string name="dictate__promo_donate_message">Podpořit Dictate?</string>
-    <string name="dictate__promo_rate_action">Ohodnotit</string>
-    <string name="dictate__promo_donate_action">Přispět</string>
     <string name="dictate__promo_changelog_message">Dictate byl aktualizován</string>
     <string name="dictate__promo_changelog_action">Podrobnosti</string>
     <string name="dictate__title">Dictate</string>
@@ -1701,16 +1669,8 @@
     <string name="dictate__prompt_library_added">Přidáno</string>
     <string name="dictate__prompt_library_add_again">Přidat znovu</string>
     <string name="dictate__prompt_library_empty">Vašemu hledání neodpovídají žádné prompty.</string>
-    <string name="dictate__prompt_library_error">Komunitní knihovnu se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.</string>
-    <string name="dictate__prompt_library_retry">Zkusit znovu</string>
     <string name="dictate__prompt_library_close">Zavřít</string>
     <string name="dictate__prompt_library_author">od {author}</string>
-    <string name="dictate__prompt_share_title">Sdílet s komunitou</string>
-    <string name="dictate__prompt_share_message">Tímto se ve vašem prohlížeči otevře GitHub s vaším promptem předvyplněným jako příspěvek. Přihlaste se a potvrďte otevření pull requestu, který jej přidá do komunitní knihovny. Je vyžadován bezplatný účet GitHub; nic se nenahraje, dokud to nepotvrdíte na GitHub.</string>
-    <string name="dictate__prompt_share_continue">Otevřít GitHub</string>
-    <string name="dictate__prompt_share_category">Kategorie (volitelné)</string>
-    <string name="dictate__prompt_share_description">Popis (volitelný)</string>
-    <string name="dictate__prompt_share_description_placeholder">např. Opraví gramatiku beze změny významu</string>
     <string name="dictate__file_preparing">Příprava souboru…</string>
     <string name="dictate__file_too_large">Soubor je příliš velký – poskytovatel přijímá nejvýše 25 MB.</string>
     <string name="dictate__file_read_error">Vybraný soubor nelze přečíst.</string>
@@ -1748,10 +1708,8 @@
     <string name="setup__grant_mic_permission__description">Dictate potřebuje přístup k mikrofonu, aby mohl nahrát váš hlas pro přepis.</string>
     <string name="setup__grant_mic_permission__btn">Udělit oprávnění k mikrofonu</string>
     <string name="changelog__dialog_title">Co je nového</string>
-    <string name="changelog__view_all">Zobrazit všechny změny</string>
     <string name="changelog__intro">Dictate byl aktualizován. Co je nového:</string>
     <string name="changelog__version_header">Verze {version}</string>
-    <string name="changelog__donate">Líbí se vám Dictate? Klepnutím sem podpoříte vývoj ♥</string>
     <string name="changelog__current">• Zcela nová klávesnice: Dictate je nyní plnohodnotná vícejazyčná klávesnice s vyhrazenou klávesou mikrofonu, která otevírá hlasový panel.\n• Vlastní AI: vyberte libovolného poskytovatele kompatibilního s OpenAI a zadejte klíč API v Nastavení → Dictate.\n• Inteligentní formátování a přeformulování pomocí zvoleného modelu.\n• Nastavení z předchozí aplikace Dictate se importují automaticky.</string>
     <string name="changelog__v4_1_0">• Novinka: vyhledávejte emoji přímo z klávesnice.\n• Nový poskytovatel přepisu: Soniox.\n• Znovu vložte své poslední diktování a obnovte nahrávky přerušené při zavření klávesnice.\n• Lišta promptů se nyní aktualizuje živě: podržením promptu jej upravíte.\n• Obrazovka poskytovatelů AI nyní zobrazuje aktivního poskytovatele přepisu i přeformulování.\n• Větší tlačítko nahrávání, na které se snáze míří.\n• Opravy: výzva k podpoře mohla zůstat viset a zakrýt lištu v některých jazycích; záloha už neselhává při vybraných promptech, klávesnici nebo motivu; uložené klíče API zůstanou zachovány při aktualizaci.</string>
     <string name="changelog__v4_1_1">• Oprava: zvýrazňovací barva se na některých zařízeních mohla zobrazovat zeleně; klávesy a tlačítka jsou opět v modré barvě Dictate.</string>
@@ -1844,8 +1802,6 @@
     <string name="dictate__providers_rewording_single_call_note">Momentálně se nepoužívá — váš poskytovatel přepisu provádí přeformulování ve svém jediném požadavku.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Možnosti diktování ze spárovaných hodinek</string>
-    <string name="dictate__wear_install_title">Nainstalovat Dictate do hodinek</string>
-    <string name="dictate__wear_install_summary">Otevře Play Store — na spárovaných hodinkách Wear OS 3+ vyberte jako cíl své hodinky.</string>
     <string name="dictate__wear_auto_rewording_title">Automaticky přeformulovat diktování z hodinek</string>
     <string name="dictate__wear_auto_rewording_summary">Přeformulujte diktování z hodinek, jako v telefonu.</string>
     <string name="quick_action__system_prev_input_method">Přepnout klávesnici</string>
@@ -2036,7 +1992,6 @@
     <string name="apptour__legacy_cta">Vybrat rozvržení</string>
     <string name="apptour__library_eyebrow">Komunita</string>
     <string name="apptour__library_title">Knihovna promptů</string>
-    <string name="apptour__library_body">Procházejte příkazy pro přeformulování sdílené komunitou a instalujte je jedním klepnutím — nebo zveřejněte vlastní, ať je používají ostatní.</string>
     <string name="apptour__library_cta">Otevřít knihovnu</string>
     <string name="apptour__stats_eyebrow">Přehledy</string>
     <string name="apptour__stats_title">Vaše statistiky diktování</string>
@@ -2077,7 +2032,7 @@
     <string name="apptour51__more_body">Spousta menších vylepšení také: v nastavení zvolte aktivní jazyk přepisu, tlačítko zastavení teď skutečně zruší běžící požadavek, přepínač zobrazení/skrytí API klíčů a vícejazyčné psaní bez automatických oprav mezi jazyky — plus řada oprav v klasickém rozvržení, číselné klávesnici a dál.</string>
     <string name="apptour51__outro_eyebrow">To je 5.1</string>
     <string name="apptour51__outro_title">Užijte si aktualizaci</string>
-    <string name="apptour51__outro_body">Děkujeme, že používáte Dictate! Pokud vám pomáhá každý den, drobný příspěvek udrží projekt v chodu. Kteroukoli z těchto prohlídek si můžete kdykoli znovu projít v Nastavení › O aplikaci.</string>
+    <string name="apptour51__outro_body">Děkujeme, že používáte Dictate! Kteroukoli z těchto prohlídek si můžete kdykoli znovu projít v Nastavení › O aplikaci.</string>
     <string name="apptour52__cta_try">Vyzkoušet</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Diktujte všude</string>
@@ -2136,14 +2091,8 @@
     <string name="apptour53__outro_body">A spousta drobností: každý poskytovatel má vlastní logo, indikátor nahrávání může být klidný, pulzující nebo reagující na hlas, výstup promptu si vedle sebe může nechat původní přepis a odstavce se už nelámou po zkratkách. Každou prohlídku si znovu pustíte v Nastavení › O aplikaci.</string>
 
     <string name="apptour60__cta_try">Vyzkoušet</string>
-    <string name="apptour60__art_minutes">minut</string>
     <string name="apptour60__art_speed">1,5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Kredit, čínština, levnější diktování</string>
-    <string name="apptour60__intro_body">Tato verze přidává druhou cestu dovnitř — koupit kredit místo vlastního klíče API —, k tomu pinyin pro čínštinu, sedm jazyků s novým slovníkem a nahrávky, které stojí méně.</string>
-    <string name="apptour60__cloud_eyebrow">Novinka: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Kupte si minuty místo shánění klíče</string>
-    <string name="apptour60__cloud_body">Kdo si nechce zakládat účet u poskytovatele, koupí si teď prostě kredit. Ano, jde to přes náš server — ale ani vaše nahrávky, ani vaše texty se tam neukládají, putují rovnou dál. Celý kód serveru je veřejný a dá se přečíst. Váš vlastní klíč funguje přesně jako dřív.</string>
     <string name="apptour60__speedup_eyebrow">Nižší náklady na API</string>
     <string name="apptour60__speedup_title">Stejná slova, méně minut</string>
     <string name="apptour60__speedup_body">Nahrávky lze před odesláním zrychlit, aniž by hlas zněl výš. Většina poskytovatelů účtuje podle délky: nahrávka o třetinu kratší stojí o třetinu méně. Dlouhá diktování se navíc zabalí, místo aby byla odmítnuta.</string>
@@ -2161,7 +2110,6 @@
     <string name="apptour60__more_body">Podržení tlačítka stop vezme zpět zaseknutý přepis. Plovoucí tlačítko už nehlásí úspěch, který nedokázalo ověřit, a zhasne s obrazovkou. Psaní tahem teď zná slova, která jste si přidali. A pád hned po aktualizaci je opraven.</string>
     <string name="apptour60__outro_eyebrow">To je 6.0</string>
     <string name="apptour60__outro_title">Ať slouží</string>
-    <string name="apptour60__outro_body">Ať Dictate používáte jakkoli — vlastní klíč, vlastní server, model v zařízení nebo kredit —, na ostatních cestách se nic nezměnilo. Každou prohlídku si znovu pustíte v Nastavení › O aplikaci.</string>
     <string name="apptour61__cta_try">Vyzkoušet</string>
     <string name="apptour61__art_folder">Samolepky</string>
     <string name="apptour61__art_share">Sdílet přes</string>
@@ -2276,7 +2224,6 @@
     <string name="apptour64__command_body">V nastavení Přeformulování si zvolte slovo — třeba „Jarvis“. Diktát, který jím začíná, se spustí jako pokyn naživo: nad vybraným textem, nebo jako otázka, když není nic vybráno. Počítá se jen první slovo, takže věta, která ho jen zmiňuje, se napíše jako obvykle. Automatické prompty teď také fungují, jak mají: vždy dostanou diktát, ke kterému patří, a prompt, který je jen [text v hranatých závorkách], se připojí na konec beze změny, místo aby šel do modelu.</string>
     <string name="apptour64__privacy_eyebrow">Soukromí a zabezpečení</string>
     <string name="apptour64__privacy_title">Celá aplikace, prověřená</string>
-    <string name="apptour64__privacy_body">Každá část Dictate prošla kontrolou soukromí a zabezpečení a vše, co se při ní našlo, je opravené. Diktát do pole pro heslo nebo PIN zůstane mimo historii, teď i přes plovoucí tlačítko. Cloudová záloha Androidu si vaše klíče API bere jen šifrované end-to-end. A „Důvěřovat uživatelským certifikátům“ teď nastavujete pro každý účet poskytovatele zvlášť, ne pro všechny najednou.</string>
     <string name="apptour64__more_eyebrow">A ještě</string>
     <string name="apptour64__more_title">Všechno ostatní v 6.4</string>
     <string name="apptour64__more_body">Drobnější změny pro ty, kdo chtějí znát podrobnosti. Pokud ne, klidně listujte dál.</string>
@@ -2361,72 +2308,6 @@
     <string name="dictate__legacy_prompt_rows_title">Řádky výzev</string>
     <string name="dictate__legacy_prompt_rows_one">Jeden řádek</string>
     <string name="dictate__legacy_prompt_rows_two">Dva řádky</string>
-    <string name="about__website__title">Webové stránky</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">Koupit kredit na diktování — bez klíče API</string>
-    <string name="dictate__cloud_row_summary_balance">Zbývá {minutes} minut kreditu</string>
-    <string name="dictate__cloud_intro_title">Diktování bez klíče API</string>
-    <string name="dictate__cloud_intro_body">Kupte si kredit na diktování přímo tady v aplikaci. Žádný účet u poskytovatele AI, žádný klíč API, žádné předplatné. Kredit nevyprší a spotřebuje se, jen když ho opravdu použijete: minuta diktování stojí minutu, přeformulování asi dvě sekundy.</string>
-    <string name="dictate__cloud_intro_alternative">Je to zcela dobrovolné. Dictate funguje stejně dobře s vaším vlastním klíčem u poskytovatele podle vašeho výběru — několik jich je zdarma — a pak vám zůstává vlastní účet a platíte přímo poskytovateli za jeho ceny.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Raději vlastního poskytovatele</string>
-    <string name="dictate__cloud_balance_label">Zbývající kredit</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">nebo asi {count} přeformulování</string>
-    <string name="dictate__cloud_balance_checked">Aktualizováno {time}</string>
-    <string name="dictate__cloud_balance_refresh">Obnovit kredit</string>
-    <string name="dictate__cloud_packs_title">Balíčky kreditu</string>
-    <string name="dictate__cloud_topup_title">Dobít</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} minut diktování</string>
-    <string name="dictate__cloud_pack_savings">O {percent} % levnější</string>
-    <string name="dictate__cloud_shop_unavailable">Balíčky kreditu tu nelze zobrazit. Obvykle to znamená, že aplikace nebyla nainstalována z Google Play nebo že na tomto zařízení není přihlášený účet Play. Váš vlastní klíč API funguje v obou případech.</string>
-    <string name="dictate__cloud_activate_title">Kredit je připravený</string>
-    <string name="dictate__cloud_activate_body">Máte kredit, ale diktování teď běží přes jiného poskytovatele. Přepněte, kdykoli budete chtít — bez vás se nic nezmění.</string>
-    <string name="dictate__cloud_activate_btn">Diktovat přes Dictate Cloud</string>
-    <string name="dictate__cloud_notice_purchased">Ke kreditu bylo přidáno {minutes} minut.</string>
-    <string name="dictate__cloud_notice_pending">Platba zatím není dokončená. Kredit se objeví, jakmile ji Google potvrdí.</string>
-    <string name="dictate__cloud_notice_not_redeemed">Platba prošla, ale kredit se nepodařilo načíst. Nic není ztraceno — otevřete tuto obrazovku znovu a kredit se připíše.</string>
-    <string name="dictate__cloud_notice_needs_recovery">Tento nákup patří k jinému kreditnímu účtu. Použijte jeho obnovovací kód, abyste kredit přenesli na toto zařízení.</string>
-    <string name="dictate__cloud_notice_failed">Nákup se nepodařilo dokončit.</string>
-    <string name="dictate__cloud_notice_deleted">Tvůj kreditní účet byl smazán.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Tvůj kreditní účet už neexistuje — byl smazán na webu nebo na jiném zařízení. Teď zmizel i z tohoto telefonu.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Toto zařízení bylo z tvého kreditního účtu odhlášeno. Účet ani kredit se nezměnily — přihlas se znovu obnovovacím kódem níže.</string>
-    <string name="dictate__cloud_delete_title">Smazat kreditní účet</string>
-    <string name="dictate__cloud_delete_explain">Smaže tvůj kreditní účet a vše, co je o něm uloženo. Zbývající kredit propadá a nevrací se. Pokud aplikaci už nemáš, jde to i na api.dictatekeyboard.com/delete.</string>
-    <string name="dictate__cloud_delete_btn">Smazat účet</string>
-    <string name="dictate__cloud_delete_dialog_title">Opravdu smazat účet?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Máš ještě {minutes} minut kreditu. Smazáním zmizí účet, obnovovací kód i všechna přihlášená zařízení.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">Tento kredit propadá a nelze jej obnovit — ani námi.</string>
-    <string name="dictate__cloud_delete_dialog_records">Doklady o nákupech zůstávají deset let, jak vyžaduje daňový zákon. Obsahují číslo objednávky a částku, nic, co by vedlo k tobě.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Nenávratně smazat</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Ponechat účet</string>
-    <string name="dictate__cloud_notice_dismiss">OK</string>
-    <string name="dictate__cloud_recovery_title">Obnovovací kód</string>
-    <string name="dictate__cloud_recovery_explain">Tento kód si zapište. Google po přeinstalaci spotřebovaný kredit neobnovuje, takže tento kód je jediná cesta, jak dostat zbývající minuty do nového telefonu. Umožní vám také používat stejný kredit na druhém zařízení.</string>
-    <string name="dictate__cloud_recovery_copy">Kopírovat obnovovací kód</string>
-    <string name="dictate__cloud_recovery_copied">Obnovovací kód zkopírován</string>
-    <string name="dictate__cloud_recovery_restore_btn">Obnovit kredit</string>
-    <string name="dictate__cloud_recovery_dialog_body">Zadejte obnovovací kód existujícího kreditního účtu. Zařízení, na kterém jste ho používali, funguje dál.</string>
-    <string name="dictate__cloud_recovery_field">Obnovovací kód</string>
-    <string name="dictate__cloud_recovery_confirm">Obnovit</string>
-    <string name="dictate__cloud_recovery_not_found">K tomuto kódu nebyl nalezen žádný kredit.</string>
-    <string name="dictate__error_cloud_no_account">Na tomto zařízení není kreditní účet</string>
-    <string name="dictate__cloud_devices_full_title">Příliš mnoho zařízení</string>
-    <string name="dictate__cloud_devices_full_body">Tvůj kredit se už používá na {count} zařízeních, což je nejvíc najednou. Odhlas jedno, abys ho mohl použít tady — kredit sám zůstane nedotčený.</string>
-    <string name="dictate__cloud_devices_sign_out">Odhlásit</string>
-    <string name="dictate__cloud_devices_unnamed">Zařízení bez názvu</string>
-    <string name="dictate__cloud_devices_last_used">Naposledy použito {time}</string>
-    <string name="dictate__cloud_devices_never_used">Zatím nepoužito</string>
-    <string name="dictate__cloud_recovery_error">Server je nedostupný. Zkontrolujte připojení a zkuste to znovu.</string>
-    <string name="dictate__cloud_limits_title">Co Dictate Cloud neumí</string>
-    <string name="dictate__cloud_limits_body">Živý přepis během mluvení s kreditem není — stojí zhruba čtyřikrát víc za minutu a engine přímo v zařízení to zvládne offline a zdarma. Model AI i to, jak dlouho přemýšlí, určuje server, takže volba modelu, míra uvažování a vlastní koncové body zůstávají vypnuté. Všechno ostatní je beze změny: prompty, historie, plovoucí tlačítko, dlouhé diktování i hodinky.</string>
-    <string name="dictate__cloud_privacy_title">Co se ukládá</string>
-    <string name="dictate__cloud_privacy_body">Vaše nahrávky a texty se pouze předávají dál a nikdy se nezapisují na disk. Ukládají se jen čísla: který účet, kdy, jak dlouho a jestli to vyšlo. Za kreditním účtem není žádné jméno, žádný e-mail ani žádný účet Google — jen náhodný identifikátor.</string>
-    <string name="dictate__cloud_other_way_title">Vlastní poskytovatel zůstává možný</string>
-    <string name="dictate__cloud_other_way_body">Kdykoli můžete přejít na vlastní klíč API a zase zpátky. Váš kredit zůstane, kde je.</string>
-    <string name="dictate__error_out_of_credit">Kredit vyčerpán</string>
-    <string name="dictate__action_top_up">Dobít kredit</string>
-    <string name="dictate__promo_low_credit_message">Kredit skoro došel.</string>
-    <string name="dictate__promo_low_credit_action">Dobít</string>
     <string name="prefs__media__sticker__title">Samolepky</string>
     <string name="prefs__media__sticker_folder__title">Složka se samolepkami</string>
     <string name="prefs__media__sticker_folder__summary_unset">Vyberte složku s vlastními obrázky</string>

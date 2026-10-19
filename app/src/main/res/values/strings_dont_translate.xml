@@ -3,24 +3,9 @@
     <!-- Full product name for prose/About/Setup; launcher label stays the short app_name ("Dictate"). -->
     <string name="app_name_full" translatable="false">Dictate Keyboard</string>
 
-    <!--
-        Dictate-branded URLs. Keys keep the historic `florisboard__` prefix so the many references in
-        code stay valid; only the values point to the Dictate project now.
-        TODO(wiki): the spell-checker / theme-editor help links point at the repo root for now, as the
-        Dictate fork has no dedicated wiki pages yet.
-    -->
-    <string name="florisboard__repo_url" translatable="false">https://github.com/DevEmperor/Dictate</string>
-    <!-- Marketing website -->
-    <string name="florisboard__website_url" translatable="false">https://dictatekeyboard.com</string>
+    <!-- URLs. Keys keep the historic `florisboard__` prefix. -->
     <!-- Upstream project Dictate is forked from (attribution); stays pointed at the original FlorisBoard repo. -->
     <string name="florisboard__upstream_repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
-    <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/DevEmperor/Dictate/issues</string>
-    <string name="florisboard__privacy_policy_url" translatable="false">https://github.com/DevEmperor/Dictate/blob/main/PRIVACY_POLICY.md</string>
-    <string name="florisboard__changelog_url" translatable="false">https://github.com/DevEmperor/Dictate/releases</string>
-    <string name="florisboard__commit_by_hash_url" translatable="false">https://github.com/DevEmperor/Dictate/commit/{hash}</string>
-    <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/DevEmperor/Dictate</string>
-    <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/DevEmperor/Dictate</string>
-    <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/DevEmperor/Dictate/blob/main/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
 
     <string name="general__system_string_placeholder" translatable="false">%s</string>

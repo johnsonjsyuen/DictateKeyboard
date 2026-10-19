@@ -757,7 +757,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "dictate__interrupted_audio_pending",
             default = false,
         )
-        // Recorded seconds of the interrupted audio, re-credited towards the rate/donate nudges on send.
+        // Recorded seconds of the interrupted audio, shown on the offer and carried into the dictation
+        // (stats/history) on send.
         val interruptedAudioSeconds = long(
             key = "dictate__interrupted_audio_seconds",
             default = 0L,
@@ -825,8 +826,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = 0L,
         )
         // --- Lifetime dictation statistics (issue #142) ------------------------------------------
-        // Never auto-reset (unlike totalAudioSeconds below, which the rate nudge clears); only the user
-        // can reset them from the stats screen. Updated centrally after each successful dictation.
+        // Never auto-reset; only the user can reset them from the stats screen. Updated centrally after
+        // each successful dictation.
         val statsDictations = long(key = "dictate__stats_dictations", default = 0L)
         val statsWords = long(key = "dictate__stats_words", default = 0L)
         val statsChars = long(key = "dictate__stats_chars", default = 0L)
@@ -848,32 +849,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // A crossed-but-not-yet-shown milestone, consumed on next app open: "time:<min>" | "count:<n>".
         val statsPendingMilestone = string(key = "dictate__stats_pending_milestone", default = "")
 
-        // --- Rate / Donate nudges (roadmap 9.7/9.8) ----------------------------------------------
-        // Cumulative seconds of successfully transcribed *recorded* audio, used to gate the one-time
-        // rate/donate prompts. Replaces the legacy usage DB (which was dropped); only this counter
-        // remains. Incremented after each successful mic transcription.
-        val totalAudioSeconds = long(
-            key = "dictate__total_audio_seconds",
-            default = 0L,
-        )
-        // Set once the user has acted on the rate prompt (accepted or declined), so it never reappears.
-        val hasRated = boolean(
-            key = "dictate__has_rated",
-            default = false,
-        )
-        // Set once the user has acted on the donate prompt; accepting/declining donate also sets
-        // hasRated, so a donor is never asked to rate afterwards (mirrors the legacy behavior).
-        val hasDonated = boolean(
-            key = "dictate__has_donated",
-            default = false,
-        )
-        // Set once the "credit is running low" nudge has been shown, so it appears once per
-        // depletion rather than on every keyboard open. Cleared again the moment a purchase credits
-        // the wallet (see DictateCloud.store), which makes one nudge per refill cycle.
-        val cloudLowCreditNudged = boolean(
-            key = "dictate__cloud_low_credit_nudged",
-            default = false,
-        )
         // The app version whose "Dictate was updated" changelog nudge has already been shown on the
         // keyboard (Smartbar). Set when the user taps or dismisses that nudge, so it appears only once
         // per update. Empty until the first post-update nudge. Independent of the in-app dialog's
@@ -932,15 +907,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         // back any time. See DictateLegacyMigrator.migratePromptsLayoutToRowIfNeeded.
         val promptsLayoutRowMigrated = boolean(
             key = "dictate__prompts_layout_row_migrated",
-            default = false,
-        )
-        // Guard for the one-time re-engagement reset shipped with the 4.0.0 relaunch: existing users
-        // (who had already rated/donated, or whose audio counter was long past the thresholds) are
-        // given the rate & donate nudges one more time so they can react to the new app. Clears
-        // hasRated/hasDonated and resets totalAudioSeconds exactly once. See
-        // DictateLegacyMigrator.reofferRateAndDonateIfNeeded.
-        val promoReengagementDone = boolean(
-            key = "dictate__promo_reengagement_done",
             default = false,
         )
 
@@ -1176,11 +1142,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val contentFilter = enum(
             key = "gif__content_filter",
             default = GifContentFilter.HIGH,
-        )
-        // Stable per-install id sent to KLIPY for relevance/localization (generated on first use).
-        val customerId = string(
-            key = "gif__customer_id",
-            default = "",
         )
         // Recently searched terms + recently inserted GIFs, for quick re-access.
         val history = custom(
@@ -2056,6 +2017,38 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                     key = "dictate__floating_button_show_when",
                     rawValue = DictateFloatingButtonShowWhen.fromShowWithDictateKeyboard(entry.rawValue).name,
                 )
+            }
+
+            // The in-app credit provider ("cloud") was removed. An install that still points at it would
+            // otherwise resolve to the fallback preset and send that account's stored token to the wrong
+            // server, so the selection goes back to the default instead.
+            "dictate__transcription_provider_id", "dictate__rewording_provider_id" -> {
+                if (entry.rawValue == "cloud") {
+                    dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                    entry.reset()
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+
+            // Saved Dictate Cloud data is wiped, on load and on a backup import alike. The keyring loses its
+            // "cloud" account — the wallet token sat in its apiKey, next to the wallet id, recovery code and
+            // balance cache — and the low-credit nudge latch, the only Cloud-only preference, is dropped.
+            // JetPref only writes the file when a value is set, so startup forces one rewrite when anything
+            // was found here (DictateLegacyMigrator.purgeRemovedProviderDataIfNeeded); an import persists
+            // by itself.
+            "dictate__provider_accounts" -> {
+                val cleaned = ProviderAccounts.Serializer.withoutRemovedProvidersOrNull(entry.rawValue)
+                if (cleaned != null) {
+                    dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                    entry.transform(rawValue = cleaned)
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+            "dictate__cloud_low_credit_nudged" -> {
+                dev.patrickgold.florisboard.dictate.data.prefs.DictateLegacyMigrator.noteRemovedProviderData()
+                entry.reset()
             }
 
             // Default: keep entry

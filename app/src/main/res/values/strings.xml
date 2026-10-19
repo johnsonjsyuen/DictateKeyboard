@@ -887,7 +887,6 @@
     <string name="about__title" comment="Title of About activity">About</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App icon of {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licenses</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacy policy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Source code</string>
 
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenses</string>
@@ -898,8 +897,6 @@
     <string name="about__whats_new__title" comment="Section/search label for the What\'s new tours">What’s new</string>
     <string name="about__whats_new__versioned" comment="Preference title reopening a specific version\'s tour; {version} e.g. 5.1">What’s new in {version}</string>
     <string name="about__whats_new__summary" comment="Preference summary">Take the feature tour again</string>
-    <string name="about__changelog__title" comment="Preference title">Changelog</string>
-    <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
     <!-- What's-new tour (in-app 5.0 feature carousel) -->
     <string name="apptour__skip" comment="Button to dismiss the What\'s new tour">Skip</string>
     <string name="apptour__next" comment="Button to advance to the next tour page">Next</string>
@@ -931,7 +928,7 @@
     <string name="apptour__legacy_cta">Choose a layout</string>
     <string name="apptour__library_eyebrow">Community</string>
     <string name="apptour__library_title">Prompt library</string>
-    <string name="apptour__library_body">Browse rewording prompts shared by the community and install them with one tap — or publish your own for others to use.</string>
+    <string name="apptour__library_body">Browse rewording prompts shared by the community and install them with one tap.</string>
     <string name="apptour__library_cta">Open the library</string>
     <string name="apptour__stats_eyebrow">Insights</string>
     <string name="apptour__stats_title">Your dictation stats</string>
@@ -973,7 +970,7 @@
     <string name="apptour51__more_body">Plenty of smaller upgrades too: choose the active transcription language in settings, the stop button now truly cancels a running request, a show/hide toggle for API keys, and multilingual typing without cross-language autocorrect — plus many fixes across the classic layout, the number pad and beyond.</string>
     <string name="apptour51__outro_eyebrow">That’s 5.1</string>
     <string name="apptour51__outro_title">Enjoy the update</string>
-    <string name="apptour51__outro_body">Thanks for using Dictate! If it helps you every day, a small donation keeps the project going. You can revisit any of these tours anytime under Settings › About.</string>
+    <string name="apptour51__outro_body">Thanks for using Dictate! You can revisit any of these tours anytime under Settings › About.</string>
     <!-- What's new tour 5.2 -->
     <string name="apptour52__cta_try" comment="Button on a 5.2 tour page to jump straight to that feature">Try it</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
@@ -1034,14 +1031,10 @@
 
     <!-- What's new tour for 6.0 -->
     <string name="apptour60__cta_try" comment="Button on a what's-new page that opens the settings screen for the feature just described">Try it</string>
-    <string name="apptour60__art_minutes" comment="Label next to a counting number in the credit-pack illustration, e.g. \u201c2200 minutes\u201d">minutes</string>
     <string name="apptour60__art_speed" comment="Playback-speed badge in the illustration showing a recording being shortened. Uses the local decimal separator.">1.5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Credit, Chinese, cheaper dictation</string>
-    <string name="apptour60__intro_body">This release adds a second way in — buy credit instead of bringing your own API key — along with Pinyin for Chinese, seven languages that gained a dictionary, and recordings that cost less to transcribe.</string>
-    <string name="apptour60__cloud_eyebrow">New: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Buy minutes instead of finding a key</string>
-    <string name="apptour60__cloud_body">If you would rather not sign up with a provider, you can now simply buy credit. Yes, that runs through our server — but neither your recordings nor your text are stored there, they are passed straight on. The entire server source is public and can be read. Your own key keeps working exactly as before.</string>
+    <string name="apptour60__intro_title">Chinese, more languages, cheaper dictation</string>
+    <string name="apptour60__intro_body">This release adds Pinyin for Chinese, seven languages that gained a dictionary, and recordings that cost less to transcribe.</string>
     <string name="apptour60__speedup_eyebrow">Spend less on the API</string>
     <string name="apptour60__speedup_title">The same words, fewer minutes</string>
     <string name="apptour60__speedup_body">Recordings can be sped up before they are uploaded, without your voice going higher. Most providers bill by audio length, so a recording a third shorter costs a third less. Long dictations are packed as well, instead of being turned away.</string>
@@ -1059,7 +1052,7 @@
     <string name="apptour60__more_body">Holding stop takes back a transcription that is hanging. The floating button no longer reports a success it could not verify, and goes down with the screen. Glide typing now knows the words you added yourself. And the crash right after updating is fixed.</string>
     <string name="apptour60__outro_eyebrow">That is 6.0</string>
     <string name="apptour60__outro_title">Have fun with it</string>
-    <string name="apptour60__outro_body">Whichever way you use Dictate — your own key, your own server, a model on the device, or credit — nothing about the other ways has changed. You can revisit any tour under Settings › About.</string>
+    <string name="apptour60__outro_body">Whichever way you use Dictate — your own key, your own server or a model on the device — it works just as before. You can revisit any tour under Settings › About.</string>
     <string name="apptour61__cta_try" comment="Button on a what\'s-new page that opens the settings screen for the feature just described">Try it</string>
     <string name="apptour61__art_folder" comment="Folder name shown on the sticker-grid illustration; a plausible folder someone would point the keyboard at">Stickers</string>
     <string name="apptour61__art_share" comment="Label on the share-sheet card in the illustration, above the app name">Share with</string>
@@ -1174,7 +1167,7 @@
     <string name="apptour64__command_body">Choose a word under Rewording — “Jarvis”, say. A dictation that starts with it runs as a live prompt: on the selected text, or as a question when nothing is selected. Only the first word counts, so a sentence that merely mentions it is written as usual. Automatic prompts also work as intended now: they always get the dictation they run on, and one that is only [text in brackets] is added to the end as written instead of going to the model.</string>
     <string name="apptour64__privacy_eyebrow">Privacy and security</string>
     <string name="apptour64__privacy_title">The whole app, checked</string>
-    <string name="apptour64__privacy_body">Every part of Dictate was reviewed for privacy and security, and what turned up is fixed. A dictation into a password or PIN field stays out of the history, now also through the floating button. Android’s cloud backup only takes your API keys end-to-end encrypted. And “Trust user certificates” is now set per provider account rather than for all of them at once.</string>
+    <string name="apptour64__privacy_body">Every part of Dictate was reviewed for privacy and security, and what turned up is fixed. A dictation into a password or PIN field stays out of the history, now also through the floating button. Your settings and API keys no longer go into Android’s cloud backup; a device-to-device transfer to a new phone still brings them along. And “Trust user certificates” is now set per provider account rather than for all of them at once.</string>
     <string name="apptour64__more_eyebrow">Also</string>
     <string name="apptour64__more_title">Everything else in 6.4</string>
     <string name="apptour64__more_body">The smaller changes, for anyone who wants the details. Skip ahead if you don’t.</string>
@@ -1203,18 +1196,9 @@
     <string name="apptour64__outro_eyebrow">That is 6.4</string>
     <string name="apptour64__outro_title">More on the phone, more your own</string>
     <string name="apptour64__outro_body">Translation and the new offline model work without a connection, and everything else still runs the way you set it up — your own key, your own server, or a model on the device. You can revisit any tour under Settings › About.</string>
-    <string name="about__website__title" comment="Preference title linking to the marketing website">Website</string>
-    <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Based on FlorisBoard</string>
     <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">A fork of FlorisBoard by Patrick Goldinger and contributors, Apache 2.0. Tap to open it.</string>
     <string name="about__made_by" comment="Personal signature shown under the app name in the About header" translatable="false">Made with ❤️ by DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title" comment="Preference title">Feedback &amp; support</string>
-    <string name="about__feedback__summary" comment="Preference summary">Send an email with questions, bugs or ideas</string>
-    <string name="about__feedback__email" translatable="false">contact@devemperor.net</string>
-    <string name="about__feedback__subject" comment="Default subject line of the feedback email" translatable="false">Dictate Feedback</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privacy policy</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">The privacy policy for this project</string>
     <string name="about__project_license__title" comment="Preference title">Project license</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} is licensed under {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Failed to load license text.\n-&gt; Reason: {error_message}</string>
@@ -1227,8 +1211,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Welcome to {app_name}! Let\'s get you ready to dictate in just a few quick steps — no technical knowledge needed.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
     <string name="setup__nav_back" comment="Setup wizard: go to the previous step">Back</string>
     <string name="setup__nav_next" comment="Setup wizard: go to the next, already-reached step">Next</string>
 
@@ -1249,12 +1231,8 @@
 
     <!-- Setup: connect an AI provider (Dictate onboarding for non-technical users) -->
     <string name="setup__provider__title">Choose how Dictate transcribes</string>
-    <!-- The two-track choice shown first: buy credit in the app, or bring your own provider key.
-         Both are fully supported and the wording must not push either way. -->
-    <string name="setup__provider__choose_intro">Dictate turns your speech into text with an AI service. Two ways suit most people — and if you\'d rather not use a cloud service at all, there are two more below.</string>
-    <string name="setup__provider__choice_cloud_title">Buy credit in the app</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: no account anywhere, no API key. You buy dictation minutes through Google Play and they never expire. The convenient way — and somewhat more expensive than going to a provider directly.</string>
-    <string name="setup__provider__choice_cloud_btn">Show credit packs</string>
+    <!-- The choice shown first: bring your own provider key, or one of the two keyless ways below it. -->
+    <string name="setup__provider__choose_intro">Dictate turns your speech into text with an AI service. Most people use their own key with a provider of their choice — and if you\'d rather not use a cloud service at all, there are two more ways below.</string>
     <string name="setup__provider__choice_own_title">Use your own AI provider</string>
     <string name="setup__provider__choice_own_body">Create a key with a provider of your choice — Groq is free for everyday dictation. You keep your own account and pay the provider directly at their prices. Takes about two minutes.</string>
     <string name="setup__provider__choice_own_btn">Set up my own key</string>
@@ -1318,8 +1296,8 @@
     <string name="backup_and_restore__back_up__files">Select what to back up</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferences</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">API keys and passwords</string>
-    <string name="backup_and_restore__back_up__credentials_warning">This archive contains your API keys and passwords in plain text, along with your Dictate Cloud credit — anyone you give it to can dictate at your expense. Do not pass it on, and if you already have, change the key at your provider. Whatever else is ticked below travels with it, including your transcription history and your clipboard.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">This archive carries no API keys, passwords or Dictate Cloud credit, so it can be passed on — but it will not restore yours either. Whatever else is ticked below is still in it, including your transcription history and your clipboard.</string>
+    <string name="backup_and_restore__back_up__credentials_warning">This archive contains your API keys and passwords in plain text — anyone you give it to can dictate at your expense. Do not pass it on, and if you already have, change the key at your provider. Whatever else is ticked below travels with it, including your transcription history and your clipboard.</string>
+    <string name="backup_and_restore__back_up__credentials_excluded_note">This archive carries no API keys or passwords, so it can be passed on — but it will not restore yours either. Whatever else is ticked below is still in it, including your transcription history and your clipboard.</string>
     <string name="backup_and_restore__back_up__personal_content_note">This archive carries no API keys or passwords, but it does carry what is ticked below — your transcription history with any kept recordings, your clipboard, your prompts and the words the keyboard has learned from you.</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Saved rewording prompts</string>
     <string name="backup_and_restore__back_up__files_personal_dictionary">Personal dictionary and learned words</string>
@@ -1338,7 +1316,7 @@
     <string name="backup_and_restore__restore__metadata">Selected backup archive</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">This backup archive was generated in another version than current, which is generally supported. Be aware though that minor issues can occur or some preferences may not get transferred properly due to feature differences.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">This backup archive was generated in a third-party app, which is generally not supported. Data losses may occur, restore at your own risk!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">This backup archive contains no API keys or passwords. Everything else is restored. Merging keeps the keys already on this device; erasing removes them — including a Dictate Cloud recovery code, which cannot be typed back in.</string>
+    <string name="backup_and_restore__restore__metadata_note_no_credentials">This backup archive contains no API keys or passwords. Everything else is restored. Merging keeps the keys already on this device; erasing removes them.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">This backup archive contains invalid metadata. Either it has been corrupted or poorly modified. Restoring from this archive is not possible, please select another one.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">This backup archive does not contain any files to restore, please select another one.</string>
     <string name="backup_and_restore__restore__mode">Restore mode</string>
@@ -1350,12 +1328,10 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictate error report</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry for the inconvenience, but Dictate has crashed due to an unexpected error.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">If you wish to report this error, first check out the issue tracker on GitHub if your crash has not already been reported.\nIf it hasn\'t, copy the generated crash log and open a new issue. Use the \"%s\" template and fill out the description, the steps to reproduce, and paste the generated crash log at the end. This helps in making Dictate better and more stable for everyone. Thank you!</string>
-    <string name="crash_dialog__bug_report_template" comment="Name of the template to use in the GitHub issue tracker (is always in English)" translatable="false">Crash report</string>
+    <string name="crash_dialog__report_instructions" comment="Report instructions for the crash dialog.">If you wish to report this error, copy the crash report below and include it when you report the problem. This helps in making Dictate better and more stable for everyone. Thank you!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copy to system clipboard</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copied to system clipboard</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Cannot copy to system clipboard: Clipboard manager instance not found</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Open issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Close</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate error reports</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate has stopped working…</string>
@@ -1559,16 +1535,12 @@
     <string name="ext__validation__enter_percent_size">Please enter a percent size</string>
     <string name="ext__validation__enter_number_between_0_100">Please enter a positive number between 0 and 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
-    <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
-    <string name="ext__update_box__search_for_updates">Search for Updates</string>
     <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
     <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
-    <string name="ext__home__info">You can download and install extensions from the Dictate Keyboard Addons Store or import any extension file you have downloaded from the internet.</string>
-    <string name="ext__home__visit_store">Visit Addons Store</string>
+    <string name="ext__home__info">You can import any extension file you have downloaded from the internet.</string>
     <string name="ext__home__manage_extensions">Manage installed extensions</string>
     <string name="ext__list__view_details">View details</string>
-    <string name="ext__check_updates__title">Check for Updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
@@ -2045,8 +2017,6 @@
     <string name="dictate__action_resume" comment="Content description for the button that resumes the recording">Resume recording</string>
     <string name="dictate__action_resend" comment="Content description for the button that retries the last failed audio">Try again</string>
     <string name="dictate__action_save_audio" comment="Content description for the button that saves a failed recording to Downloads">Save audio</string>
-    <string name="dictate__error_out_of_credit" comment="Short error: the Dictate Cloud credit is used up; shown instead of the generic quota error">Credit used up</string>
-    <string name="dictate__action_top_up" comment="Content description for the button that opens Dictate Cloud to buy more credit">Top up credit</string>
     <string name="dictate__audio_saved" comment="Toast after saving a failed recording; %s is the file name">Audio saved to Downloads/Dictate: %s</string>
     <string name="dictate__audio_save_failed" comment="Toast when saving a failed recording did not work">Couldn\'t save the audio</string>
     <string name="dictate__action_dismiss" comment="Content description for the button that dismisses the resend error">Dismiss</string>
@@ -2059,12 +2029,8 @@
     <string name="smartbar__a11y_show_suggestions" comment="Spoken by a screen reader for the arrow at the edge of the Smartbar while it shows the action buttons: tapping it brings the word suggestions back">Show suggestions</string>
     <string name="smartbar__a11y_show_more_actions" comment="Spoken by a screen reader for the Smartbar toggle that opens a second row of action buttons">Show more actions</string>
     <string name="smartbar__a11y_hide_more_actions" comment="Spoken by a screen reader for the Smartbar toggle while the second row of action buttons is open: tapping it closes that row">Hide more actions</string>
-    <string name="dictate__action_yes" comment="Content description for the accept button of the rate/donate nudge">Yes</string>
-    <string name="dictate__action_no" comment="Content description for the decline button of the rate/donate nudge">No, thanks</string>
-    <string name="dictate__promo_rate_message" comment="Smartbar nudge asking the user to rate the app after enough usage. Kept short to fit the single-line Smartbar.">Enjoying Dictate?</string>
-    <string name="dictate__promo_donate_message" comment="Smartbar nudge asking the user to donate after enough usage. Kept short to fit the single-line Smartbar.">Support Dictate?</string>
-    <string name="dictate__promo_rate_action" comment="Label of the accent pill button that opens the Play Store to rate the app">Rate</string>
-    <string name="dictate__promo_donate_action" comment="Label of the accent pill button that opens PayPal to donate">Donate</string>
+    <string name="dictate__action_yes" comment="Content description for the accept button of a one-time Smartbar nudge">Yes</string>
+    <string name="dictate__action_no" comment="Content description for the decline button of a one-time Smartbar nudge">No, thanks</string>
     <string name="dictate__promo_changelog_message" comment="Smartbar nudge shown after an app update. Kept short to fit the single-line Smartbar.">Dictate was updated</string>
     <string name="dictate__promo_changelog_action" comment="Short label of the accent pill button that opens the app's What's new changelog dialog. Must stay short to fit the single-line Smartbar.">Details</string>
     <string name="dictate__promo_floating_button_message" comment="Smartbar spotlight message introducing the floating dictation button. Keep short for one line.">New: dictate in any app</string>
@@ -2072,8 +2038,6 @@
     <string name="dictate__promo_milestone_time" comment="Smartbar milestone nudge for saved time; %s is a duration. Keep short (single line).">Saved %s with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_count" comment="Smartbar milestone nudge for dictation count; %s is a number. Keep short (single line).">%s dictations with Dictate! 🎉</string>
     <string name="dictate__promo_milestone_action" comment="Short label of the accent pill that opens the statistics screen. Must stay short to fit the single-line Smartbar.">Stats</string>
-    <string name="dictate__promo_low_credit_message" comment="Smartbar nudge shown once when Dictate Cloud credit is nearly used up">Credit almost gone.</string>
-    <string name="dictate__promo_low_credit_action" comment="Short label of the accent pill that opens Dictate Cloud. Must stay short to fit the single-line Smartbar.">Top up</string>
 
     <!-- Dictate settings screen -->
     <string name="dictate__title" comment="Title of the Dictate settings screen and home tile">Dictate</string>
@@ -2158,68 +2122,6 @@
     <string name="dictate__providers_azure_link_signup" comment="Link next to the Azure endpoint field: the page where a new Azure account is created">Create an Azure account</string>
     <string name="dictate__providers_azure_link_portal" comment="Link next to the Azure endpoint field: the Azure portal, where the key and endpoint are found">Azure portal</string>
     <string name="dictate__providers_azure_link_guide" comment="Link next to the Azure endpoint field: Microsoft's own setup guide and prerequisites for the MAI-Transcribe model">Setup guide</string>
-    <!-- Dictate Cloud: prepaid credit bought in the app, as an alternative to bringing your own API key -->
-    <string name="dictate__cloud_title" comment="Title of the Dictate Cloud screen and the row linking to it">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none" comment="Summary of the Dictate Cloud row when no credit account exists">Buy dictation credit — no API key needed</string>
-    <string name="dictate__cloud_row_summary_balance" comment="Summary of the Dictate Cloud row when credit exists; {minutes} is a number">{minutes} minutes of credit left</string>
-    <string name="dictate__cloud_intro_title">Dictate without an API key</string>
-    <string name="dictate__cloud_intro_body">Buy dictation credit right here in the app. No account with an AI provider, no API key, no subscription. Credit never expires and is only used up when you actually use it — a minute of dictation costs a minute, a rewording about two seconds.</string>
-    <string name="dictate__cloud_intro_alternative">This is entirely optional. Dictate works just as well with your own key from a provider of your choice — several are free — and then you keep your own account and pay the provider directly, at their prices.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Use my own provider instead</string>
-    <string name="dictate__cloud_balance_label">Credit remaining</string>
-    <string name="dictate__cloud_balance_minutes" comment="{minutes} is a number">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords" comment="{count} is a number; credit is one balance, so this is what it is worth in rewordings rather than a separate allowance">or about {count} rewordings</string>
-    <string name="dictate__cloud_balance_checked" comment="{time} is a formatted date and time">Updated {time}</string>
-    <string name="dictate__cloud_balance_refresh">Refresh balance</string>
-    <string name="dictate__cloud_packs_title">Credit packs</string>
-    <string name="dictate__cloud_topup_title">Top up</string>
-    <string name="dictate__cloud_pack_minutes" comment="{minutes} is a number">{minutes} minutes of dictation</string>
-    <string name="dictate__cloud_pack_savings" comment="{percent} is a number, e.g. 31. A small badge next to the name of a larger credit pack, saying how much less a minute of dictation costs in it than in the smallest pack.">{percent}% cheaper</string>
-    <string name="dictate__cloud_shop_unavailable">The credit packs can\'t be shown here. Usually that means the app wasn\'t installed from Google Play, or no Play account is signed in on this device. Your own API key works either way.</string>
-    <string name="dictate__cloud_activate_title">Credit is ready</string>
-    <string name="dictate__cloud_activate_body">You have credit, but dictation currently runs through a different provider. Switch whenever you like — nothing changes without you.</string>
-    <string name="dictate__cloud_activate_btn">Dictate through Dictate Cloud</string>
-    <string name="dictate__cloud_notice_purchased" comment="{minutes} is a number">{minutes} minutes added to your credit.</string>
-    <string name="dictate__cloud_notice_pending">Your payment hasn\'t completed yet. The credit appears as soon as Google confirms it.</string>
-    <string name="dictate__cloud_notice_not_redeemed">The payment went through, but the credit couldn\'t be fetched. Nothing is lost — open this screen again and it will be added.</string>
-    <string name="dictate__cloud_notice_needs_recovery">This purchase belongs to another credit account. Use its recovery code to bring the credit to this device.</string>
-    <string name="dictate__cloud_notice_failed">The purchase couldn\'t be completed.</string>
-    <string name="dictate__cloud_notice_deleted">Your credit account was deleted.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Your credit account no longer exists — it was deleted on the website or on another device. It has now been removed from this phone as well.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">This device was signed out of your credit account. The account and its credit are untouched — enter your recovery code below to sign in again.</string>
-    <string name="dictate__cloud_delete_title">Delete credit account</string>
-    <string name="dictate__cloud_delete_explain">Deletes your credit account and everything stored about it. Any remaining credit is forfeited — it isn\'t refunded. You can also do this at api.dictatekeyboard.com/delete if you no longer have the app.</string>
-    <string name="dictate__cloud_delete_btn">Delete account</string>
-    <string name="dictate__cloud_delete_dialog_title">Delete your account?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">You still have {minutes} minutes of credit. Deleting removes your account, your recovery code and every signed-in device.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">This credit is forfeited and cannot be restored — not even by us.</string>
-    <string name="dictate__cloud_delete_dialog_records">Your purchase records stay for ten years, as tax law requires. They hold an order number and an amount, nothing that leads back to you.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Delete permanently</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Keep my account</string>
-    <string name="dictate__cloud_notice_dismiss">OK</string>
-    <string name="dictate__cloud_recovery_title">Recovery code</string>
-    <string name="dictate__cloud_recovery_explain">Write this code down. Google doesn\'t restore used-up credit after a reinstall, so this code is the only way to get your remaining minutes onto a new phone. It also lets you use the same credit on a second device.</string>
-    <string name="dictate__cloud_recovery_copy">Copy recovery code</string>
-    <string name="dictate__cloud_recovery_copied">Recovery code copied</string>
-    <string name="dictate__cloud_recovery_restore_btn">Restore credit</string>
-    <string name="dictate__cloud_recovery_dialog_body">Enter the recovery code of an existing credit account. The device you were using it on keeps working.</string>
-    <string name="dictate__cloud_recovery_field">Recovery code</string>
-    <string name="dictate__cloud_recovery_confirm">Restore</string>
-    <string name="dictate__cloud_recovery_not_found">No credit found for this code.</string>
-    <string name="dictate__error_cloud_no_account" comment="Smartbar error when Dictate Cloud is the active provider but this device holds no credit account any more">No credit account on this device</string>
-    <string name="dictate__cloud_devices_full_title">Too many devices</string>
-    <string name="dictate__cloud_devices_full_body" comment="{count} is the number of devices already signed in">Your credit is already in use on {count} devices, which is the most allowed at once. Sign one out to use it here — the credit itself is untouched.</string>
-    <string name="dictate__cloud_devices_sign_out">Sign out</string>
-    <string name="dictate__cloud_devices_unnamed">Unnamed device</string>
-    <string name="dictate__cloud_devices_last_used" comment="{time} is a formatted date and time">Last used {time}</string>
-    <string name="dictate__cloud_devices_never_used">Never used</string>
-    <string name="dictate__cloud_recovery_error">Couldn\'t reach the server. Check your connection and try again.</string>
-    <string name="dictate__cloud_limits_title">What Dictate Cloud can\'t do</string>
-    <string name="dictate__cloud_limits_body">Live transcription while you speak isn\'t available on credit — it costs about four times as much per minute, and the on-device engine does it offline and for free. The AI model and how hard it thinks are set by the server, so model choice, reasoning effort and custom endpoints stay off. Everything else is unchanged: prompts, history, the floating button, long-form dictation and the watch.</string>
-    <string name="dictate__cloud_privacy_title">What gets stored</string>
-    <string name="dictate__cloud_privacy_body">Your recordings and texts are passed straight through and never written to disk. Only numbers are kept: which account, when, how long, and whether it worked. There\'s no name, no email address and no Google account behind a credit account — only a random ID.</string>
-    <string name="dictate__cloud_other_way_title">Your own provider stays available</string>
-    <string name="dictate__cloud_other_way_body">You can switch to your own API key at any time, and back again. Your credit stays where it is.</string>
 
     <string name="dictate__providers_network_group" comment="Group title for network-level provider settings (proxy)">Network</string>
     <!-- How long a request to the AI provider may take (issue #337). One number for the gap between
@@ -2230,8 +2132,6 @@
 
     <string name="dictate__wear_title" comment="Title of the Wear OS companion settings screen">Wear OS</string>
     <string name="dictate__wear_summary" comment="Summary of the Wear OS settings entry on the main Dictate screen">Options for dictating from a paired watch</string>
-    <string name="dictate__wear_install_title" comment="Title of the button that opens the Play Store to install the Wear OS app">Install Dictate on your watch</string>
-    <string name="dictate__wear_install_summary" comment="Summary explaining the install button opens the Play Store listing where a paired watch can be chosen">Opens the Play Store — on a paired Wear OS 3+ watch, pick your watch as the target.</string>
     <string name="dictate__wear_auto_rewording_title" comment="Title of the toggle that auto-rewords watch dictations">Auto-reword watch dictations</string>
     <string name="dictate__wear_auto_rewording_summary" comment="Short summary for the auto-rewording-on-watch toggle">Reword dictations made from the watch, like on the phone.</string>
     <string name="dictate__wear_standalone_title" comment="Title of the toggle that lets a paired Wear OS watch transcribe on its own">Sync key to watch</string>
@@ -2666,18 +2566,8 @@
     <string name="dictate__prompt_library_added" comment="Marker/label shown once a library prompt has been imported">Added</string>
     <string name="dictate__prompt_library_add_again" comment="Confirm button in the preview dialog for a prompt that is already in the user\'s list; adds a second copy">Add again</string>
     <string name="dictate__prompt_library_empty" comment="Shown when no library prompt matches the search/filter">No prompts match your search.</string>
-    <string name="dictate__prompt_library_error" comment="Shown when the community library could not be downloaded">Couldn\'t load the community library. Check your connection and try again.</string>
-    <string name="dictate__prompt_library_retry" comment="Button to retry loading the community library">Retry</string>
     <string name="dictate__prompt_library_close" comment="Button that closes the prompt preview dialog">Close</string>
     <string name="dictate__prompt_library_author" comment="Attribution line in the prompt preview; {author} is the author name">by {author}</string>
-
-    <!-- Dictate: contribute one of your own prompts back to the community library (issue #105) -->
-    <string name="dictate__prompt_share_title" comment="Action/dialog title for contributing a prompt to the community">Share to community</string>
-    <string name="dictate__prompt_share_message" comment="Explains what happens when the user contributes a prompt">This opens GitHub in your browser with your prompt pre-filled as a submission. Sign in and confirm to open a pull request that adds it to the community library. A free GitHub account is required; nothing is uploaded until you confirm on GitHub.</string>
-    <string name="dictate__prompt_share_continue" comment="Confirm button that opens GitHub to submit the prompt">Open GitHub</string>
-    <string name="dictate__prompt_share_category" comment="Label above the category chips in the share dialog">Category (optional)</string>
-    <string name="dictate__prompt_share_description" comment="Label for the optional description field in the share dialog">Description (optional)</string>
-    <string name="dictate__prompt_share_description_placeholder" comment="Placeholder for the share description field">e.g. Cleans up grammar without changing the meaning</string>
 
     <!-- Dictate file transcription (long-press the mic to pick an audio/video file) -->
     <string name="dictate__file_preparing" comment="Toast shown while the picked file is copied to the cache">Preparing file…</string>
@@ -2726,10 +2616,8 @@
 
     <!-- ============================== Changelog ============================== -->
     <string name="changelog__dialog_title" comment="Title of the what's-new dialog shown after an update">What\'s new</string>
-    <string name="changelog__view_all" comment="Button that opens the full changelog/releases page online">View all changes</string>
     <string name="changelog__intro" comment="Brief intro line at the top of the what's-new dialog, before the per-version notes">Dictate has been updated. Here\'s what\'s new:</string>
     <string name="changelog__version_header" comment="Header shown above one release's notes. {version} is e.g. 4.0.0">Version {version}</string>
-    <string name="changelog__donate" comment="Tappable invitation to donate, shown at the bottom of the what's-new dialog">Enjoying Dictate? Tap here to support development ♥</string>
     <!-- Per-release notes. To announce a new version, add a changelog__vX_Y_Z string here and a matching
          entry in DictateChangelog.kt. changelog__current holds the notes for the initial 4.0.0 release. -->
     <string name="changelog__current" comment="What's-new text for the 4.0.0 release. One change per line.">• Brand-new keyboard: Dictate now ships as a full multi-language layout keyboard with a dedicated mic key that opens the voice panel.\n• Bring your own AI: pick any OpenAI-compatible provider and enter your API key under Settings → Dictate.\n• Smart formatting and rewording powered by your chosen model.\n• Your settings from the previous Dictate app are imported automatically.</string>

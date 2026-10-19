@@ -620,7 +620,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__title" comment="Title of About activity">Tentang</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikon aplikasi {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Lisensi sumber terbuka</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Kebijakan privasi</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kode sumber</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lisensi sumber terbuka</string>
     <string name="about__data_attributions__title">Lisensi data dan model</string>
@@ -628,12 +627,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__version__title" comment="Preference title">Versi</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versi disalin ke papan klip</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Terjadi kesalahan: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Changelog</string>
-    <string name="about__changelog__summary" comment="Preference summary">Apa yang baru</string>
-    <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Sumber kode, diskusi, masalah dan info</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Kebijakan privasi</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Kebijakan privasi untuk proyek ini</string>
     <string name="about__project_license__title" comment="Preference title">Lisensi proyek</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} dilisensikan di bawah {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kesalahan: Gagal memuat teks lisensi.\n-&gt; Alasan: {error_message}</string>
@@ -643,8 +636,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Selamat datang!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Terima kasih telah menggunakan {app_name}! Penyiapan cepat ini memandu Anda melalui langkah-langkah yang diperlukan untuk menggunakan {app_name} di perangkat Anda.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Kebijakan privasi</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repositori</string>
     <string name="setup__enable_ime__title">Aktifkan {app_name}</string>
     <string name="setup__enable_ime__description">Android mengharuskan setiap papan ketik kustom diaktifkan secara terpisah sebelum Anda dapat menggunakannya. Buka setelan <i>Bahasa &amp; masukan</i> sistem, dan di sana aktifkan \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Buka Setelan Sistem</string>
@@ -676,8 +667,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="backup_and_restore__back_up__files">Pilih apa yang akan dicadangkan</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferensi</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">Kunci API dan kata sandi</string>
-    <string name="backup_and_restore__back_up__credentials_warning">Arsip ini memuat kunci API dan kata sandi Anda dalam teks biasa, beserta saldo Dictate Cloud Anda — siapa pun yang menerimanya bisa mendikte atas biaya Anda. Jangan meneruskannya, dan jika sudah, gantilah kuncinya di penyedia Anda. Semua hal lain yang dicentang di bawah ikut terbawa, termasuk riwayat transkripsi dan papan klip Anda.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">Arsip ini tidak memuat kunci API, kata sandi, maupun saldo Dictate Cloud, jadi boleh diteruskan, tetapi juga tidak akan memulihkan milik Anda. Semua hal lain yang dicentang di bawah tetap ada di dalamnya, termasuk riwayat transkripsi dan papan klip Anda.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Arsip ini tidak memuat kunci API dan kata sandi, tetapi memuat semua yang dicentang di bawah: riwayat transkripsi beserta rekaman yang disimpan, papan klip, prompt Anda, dan kata-kata yang dipelajari papan ketik dari Anda.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Ekstensi papan ketik</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Ekstensi / kamus ejaan</string>
@@ -694,7 +683,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="backup_and_restore__restore__metadata">Arsip cadangan dipilih</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Arsip cadangan ini dibuat di versi lain daripada saat ini, yang biasanya didukung. Dicatat bahwa masalah-masalah minor dapat terjadi atau beberapa preferensi tidak dapat dipindahkan dengan benar karena perbedaan fitur-fitur.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Arsip cadangan ini dibuat oleh sebuah aplikasi pihak ketiga, yang biasanya tidak didukung. Kehilangan data mungkin terjadi, hanya pulihkan dengan risiko Anda sendiri!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">Arsip pencadangan ini tidak memuat kunci API dan kata sandi. Semua yang lain dipulihkan. Penggabungan mempertahankan kunci yang sudah ada di perangkat ini; penimpaan menghapusnya, termasuk kode pemulihan Dictate Cloud, yang tidak dapat dimasukkan kembali.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Arsip cadangan ini terdapat metadata yang tidak valid. Arsip cadangannya mungkin telah terkorupsi atau dimodifikasi dengan tidak benar. Memulihkan dari arsip ini tidak memungkinkan, mohon pilih yang lain.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Arsip cadangan ini tidak mempunyai file apa pun untuk dipulihkan, mohon pilih yang lain.</string>
     <string name="backup_and_restore__restore__mode">Mode pemulihan</string>
@@ -705,11 +693,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Laporan kesalahan Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Maaf atas ketidaknyamanan ini, tetapi Dictate mogok karena kesalahan yang tidak terduga.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Jika Anda ingin melaporkan kesalahan ini, periksa dulu pelacak masalah di GitHub jika crash Anda belum dilaporkan.\nJika belum, salin log crash yang dihasilkan dan buka masalah baru. Gunakan template \"%s\" dan isi deskripsi, langkah-langkah untuk mereproduksi, dan tempel log crash yang dihasilkan di bagian akhir. Ini membantu membuat Dictate lebih baik dan lebih stabil untuk semuanya. Terima kasih!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Salin ke papan klip sistem</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Disalin ke papan klip sistem</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Tidak bisa salin ke papan klip sistem: Instansi pengelola papan klip tidak ditemukan</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Buka pelacak masalah (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tutup</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Laporan kesalahan Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate berhenti bekerja…</string>
@@ -889,16 +875,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__validation__enter_percent_size">Harap masukkan ukuran persen</string>
     <string name="ext__validation__enter_number_between_0_100">Harap masukkan bilangan positif antara 0 dan 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Nilai apa pun di atas 50% akan berperilaku seolah-olah Anda menetapkan 50%, pertimbangkan untuk menurunkan ukuran persen Anda</string>
-    <string name="ext__update_box__internet_permission_hint">Karena aplikasi ini tidak memiliki izin Internet, pembaruan untuk ekstensi yang diinstal harus diperiksa secara manual.</string>
-    <string name="ext__update_box__search_for_updates">Cari Pembaruan</string>
     <string name="ext__addon_management_box__managing_placeholder">Kelola {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Semua tugas yang terkait dengan mengimpor, mengekspor, membuat, menyesuaikan, dan menghapus ekstensi dapat ditangani melalui manajer addon terpusat.</string>
     <string name="ext__addon_management_box__go_to_page">Ke {ext_home_title}</string>
-    <string name="ext__home__info">Anda dapat mengunduh dan menginstal ekstensi dari Dictate Addons Store atau mengimpor file ekstensi apa pun yang telah Anda unduh dari internet.</string>
-    <string name="ext__home__visit_store">Kunjungi Add-ons Store</string>
     <string name="ext__home__manage_extensions">Kelola ekstensi terpasang</string>
     <string name="ext__list__view_details">Lihat rincian</string>
-    <string name="ext__check_updates__title">Periksa Pembaruan</string>
     <!-- Action strings -->
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
@@ -1142,15 +1123,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__based_on_floris__title">Berdasarkan FlorisBoard</string>
     <string name="about__based_on_floris__summary">Cabang dari FlorisBoard oleh Patrick Goldinger dan kontributor, Apache 2.0. Ketuk untuk membuka.</string>
     <string name="about__made_by">Dibuat dengan ❤️ oleh DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Masukan &amp; dukungan</string>
-    <string name="about__feedback__summary">Kirim email berisi pertanyaan, bug, atau ide</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Pilih cara Dictate menyalin suara</string>
-    <string name="setup__provider__choose_intro">Dictate mengubah suaramu menjadi teks dengan bantuan layanan AI. Dua cara di atas cocok untuk kebanyakan orang — dan kalau kamu sama sekali tidak ingin memakai layanan awan, ada dua cara lagi di bawah.</string>
-    <string name="setup__provider__choice_cloud_title">Beli saldo di dalam aplikasi</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: tanpa akun di mana pun, tanpa kunci API. Kamu membeli menit pendiktean lewat Google Play dan saldonya tidak pernah kedaluwarsa. Jalan yang praktis — dan sedikit lebih mahal daripada langsung ke penyedia.</string>
-    <string name="setup__provider__choice_cloud_btn">Tampilkan paket saldo</string>
     <string name="setup__provider__choice_own_title">Pakai penyedia AI sendiri</string>
     <string name="setup__provider__choice_own_body">Buat kunci di penyedia pilihanmu — Groq gratis untuk pendiktean sehari-hari. Kamu tetap memegang akunmu sendiri dan membayar langsung ke penyedia dengan harganya. Perlu sekitar dua menit.</string>
     <string name="setup__provider__choice_own_btn">Siapkan kunci saya sendiri</string>
@@ -1182,7 +1155,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__provider__other_provider">Gunakan penyedia AI lain</string>
     <string name="setup__provider__other_provider_hint">Lanjutan: pilih layanan lain daripada Groq. Anda memerlukan kunci API dari penyedia tersebut.</string>
     <string name="setup__finish_up__add_key_hint">Tips: Anda belum menambahkan kunci AI. Tambahkan kapan saja di Pengaturan → Dictate → Penyedia AI untuk mulai mendikte.</string>
-    <string name="crash_dialog__bug_report_template">Laporan kerusakan</string>
     <string name="enum__swipe_action__toggle_compact_layout">Alihkan tata letak ringkas</string>
     <string name="unit__hours__symbol">{v} j</string>
     <string name="unit__minutes__symbol">{v} mnt</string>
@@ -1331,10 +1303,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__action_dismiss">Tutup</string>
     <string name="dictate__action_yes">Ya</string>
     <string name="dictate__action_no">Tidak, terima kasih</string>
-    <string name="dictate__promo_rate_message">Suka dengan Dictate?</string>
-    <string name="dictate__promo_donate_message">Dukung Dictate?</string>
-    <string name="dictate__promo_rate_action">Beri nilai</string>
-    <string name="dictate__promo_donate_action">Donasi</string>
     <string name="dictate__promo_changelog_message">Dictate telah diperbarui</string>
     <string name="dictate__promo_changelog_action">Detail</string>
     <string name="dictate__title">Dictate</string>
@@ -1640,16 +1608,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__prompt_library_added">Ditambahkan</string>
     <string name="dictate__prompt_library_add_again">Tambahkan lagi</string>
     <string name="dictate__prompt_library_empty">Tidak ada perintah yang cocok dengan pencarian Anda.</string>
-    <string name="dictate__prompt_library_error">Tidak dapat memuat pustaka komunitas. Periksa koneksi Anda dan coba lagi.</string>
-    <string name="dictate__prompt_library_retry">Coba lagi</string>
     <string name="dictate__prompt_library_close">Tutup</string>
     <string name="dictate__prompt_library_author">oleh {author}</string>
-    <string name="dictate__prompt_share_title">Bagikan ke komunitas</string>
-    <string name="dictate__prompt_share_message">Ini membuka GitHub di browser Anda dengan perintah Anda yang sudah terisi sebagai kiriman. Masuk dan konfirmasi untuk membuka pull request yang menambahkannya ke pustaka komunitas. Diperlukan akun GitHub gratis; tidak ada yang diunggah hingga Anda mengonfirmasi di GitHub.</string>
-    <string name="dictate__prompt_share_continue">Buka GitHub</string>
-    <string name="dictate__prompt_share_category">Kategori (opsional)</string>
-    <string name="dictate__prompt_share_description">Deskripsi (opsional)</string>
-    <string name="dictate__prompt_share_description_placeholder">mis. Merapikan tata bahasa tanpa mengubah maknanya</string>
     <string name="dictate__file_preparing">Menyiapkan berkas…</string>
     <string name="dictate__file_too_large">Berkas terlalu besar – penyedia menerima maksimal 25 MB.</string>
     <string name="dictate__file_read_error">Tidak dapat membaca berkas yang dipilih.</string>
@@ -1687,10 +1647,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__grant_mic_permission__description">Dictate memerlukan akses mikrofon untuk merekam suara Anda guna transkripsi.</string>
     <string name="setup__grant_mic_permission__btn">Berikan izin mikrofon</string>
     <string name="changelog__dialog_title">Yang baru</string>
-    <string name="changelog__view_all">Lihat semua perubahan</string>
     <string name="changelog__intro">Dictate telah diperbarui. Inilah yang baru:</string>
     <string name="changelog__version_header">Versi {version}</string>
-    <string name="changelog__donate">Suka dengan Dictate? Ketuk di sini untuk mendukung pengembangan ♥</string>
     <string name="changelog__current">• Papan ketik yang sama sekali baru: Dictate kini hadir sebagai papan ketik tata letak multibahasa lengkap dengan tombol mikrofon khusus yang membuka panel suara.\n• Bawa AI Anda sendiri: pilih penyedia apa pun yang kompatibel dengan OpenAI dan masukkan kunci API Anda di Pengaturan → Dictate.\n• Pemformatan dan penyusunan ulang cerdas yang didukung oleh model pilihan Anda.\n• Pengaturan Anda dari aplikasi Dictate sebelumnya diimpor secara otomatis.</string>
     <string name="changelog__v4_1_0">• Baru: cari emoji langsung dari keyboard.\n• Penyedia transkripsi baru: Soniox.\n• Sisipkan kembali dikte terakhir Anda, dan pulihkan rekaman yang terputus saat keyboard ditutup.\n• Bilah prompt kini diperbarui secara langsung: tekan lama sebuah prompt untuk mengeditnya.\n• Layar penyedia AI kini menampilkan penyedia transkripsi dan pengubahan kata yang aktif.\n• Tombol rekam lebih besar dan lebih mudah ditekan.\n• Perbaikan: pesan dukungan bisa macet dan menutupi bilah dalam beberapa bahasa; pencadangan tidak lagi gagal saat prompt, keyboard, atau tema dipilih; kunci API yang tersimpan dipertahankan saat memperbarui.</string>
     <string name="changelog__v4_1_1">• Perbaikan: warna aksen bisa tampak hijau di beberapa perangkat; tombol dan tuts kembali ke biru Dictate.</string>
@@ -1780,8 +1738,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__providers_rewording_single_call_note">Sedang tidak digunakan — penyedia transkripsi Anda melakukan penyusunan ulang dalam panggilan tunggalnya.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opsi untuk mendikte dari jam tangan yang dipasangkan</string>
-    <string name="dictate__wear_install_title">Instal Dictate di jam tangan Anda</string>
-    <string name="dictate__wear_install_summary">Membuka Play Store — pada jam tangan Wear OS 3+ yang dipasangkan, pilih jam tangan Anda sebagai tujuan.</string>
     <string name="dictate__wear_auto_rewording_title">Susun ulang otomatis dikte dari jam tangan</string>
     <string name="dictate__wear_auto_rewording_summary">Susun ulang dikte dari jam tangan, seperti di ponsel.</string>
     <string name="quick_action__system_prev_input_method">Ganti keyboard</string>
@@ -1972,7 +1928,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour__legacy_cta">Pilih tata letak</string>
     <string name="apptour__library_eyebrow">Komunitas</string>
     <string name="apptour__library_title">Pustaka prompt</string>
-    <string name="apptour__library_body">Telusuri prompt penyusunan ulang yang dibagikan komunitas dan pasang dengan satu ketukan — atau terbitkan milikmu sendiri untuk dipakai orang lain.</string>
     <string name="apptour__library_cta">Buka pustaka</string>
     <string name="apptour__stats_eyebrow">Wawasan</string>
     <string name="apptour__stats_title">Statistik dikte Anda</string>
@@ -2013,7 +1968,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour51__more_body">Banyak juga peningkatan kecil: pilih bahasa transkripsi aktif di pengaturan, tombol berhenti kini benar-benar membatalkan permintaan yang sedang berjalan, sakelar tampilkan/sembunyikan untuk kunci API, dan mengetik multibahasa tanpa koreksi otomatis antarbahasa — plus banyak perbaikan di tata letak klasik, papan angka, dan lainnya.</string>
     <string name="apptour51__outro_eyebrow">Itulah 5.1</string>
     <string name="apptour51__outro_title">Selamat menikmati pembaruan</string>
-    <string name="apptour51__outro_body">Terima kasih telah menggunakan Dictate! Jika ini membantumu setiap hari, donasi kecil membuat proyek ini terus berjalan. Kamu dapat mengunjungi kembali tur mana pun kapan saja di Pengaturan › Tentang.</string>
+    <string name="apptour51__outro_body">Terima kasih telah menggunakan Dictate! Kamu dapat mengunjungi kembali tur mana pun kapan saja di Pengaturan › Tentang.</string>
     <string name="apptour52__cta_try">Coba</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Dikte di mana saja</string>
@@ -2072,14 +2027,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour53__outro_body">Ditambah banyak hal kecil: setiap penyedia membawa logonya sendiri, indikator rekaman bisa diam, berdenyut, atau bereaksi pada suara, keluaran prompt bisa menyimpan transkrip aslinya di samping, dan paragraf tak lagi terpotong setelah singkatan. Semua tur bisa dilihat lagi di Pengaturan › Tentang.</string>
 
     <string name="apptour60__cta_try">Coba</string>
-    <string name="apptour60__art_minutes">menit</string>
     <string name="apptour60__art_speed">1,5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Saldo, bahasa Mandarin, dikte lebih murah</string>
-    <string name="apptour60__intro_body">Versi ini menambah jalan masuk kedua — membeli saldo alih-alih membawa kunci API sendiri —, ditambah pinyin untuk bahasa Mandarin, tujuh bahasa dengan kamus baru, dan rekaman yang lebih murah.</string>
-    <string name="apptour60__cloud_eyebrow">Baru: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Beli menit alih-alih mencari kunci</string>
-    <string name="apptour60__cloud_body">Jika Anda lebih suka tidak membuat akun di penyedia, kini Anda cukup membeli saldo. Ya, itu melewati server kami — tetapi rekaman maupun teks Anda tidak disimpan di sana, semuanya diteruskan langsung. Seluruh kode server bersifat publik dan dapat dibaca. Kunci Anda sendiri tetap bekerja persis seperti sebelumnya.</string>
     <string name="apptour60__speedup_eyebrow">Hemat biaya API</string>
     <string name="apptour60__speedup_title">Kata yang sama, menit lebih sedikit</string>
     <string name="apptour60__speedup_body">Rekaman dapat dipercepat sebelum diunggah, tanpa membuat suara Anda meninggi. Sebagian besar penyedia menagih berdasarkan durasi: rekaman yang sepertiga lebih pendek berbiaya sepertiga lebih murah. Dikte panjang juga dikemas alih-alih ditolak.</string>
@@ -2097,7 +2046,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour60__more_body">Menahan tombol berhenti membatalkan transkripsi yang menggantung. Tombol mengambang tidak lagi melaporkan keberhasilan yang tak dapat diverifikasinya, dan padam bersama layar. Mengetik geser kini mengenal kata-kata yang Anda tambahkan sendiri. Dan mogok tepat setelah pembaruan sudah diperbaiki.</string>
     <string name="apptour60__outro_eyebrow">Itulah 6.0</string>
     <string name="apptour60__outro_title">Selamat menikmati</string>
-    <string name="apptour60__outro_body">Bagaimanapun Anda memakai Dictate — kunci sendiri, server sendiri, model di perangkat, atau saldo —, tidak ada yang berubah pada jalan lainnya. Setiap tur dapat dilihat lagi di Setelan › Tentang.</string>
     <string name="apptour61__cta_try">Coba</string>
     <string name="apptour61__art_folder">Stiker</string>
     <string name="apptour61__art_share">Bagikan dengan</string>
@@ -2212,7 +2160,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="apptour64__command_body">Pilih sebuah kata di Penyusunan ulang — misalnya “Jarvis”. Dikte yang diawali kata itu dijalankan sebagai perintah suara: pada teks yang dipilih, atau sebagai pertanyaan jika tidak ada yang dipilih. Hanya kata pertama yang dihitung, jadi kalimat yang sekadar menyebutnya tetap ditulis seperti biasa. Prompt otomatis kini juga bekerja sebagaimana mestinya: selalu mendapat dikte yang menjadi bahannya, dan prompt yang hanya berisi [teks dalam kurung siku] ditambahkan ke akhir apa adanya, bukan dikirim ke model.</string>
     <string name="apptour64__privacy_eyebrow">Privasi dan keamanan</string>
     <string name="apptour64__privacy_title">Seluruh aplikasi, diperiksa</string>
-    <string name="apptour64__privacy_body">Setiap bagian Dictate ditinjau dari sisi privasi dan keamanan, dan apa yang ditemukan sudah diperbaiki. Dikte ke kolom kata sandi atau PIN tidak masuk riwayat, kini juga lewat tombol mengambang. Cadangan cloud Android hanya membawa kunci API-mu dalam keadaan terenkripsi end-to-end. Dan “Percayai sertifikat pengguna” kini diatur per akun penyedia, bukan untuk semuanya sekaligus.</string>
     <string name="apptour64__more_eyebrow">Selain itu</string>
     <string name="apptour64__more_title">Semua hal lain di 6.4</string>
     <string name="apptour64__more_body">Perubahan yang lebih kecil, untuk yang ingin tahu detailnya. Lewati saja kalau tidak.</string>
@@ -2297,72 +2244,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="dictate__legacy_prompt_rows_title">Baris prompt</string>
     <string name="dictate__legacy_prompt_rows_one">Satu baris</string>
     <string name="dictate__legacy_prompt_rows_two">Dua baris</string>
-    <string name="about__website__title">Situs web</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">Beli saldo pendiktean — tanpa kunci API</string>
-    <string name="dictate__cloud_row_summary_balance">Sisa {minutes} menit saldo</string>
-    <string name="dictate__cloud_intro_title">Mendikte tanpa kunci API</string>
-    <string name="dictate__cloud_intro_body">Beli saldo pendiktean langsung di sini, di dalam aplikasi. Tanpa akun di penyedia AI, tanpa kunci API, tanpa langganan. Saldo tidak kedaluwarsa dan hanya terpakai saat benar-benar dipakai: satu menit pendiktean menghabiskan satu menit, satu penulisan ulang sekitar dua detik.</string>
-    <string name="dictate__cloud_intro_alternative">Ini sepenuhnya pilihan. Dictate bekerja sama baiknya dengan kuncimu sendiri di penyedia pilihanmu — beberapa di antaranya gratis — dan dengan begitu kamu tetap memegang akunmu dan membayar langsung ke penyedia dengan harganya.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Pakai penyedia saya saja</string>
-    <string name="dictate__cloud_balance_label">Sisa saldo</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} mnt</string>
-    <string name="dictate__cloud_balance_rewords">atau sekitar {count} penulisan ulang</string>
-    <string name="dictate__cloud_balance_checked">Diperbarui {time}</string>
-    <string name="dictate__cloud_balance_refresh">Segarkan saldo</string>
-    <string name="dictate__cloud_packs_title">Paket saldo</string>
-    <string name="dictate__cloud_topup_title">Isi ulang</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} menit pendiktean</string>
-    <string name="dictate__cloud_pack_savings">{percent}% lebih murah</string>
-    <string name="dictate__cloud_shop_unavailable">Paket saldo tidak dapat ditampilkan di sini. Biasanya itu berarti aplikasi tidak dipasang dari Google Play, atau tidak ada akun Play yang masuk di perangkat ini. Kunci API milikmu tetap berfungsi pada kedua kasus tersebut.</string>
-    <string name="dictate__cloud_activate_title">Saldo sudah siap</string>
-    <string name="dictate__cloud_activate_body">Kamu punya saldo, tetapi pendiktean saat ini berjalan lewat penyedia lain. Pindah kapan saja — tanpa kamu, tidak ada yang berubah.</string>
-    <string name="dictate__cloud_activate_btn">Mendikte lewat Dictate Cloud</string>
-    <string name="dictate__cloud_notice_purchased">{minutes} menit ditambahkan ke saldomu.</string>
-    <string name="dictate__cloud_notice_pending">Pembayaranmu belum selesai. Saldo akan muncul begitu Google mengonfirmasinya.</string>
-    <string name="dictate__cloud_notice_not_redeemed">Pembayaran berhasil, tetapi saldo belum bisa diambil. Tidak ada yang hilang — buka lagi layar ini dan saldo akan ditambahkan.</string>
-    <string name="dictate__cloud_notice_needs_recovery">Pembelian ini milik akun saldo lain. Gunakan kode pemulihannya untuk memindahkan saldo ke perangkat ini.</string>
-    <string name="dictate__cloud_notice_failed">Pembelian tidak dapat diselesaikan.</string>
-    <string name="dictate__cloud_notice_deleted">Akun kredit Anda telah dihapus.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Akun kredit Anda sudah tidak ada — akun itu dihapus lewat situs web atau dari perangkat lain. Sekarang akun itu juga hilang dari ponsel ini.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Perangkat ini telah dikeluarkan dari akun kredit Anda. Akun dan kreditnya tidak berubah — masukkan kode pemulihan di bawah untuk masuk lagi.</string>
-    <string name="dictate__cloud_delete_title">Hapus akun kredit</string>
-    <string name="dictate__cloud_delete_explain">Menghapus akun kredit Anda dan semua yang tersimpan tentangnya. Sisa kredit hangus dan tidak dikembalikan. Jika aplikasi sudah tidak ada, ini juga bisa lewat api.dictatekeyboard.com/delete.</string>
-    <string name="dictate__cloud_delete_btn">Hapus akun</string>
-    <string name="dictate__cloud_delete_dialog_title">Hapus akun Anda?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Anda masih punya {minutes} menit kredit. Menghapus akan menghilangkan akun, kode pemulihan, dan semua perangkat yang masuk.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">Kredit ini hangus dan tidak bisa dipulihkan — bahkan oleh kami.</string>
-    <string name="dictate__cloud_delete_dialog_records">Bukti pembelian Anda disimpan sepuluh tahun sesuai ketentuan pajak. Isinya nomor pesanan dan jumlah, tidak ada yang mengarah ke Anda.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Hapus permanen</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Pertahankan akun</string>
-    <string name="dictate__cloud_notice_dismiss">Oke</string>
-    <string name="dictate__cloud_recovery_title">Kode pemulihan</string>
-    <string name="dictate__cloud_recovery_explain">Catat kode ini. Google tidak memulihkan saldo yang sudah terpakai setelah pemasangan ulang, jadi kode ini satu-satunya cara membawa sisa menitmu ke ponsel baru. Kode ini juga memungkinkanmu memakai saldo yang sama di perangkat kedua.</string>
-    <string name="dictate__cloud_recovery_copy">Salin kode pemulihan</string>
-    <string name="dictate__cloud_recovery_copied">Kode pemulihan disalin</string>
-    <string name="dictate__cloud_recovery_restore_btn">Pulihkan saldo</string>
-    <string name="dictate__cloud_recovery_dialog_body">Masukkan kode pemulihan dari akun saldo yang sudah ada. Perangkat tempat kamu memakainya tetap berfungsi.</string>
-    <string name="dictate__cloud_recovery_field">Kode pemulihan</string>
-    <string name="dictate__cloud_recovery_confirm">Pulihkan</string>
-    <string name="dictate__cloud_recovery_not_found">Tidak ditemukan saldo untuk kode ini.</string>
-    <string name="dictate__error_cloud_no_account">Tidak ada akun kredit di perangkat ini</string>
-    <string name="dictate__cloud_devices_full_title">Terlalu banyak perangkat</string>
-    <string name="dictate__cloud_devices_full_body">Saldo Anda sudah dipakai di {count} perangkat, dan itu batas maksimalnya. Keluarkan salah satu untuk memakainya di sini — saldonya sendiri tidak berubah.</string>
-    <string name="dictate__cloud_devices_sign_out">Keluarkan</string>
-    <string name="dictate__cloud_devices_unnamed">Perangkat tanpa nama</string>
-    <string name="dictate__cloud_devices_last_used">Terakhir dipakai {time}</string>
-    <string name="dictate__cloud_devices_never_used">Belum pernah dipakai</string>
-    <string name="dictate__cloud_recovery_error">Server tidak dapat dihubungi. Periksa koneksimu dan coba lagi.</string>
-    <string name="dictate__cloud_limits_title">Yang tidak dilakukan Dictate Cloud</string>
-    <string name="dictate__cloud_limits_body">Transkripsi langsung sambil berbicara tidak tersedia dengan saldo — biayanya sekitar empat kali lipat per menit, sedangkan mesin di perangkat melakukannya luring dan gratis. Model AI dan seberapa lama ia berpikir ditentukan oleh server, jadi pemilihan model, tingkat penalaran, dan endpoint sendiri tetap nonaktif. Selebihnya tidak berubah: prompt, riwayat, tombol mengambang, pendiktean panjang, dan jam tangan.</string>
-    <string name="dictate__cloud_privacy_title">Yang disimpan</string>
-    <string name="dictate__cloud_privacy_body">Rekaman dan teksmu hanya diteruskan dan tidak pernah ditulis ke disk. Yang disimpan hanya angka: akun mana, kapan, berapa lama, dan apakah berhasil. Di balik akun saldo tidak ada nama, alamat email, maupun akun Google — hanya sebuah pengenal acak.</string>
-    <string name="dictate__cloud_other_way_title">Penyedia sendiri tetap tersedia</string>
-    <string name="dictate__cloud_other_way_body">Kamu bisa beralih ke kunci API milikmu kapan saja, dan kembali lagi. Saldomu tetap di tempatnya.</string>
-    <string name="dictate__error_out_of_credit">Saldo habis</string>
-    <string name="dictate__action_top_up">Isi ulang saldo</string>
-    <string name="dictate__promo_low_credit_message">Saldo hampir habis.</string>
-    <string name="dictate__promo_low_credit_action">Isi ulang</string>
     <string name="prefs__media__sticker__title">Stiker</string>
     <string name="prefs__media__sticker_folder__title">Folder stiker</string>
     <string name="prefs__media__sticker_folder__summary_unset">Pilih folder berisi gambar milikmu sendiri</string>

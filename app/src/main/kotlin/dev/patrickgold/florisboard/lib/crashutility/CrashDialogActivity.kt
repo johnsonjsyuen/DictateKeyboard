@@ -20,8 +20,6 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -32,7 +30,6 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
@@ -57,9 +54,7 @@ class CrashDialogActivity : ComponentActivity() {
     private val prefs by SafePreferenceInstanceWrapper()
 
     private val stacktrace by lazy { findViewById<TextView>(R.id.stacktrace) }
-    private val reportInstructions by lazy { findViewById<TextView>(R.id.report_instructions) }
     private val copyToClipboard by lazy { findViewById<Button>(R.id.copy_to_clipboard) }
-    private val openBugReportForm by lazy { findViewById<Button>(R.id.open_bug_report_form) }
     private val close by lazy { findViewById<Button>(R.id.close) }
 
     @SuppressLint("InflateParams")
@@ -72,16 +67,10 @@ class CrashDialogActivity : ComponentActivity() {
         setActionBar(toolbar)
 
         stacktraces = CrashUtility.getUnhandledStacktraces(this)
-        val versionName = buildString {
-            append("[")
-            append(BuildConfig.VERSION_NAME)
-            append("](")
-            if (BuildConfig.DEBUG) {
-                append(stringRes(R.string.florisboard__commit_by_hash_url, "hash" to BuildConfig.BUILD_COMMIT_HASH))
-            } else {
-                append(stringRes(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME))
-            }
-            append(")")
+        val versionName = if (BuildConfig.DEBUG) {
+            "${BuildConfig.VERSION_NAME} [commit ${BuildConfig.BUILD_COMMIT_HASH}]"
+        } else {
+            BuildConfig.VERSION_NAME
         }
         errorReport.apply {
             appendLine("#### Environment information")
@@ -108,11 +97,6 @@ class CrashDialogActivity : ComponentActivity() {
         }
         stacktrace.text = errorReport
 
-        reportInstructions.text =
-            reportInstructions.text.toString().format(
-                resources.getString(R.string.crash_dialog__bug_report_template)
-            )
-
         copyToClipboard.setOnClickListener {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
             val toastMessage: String = if (clipboardManager != null && clipboardManager is ClipboardManager) {
@@ -122,14 +106,6 @@ class CrashDialogActivity : ComponentActivity() {
                 resources.getString(R.string.crash_dialog__copy_to_clipboard_failure)
             }
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
-        }
-
-        openBugReportForm.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(resources.getString(R.string.florisboard__issue_tracker_url))
-            )
-            startActivity(browserIntent)
         }
 
         close.setOnClickListener {

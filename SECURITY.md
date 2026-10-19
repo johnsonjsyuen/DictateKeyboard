@@ -7,9 +7,8 @@ ask for, so a way to report a problem privately matters more here than it does f
 ## Reporting a vulnerability
 
 **Please do not open a public issue for anything that could be used against someone's device or
-data.** Use GitHub's private reporting instead:
-
-> **[→ Report a vulnerability privately](https://github.com/DevEmperor/DictateKeyboard/security/advisories/new)**
+data.** Use GitHub's private vulnerability reporting on this repository instead (the
+**Security** tab → **Report a vulnerability**).
 
 Only you and I can see the report, and it turns into a published advisory once a fix is out —
 with credit, unless you would rather not be named.
@@ -30,15 +29,12 @@ older versions.
 
 ## In scope
 
-The Android app, the Wear OS app, and the Dictate Cloud backend. In particular:
+The Android app and the Wear OS app. In particular:
 
-- Anything that exposes a stored provider API key, or a Dictate Cloud wallet or recovery code, to
-  another app or to someone on the network.
+- Anything that exposes a stored provider API key to another app or to someone on the network.
 - Anything that lets another app read what is typed or dictated, or drive the floating button's
   accessibility service.
 - Anything that sends audio or text somewhere other than the provider you configured.
-- Anything server-side in Dictate Cloud: manipulating credit, reaching another person's balance or
-  history, or getting transcription without paying for it.
 - Extensions and language packs: a crafted `.flex` that escapes its directory, overwrites files
   outside it, or gets code executed.
 - Anything that weakens or bypasses TLS beyond the switches documented below.
@@ -47,8 +43,7 @@ The Android app, the Wear OS app, and the Dictate Cloud backend. In particular:
 
 These are how the app is built, and reporting them will get you this section quoted back:
 
-- **Your audio and text go to the AI provider you configured.** That is what the app is for; the
-  [privacy policy](PRIVACY_POLICY.md) describes exactly what leaves the device and when. Choosing
+- **Your audio and text go to the AI provider you configured.** That is what the app is for. Choosing
   the on-device engine is how you avoid it entirely.
 - **Your API key is stored on the device**, in Dictate's private storage. An attacker who already
   has root, an unlocked bootloader, or physical access to an unlocked phone can read it — that is

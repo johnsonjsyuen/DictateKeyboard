@@ -515,7 +515,6 @@
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">تراخيص البرامج مفتوحة المصدر</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
     <string name="about__data_attributions__title">تراخيص البيانات والنماذج</string>
@@ -523,12 +522,6 @@
     <string name="about__version__title" comment="Preference title">الإصدار</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">تم نسخ الإصدار إلى الحافظة</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">لقد حدث خطأ ما: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">سِجل التغييرات</string>
-    <string name="about__changelog__summary" comment="Preference summary">مالجديد</string>
-    <string name="about__repository__title" comment="Preference title">المستودع(چيتهب)</string>
-    <string name="about__repository__summary" comment="Preference summary">الكود المصدري, المناقشات, الاخطاء والمعلومات</string>
-    <string name="about__privacy_policy__title" comment="Preference title">سياسة الخصوصية</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">سياسة الخصوصية لهذا المشروع</string>
     <string name="about__project_license__title" comment="Preference title">رخصة المشروع</string>
     <string name="about__project_license__summary" comment="Preference summary">هذا التطبيق هو مرخص تحت رخصة {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطأ: فشل تحميل نص الترخيص. \n-&gt; السبب: {error_message}</string>
@@ -538,8 +531,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">مرحباً!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">شكرًا لاستخدامك {app_name}! سيرشدك هذا الإعداد السريع خلال الخطوات المطلوبة لاستخدام {app_name} على جهازك.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سياسة الخصوصية</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">المستودع</string>
     <string name="setup__enable_ime__title">تفعيل {app_name}</string>
     <string name="setup__enable_ime__description">يتطلب نظام Android تمكين كل لوحة مفاتيح مخصصة بشكل منفصل قبل أن تتمكن من استخدامها. افتح النظام <i> اعدادات اللغة و الأدخال </i> وتمكين \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">افتح إعدادات النظام</string>
@@ -567,8 +558,6 @@
     <string name="backup_and_restore__back_up__files">حدد ما يتم نسخه احتياطيا</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">تفضيلات</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">مفاتيح API وكلمات المرور</string>
-    <string name="backup_and_restore__back_up__credentials_warning">يحتوي هذا الأرشيف على مفاتيح API وكلمات المرور الخاصة بك بنص واضح، إلى جانب رصيدك في Dictate Cloud — ومن يحصل عليه يمكنه الإملاء على حسابك. لا تُشاركه، وإذا كنت قد شاركته بالفعل فغيِّر المفتاح عند مزوّدك. كل ما هو محدَّد أدناه يرحل معه أيضًا، بما في ذلك سجل النسخ النصي والحافظة.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">لا يحتوي هذا الأرشيف على مفاتيح API أو كلمات مرور أو رصيد Dictate Cloud، فيمكن مشاركته، لكنه لن يستعيد مفاتيحك كذلك. كل ما هو محدَّد أدناه لا يزال فيه، بما في ذلك سجل النسخ النصي والحافظة.</string>
     <string name="backup_and_restore__back_up__personal_content_note">لا يحتوي هذا الأرشيف على مفاتيح API أو كلمات مرور، لكنه يحتوي على كل ما هو محدَّد أدناه: سجل النسخ النصي مع التسجيلات المحفوظة، والحافظة، ومطالباتك، والكلمات التي تعلّمتها لوحة المفاتيح منك.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">ملحقات لوحة المفاتيح</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">ملحقات التهجئة/ القاموس</string>
@@ -585,7 +574,6 @@
     <string name="backup_and_restore__restore__metadata">اختر أرشيف النسخة الاحتياطية</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">تم إنشاء أرشيف النسخ الاحتياطي هذا في إصدار آخر غير الإصدار الحالي ، والذي يتم دعمه بشكل عام. كن على علم بأنه قد تحدث مشكلات بسيطة أو قد لا يتم نقل بعض التفضيلات بشكل صحيح بسبب اختلافات في الميزات.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">تم إنشاء أرشيف النسخ الاحتياطي هذا في تطبيق تابع لجهة خارجية ، وهو غير مدعوم بشكل عام. قد تحدث خسائر في البيانات ، قم باستعادتها على مسؤوليتك الخاصة!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">لا يحتوي أرشيف النسخ الاحتياطي هذا على مفاتيح API أو كلمات مرور. يُستعاد كل ما عدا ذلك. الدمج يحافظ على المفاتيح الموجودة على هذا الجهاز؛ أما الاستبدال فيحذفها، بما في ذلك رمز استرداد Dictate Cloud الذي لا يمكن إدخاله من جديد.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">يحتوي أرشيف النسخ الاحتياطي هذا على بيانات تعريف غير صالحة. إما أنه تالف أو تم تعديله بشكل سيئ. الاستعادة من هذا الأرشيف غير ممكنة ، يرجى تحديد واحد آخر.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">لا يحتوي أرشيف النسخ الاحتياطي هذا على أي ملفات لاستعادتها ، يرجى تحديد ملف آخر.</string>
     <string name="backup_and_restore__restore__mode">وضع الإستعادة</string>
@@ -596,11 +584,9 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن Dictate تعطل بسبب خطأ غير متوقع.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">إذا كنت ترغب في الإبلاغ عن هذا الخطأ ، فتحقق أولاً من أداة تعقب المشكلات على GitHub إذا لم يتم الإبلاغ عن العطل بالفعل. \n إذا لم يتم الإبلاغ عن هذا الخطأ ، فقم بنسخ سجل التعطل الذي تم إنشاؤه وافتح مشكلة جديدة. استخدم القالب واملأ الوصف وخطوات إعادة إنتاج ولصق سجل العطل الذي تم إنشاؤه في النهاية. هذا يساعد\"%s\" في جعل Dictate أفضل وأكثر استقرارًا للجميع. شكرا لك!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ الى حافظة النظام</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">تم النسخ الى حافظة النظام</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">لا يمكن النسخ إلى حافظة النظام: لم يتم العثور على جلسة مدير الحافظة</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">إغلاق</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف Dictate عن العمل…</string>
@@ -774,16 +760,11 @@
     <string name="ext__validation__enter_percent_size">يرجى إدخال النسبة المئوية للحجم</string>
     <string name="ext__validation__enter_number_between_0_100">يرجى إدخال رَقْم موجب بين 0 و 100</string>
     <string name="ext__validation__hint_value_above_50_percent">أي قيمة أعلى من 50 ٪ ستتصرف كما لو أنك قمت بتعيين 50 ٪، فكر في خفض النسبة المئوية لحجمك</string>
-    <string name="ext__update_box__internet_permission_hint">نظرًا لأن هذا التطبيق ليس لديه إذن إنترنت، يجب التحقق من تحديثات الإضافات المثبتة يدويًا.</string>
-    <string name="ext__update_box__search_for_updates">البحث عن التحديثات</string>
     <string name="ext__addon_management_box__managing_placeholder">إدارة {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">يمكن التعامل مع جميع المهام المتعلقة باستيراد الملحقات وتصديرها وإنشائها وتخصيصها وإزالتها بواسطة مدير الإضافات المركزي.</string>
     <string name="ext__addon_management_box__go_to_page">انتقل إلى {ext_home_title}</string>
-    <string name="ext__home__info">يمكنك تنزيل الإضافات وتثبيتها من متجر إضافات Dictate أو استيراد أي مِلَفّ ملحق قمت بتنزيله من الإنترنت.</string>
-    <string name="ext__home__visit_store">زيارة متجر الإضافات</string>
     <string name="ext__home__manage_extensions">إدارة الإضافات المثبتة</string>
     <string name="ext__list__view_details">عرض التفاصيل</string>
-    <string name="ext__check_updates__title">التحقق من وجود تحديثات</string>
     <!-- Action strings -->
     <string name="action__add">إضافة</string>
     <string name="action__apply">تطبيق</string>
@@ -1045,15 +1026,7 @@
     <string name="about__based_on_floris__title">مبني على FlorisBoard</string>
     <string name="about__based_on_floris__summary">نسخة معدّلة من FlorisBoard من إعداد Patrick Goldinger والمساهمين، برخصة Apache 2.0. انقر لفتحه.</string>
     <string name="about__made_by">صُنع بـ ❤️ بواسطة DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">الملاحظات والدعم</string>
-    <string name="about__feedback__summary">أرسل بريدًا إلكترونيًا بأسئلة أو أخطاء أو أفكار</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">اختر كيف يُفرِّغ Dictate كلامك</string>
-    <string name="setup__provider__choose_intro">يحوِّل Dictate كلامك إلى نص بمساعدة خدمة ذكاء اصطناعي. الطريقتان أعلاه تناسبان معظم الناس — وإذا كنت تفضّل الاستغناء عن الخدمات السحابية تمامًا، فهناك طريقتان إضافيتان بالأسفل.</string>
-    <string name="setup__provider__choice_cloud_title">شراء رصيد داخل التطبيق</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: لا حساب في أي مكان، ولا مفتاح API. تشتري دقائق الإملاء عبر Google Play ولا تنتهي صلاحيتها أبدًا. الطريق المريح — وأغلى قليلًا من التوجّه إلى مزوّد مباشرة.</string>
-    <string name="setup__provider__choice_cloud_btn">عرض باقات الرصيد</string>
     <string name="setup__provider__choice_own_title">استخدام مزوّد ذكاء اصطناعي خاص بك</string>
     <string name="setup__provider__choice_own_body">أنشئ مفتاحًا لدى مزوّد تختاره — Groq مجاني للإملاء اليومي. تحتفظ بحسابك وتدفع للمزوّد مباشرة بأسعاره. يستغرق نحو دقيقتين.</string>
     <string name="setup__provider__choice_own_btn">إعداد مفتاحي الخاص</string>
@@ -1085,7 +1058,6 @@
     <string name="setup__provider__other_provider">استخدم مزوّد ذكاء اصطناعي آخر</string>
     <string name="setup__provider__other_provider_hint">متقدّم: اختر خدمة أخرى بدلًا من Groq. ستحتاج إلى مفتاح API من ذلك المزوّد.</string>
     <string name="setup__finish_up__add_key_hint">نصيحة: لم تُضِف مفتاح ذكاء اصطناعي بعد. أضِف واحدًا في أي وقت من الإعدادات ← Dictate ← مزوّدو الذكاء الاصطناعي لبدء الإملاء.</string>
-    <string name="crash_dialog__bug_report_template">تقرير الأعطال</string>
     <string name="enum__swipe_action__toggle_compact_layout">تبديل التخطيط المضغوط</string>
     <string name="unit__hours__symbol">{v} س</string>
     <string name="unit__minutes__symbol">{v} د</string>
@@ -1234,10 +1206,6 @@
     <string name="dictate__action_dismiss">تجاهل</string>
     <string name="dictate__action_yes">نعم</string>
     <string name="dictate__action_no">لا، شكرًا</string>
-    <string name="dictate__promo_rate_message">هل يعجبك Dictate؟</string>
-    <string name="dictate__promo_donate_message">هل تدعم Dictate؟</string>
-    <string name="dictate__promo_rate_action">قيّم</string>
-    <string name="dictate__promo_donate_action">تبرّع</string>
     <string name="dictate__promo_changelog_message">تم تحديث Dictate</string>
     <string name="dictate__promo_changelog_action">التفاصيل</string>
     <string name="dictate__title">Dictate</string>
@@ -1543,16 +1511,8 @@
     <string name="dictate__prompt_library_added">تمت الإضافة</string>
     <string name="dictate__prompt_library_add_again">إضافة مرة أخرى</string>
     <string name="dictate__prompt_library_empty">لا توجد مطالبات مطابقة لبحثك.</string>
-    <string name="dictate__prompt_library_error">تعذّر تحميل مكتبة المجتمع. تحقّق من اتصالك وأعد المحاولة.</string>
-    <string name="dictate__prompt_library_retry">إعادة المحاولة</string>
     <string name="dictate__prompt_library_close">إغلاق</string>
     <string name="dictate__prompt_library_author">بواسطة {author}</string>
-    <string name="dictate__prompt_share_title">المشاركة مع المجتمع</string>
-    <string name="dictate__prompt_share_message">يفتح هذا GitHub في متصفّحك مع تعبئة مطالبتك مسبقًا كطلب إرسال. سجّل الدخول وأكّد لفتح طلب سحب يضيفها إلى مكتبة المجتمع. يلزم حساب GitHub مجاني؛ لا يُرفع أي شيء حتى تؤكّد على GitHub.</string>
-    <string name="dictate__prompt_share_continue">فتح GitHub</string>
-    <string name="dictate__prompt_share_category">الفئة (اختياري)</string>
-    <string name="dictate__prompt_share_description">الوصف (اختياري)</string>
-    <string name="dictate__prompt_share_description_placeholder">مثال: يُصلح القواعد دون تغيير المعنى</string>
     <string name="dictate__file_preparing">جارٍ تحضير الملف…</string>
     <string name="dictate__file_too_large">الملف كبير جدًا – يقبل المزوّد 25 ميغابايت كحد أقصى.</string>
     <string name="dictate__file_read_error">تعذّرت قراءة الملف المحدّد.</string>
@@ -1590,10 +1550,8 @@
     <string name="setup__grant_mic_permission__description">يحتاج Dictate إلى الوصول إلى الميكروفون لتسجيل صوتك من أجل التفريغ النصي.</string>
     <string name="setup__grant_mic_permission__btn">منح إذن الميكروفون</string>
     <string name="changelog__dialog_title">ما الجديد</string>
-    <string name="changelog__view_all">عرض جميع التغييرات</string>
     <string name="changelog__intro">تم تحديث Dictate. إليك ما الجديد:</string>
     <string name="changelog__version_header">الإصدار {version}</string>
-    <string name="changelog__donate">هل يعجبك Dictate؟ انقر هنا لدعم التطوير ♥</string>
     <string name="changelog__current">• لوحة مفاتيح جديدة كليًا: يأتي Dictate الآن كلوحة مفاتيح متعددة اللغات كاملة التخطيط مع مفتاح ميكروفون مخصّص يفتح لوحة الصوت.\n• استخدم ذكاءك الاصطناعي الخاص: اختر أي مزوّد متوافق مع OpenAI وأدخِل مفتاح API الخاص بك ضمن الإعدادات ← Dictate.\n• تنسيق وإعادة صياغة ذكيان بدعم من النموذج الذي تختاره.\n• تُستورَد إعداداتك من تطبيق Dictate السابق تلقائيًا.</string>
     <string name="changelog__v4_1_0">• جديد: ابحث عن الرموز التعبيرية مباشرة من لوحة المفاتيح.\n• مزوّد تفريغ صوتي جديد: Soniox.\n• أعد إدراج آخر إملاء، واستعد التسجيلات التي انقطعت عند إغلاق لوحة المفاتيح.\n• يتم الآن تحديث شريط المطالبات مباشرةً: اضغط مطوّلاً على مطالبة لتعديلها.\n• تعرض الآن شاشة مزوّدي الذكاء الاصطناعي مزوّد التفريغ الصوتي ومزوّد إعادة الصياغة النشطين معًا.\n• زر تسجيل أكبر وأسهل في الضغط عليه.\n• إصلاحات: كان من الممكن أن يعلق إشعار الدعم ويحجب الشريط في بعض اللغات؛ لم يعد النسخ الاحتياطي يفشل عند تحديد المطالبات أو لوحة المفاتيح أو السمة؛ تُحفظ مفاتيح API المخزّنة عند التحديث.</string>
     <string name="changelog__v4_1_1">• إصلاح: قد يظهر لون التمييز باللون الأخضر على بعض الأجهزة؛ عادت المفاتيح والأزرار إلى الأزرق الخاص بـ Dictate.</string>
@@ -1688,8 +1646,6 @@
     <string name="dictate__providers_rewording_single_call_note">غير مُستخدَم حاليًا — مزوّد النسخ لديك يقوم بإعادة الصياغة ضمن استدعائه الواحد.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">خيارات الإملاء من ساعة مقترنة</string>
-    <string name="dictate__wear_install_title">تثبيت Dictate على ساعتك</string>
-    <string name="dictate__wear_install_summary">يفتح Play Store — على ساعة Wear OS 3+ مقترنة، اختر ساعتك كوجهة.</string>
     <string name="dictate__wear_auto_rewording_title">إعادة صياغة إملاءات الساعة تلقائيًا</string>
     <string name="dictate__wear_auto_rewording_summary">أعد صياغة الإملاءات من الساعة، كما في الهاتف.</string>
     <string name="quick_action__system_prev_input_method">تبديل لوحة المفاتيح</string>
@@ -1880,7 +1836,6 @@
     <string name="apptour__legacy_cta">اختر تخطيطًا</string>
     <string name="apptour__library_eyebrow">المجتمع</string>
     <string name="apptour__library_title">مكتبة الموجّهات</string>
-    <string name="apptour__library_body">تصفَّح مطالبات إعادة الصياغة التي يشاركها المجتمع وثبّتها بضغطة واحدة — أو انشر مطالباتك الخاصة ليستخدمها الآخرون.</string>
     <string name="apptour__library_cta">افتح المكتبة</string>
     <string name="apptour__stats_eyebrow">إحصاءات</string>
     <string name="apptour__stats_title">إحصاءات الإملاء الخاصة بك</string>
@@ -1921,7 +1876,7 @@
     <string name="apptour51__more_body">الكثير من التحسينات الأصغر أيضاً: اختر لغة النسخ النشطة في الإعدادات، وزر الإيقاف يلغي الآن فعلاً أي طلب جارٍ، ومفتاح إظهار/إخفاء لمفاتيح API، والكتابة متعددة اللغات دون تصحيح تلقائي عبر اللغات — إضافةً إلى إصلاحات كثيرة في التخطيط الكلاسيكي ولوحة الأرقام وغيرها.</string>
     <string name="apptour51__outro_eyebrow">هذه هي 5.1</string>
     <string name="apptour51__outro_title">استمتع بالتحديث</string>
-    <string name="apptour51__outro_body">شكراً لاستخدامك Dictate! إن كان يساعدك كل يوم، فإن تبرعاً صغيراً يُبقي المشروع مستمراً. يمكنك إعادة مشاهدة أي من هذه الجولات في أي وقت من الإعدادات › حول.</string>
+    <string name="apptour51__outro_body">شكراً لاستخدامك Dictate! يمكنك إعادة مشاهدة أي من هذه الجولات في أي وقت من الإعدادات › حول.</string>
     <string name="apptour52__cta_try">جرّبه</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">أملِ في كل مكان</string>
@@ -1980,14 +1935,8 @@
     <string name="apptour53__outro_body">إضافة إلى تفاصيل كثيرة: لكل مزوّد شعاره الخاص، ومؤشّر التسجيل يمكن أن يكون ساكنًا أو نابضًا أو متفاعلًا مع الصوت، ومخرجات المطالبة يمكنها الاحتفاظ بالنص الأصلي بجانبها، والفقرات لم تعد تنقطع بعد الاختصارات. يمكنك إعادة مشاهدة أي جولة من الإعدادات › حول.</string>
 
     <string name="apptour60__cta_try">جرّبه</string>
-    <string name="apptour60__art_minutes">دقيقة</string>
     <string name="apptour60__art_speed">1.5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">رصيد وصينية وإملاء أرخص</string>
-    <string name="apptour60__intro_body">يضيف هذا الإصدار طريقًا ثانيًا للدخول — شراء رصيد بدل إحضار مفتاح API خاص بك — إلى جانب البينيين للصينية، وسبع لغات حصلت على قاموس، وتسجيلات تكلفتها أقل.</string>
-    <string name="apptour60__cloud_eyebrow">جديد: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">اشترِ دقائق بدل البحث عن مفتاح</string>
-    <string name="apptour60__cloud_body">إن كنت تفضّل عدم إنشاء حساب لدى مزوّد، يمكنك الآن ببساطة شراء رصيد. نعم، يمرّ ذلك عبر خادمنا — لكن لا تسجيلاتك ولا نصوصك تُحفظ هناك، بل تُمرَّر مباشرة. شيفرة الخادم كاملة متاحة للعلن ويمكن قراءتها. ومفتاحك الخاص يعمل تمامًا كما كان.</string>
     <string name="apptour60__speedup_eyebrow">إنفاق أقل على واجهة البرمجة</string>
     <string name="apptour60__speedup_title">الكلمات نفسها بدقائق أقل</string>
     <string name="apptour60__speedup_body">يمكن تسريع التسجيلات قبل رفعها دون أن يرتفع صوتك. معظم المزوّدين يحاسبون على مدة الصوت: تسجيل أقصر بالثلث يكلّف أقل بالثلث. كما تُحزَم الإملاءات الطويلة بدل أن تُرفَض.</string>
@@ -2005,7 +1954,6 @@
     <string name="apptour60__more_body">الضغط المطوّل على زر الإيقاف يسترجع تفريغًا معلّقًا. لم يعد الزر العائم يبلّغ عن نجاح لم يستطع التحقق منه، وينطفئ مع الشاشة. صار السحب للكتابة يعرف الكلمات التي أضفتها بنفسك. وأُصلح الانهيار الذي كان يحدث بعد التحديث مباشرة.</string>
     <string name="apptour60__outro_eyebrow">هذا هو الإصدار 6.0</string>
     <string name="apptour60__outro_title">استمتع به</string>
-    <string name="apptour60__outro_body">مهما كانت طريقتك في استخدام Dictate — مفتاحك أو خادمك أو نموذج على الجهاز أو رصيد — لم يتغيّر شيء في الطرق الأخرى. يمكنك مراجعة أي جولة من الإعدادات › حول.</string>
     <string name="apptour61__cta_try">جرّبه</string>
     <string name="apptour61__art_folder">ملصقات</string>
     <string name="apptour61__art_share">مشاركة عبر</string>
@@ -2120,7 +2068,6 @@
     <string name="apptour64__command_body">اختر كلمة في «إعادة الصياغة» — «جارفيس» مثلًا. والإملاء الذي يبدأ بها يُنفَّذ كأمر صوتي: على النص المحدد، أو كسؤال إن لم يكن هناك تحديد. ولا تُحتسب إلا الكلمة الأولى، فالجملة التي تذكرها عَرَضًا تُكتب كالمعتاد. وصارت الموجّهات التلقائية تعمل كما ينبغي أيضًا: فهي تتلقى دائمًا الإملاء الذي تعمل عليه، والموجّه الذي ليس سوى [نص بين قوسين مربعين] يُضاف إلى النهاية كما هو بدل أن يذهب إلى النموذج.</string>
     <string name="apptour64__privacy_eyebrow">الخصوصية والأمان</string>
     <string name="apptour64__privacy_title">فُحص التطبيق بأكمله</string>
-    <string name="apptour64__privacy_body">رُوجع كل جزء من Dictate من حيث الخصوصية والأمان، وأُصلح كل ما ظهر. الإملاء في حقل كلمة مرور أو رمز PIN يبقى خارج السجل، والآن عبر الزر العائم أيضًا. ولا يأخذ النسخ الاحتياطي السحابي في Android مفاتيح API إلا مشفّرة من طرف إلى طرف. وصار «الوثوق بشهادات المستخدم» يُضبط لكل حساب مزوّد على حدة، بدل أن يسري على الجميع دفعة واحدة.</string>
     <string name="apptour64__more_eyebrow">وأيضًا</string>
     <string name="apptour64__more_title">كل ما تبقّى في 6.4</string>
     <string name="apptour64__more_body">التغييرات الأصغر، لمن يريد التفاصيل. وإن لم تُرِدها فتخطَّها.</string>
@@ -2205,72 +2152,6 @@
     <string name="dictate__legacy_prompt_rows_title">صفوف المطالبات</string>
     <string name="dictate__legacy_prompt_rows_one">صف واحد</string>
     <string name="dictate__legacy_prompt_rows_two">صفان</string>
-    <string name="about__website__title">الموقع الإلكتروني</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">اشترِ رصيد إملاء — دون مفتاح API</string>
-    <string name="dictate__cloud_row_summary_balance">بقي {minutes} دقيقة من الرصيد</string>
-    <string name="dictate__cloud_intro_title">الإملاء دون مفتاح API</string>
-    <string name="dictate__cloud_intro_body">اشترِ رصيد الإملاء هنا مباشرة داخل التطبيق. لا حساب لدى مزوّد ذكاء اصطناعي، ولا مفتاح API، ولا اشتراك. الرصيد لا تنتهي صلاحيته ولا يُستهلك إلا عند الاستخدام الفعلي: دقيقة إملاء تكلّف دقيقة، وإعادة الصياغة نحو ثانيتين.</string>
-    <string name="dictate__cloud_intro_alternative">هذا اختياري تمامًا. يعمل Dictate بالكفاءة نفسها بمفتاحك الخاص لدى مزوّد تختاره — وعدد منها مجاني — وعندئذٍ تحتفظ بحسابك وتدفع للمزوّد مباشرة بأسعاره.</string>
-    <string name="dictate__cloud_use_own_provider_btn">أفضّل مزوّدي الخاص</string>
-    <string name="dictate__cloud_balance_label">الرصيد المتبقي</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} د</string>
-    <string name="dictate__cloud_balance_rewords">أو نحو {count} إعادة صياغة</string>
-    <string name="dictate__cloud_balance_checked">آخر تحديث {time}</string>
-    <string name="dictate__cloud_balance_refresh">تحديث الرصيد</string>
-    <string name="dictate__cloud_packs_title">باقات الرصيد</string>
-    <string name="dictate__cloud_topup_title">شحن</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} دقيقة إملاء</string>
-    <string name="dictate__cloud_pack_savings">أرخص بنسبة {percent}%</string>
-    <string name="dictate__cloud_shop_unavailable">تعذّر عرض باقات الرصيد هنا. عادةً يعني ذلك أن التطبيق لم يُثبَّت من Google Play، أو أنه لا يوجد حساب Play مسجَّل على هذا الجهاز. مفتاح API الخاص بك يعمل في الحالتين.</string>
-    <string name="dictate__cloud_activate_title">الرصيد جاهز</string>
-    <string name="dictate__cloud_activate_body">لديك رصيد، لكن الإملاء يمرّ حاليًا عبر مزوّد آخر. بدِّل متى شئت — لا شيء يتغيّر من دونك.</string>
-    <string name="dictate__cloud_activate_btn">الإملاء عبر Dictate Cloud</string>
-    <string name="dictate__cloud_notice_purchased">أُضيفت {minutes} دقيقة إلى رصيدك.</string>
-    <string name="dictate__cloud_notice_pending">لم تكتمل عملية الدفع بعد. سيظهر الرصيد فور تأكيد Google لها.</string>
-    <string name="dictate__cloud_notice_not_redeemed">تمّت عملية الدفع، لكن تعذّر جلب الرصيد. لم يضِع شيء — افتح هذه الشاشة مرة أخرى وسيُضاف.</string>
-    <string name="dictate__cloud_notice_needs_recovery">هذه العملية تخصّ حساب رصيد آخر. استخدم رمز الاسترداد الخاص به لنقل الرصيد إلى هذا الجهاز.</string>
-    <string name="dictate__cloud_notice_failed">تعذّر إتمام عملية الشراء.</string>
-    <string name="dictate__cloud_notice_deleted">تم حذف حساب رصيدك.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">لم يعد حساب رصيدك موجودًا — فقد حُذف من الموقع الإلكتروني أو من جهاز آخر. وقد أُزيل الآن من هذا الهاتف أيضًا.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">تم تسجيل خروج هذا الجهاز من حساب رصيدك. الحساب والرصيد لم يتأثرا — أدخل رمز الاسترداد أدناه لتسجيل الدخول من جديد.</string>
-    <string name="dictate__cloud_delete_title">حذف حساب الرصيد</string>
-    <string name="dictate__cloud_delete_explain">يحذف حساب رصيدك وكل ما هو مخزَّن عنه. الرصيد المتبقي يسقط ولا يُسترد. إن لم يعد التطبيق لديك، يمكنك ذلك أيضاً عبر api.dictatekeyboard.com/delete.</string>
-    <string name="dictate__cloud_delete_btn">حذف الحساب</string>
-    <string name="dictate__cloud_delete_dialog_title">هل تريد حذف حسابك؟</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">لا يزال لديك {minutes} دقيقة رصيد. الحذف يزيل حسابك ورمز الاسترداد وكل الأجهزة المسجَّلة.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">هذا الرصيد يسقط ولا يمكن استعادته — ولا حتى من جانبنا.</string>
-    <string name="dictate__cloud_delete_dialog_records">تبقى إيصالات شرائك عشر سنوات كما يقتضي القانون الضريبي. تحتوي على رقم الطلب والمبلغ فقط، ولا شيء يقود إليك.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">حذف نهائي</string>
-    <string name="dictate__cloud_delete_dialog_cancel">الاحتفاظ بالحساب</string>
-    <string name="dictate__cloud_notice_dismiss">حسنًا</string>
-    <string name="dictate__cloud_recovery_title">رمز الاسترداد</string>
-    <string name="dictate__cloud_recovery_explain">دوِّن هذا الرمز. لا يستعيد Google الرصيد المستهلك بعد إعادة التثبيت، فهذا الرمز هو السبيل الوحيد لنقل دقائقك المتبقية إلى هاتف جديد. كما يتيح لك استخدام الرصيد نفسه على جهاز ثانٍ.</string>
-    <string name="dictate__cloud_recovery_copy">نسخ رمز الاسترداد</string>
-    <string name="dictate__cloud_recovery_copied">تم نسخ رمز الاسترداد</string>
-    <string name="dictate__cloud_recovery_restore_btn">استرداد الرصيد</string>
-    <string name="dictate__cloud_recovery_dialog_body">أدخل رمز الاسترداد لحساب رصيد قائم. الجهاز الذي كنت تستخدمه عليه يظلّ يعمل.</string>
-    <string name="dictate__cloud_recovery_field">رمز الاسترداد</string>
-    <string name="dictate__cloud_recovery_confirm">استرداد</string>
-    <string name="dictate__cloud_recovery_not_found">لم يُعثر على رصيد لهذا الرمز.</string>
-    <string name="dictate__error_cloud_no_account">لا يوجد حساب رصيد على هذا الجهاز</string>
-    <string name="dictate__cloud_devices_full_title">أجهزة كثيرة جدًا</string>
-    <string name="dictate__cloud_devices_full_body">رصيدك مستخدم بالفعل على {count} أجهزة، وهذا أقصى عدد مسموح به في وقت واحد. سجّل خروج أحدها لاستخدامه هنا — الرصيد نفسه لا يتأثر.</string>
-    <string name="dictate__cloud_devices_sign_out">تسجيل الخروج</string>
-    <string name="dictate__cloud_devices_unnamed">جهاز بلا اسم</string>
-    <string name="dictate__cloud_devices_last_used">آخر استخدام {time}</string>
-    <string name="dictate__cloud_devices_never_used">لم يُستخدم بعد</string>
-    <string name="dictate__cloud_recovery_error">تعذّر الوصول إلى الخادم. تحقّق من اتصالك وحاول مجددًا.</string>
-    <string name="dictate__cloud_limits_title">ما لا يفعله Dictate Cloud</string>
-    <string name="dictate__cloud_limits_body">التفريغ المباشر أثناء الكلام غير متاح بالرصيد — فتكلفته للدقيقة نحو أربعة أضعاف، ومحرّك الجهاز يؤدّيه دون اتصال ومجانًا. نموذج الذكاء الاصطناعي ومقدار تفكيره يحدّدهما الخادم، لذا يظلّ اختيار النموذج ومستوى التفكير والعناوين المخصّصة معطَّلين. وكل ما عدا ذلك دون تغيير: التوجيهات، السجل، الزر العائم، الإملاء الطويل، والساعة.</string>
-    <string name="dictate__cloud_privacy_title">ما الذي يُخزَّن</string>
-    <string name="dictate__cloud_privacy_body">تُمرَّر تسجيلاتك ونصوصك مباشرة ولا تُكتب على القرص أبدًا. لا يُحفظ سوى أرقام: أي حساب، ومتى، وكم المدة، وهل نجحت العملية. لا يقف خلف حساب الرصيد اسم ولا بريد إلكتروني ولا حساب Google — بل معرّف عشوائي فقط.</string>
-    <string name="dictate__cloud_other_way_title">مزوّدك الخاص يظلّ متاحًا</string>
-    <string name="dictate__cloud_other_way_body">يمكنك التبديل إلى مفتاح API الخاص بك في أي وقت، والعودة كذلك. يبقى رصيدك كما هو.</string>
-    <string name="dictate__error_out_of_credit">نفد الرصيد</string>
-    <string name="dictate__action_top_up">شحن الرصيد</string>
-    <string name="dictate__promo_low_credit_message">الرصيد شارف على النفاد.</string>
-    <string name="dictate__promo_low_credit_action">شحن</string>
     <string name="prefs__media__sticker__title">الملصقات</string>
     <string name="prefs__media__sticker_folder__title">مجلد الملصقات</string>
     <string name="prefs__media__sticker_folder__summary_unset">اختر مجلدًا يحتوي على صورك الخاصة</string>

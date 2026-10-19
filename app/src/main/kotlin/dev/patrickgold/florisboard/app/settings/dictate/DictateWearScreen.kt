@@ -13,17 +13,13 @@ package dev.patrickgold.florisboard.app.settings.dictate
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Key
-import androidx.compose.material.icons.filled.Shop
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.search.settingsSearchAnchor
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import org.florisboard.lib.compose.stringRes
 
@@ -46,19 +42,6 @@ fun DictateWearScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
 
     content {
-        val context = LocalContext.current
-        // Discovery helper: some users can't find the Wear app on their watch. Opening the phone's Play
-        // Store listing lets them pick their paired watch as the install target (the watch must run
-        // Wear OS 3+ / API 30 — older Tizen Galaxy watches can't run Wear OS apps at all).
-        Preference(
-            icon = Icons.Default.Shop,
-            modifier = Modifier.settingsSearchAnchor("dictate__wear_install_title"),
-            title = stringRes(R.string.dictate__wear_install_title),
-            summary = stringRes(R.string.dictate__wear_install_summary),
-            onClick = {
-                context.launchUrl("https://play.google.com/store/apps/details?id=net.devemperor.dictate")
-            },
-        )
         SwitchPreference(
             prefs.dictate.wearStandaloneEnabled,
             icon = Icons.Default.Key,

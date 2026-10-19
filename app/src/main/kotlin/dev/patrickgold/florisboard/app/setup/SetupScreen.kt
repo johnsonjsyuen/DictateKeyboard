@@ -85,7 +85,6 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
 import dev.patrickgold.florisboard.dictate.ui.DictateWaveform
 import dev.patrickgold.florisboard.app.settings.dictate.ProviderSetupHandoff
 import dev.patrickgold.florisboard.app.settings.dictate.modelLanguagesAndSize
@@ -109,7 +108,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.FlorisBulletSpacer
 import org.florisboard.lib.compose.FlorisStep
 import org.florisboard.lib.compose.FlorisStepLayout
 import org.florisboard.lib.compose.FlorisStepLayoutScope
@@ -317,31 +315,7 @@ private fun FlorisScreenScope.content(
                 context, navController, requestNotification, requestMic,
                 isProviderConfigured, onSkipProvider, onPassFloatingButton, accounts, scope,
             ),
-            footer = {
-                footer(context)
-            },
         )
-    }
-}
-
-@Composable
-private fun footer(context: Context) {
-    Spacer(modifier = Modifier.height(16.dp))
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
-        TextButton(onClick = { context.launchUrl(privacyPolicyUrl) }) {
-            Text(text = stringRes(R.string.setup__footer__privacy_policy))
-        }
-        FlorisBulletSpacer()
-        val repositoryUrl = stringRes(R.string.florisboard__repo_url)
-        TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
-            Text(text = stringRes(R.string.setup__footer__repository))
-        }
     }
 }
 
@@ -386,8 +360,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
     /**
      * Opens the provider settings on a particular editor. Used for the two ways that already have a
      * screen of their own — a server of the user's own, and the full on-device model list — rather than
-     * rebuilding either inside the wizard. Leaving the flow and coming back is what the credit screen
-     * does too, so the movement is not a new one for the user.
+     * rebuilding either inside the wizard.
      */
     fun openProviderEditor(target: String) {
         ProviderSetupHandoff.openEditorFor = target
@@ -446,10 +419,6 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             ProviderSetupStep(
                 onSaveKey = ::saveKey,
                 onSkip = onSkipProvider,
-                onOpenCloud = {
-                    DictateCloud.openedFromSetup = true
-                    navController.navigate(Routes.Settings.DictateCloud)
-                },
                 onActivateLocalModel = ::activateLocalModel,
                 onOpenAllModels = { openProviderEditor(ProviderRegistry.LOCAL.id) },
                 onOpenServerEditor = { openProviderEditor(ProviderSetupHandoff.ADD_CUSTOM) },
@@ -528,7 +497,6 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
 private fun FlorisStepLayoutScope.ProviderSetupStep(
     onSaveKey: (providerId: String, key: String) -> Unit,
     onSkip: () -> Unit,
-    onOpenCloud: () -> Unit,
     onActivateLocalModel: (modelId: String) -> Unit,
     onOpenAllModels: () -> Unit,
     onOpenServerEditor: () -> Unit,
@@ -541,20 +509,9 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     var showManualEntry by rememberSaveable { mutableStateOf(false) }
     var pasteHint by remember { mutableStateOf<String?>(null) }
     var providerMenuExpanded by remember { mutableStateOf(false) }
-    // Which way the user has picked. Starts undecided on purpose: presenting the API-key flow first
-    // and mentioning credit afterwards would be a recommendation dressed up as an order, and the two
-    // headline ways are meant to be equal here.
+    // Which way the user has picked. Starts undecided on purpose, so the key flow and the keyless
+    // ways below it are offered side by side rather than one being pushed first.
     var branch by rememberSaveable { mutableStateOf(ProviderBranch.CHOICE) }
-
-    // Coming back from the credit screen via "use my own provider" lands here, and must land on the
-    // key flow rather than on the fork the user has already answered.
-    val ownKeyRequested by DictateCloud.ownKeyRequested.collectAsState()
-    LaunchedEffect(ownKeyRequested) {
-        if (ownKeyRequested) {
-            branch = ProviderBranch.OWN_KEY
-            DictateCloud.ownKeyRequested.value = false
-        }
-    }
 
     // Every side of the fork is long enough to scroll, and to the layout this is one step
     // throughout — so without this, answering the fork from halfway down the page lands the key
@@ -564,12 +521,11 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
     val selectedPreset = ProviderRegistry.byId(selectedProviderId) ?: ProviderRegistry.GROQ
     val isRecommended = selectedProviderId == RECOMMENDED_PROVIDER_ID
 
-    // No plate on this step, deliberately. Its content is two cards that each already carry a mark;
-    // a third illustration above them competes rather than orients.
+    // No plate on this step, deliberately. Its content is a card that already carries marks; an
+    // illustration above it competes rather than orients.
     when (branch) {
         ProviderBranch.CHOICE -> {
             ProviderChoice(
-                onChooseCloud = onOpenCloud,
                 onChooseOwnKey = { branch = ProviderBranch.OWN_KEY },
                 onChooseOnDevice = { branch = ProviderBranch.ON_DEVICE },
                 onChooseServer = onOpenServerEditor,
@@ -748,9 +704,6 @@ private fun FlorisStepLayoutScope.ProviderSetupStep(
                 ) {
                     ProviderRegistry.presets
                         .filter { it.capabilities.transcription }
-                        // Dictate Cloud is the *other* branch of this step, not an entry in the list
-                        // of providers to bring a key for — it has no key page and nothing to paste.
-                        .filter { it.id != ProviderRegistry.CLOUD.id }
                         .forEach { preset ->
                             DropdownMenuItem(
                                 leadingIcon = {
@@ -809,21 +762,18 @@ private fun SetupWelcomeWave() {
 /**
  * The fork in the road, shown before anything else in the provider step.
  *
- * The two headline ways get the same space, the same shape and the same tone — including the
- * sentence that credit costs more than going to a provider directly. Someone who finds that out
- * after paying has been steered, and the whole point of Dictate Cloud is that it is a convenience,
- * not a funnel. "Set up later" stays available underneath, as it always was.
+ * The headline way — a key with a provider of the user's choice — gets a card of its own. "Set up
+ * later" stays available underneath, as it always was.
  *
- * Below them, two quieter rows for the ways that need no account anywhere: the on-device engine and
+ * Below it, two quieter rows for the ways that need no account anywhere: the on-device engine and
  * a server of the user's own. Both have worked for releases, and both were invisible here — and this
  * screen is where people form their idea of what the app can do, so a paying self-hoster went looking
  * for the second one, did not find it, and concluded it did not exist (issue #273). Deliberately not
- * a third and fourth card: for most people the answer really is one of the two above, and four equal
- * offers would be a menu rather than a recommendation.
+ * more cards: for most people the answer really is the one above, and equal offers would be a menu
+ * rather than a recommendation.
  */
 @Composable
 private fun FlorisStepLayoutScope.ProviderChoice(
-    onChooseCloud: () -> Unit,
     onChooseOwnKey: () -> Unit,
     onChooseOnDevice: () -> Unit,
     onChooseServer: () -> Unit,
@@ -832,15 +782,6 @@ private fun FlorisStepLayoutScope.ProviderChoice(
     StepText(stringRes(R.string.setup__provider__choose_intro))
     Spacer(modifier = Modifier.height(16.dp))
 
-    ChoiceCard(
-        title = stringRes(R.string.setup__provider__choice_cloud_title),
-        body = stringRes(R.string.setup__provider__choice_cloud_body),
-        buttonLabel = stringRes(R.string.setup__provider__choice_cloud_btn),
-        onClick = onChooseCloud,
-        // One mark, because this is one service.
-        marks = listOf(ProviderRegistry.CLOUD.id),
-    )
-    Spacer(modifier = Modifier.height(12.dp))
     ChoiceCard(
         title = stringRes(R.string.setup__provider__choice_own_title),
         body = stringRes(R.string.setup__provider__choice_own_body),

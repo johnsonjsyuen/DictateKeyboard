@@ -24,11 +24,11 @@ package dev.patrickgold.florisboard.dictate.provider
 object ProviderListing {
 
     /**
-     * Always on the providers screen, set up or not: the two ways to dictate without an account anywhere
-     * else. Dictate Cloud is bought inside the app and the on-device engine needs only a download, so
-     * hiding them until they were set up would hide them from exactly the people they are for.
+     * Always on the providers screen, set up or not: the way to dictate without an account anywhere
+     * else. The on-device engine needs only a download, so hiding it until it was set up would hide it
+     * from exactly the people it is for.
      */
-    val pinnedIds: Set<String> = setOf(ProviderRegistry.LOCAL.id, ProviderRegistry.CLOUD.id)
+    val pinnedIds: Set<String> = setOf(ProviderRegistry.LOCAL.id)
 
     /**
      * Whether [preset] can be used right now.

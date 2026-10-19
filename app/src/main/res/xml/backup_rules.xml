@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 8.0 and 8.1 (API 26-27). These versions cannot tell a cloud backup from a device-to-device
+  transfer (requireFlags needs API 28, see xml-v28/backup_rules.xml), so the settings
+  (jetpref_datastore, which holds the API keys) are left out of both. See data_extraction_rules.xml.
+-->
 <full-backup-content>
-    <include
-        domain="root"
-        path="jetpref_datastore"/>
     <include
         domain="file"
         path="ime"/>

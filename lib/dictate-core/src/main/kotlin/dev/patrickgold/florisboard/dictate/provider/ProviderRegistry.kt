@@ -54,8 +54,8 @@ data class ProviderPreset(
      * **Null means "this provider has no key page", never "we did not look it up"** (#410). Both places
      * that offer the page — the setup wizard's button and the key icon in the provider dialog's title
      * row — key off null alone, so a missing URL silently removes the way out of a dialog whose key
-     * field is the thing being stared at. Null is right for Dictate Cloud, Ollama, the on-device
-     * provider and custom endpoints: there is nowhere to send anyone.
+     * field is the thing being stared at. Null is right for Ollama, the on-device provider and
+     * custom endpoints: there is nowhere to send anyone.
      *
      * Checked against the live host, with the date, like every other fact in here.
      */
@@ -209,40 +209,6 @@ object ProviderRegistry {
         ),
     )
 
-    /**
-     * Dictate Cloud — credit bought inside the app instead of an API key of one's own.
-     *
-     * Technically the least remarkable entry in this list: the server speaks the same OpenAI formats
-     * as everything else, so [OpenAiCompatibleClient] reaches it unchanged and the wallet token
-     * simply sits where an API key would, in [ProviderAccount.apiKey]. What differs is who decides.
-     * The model is not the user's pick but the server's, because the price is calculated from it —
-     * so there is nothing for the picker to offer and [supportsDynamicModels] is false. The ids
-     * below travel with the request and are overwritten upstream; they exist so the request stays
-     * well-formed, not because they name anything real.
-     *
-     * Realtime stays off on purpose rather than by omission: streaming costs nearly four times a
-     * dictated minute, and the on-device engine already does it for nothing.
-     */
-    val CLOUD = ProviderPreset(
-        id = "cloud",
-        displayName = "Dictate Cloud",
-        baseUrl = "https://api.dictatekeyboard.com/v1/",
-        capabilities = CHAT_AND_STT,
-        supportsDynamicModels = false,
-        apiKeyUrl = null,
-        defaultChatModel = "dictate-cloud",
-        defaultTranscriptionModel = "dictate-cloud",
-        supportsRealtime = false,
-        // Not copied from an upstream provider's list — the server does not say which one it used. This
-        // is what its OWN duration probe reads (`cloud/src/audio.ts`), and that matters to the person
-        // paying: a container it cannot probe is billed from a generous size estimate instead of the
-        // real length. Converting into this set is therefore cheaper for the user, not just safer.
-        acceptedAudioContainers = setOf(
-            AudioContainer.WAV, AudioContainer.MP3, AudioContainer.M4A,
-            AudioContainer.OGG, AudioContainer.FLAC,
-        ),
-    )
-
     val GROQ = ProviderPreset(
         id = "groq",
         displayName = "Groq",
@@ -343,9 +309,10 @@ object ProviderRegistry {
             AudioContainer.OGG, AudioContainer.WEBM, AudioContainer.AAC,
         ),
         // Attribution headers recommended by OpenRouter: both are used for app ranking and some routes
-        // reject requests without an HTTP-Referer. The value is a stable identifier, not a real URL.
+        // reject requests without an HTTP-Referer. The value is a stable identifier: this fork's
+        // repository, not the original project's.
         extraHeaders = mapOf(
-            "HTTP-Referer" to "https://github.com/DevEmperor/Dictate",
+            "HTTP-Referer" to "https://github.com/johnsonjsyuen/DictateKeyboard",
             "X-Title" to "Dictate",
         ),
         // Data residency (#403): the EU entry point decrypts in the EU and routes only to in-region
@@ -947,7 +914,7 @@ object ProviderRegistry {
 
     /** All built-in presets in display order. The custom option is added by the UI on top of these. */
     val presets: List<ProviderPreset> = listOf(
-        CLOUD, OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
+        OPENAI, GROQ, OPENROUTER, GEMINI, ANTHROPIC, TOGETHER, DEEPINFRA, MISTRAL, SONIOX,
         ELEVENLABS, DEEPGRAM, ASSEMBLYAI, AZURE, XAI, DEEPSEEK, SILICONFLOW, SCALEWAY, OVHCLOUD,
         OLLAMA, LOCAL,
     )
@@ -981,14 +948,6 @@ object ProviderRegistry {
      *
      * Figures read from each provider's own documentation on 2026-08-17:
      *  - OpenAI 25 MB.
-     *  - Dictate Cloud 25 MB — but for its own reason, not a borrowed one. The figure used to be
-     *    justified as "it proxies to OpenAI, so it inherits the ceiling", and that reasoning has
-     *    stopped being true: the server now chooses between two providers per service and the app is
-     *    deliberately never told which. What the number has to express is the **server's own
-     *    promise**, `MAX_AUDIO_SECONDS` — ten minutes, which at 16 kHz mono WAV is about 19 MB. The
-     *    25 MB stays because it is the ceiling the server would reject at, and rejecting is its job:
-     *    it answers 413 with `CONTENT_SIZE_LIMIT`, which the app turns into an offer to keep the
-     *    recording. A lower figure here would refuse locally what the server would have accepted.
      *  - Groq 25 MB on the free tier, 100 MB on the dev tier. The key does not say which tier it is
      *    on, so the lower one is assumed.
      *  - Gemini caps the whole request at 20 MB, and its audio travels **base64-inline**
@@ -1021,7 +980,7 @@ object ProviderRegistry {
      *    megabytes, the lower of the two readings, since nobody has measured which one xAI means.
      */
     fun maxUploadBytes(providerId: String): Long = when (providerId) {
-        "openai", "cloud", "groq", "openrouter", "scaleway" -> 25L * 1024 * 1024
+        "openai", "groq", "openrouter", "scaleway" -> 25L * 1024 * 1024
         "gemini" -> 15L * 1024 * 1024
         "siliconflow" -> 50L * 1024 * 1024
         "azure" -> 300L * 1024 * 1024

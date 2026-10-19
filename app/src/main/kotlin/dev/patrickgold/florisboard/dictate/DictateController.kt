@@ -48,8 +48,6 @@ import dev.patrickgold.florisboard.dictate.audio.SmartTurnModel
 import dev.patrickgold.florisboard.dictate.audio.Pcm16Resampler
 import dev.patrickgold.florisboard.dictate.audio.RecordingController
 import dev.patrickgold.florisboard.dictate.audio.SpeechGate
-import dev.patrickgold.florisboard.dictate.cloud.DictateCloud
-import dev.patrickgold.florisboard.dictate.cloud.DictateCloudApi
 import dev.patrickgold.florisboard.dictate.data.prompts.CommandTrigger
 import dev.patrickgold.florisboard.dictate.data.prompts.DictatePromptDefaults
 import dev.patrickgold.florisboard.dictate.data.prompts.PromptModel
@@ -209,7 +207,7 @@ object DictateController {
          */
         data class Interrupted(val seconds: Long) : UiState
         /**
-         * A one-time Smartbar nudge (roadmap 9.7/9.8). [message] overrides the kind's static text for
+         * A one-time Smartbar nudge. [message] overrides the kind's static text for
          * nudges whose text is dynamic (the [PromoKind.MILESTONE] celebration, issue #142).
          */
         data class Promo(val kind: PromoKind, val message: String? = null) : UiState
@@ -243,20 +241,14 @@ object DictateController {
          * reason that resending can't fix (too large / unsupported format) so a long recording isn't lost.
          */
         SAVE_AUDIO,
-
-        /**
-         * Open the Dictate Cloud screen to buy more credit. Offered only when the server said the
-         * balance is spent — the one out-of-quota case this app can actually resolve.
-         */
-        TOP_UP,
     }
 
     /**
-     * Which one-time nudge is being shown. RATE/DONATE are usage-gated (see [maybePromptForReview]);
-     * CHANGELOG is shown right after an app update (see [maybePromptChangelog]) and opens the in-app
-     * "What's new" dialog instead of a web page.
+     * Which one-time nudge is being shown. CHANGELOG is shown right after an app update (see
+     * [maybePromptChangelog]) and opens the in-app "What's new" dialog; FLOATING_BUTTON spotlights the
+     * floating button (see [maybePromptFloatingButton]); MILESTONE celebrates a stats milestone.
      */
-    enum class PromoKind { RATE, DONATE, CHANGELOG, FLOATING_BUTTON, MILESTONE, LOW_CREDIT }
+    enum class PromoKind { CHANGELOG, FLOATING_BUTTON, MILESTONE }
 
     /**
      * Where the active dictation's output goes: the keyboard editor ([OutputTarget.IME]) or the
@@ -752,16 +744,11 @@ object DictateController {
     /** Shortest gap between two wake-up pokes at the same sleeping server (#189). */
     private const val WARM_UP_THROTTLE_MS = 60_000L
 
-    /** Cumulative recorded audio (seconds) after which the rate / donate nudges appear (roadmap 9.7/9.8). */
-
     /** How long the discarded mic takes to reach the bin; the bar outlives the recording by this much. */
     const val PUSH_TO_TALK_FLIGHT_MS = 950L
 
     /** How long the key shows a lock after latching, before dissolving into its ordinary icon. */
     const val PUSH_TO_TALK_LOCK_FLASH_MS = 600L
-
-    private const val RATE_THRESHOLD_SECONDS = 180L   // 3 min
-    private const val DONATE_THRESHOLD_SECONDS = 300L // 5 min (user choice; legacy used 10 min)
 
     /**
      * Single entry point for the mic button: starts recording, or stops and transcribes. [target]
@@ -1074,21 +1061,6 @@ object DictateController {
     }
 
     /**
-     * Opens the Dictate Cloud screen from the keyboard so credit can be topped up without losing the
-     * place in whatever was being written. Same new-task launch as [openProviderSettings].
-     */
-    fun openCloudSettings(context: Context) {
-        runCatching {
-            context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("ui://florisboard/settings/dictate/cloud"))
-                    .addCategory(Intent.CATEGORY_BROWSABLE)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-            )
-        }
-        clearError()
-    }
-
-    /**
      * Which half of a dictation a failure came from. The messages have to name the right one: a rewording
      * that died used to report "Unknown error during transcription", which cost a reporter the time to
      * rule out his key, his model and his reasoning setting before writing in (issue #284).
@@ -1210,12 +1182,7 @@ object DictateController {
         // "Request timed out" is a sentence about a server, and nothing was requested from one.
         onDevice: Boolean = false,
     ): UiState.Error {
-        // Dictate Cloud running out of credit is checked first, and before the resend branches: it is
-        // classified as QUOTA_EXCEEDED like every other provider's rate limit, but unlike those it is
-        // neither worth retrying nor something to go and fix at a provider. Buying more is a button.
-        val outOfCredit = e.code == DictateCloudApi.ErrorCode.INSUFFICIENT_CREDITS
         val action = when {
-            outOfCredit -> ErrorAction.TOP_UP
             canResend && e.kind in EXPORTABLE_ERROR_KINDS -> ErrorAction.SAVE_AUDIO
             canResend && e.kind.isRetryable -> ErrorAction.RESEND
             e.kind == DictateApiException.Kind.INVALID_API_KEY -> ErrorAction.OPEN_SETTINGS
@@ -1225,14 +1192,13 @@ object DictateController {
         // it — "try on-device" is more use than repeating that there is no connection. The full sentence
         // goes into the detail popup, where there is room and where the raw provider text for a network
         // failure ("timeout") is next to useless on its own.
-        val hint = suggestOnDevice && !outOfCredit
+        val hint = suggestOnDevice
         val detail = listOfNotNull(
             e.message?.takeIf { it.isNotBlank() },
             defaultModelNote(context, stage, e.message),
         ).joinToString("\n\n").takeIf { it.isNotBlank() }
         return UiState.Error(
             message = when {
-                outOfCredit -> context.getString(R.string.dictate__error_out_of_credit)
                 hint -> context.getString(R.string.dictate__error_try_on_device)
                 onDevice && e.kind == DictateApiException.Kind.TIMEOUT ->
                     context.getString(R.string.dictate__error_timeout_on_device)
@@ -1755,8 +1721,8 @@ object DictateController {
         recorder = null
         _livePromptActive.value = false
         unregisterScreenOffReceiver()
-        // Capture the recorded length before leaving the Recording state, to credit the usage counter
-        // that gates the rate/donate nudges (roadmap 9.7/9.8). Includes any carried-over seconds.
+        // Capture the recorded length before leaving the Recording state, for the stats and history
+        // entry. Includes any carried-over seconds.
         val recordedSeconds = recordedSecondsOf(_state.value)
         val recorderStopStartedNanos = SystemClock.elapsedRealtimeNanos()
         val audioFile = activeRecorder?.stop()
@@ -1908,7 +1874,7 @@ object DictateController {
         }
 
         if (apiKey.isBlank() && requiresKey(account)) {
-            _state.value = missingCredentialError(context, account)
+            _state.value = missingCredentialError(context)
             logFailureAndDrop()
             return
         }
@@ -2478,7 +2444,6 @@ object DictateController {
                 rememberLastDictation(appContext, outputText)
                 if (capture?.isReplay != true) {
                     DictateStats.recordDictation(prefs, outputText, recordedSeconds)
-                    if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
                 }
                 recordHistory(appContext, outputText, originalForHistory, recordedSeconds, capture, reworded = isLive)
                 discardRetainedAudio()
@@ -2496,21 +2461,17 @@ object DictateController {
         lastDictationLead = lead
         if (capture?.isReplay != true) {
             DictateStats.recordDictation(prefs, dictated, recordedSeconds)
-            if (recordedSeconds > 0L) creditAudioSeconds(recordedSeconds)
         }
         recordHistory(appContext, dictated, originalForHistory, recordedSeconds, capture, reworded = isLive)
         discardRetainedAudio()
         if (reportSwallowedRewording(appContext)) return
         _state.value = UiState.Idle
-        // Both nudges are Smartbar chips: they can only be seen, tapped and dismissed on the keyboard.
-        // Arming one after a dictation that did not come from the keyboard parked the state machine in a
-        // state nothing outside the keyboard can clear — which, for the floating button, meant it read
-        // "a dictation is running" and stayed on screen over every app for good (#339). The nudges are
-        // not lost: the keyboard asks for them again on every open, and a milestone stays pending until
-        // it is actually shown.
-        if (outputTarget == OutputTarget.IME && !showMilestoneNudge(appContext)) {
-            maybePromptForReview()
-        }
+        // The milestone nudge is a Smartbar chip: it can only be seen, tapped and dismissed on the
+        // keyboard. Arming it after a dictation that did not come from the keyboard parked the state
+        // machine in a state nothing outside the keyboard can clear — which, for the floating button,
+        // meant it read "a dictation is running" and stayed on screen over every app for good (#339).
+        // The milestone is not lost: it stays pending until it is actually shown.
+        if (outputTarget == OutputTarget.IME) showMilestoneNudge(appContext)
     }
 
     /** Copies [text] to the system clipboard — the floating-button always-copy safety net (issue #214). */
@@ -3989,7 +3950,7 @@ object DictateController {
      * True when the dictation is going into a password field or an incognito one, so it must not be
      * logged or kept for re-insert.
      *
-     * Every path is asked, because the privacy policy promises it of every path (#383). Until then only
+     * Every path is asked, because the promise has to hold for every path (#383). Until then only
      * the keyboard was; the floating button was assumed to have no signal, though the accessibility node
      * says `isPassword`. The voice IME passes its field's answer in [startRecognition]. An app asking
      * Android's speech recognition says nothing about what the words are for, so that request is logged.
@@ -4049,66 +4010,7 @@ object DictateController {
         )
     }
 
-    // --- Rate / Donate nudges (roadmap 9.7/9.8) -------------------------------------------------
-
-    /**
-     * Shows a one-time rate or donate nudge in the Smartbar once the user has accumulated enough
-     * transcribed audio, mirroring the legacy app: rate after [RATE_THRESHOLD_SECONDS], donate after
-     * [DONATE_THRESHOLD_SECONDS]. Each is shown until acted on (a flag is then set); accepting or
-     * declining donate also marks rate as done, so a donor is never asked to rate. No-op unless idle.
-     * Called when the keyboard appears so it never interrupts an in-flight recording/transcription.
-     */
-    fun maybePromptForReview() {
-        if (_state.value !is UiState.Idle) return
-        // Credit running out comes first: it is the only nudge that is about to stop the app working,
-        // and asking someone to rate Dictate minutes before it refuses to transcribe is poor timing.
-        if (maybeWarnLowCredit()) return
-        val total = prefs.dictate.totalAudioSeconds.get()
-        val kind = when {
-            total > DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasDonated.get() -> PromoKind.DONATE
-            total > RATE_THRESHOLD_SECONDS && total <= DONATE_THRESHOLD_SECONDS && !prefs.dictate.hasRated.get() -> PromoKind.RATE
-            else -> return
-        }
-        _state.value = UiState.Promo(kind)
-    }
-
-    /** Below this much Dictate Cloud credit the Smartbar says so, once per depletion. */
-    private const val LOW_CREDIT_MINUTES = 10
-
-    /** How often the balance may be re-fetched in the background. */
-    private const val BALANCE_REFRESH_INTERVAL_MS = 15 * 60 * 1000L
-
-    private var lastBalanceRefreshAt = 0L
-
-    /**
-     * Warns that Dictate Cloud credit is nearly gone, and returns true if it did.
-     *
-     * The balance is read from the cached copy rather than fetched here, because this runs on every
-     * keyboard open and a network round trip on that path would be felt. A throttled refresh is
-     * kicked off alongside instead, so the cache is at most [BALANCE_REFRESH_INTERVAL_MS] stale — the
-     * warning may therefore arrive one keyboard open late, which is a fair price for not making the
-     * keyboard wait on the network. Running out entirely is caught anyway, by the 402 that follows.
-     */
-    private fun maybeWarnLowCredit(): Boolean {
-        if (prefs.dictate.transcriptionProviderId.get() != ProviderRegistry.CLOUD.id) return false
-        val account = prefs.dictate.providerAccounts.get().getOrEmpty(ProviderRegistry.CLOUD.id)
-        if (!account.hasWallet) return false
-
-        val now = SystemClock.elapsedRealtime()
-        if (now - lastBalanceRefreshAt > BALANCE_REFRESH_INTERVAL_MS) {
-            lastBalanceRefreshAt = now
-            scope.launch { DictateCloud.refreshBalance() }
-        }
-
-        if (prefs.dictate.cloudLowCreditNudged.get()) return false
-        // -1 means never fetched; saying "0 minutes left" then would be a lie about a full wallet.
-        val minutesLeft = account.balanceSeconds.takeIf { it >= 0 }?.div(60) ?: return false
-        if (minutesLeft > LOW_CREDIT_MINUTES) return false
-
-        scope.launch { prefs.dictate.cloudLowCreditNudged.set(true) }
-        _state.value = UiState.Promo(PromoKind.LOW_CREDIT)
-        return true
-    }
+    // --- Smartbar nudges ------------------------------------------------------------------------
 
     /**
      * If a saved-time / dictation-count milestone is pending (issue #142), shows it as a one-time Smartbar
@@ -4166,17 +4068,14 @@ object DictateController {
     }
 
     /**
-     * Acts on the active promo and marks it done: RATE/DONATE open the Play Store / PayPal page,
-     * CHANGELOG opens the app (which then shows the "What's new" dialog), FLOATING_BUTTON deep-links to its
-     * settings screen. No-op otherwise.
+     * Acts on the active promo and marks it done: CHANGELOG opens the app (which then shows the "What's
+     * new" dialog), FLOATING_BUTTON deep-links to its settings screen, MILESTONE opens the stats screen.
+     * No-op otherwise.
      */
     fun acceptPromo(context: Context) {
         val kind = (_state.value as? UiState.Promo)?.kind ?: return
         runCatching {
             val intent = when (kind) {
-                PromoKind.RATE -> Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=net.devemperor.dictate"))
-                PromoKind.DONATE -> Intent(Intent.ACTION_VIEW, Uri.parse("https://paypal.me/DevEmperor"))
                 PromoKind.CHANGELOG -> Intent(context, FlorisAppActivity::class.java)
                 PromoKind.FLOATING_BUTTON -> Intent(
                     Intent.ACTION_VIEW,
@@ -4187,12 +4086,6 @@ object DictateController {
                 PromoKind.MILESTONE -> Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("ui://florisboard/settings/dictate/stats"),
-                    context,
-                    FlorisAppActivity::class.java,
-                ).addCategory(Intent.CATEGORY_BROWSABLE)
-                PromoKind.LOW_CREDIT -> Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("ui://florisboard/settings/dictate/cloud"),
                     context,
                     FlorisAppActivity::class.java,
                 ).addCategory(Intent.CATEGORY_BROWSABLE)
@@ -4210,15 +4103,10 @@ object DictateController {
         _state.value = UiState.Idle
     }
 
-    /** Persists the "handled" flags: declining/accepting donate also marks rate as done. */
+    /** Persists the "handled" flags. */
     private fun markPromoDone(kind: PromoKind) {
         scope.launch {
             when (kind) {
-                PromoKind.RATE -> prefs.dictate.hasRated.set(true)
-                PromoKind.DONATE -> {
-                    prefs.dictate.hasDonated.set(true)
-                    prefs.dictate.hasRated.set(true)
-                }
                 // Remember this version so the keyboard nudge shows only once per update. The in-app
                 // dialog stays governed by versionLastChangelog, so tapping/dismissing here never hides it.
                 PromoKind.CHANGELOG -> prefs.dictate.changelogNudgeVersion.set(BuildConfig.VERSION_NAME)
@@ -4226,19 +4114,8 @@ object DictateController {
                 PromoKind.FLOATING_BUTTON -> prefs.dictate.floatingButtonSpotlightVersion.set(FEATURE_VERSION_NAME)
                 // The milestone was already consumed when shown; nothing further to persist.
                 PromoKind.MILESTONE -> Unit
-                // The flag was already set when shown, so the nudge cannot come back on the next
-                // keyboard open whether it was acted on or waved away. A purchase clears it again.
-                PromoKind.LOW_CREDIT -> Unit
             }
         }
-    }
-
-    /**
-     * Adds [seconds] to the cumulative audio counter that gates the nudges. Suspends until the new value
-     * is written to the in-memory cache, so a [maybePromptForReview] called right after sees the update.
-     */
-    private suspend fun creditAudioSeconds(seconds: Long) {
-        prefs.dictate.totalAudioSeconds.set(prefs.dictate.totalAudioSeconds.get() + seconds)
     }
 
     // --- Rewording / GPT engine (roadmap section 4) ---------------------------------------------
@@ -4258,7 +4135,7 @@ object DictateController {
         target: OutputTarget? = null,
     ) {
         // A nudge is a notice, not work: it must not swallow an action the user asked for. Left over from
-        // #339, where a rate/donate chip parked the state machine and the floating button's long-press
+        // #339, where a rate chip parked the state machine and the floating button's long-press
         // menu quietly did nothing. Interrupted stays out — an offer of kept audio hangs on it.
         if (_state.value !is UiState.Idle && _state.value !is UiState.Error &&
             _state.value !is UiState.Promo
@@ -4394,7 +4271,7 @@ object DictateController {
      * dictation is safe in the field, so this is a notice and not a failure: themed rather than red, no
      * action, gone by itself after a moment, and carrying the provider's own message for anyone who taps
      * it. Returns whether it took over the state (the caller then skips the idle nudges: a dictation that
-     * half-worked is not the moment to ask for a Play rating).
+     * half-worked is not the moment for a celebration).
      *
      * Not shown for the system voice input (issue #67): there is no Smartbar in front of that user, and
      * the calling app already has its text.
@@ -4995,8 +4872,8 @@ object DictateController {
      * Says no before the microphone opens, when the active provider has no credential to use.
      *
      * The check existed already, but it sat after the recording, just before the upload — so
-     * someone whose credit account had been deleted spoke a whole dictation, waited for it to
-     * upload, and only then learned it could never have worked. The audio was thrown away.
+     * someone without a key spoke a whole dictation, waited for it to upload, and only then
+     * learned it could never have worked. The audio was thrown away.
      *
      * Not a substitute for the later check, which still guards the paths that do not come through
      * here; this only moves the moment of truth to before anyone has said anything.
@@ -5005,32 +4882,17 @@ object DictateController {
         val account = prefs.dictate.providerAccounts.get()
             .getOrEmpty(prefs.dictate.transcriptionProviderId.get())
         if (account.apiKey.isNotBlank() || !requiresKey(account)) return false
-        _state.value = missingCredentialError(context, account)
+        _state.value = missingCredentialError(context)
         return true
     }
 
-    /**
-     * What to say when there is no credential, and where to send the user.
-     *
-     * Dictate Cloud gets its own wording and its own destination. "Check your API key" is wrong
-     * twice over for it — there is no key to check, and the provider list it opens is not where
-     * the answer is. The credit screen is: it already explains what happened, because the app
-     * learns from the server whether the account was deleted or this device was signed out.
-     */
-    private fun missingCredentialError(context: Context, account: ProviderAccount): UiState.Error =
-        if (account.providerId == ProviderRegistry.CLOUD.id) {
-            UiState.Error(
-                message = context.getString(R.string.dictate__error_cloud_no_account),
-                kind = DictateApiException.Kind.INVALID_API_KEY,
-                action = ErrorAction.TOP_UP,
-            )
-        } else {
-            UiState.Error(
-                message = context.getString(R.string.dictate__error_no_api_key),
-                kind = DictateApiException.Kind.INVALID_API_KEY,
-                action = ErrorAction.OPEN_SETTINGS,
-            )
-        }
+    /** What to say when there is no credential, and where to send the user. */
+    private fun missingCredentialError(context: Context): UiState.Error =
+        UiState.Error(
+            message = context.getString(R.string.dictate__error_no_api_key),
+            kind = DictateApiException.Kind.INVALID_API_KEY,
+            action = ErrorAction.OPEN_SETTINGS,
+        )
 
     /**
      * Whether [account] needs a credential: built-in cloud providers do; custom/local servers may not.

@@ -10,26 +10,14 @@ A powerful AI keyboard for dictation, real-time transcription and typing — wit
 more speech engines, in the cloud or on your phone.
 
 <p>
-  <a href="https://dictatekeyboard.com"><img alt="Website" src="https://img.shields.io/badge/website-dictatekeyboard.com-30B7E6?labelColor=1b1e2b&logo=googlechrome&logoColor=white"></a>
-  <a href="https://github.com/DevEmperor/DictateKeyboard/releases"><img alt="Latest release" src="https://img.shields.io/github/v/release/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b&label=release"></a>
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-30B7E6?labelColor=1b1e2b"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Android%206%2B-30B7E6?labelColor=1b1e2b">
-  <a href="https://github.com/DevEmperor/DictateKeyboard/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/DevEmperor/DictateKeyboard?color=30B7E6&labelColor=1b1e2b"></a>
-  <a href="https://github.com/sponsors/DevEmperor"><img alt="Sponsors" src="https://img.shields.io/github/sponsors/DevEmperor?color=30B7E6&labelColor=1b1e2b&label=sponsors"></a>
-  <a href="https://github.com/DevEmperor/DictateKeyboard/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/DevEmperor/DictateKeyboard?style=social"></a>
 </p>
 
 <p>
   <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white">
   <img alt="Jetpack Compose" src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white">
 </p>
-
-<table align="center">
-  <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dbadge%26utm_campaign%3Dreadme"><img alt="Get it on Google Play" width="300" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a></td>
-    <td valign="middle"><a href="https://paypal.me/DevEmperor"><img alt="Donate with PayPal" width="200" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png"/></a></td>
-  </tr>
-</table>
 
 </div>
 
@@ -147,8 +135,7 @@ APK's `assets/licenses/qwen-native.txt`.
 > [!NOTE]
 > This is a complete rebuild of Dictate as a full, standalone keyboard on top of
 > [**FlorisBoard**](https://github.com/florisboard/florisboard), replacing the original Java
-> app that powered Dictate v1–v3. The previous Java codebase is preserved on the
-> [`legacy-java`](https://github.com/DevEmperor/Dictate/tree/legacy-java) branch.
+> app that powered Dictate v1–v3.
 
 ---
 
@@ -191,13 +178,7 @@ APK's `assets/licenses/qwen-native.txt`.
 
 ## 📲 Installation
 
-**The app is available on [Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro%26utm_campaign%3Dreadme)**
-(for a small fee that supports continued development), giving you easy installation and free
-lifetime updates. Just tap the badge above or [this link](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dintro_link%26utm_campaign%3Dreadme).
-
-> [!TIP]
-> **Existing users:** the new keyboard keeps the same app identity and signing key, so your
-> settings carry over on update — no reinstall, no lost configuration.
+Install the APK from this fork's releases — see [Getting the APK](#getting-the-apk) above.
 
 <br>
 
@@ -218,10 +199,9 @@ your typos. Need the text more formal, translated, summarised, or fixed-up? Hand
 rewording prompt and let the model do the work. With the floating button you can even
 dictate straight into apps while another keyboard is open.
 
-There are four ways to power it, and you pick one during setup: **your own API key** with the
-provider of your choice, **a server of your own**, **a model on the device** with no network at
-all, or **prepaid credit** if you would rather not deal with any of that. The first three cost
-Dictate nothing and are not going anywhere.
+There are three ways to power it, and you pick one during setup: **your own API key** with the
+provider of your choice, **a server of your own**, or **a model on the device** with no network at
+all.
 
 <br>
 
@@ -241,7 +221,7 @@ Dictate nothing and are not going anywhere.
 - **Wear OS keyboard** — dictate straight from your watch, tethered through your phone or fully standalone.
 - **Floating dictation button** — dictate straight into **any** app, even when another keyboard is active. Pick from six styles (Pill, Ring, Orb, the audio-reactive Cloud and the new Aurora and Lattice orbs), watch a live waveform while you speak, drag it anywhere with edge-snapping, set its color and size, and long-press for rewording — or for a **freeform voice command**: just say what you want and the AI does it, using any selected text as context.
 - **AI rewording & rewriting** — turn a selection into something more formal, casual, translated, summarised, or anything you define with custom prompts, with adjustable reasoning effort. Give it a command word and you stop reaching for a button at all: a dictation that opens with it — “Jarvis, make this more formal” — is the instruction, not the text.
-- **Community prompt library** — browse rewording prompts shared by others and install them in a tap, or publish your own.
+- **Prompt library** — browse a built-in collection of rewording prompts and install them in a tap.
 - **Dictation statistics** — track how much you've dictated and typed, with milestones and a home-screen overview.
 - **Cleaner transcripts, cheaper uploads** — long silences are trimmed out of a recording before it is sent, and it can be sped up without your voice going higher: providers bill by audio length, so a recording a third shorter costs a third less. Long dictations are packed rather than refused, and can be split into paragraphs automatically at sentence boundaries.
 - **Contact names, without the address book** — put your contacts' names into the personal dictionary so the keyboard stops underlining them and starts suggesting them. Dictate never asks for contacts permission: you pick the names through a picker, or import a vCard. Nothing is read that you did not hand over.
@@ -253,8 +233,7 @@ Dictate nothing and are not going anywhere.
 - **Scan text** — photograph an IBAN, a serial number or an address on an envelope and tap the part of it you want in the field. Recognition runs on the device, no camera permission is asked for, and the photo is deleted as soon as it has been read.
 - **Offline translation** — tap Translate in the Smartbar, type in your language and the translation appears in the text field as you go; press Enter and it is sent. Runs entirely on the phone with Mozilla's Firefox Translations models: 49 languages including Hindi, Japanese and Arabic, downloaded one at a time (30–75 MB each), and nothing you type leaves the device.
 - **Searchable settings** — find any option by name and jump straight to it, no digging through menus.
-- **Backup & restore** — take your whole setup to a new phone: preferences, rewording prompts, personal dictionary and learned words, themes, layouts. You choose what goes in, and an archive can be made **without** your API keys, passwords or Dictate Cloud credit — so it can be handed to someone else or attached to a bug report without leaking anything.
-- **Dictate Cloud — credit instead of an API key** *(optional)* — buy prepaid minutes through Google Play and skip the provider sign-up entirely. Neither your recordings nor your text are stored on the way through; the server that does it lives in [`cloud/`](cloud/) in this repository, so the privacy claims can be read rather than believed. No name, no email address — just a wallet and a recovery code you can delete from inside the app.
+- **Backup & restore** — take your whole setup to a new phone: preferences, rewording prompts, personal dictionary and learned words, themes, layouts. You choose what goes in, and an archive can be made **without** your API keys or passwords — so it can be handed to someone else or attached to a bug report without leaking anything.
 - **Bring your own key & provider** — use your own API key with OpenAI, Google Gemini, Groq, Mistral, OpenRouter, Anthropic, xAI, Soniox, Deepgram, AssemblyAI, ElevenLabs, Azure Speech and other compatible endpoints, so you stay in control of usage and cost. xAI's Grok Voice Transcribe costs ten cents an hour of audio, and twenty streamed live. Azure runs Microsoft's own MAI-Transcribe, which detects across 60 languages and follows a switch mid-sentence. Gemini transcribes with Google's dedicated speech-to-text models rather than a chat model under instruction, and if you speak more than one language you can say which ones instead of picking one and hoping. Where a provider runs its data where you are — Soniox has projects in the EU, Japan and India, OpenRouter an EU entry point — the region is a field in the provider editor, and it moves live streaming with it rather than leaving that one request on another continent. For audio and text that never leave the EU at all, **Scaleway** (Paris) and **OVHcloud** (Gravelines) transcribe and reword in France, under the GDPR and with zero data retention.
 - **Self-hosting friendly** — point Dictate at a server of your own for transcription, rewording and even live streaming, and let it wake a sleeping GPU machine before the first request arrives.
 - **A real, full keyboard** *(courtesy of the FlorisBoard base):*
@@ -268,7 +247,7 @@ Dictate nothing and are not going anywhere.
   - A **text editing panel** — a cursor pad that repeats when held, a *Select* key that turns the arrows into a selection, and cut/copy/paste next to them, so fixing a typo in the middle of a paragraph does not mean aiming at it with a fingertip
   - **Your own symbol pages** — put the symbols you actually use on both symbol pages, each key with long presses of your choosing: tap a key in a picture of the page, pick from a palette or paste anything, an e-mail address included. A layout can be shared as a file and travels in the backup with your settings
   - One-handed / compact mode, a **split keyboard** for two thumbs on a tablet or an unfolded foldable, gesture actions, customizable key sound & haptic feedback
-- **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Choose a key, a server of your own or an on-device model and Dictate never talks to us at all; choose Dictate Cloud and nothing you say or write is stored on the way through.
+- **Privacy-respecting by design** — no tracking, and your audio goes only to the provider you configure. Whether you choose a key, a server of your own or an on-device model, Dictate never talks to us at all.
 
 <p align="center"><i>Bring your own API key — Dictate works with:</i></p>
 <p align="center">
@@ -340,35 +319,6 @@ network, no audio leaving the phone — offered right in the setup wizard, and u
 
 <br>
 
-## ☁️ Dictate Cloud
-
-Everything above needs you to bring *something* — a key, a server, or the patience to download a
-model. **Dictate Cloud** is for the people who would rather not: buy prepaid minutes through Google
-Play and start dictating. It is one option among four, it is off unless you choose it, and the rest
-of the app does not depend on it in any way.
-
-Because it is the one path where your words pass through a machine of ours, here is exactly what
-that machine does:
-
-- **Nothing of yours is written to disk.** Your audio and your text are forwarded to the provider
-  and the answer comes straight back. What is stored is numbers — wallet id, timestamp, duration,
-  token counts, status code, milliseconds.
-- **It has no idea who you are.** An account is a wallet and a recovery code; no name, no email
-  address, no sign-in. You can delete it from inside the app, and the app says what deletion leaves
-  behind before you do.
-- **The source is right here**, in [`cloud/`](cloud/) — a single Cloudflare Worker. The privacy
-  policy makes claims about this server, and [`cloud/src/meter.ts`](cloud/src/meter.ts) is the only
-  file in it that writes anything. That is the point of publishing it: a claim you can read the
-  source of is worth more than one you have to take on trust.
-- **Credit is seconds**, and every service prices itself into them. So a pack's price is a hard
-  ceiling on what it can cost to serve, whatever you spend it on — which is why there is no fair-use
-  clause anywhere.
-
-Larger packs cost less per minute, and the shop says by how much. If you already have an API key,
-keep using it — it is the cheaper way and it is not going to stop working.
-
-<br>
-
 ## 🧱 Built on FlorisBoard
 
 Dictate Keyboard is a fork of [**FlorisBoard**](https://github.com/florisboard/florisboard),
@@ -386,13 +336,13 @@ see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for full attribution.
 
 ## 🤝 Contributing
 
-The best way to help right now is to **[open an issue](https://github.com/DevEmperor/DictateKeyboard/issues)**
+The best way to help right now is to **open an issue** in this repository
 with bug reports, ideas or feedback. Full contribution and community guidelines will be
 published as the project matures. Thank you! 🙏
 
-**Found a security problem?** Please don't open a public issue for it — use
-[GitHub's private advisory form](https://github.com/DevEmperor/DictateKeyboard/security/advisories/new).
-[`SECURITY.md`](SECURITY.md) says what is in scope, what isn't, and what to expect.
+**Found a security problem?** Please don't open a public issue for it — report it privately as
+described in [`SECURITY.md`](SECURITY.md), which also says what is in scope, what isn't, and what
+to expect.
 
 <br>
 
@@ -423,24 +373,3 @@ Dictate Keyboard is released under the terms of the
 - Offline translation uses Mozilla's [Firefox Translations](https://github.com/mozilla/translations)
   models and its Bergamot engine (MPL-2.0), built on [Marian NMT](https://marian-nmt.github.io) (MIT).
 - GIF search is powered by [KLIPY](https://klipy.com); GIFs are served by KLIPY under their terms.
-
-<br>
-
-## ❤️ Support &amp; sponsors
-
-Dictate is free and open source, built in my spare time. If it makes your day a little
-easier, you can support development by
-[buying the app on Google Play](https://play.google.com/store/apps/details?id=net.devemperor.dictate&referrer=utm_source%3Dgithub%26utm_medium%3Dsupport%26utm_campaign%3Dreadme),
-[sponsoring me on GitHub](https://github.com/sponsors/DevEmperor),
-or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — thank you! 🙏
-
-**Dictate's sponsors — thank you!** 🎉
-
-<!-- SPONSORS:START -->
-<p>
-  <a href="https://github.com/cnfatman"><img src="https://github.com/cnfatman.png" width="72" alt="Codename: Fatman" title="Codename: Fatman — Dictate's first sponsor 💖"></a>
-  <a href="https://github.com/george1612"><img src="https://github.com/george1612.png" width="72" alt="george1612" title="george1612"></a>
-  <a href="https://github.com/nichu42"><img src="https://github.com/nichu42.png" width="72" alt="nichu42" title="nichu42"></a>
-  <a href="https://github.com/4kaimar"><img src="https://github.com/4kaimar.png" width="72" alt="4kaimar" title="4kaimar"></a>
-</p>
-<!-- SPONSORS:END -->

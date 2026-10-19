@@ -185,12 +185,6 @@ object DictateLegacyMigrator {
                 proxy.username?.let { prefs.dictate.proxyUsername.set(it) }
                 proxy.password?.let { prefs.dictate.proxyPassword.set(it) }
             }
-
-            // --- Rate/donate nudges (roadmap 9.7/9.8): carry over the "handled" flags so users who
-            // already rated/donated in the legacy app are never asked again. The old usage DB that
-            // tracked total audio time was dropped, so the new counter simply starts at 0. ---
-            prefs.dictate.hasRated.set(s.hasRatedInPlaystore)
-            prefs.dictate.hasDonated.set(s.hasDonated)
         }
 
         prefs.dictate.legacyImported.set(true)
@@ -282,6 +276,34 @@ object DictateLegacyMigrator {
     }
 
     /**
+     * Set by `FlorisPreferenceModel.migrate` when the store it read still held saved Dictate Cloud data: a
+     * "cloud" account in the keyring, the low-credit nudge latch, or a provider id pointing at "cloud".
+     */
+    @Volatile
+    private var removedProviderDataFound = false
+
+    /** Called from `FlorisPreferenceModel.migrate`; see [purgeRemovedProviderDataIfNeeded]. */
+    fun noteRemovedProviderData() {
+        removedProviderDataFound = true
+    }
+
+    /**
+     * Writes the settings file once more after a load that found Dictate Cloud data, so the wallet token is
+     * gone from the disk and not only from memory.
+     *
+     * The migration has already removed it from what was loaded, but JetPref writes the file only when a
+     * value is set — and then always the whole store as it is in memory, which leaves out every key no
+     * longer declared. Setting the keyring to itself is that write. Idempotent: the rewritten file holds
+     * nothing for the migration to find, so the next start does nothing here.
+     */
+    suspend fun purgeRemovedProviderDataIfNeeded() {
+        if (!removedProviderDataFound) return
+        removedProviderDataFound = false
+        val prefs by FlorisPreferenceStore
+        prefs.dictate.providerAccounts.set(prefs.dictate.providerAccounts.get())
+    }
+
+    /**
      * Removes the live-prompt Smartbar action ([KeyCode.DICTATE_LIVE_PROMPT]) from the saved action
      * arrangement. The live prompt is now a chip inside the prompt panel/row, so it no longer ships as a
      * separate Smartbar button; this strips the action that the earlier injection added (and that the
@@ -304,26 +326,6 @@ object DictateLegacyMigrator {
         if (prefs.dictate.promptsActionMigrated.get()) return
         ensureActionPresent(TextKeyData.DICTATE_PROMPTS, KeyCode.DICTATE_PROMPTS)
         prefs.dictate.promptsActionMigrated.set(true)
-    }
-
-    /**
-     * One-time re-engagement reset for the 4.0.0 relaunch: re-offers the rate & donate nudges to
-     * existing users. Many of them already acted on (or were long past) these prompts in an earlier
-     * version, so the "handled" flags were set and/or their audio counter sat well beyond the
-     * thresholds – meaning the nudges would never appear again. As the app has changed substantially,
-     * we clear [Dictate.hasRated]/[Dictate.hasDonated] and reset [Dictate.totalAudioSeconds] so the
-     * rate prompt (after [DictateController] RATE threshold) and then the donate prompt (after the
-     * DONATE threshold) surface once more as the user dictates with the new version. For a brand-new
-     * install this is a no-op (everything is already at its default). Idempotent via
-     * `prefs.dictate.promoReengagementDone`, so it fires exactly once.
-     */
-    suspend fun reofferRateAndDonateIfNeeded() {
-        val prefs by FlorisPreferenceStore
-        if (prefs.dictate.promoReengagementDone.get()) return
-        prefs.dictate.hasRated.set(false)
-        prefs.dictate.hasDonated.set(false)
-        prefs.dictate.totalAudioSeconds.set(0L)
-        prefs.dictate.promoReengagementDone.set(true)
     }
 
     /**

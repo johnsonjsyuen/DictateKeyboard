@@ -253,14 +253,11 @@
     <string name="about__title" comment="Title of About activity">אודות</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">סמל האפליקציה של {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">רישיונות קוד פתוח</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">מדיניות פרטיות</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">קוד מקור</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">רישיונות קוד פתוח</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">הגרסה הועתקה ללוח</string>
-    <string name="about__privacy_policy__title" comment="Preference title">מדיניות פרטיות</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">ברוכים הבאים!</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">מדיניות פרטיות</string>
     <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->

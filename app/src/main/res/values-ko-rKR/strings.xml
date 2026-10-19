@@ -291,18 +291,11 @@
     <string name="about__title" comment="Title of About activity">정보</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">앱 아이콘</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">오픈 소스 라이선스s</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">개인 정보 보호 정책</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">오픈 소스 라이선스</string>
     <string name="about__version__title" comment="Preference title">버전</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">버전을 클립보드에 복사했습니다.</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">오류가 발생했습니다: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">변경 내역</string>
-    <string name="about__changelog__summary" comment="Preference summary">새로운 기능</string>
-    <string name="about__repository__title" comment="Preference title">리포지터리 (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">소스 코드, 토론, 버그 신고 및 정보</string>
-    <string name="about__privacy_policy__title" comment="Preference title">개인 정보 보호 정책</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">이 프로젝트의 개인 정보 보호 정책</string>
     <string name="about__project_license__title" comment="Preference title">프로젝트 라이선스</string>
     <string name="about__project_license__summary" comment="Preference summary">이 앱은 {license_name} 라이선스를 따릅니다.</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">오류: 라이선스 텍스트를 불러올 수 없습니다.\n-&gt; 사유: {error_message}</string>
@@ -311,8 +304,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">어서오세요!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} 키보드를 사용해 주셔서 고마워요! {app_name} 키보드를 사용하기 위해서 필요한 단계를 설명해 드릴게요.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">개인 정보 보호 정책</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">리포지터리</string>
     <string name="setup__enable_ime__title">{app_name} 켜기</string>
     <string name="setup__enable_ime__description">Android에서 다른 키보드를 사용하려면 먼저 설정에서 키보드를 켜야 해요. 시스템 설정의 <i>언어 및 키보드</i>에 들어가서, \"{app_name}\" 키보드를 켜 주세요.</string>
     <string name="setup__enable_ime__open_settings_btn">시스템 설정 열기</string>
@@ -425,7 +416,6 @@
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">파일을 가져올 수 없습니다. 사유:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">지원하지 않거나 알 수 없는 파일 형식입니다.</string>
     <string name="ext__home__manage_extensions">설치한 확장 기능 관리</string>
-    <string name="ext__check_updates__title">업데이트 확인</string>
     <!-- Action strings -->
     <string name="action__add">추가</string>
     <string name="action__apply">적용</string>

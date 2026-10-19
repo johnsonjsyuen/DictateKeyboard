@@ -82,8 +82,6 @@ class DictateLegacyPreferences(context: Context) {
         systemPromptCustomText = sp.getString(K_SYSTEM_PROMPT_CUSTOM_TEXT, null),
 
         lastVersionCode = sp.getInt(K_LAST_VERSION_CODE, 0),
-        hasRatedInPlaystore = sp.getBoolean(K_FLAG_HAS_RATED, false),
-        hasDonated = sp.getBoolean(K_FLAG_HAS_DONATED, false),
     )
 
     companion object {
@@ -137,7 +135,5 @@ class DictateLegacyPreferences(context: Context) {
         private const val K_SYSTEM_PROMPT_SELECTION = P + "system_prompt_selection"
         private const val K_SYSTEM_PROMPT_CUSTOM_TEXT = P + "system_prompt_custom_text"
         private const val K_LAST_VERSION_CODE = P + "last_version_code"
-        private const val K_FLAG_HAS_RATED = P + "flag_has_rated_in_playstore"
-        private const val K_FLAG_HAS_DONATED = P + "flag_has_donated"
     }
 }

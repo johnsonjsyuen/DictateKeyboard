@@ -573,7 +573,6 @@
     <string name="about__title" comment="Title of About activity">Über</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-Icon von {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open Source-Lizenzen</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Datenschutzrichtlinien</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Quellcode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open Source-Lizenzen</string>
     <string name="about__data_attributions__title">Daten- und Modell-Lizenzen</string>
@@ -581,14 +580,8 @@
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version in die Zwischenablage kopiert</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Etwas ist schief gelaufen: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Änderungsprotokoll</string>
-    <string name="about__changelog__summary" comment="Preference summary">Was ist neu</string>
-    <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Quellcode, Diskussionen, Probleme und Info</string>
     <string name="about__based_on_floris__title" comment="Preference title crediting the upstream project Dictate is forked from">Basiert auf FlorisBoard</string>
     <string name="about__based_on_floris__summary" comment="Preference summary crediting the upstream project">Ein Fork von FlorisBoard von Patrick Goldinger und Mitwirkenden, Apache 2.0. Zum Öffnen tippen.</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Datenschutzrichtlinie</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Datenschutzrichtlinie für dieses Projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projekt-Lizenz</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} ist unter {license_name} lizenziert</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Fehler: Lizenztext konnte nicht geladen werden.\n-&gt; Grund: {error_message}</string>
@@ -598,8 +591,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Herzlich willkommen!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Vielen Dank für die Nutzung von {app_name}! Dieses Quick Setup leitet dich durch die erforderlichen Schritte {app_name} auf deinem Gerät zu nutzen.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Datenschutzrichtlinie</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Quellcode</string>
     <string name="setup__enable_ime__title">{app_name} aktivieren</string>
     <string name="setup__enable_ime__description">Android erfordert, dass jede nachinstallierte Tastatur vor der Nutzung aktiviert (eingeschaltet) wird. Öffne <i> Sprachen und Eingabe</i> in den Systemeinstellungen und aktiviere dort {app_name}.</string>
     <string name="setup__enable_ime__open_settings_btn">Systemeinstellungen öffnen</string>
@@ -633,8 +624,6 @@
     <string name="backup_and_restore__back_up__files">Auswählen, wovon eine Sicherung erstellt werden soll</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Einstellungen</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">API-Schlüssel und Passwörter</string>
-    <string name="backup_and_restore__back_up__credentials_warning">Dieses Archiv enthält deine API-Schlüssel und Passwörter im Klartext, dazu dein Dictate-Cloud-Guthaben – wer es bekommt, kann auf deine Kosten diktieren. Gib es nicht weiter, und wenn du das schon getan hast, ändere den Schlüssel bei deinem Anbieter. Alles andere, was unten angehakt ist, geht mit – auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">Dieses Archiv enthält keine API-Schlüssel, Passwörter und kein Dictate-Cloud-Guthaben, du kannst es also weitergeben – es stellt deine aber auch nicht wieder her. Alles andere, was unten angehakt ist, ist weiterhin enthalten, auch dein Transkriptionsverlauf und deine Zwischenablage.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Dieses Archiv enthält keine API-Schlüssel und Passwörter, aber alles, was unten angehakt ist – deinen Transkriptionsverlauf samt aufbewahrter Aufnahmen, deine Zwischenablage, deine Prompts und die Wörter, die die Tastatur von dir gelernt hat.</string>
     <string name="backup_and_restore__back_up__files_dictate_prompts">Gespeicherte Umformulierungs-Prompts</string>
     <string name="backup_and_restore__back_up__files_personal_dictionary">Persönliches Wörterbuch und gelernte Wörter</string>
@@ -653,7 +642,6 @@
     <string name="backup_and_restore__restore__metadata">Ausgewählte Sicherungsarchive</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Dieses Sicherungsarchiv wurde in einer anderen als der aktuellen Version erstellt, was grundsätzlich unterstützt wird. Beachte jedoch, dass kleinere Probleme auftreten können oder einige Einstellungen aufgrund von Funktionsunterschieden möglicherweise nicht richtig übertragen werden.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Dieses Sicherungsarchiv wurde in einer Drittanbieter-App erstellt, was grundsätzlich nicht unterstützt wird. Es kann zu Datenverlust kommen, Wiederherstellung auf eigene Gefahr!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">Diese Datensicherung enthält keine API-Schlüssel und Passwörter. Alles andere wird wiederhergestellt. Beim Zusammenführen bleiben die Schlüssel auf diesem Gerät erhalten; beim Überschreiben verschwinden sie – auch ein Dictate-Cloud-Wiederherstellungscode, den man nicht neu eintippen kann.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Dieses Sicherungsarchiv enthält ungültige Metadaten. Entweder ist die Datei beschädigt oder sie wurde falsch modifiziert. Das Wiederherstellen dieser Datei ist nicht möglich, bitte eine andere wählen.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Dieses Sicherungsarchiv enthält keine wiederherstellbaren Dateien, bitte ein anderes auswählen.</string>
     <string name="backup_and_restore__restore__mode">Wiederherstellungsmodus</string>
@@ -664,11 +652,9 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictate Fehlermeldung</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Entschuldigung für die Unannehmlichkeiten, aber Dictate ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Wenn du diesen Fehler melden möchtest, prüfe zuerst im Issue Tracker auf Github, ob der Absturz bereits gemeldet worden ist.\nFalls nicht, kopiere den erzeugten Absturzbericht und erstelle ein neues Problem. Benutze die \"%s\"-Vorlage, gib die Beschreibung und die Schritte zum Reproduzieren des Fehlers an und füge am Ende den erzeugten Absturzbericht hinzu. Dies hilft, Dictate für alle besser und stabiler zu machen. Vielen Dank!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">In die System-Zwischenablage kopieren</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">In die System-Zwischenablage kopiert</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Kopieren zur System-Zwischenablage nicht möglich: Zwischenablagen-Manager-Instanz nicht gefunden</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Öffne \"Issue Tracker\" (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Schließen</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate Fehlermeldungen</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate funktioniert nicht mehr …</string>
@@ -849,16 +835,11 @@
     <string name="ext__validation__enter_percent_size">Bitte gib eine Prozentzahl an</string>
     <string name="ext__validation__enter_number_between_0_100">Bitte gib eine positive Zahl zwischen 0 und 100 an</string>
     <string name="ext__validation__hint_value_above_50_percent">Jeder Wert über 50 % verhält sich so, als ob 50 % eingestellt wären. Überlege den Wert zu senken</string>
-    <string name="ext__update_box__internet_permission_hint">Weil diese App keine Internetberechtigungen hat, muss manuell nach Updates für Erweiterungen gesucht werden.</string>
-    <string name="ext__update_box__search_for_updates">Nach Updates suchen</string>
     <string name="ext__addon_management_box__managing_placeholder">Verwalte {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Alle Aufgaben im Zusammenhang mit dem Importieren, Exportieren, Erstellen, Anpassen und Entfernen von Erweiterungen können über den Add-on-Manager abgewickelt werden.</string>
     <string name="ext__addon_management_box__go_to_page">Gehe zu {ext_home_title}</string>
-    <string name="ext__home__info">Erweiterungen können über den Dictate Add-on Store heruntergeladen und installiert werden oder importiere beliebige Erweiterungen aus dem Internet.</string>
-    <string name="ext__home__visit_store">Besuche den Add-ons Store</string>
     <string name="ext__home__manage_extensions">Installierte Erweiterungen verwalten</string>
     <string name="ext__list__view_details">Details anzeigen</string>
-    <string name="ext__check_updates__title">Auf Updates prüfen</string>
     <!-- Action strings -->
     <string name="action__add">Hinzufügen</string>
     <string name="action__apply">Übernehmen</string>
@@ -1121,15 +1102,7 @@
     <string name="quick_action__dictate_prompts">KI-Prompts</string>
     <string name="quick_action__dictate_prompts__tooltip">Die KI-Umformulierungs-Prompts öffnen</string>
     <string name="about__made_by">Mit ❤️ erstellt von DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Feedback &amp; Support</string>
-    <string name="about__feedback__summary">Eine E-Mail mit Fragen, Fehlern oder Ideen senden</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Wähle, wie Dictate transkribiert</string>
-    <string name="setup__provider__choose_intro">Dictate wandelt deine Sprache mit einem KI-Dienst in Text um. Für die meisten passt einer der beiden Wege — und wenn du gar keinen Cloud-Dienst nutzen willst, stehen darunter zwei weitere.</string>
-    <string name="setup__provider__choice_cloud_title">Guthaben in der App kaufen</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: kein Konto irgendwo, kein API-Schlüssel. Du kaufst Diktatminuten über Google Play, und sie verfallen nicht. Der bequeme Weg — und etwas teurer, als direkt zu einem Anbieter zu gehen.</string>
-    <string name="setup__provider__choice_cloud_btn">Guthaben-Pakete anzeigen</string>
     <string name="setup__provider__choice_own_title">Eigenen KI-Anbieter nutzen</string>
     <string name="setup__provider__choice_own_body">Leg dir bei einem Anbieter deiner Wahl einen Schlüssel an — Groq ist für den Alltag kostenlos. Du behältst dein eigenes Konto und zahlst direkt beim Anbieter zu dessen Preisen. Dauert etwa zwei Minuten.</string>
     <string name="setup__provider__choice_own_btn">Eigenen Schlüssel einrichten</string>
@@ -1161,7 +1134,6 @@
     <string name="setup__provider__other_provider">Einen anderen KI-Anbieter verwenden</string>
     <string name="setup__provider__other_provider_hint">Erweitert: einen anderen Dienst statt Groq wählen. Du brauchst einen API-Schlüssel dieses Anbieters.</string>
     <string name="setup__finish_up__add_key_hint">Tipp: Du hast noch keinen KI-Schlüssel hinzugefügt. Füge jederzeit einen unter Einstellungen → Dictate → KI-Anbieter hinzu, um mit dem Diktieren zu beginnen.</string>
-    <string name="crash_dialog__bug_report_template">Absturzbericht</string>
     <string name="enum__swipe_action__toggle_compact_layout">Kompaktes Layout umschalten</string>
     <string name="unit__hours__symbol">{v} Std.</string>
     <string name="unit__minutes__symbol">{v} Min.</string>
@@ -1301,10 +1273,6 @@
     <string name="smartbar__a11y_hide_more_actions">Weitere Aktionen ausblenden</string>
     <string name="dictate__action_yes">Ja</string>
     <string name="dictate__action_no">Nein, danke</string>
-    <string name="dictate__promo_rate_message">Gefällt dir Dictate?</string>
-    <string name="dictate__promo_donate_message">Dictate unterstützen?</string>
-    <string name="dictate__promo_rate_action">Bewerten</string>
-    <string name="dictate__promo_donate_action">Spenden</string>
     <string name="dictate__promo_changelog_message">Dictate wurde aktualisiert</string>
     <string name="dictate__promo_changelog_action">Details</string>
     <string name="dictate__promo_floating_button_message">Neu: in jeder App diktieren</string>
@@ -1378,67 +1346,6 @@
     <string name="dictate__providers_azure_link_signup">Azure-Konto erstellen</string>
     <string name="dictate__providers_azure_link_portal">Azure-Portal</string>
     <string name="dictate__providers_azure_link_guide">Einrichtungsanleitung</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">Diktat-Guthaben kaufen — ohne API-Schlüssel</string>
-    <string name="dictate__cloud_row_summary_balance">Noch {minutes} Minuten Guthaben</string>
-    <string name="dictate__cloud_intro_title">Diktieren ohne API-Schlüssel</string>
-    <string name="dictate__cloud_intro_body">Kauf dir Diktat-Guthaben direkt hier in der App. Kein Konto bei einem KI-Anbieter, kein API-Schlüssel, kein Abo. Das Guthaben verfällt nicht und wird nur verbraucht, wenn du es wirklich nutzt: eine Minute Diktat kostet eine Minute, eine Umformulierung rund zwei Sekunden.</string>
-    <string name="dictate__cloud_intro_alternative">Das ist völlig freiwillig. Dictate funktioniert genauso gut mit deinem eigenen Schlüssel bei einem Anbieter deiner Wahl — mehrere sind kostenlos — und dann behältst du dein eigenes Konto und zahlst direkt beim Anbieter zu dessen Preisen.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Lieber eigenen Anbieter nutzen</string>
-    <string name="dictate__cloud_balance_label">Verbleibendes Guthaben</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} Min.</string>
-    <string name="dictate__cloud_balance_rewords">oder rund {count} Umformulierungen</string>
-    <string name="dictate__cloud_balance_checked">Stand {time}</string>
-    <string name="dictate__cloud_balance_refresh">Guthaben aktualisieren</string>
-    <string name="dictate__cloud_packs_title">Guthaben-Pakete</string>
-    <string name="dictate__cloud_topup_title">Aufladen</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} Minuten Diktat</string>
-    <string name="dictate__cloud_pack_savings">{percent} % günstiger</string>
-    <string name="dictate__cloud_shop_unavailable">Die Guthaben-Pakete lassen sich hier nicht anzeigen. Meist heißt das, dass die App nicht über Google Play installiert wurde oder auf diesem Gerät kein Play-Konto angemeldet ist. Ein eigener API-Schlüssel funktioniert in beiden Fällen.</string>
-    <string name="dictate__cloud_activate_title">Guthaben ist bereit</string>
-    <string name="dictate__cloud_activate_body">Du hast Guthaben, aber das Diktat läuft gerade über einen anderen Anbieter. Wechsle, wann immer du willst — ohne dich ändert sich nichts.</string>
-    <string name="dictate__cloud_activate_btn">Über Dictate Cloud diktieren</string>
-    <string name="dictate__cloud_notice_purchased">{minutes} Minuten zu deinem Guthaben hinzugefügt.</string>
-    <string name="dictate__cloud_notice_pending">Deine Zahlung ist noch nicht abgeschlossen. Das Guthaben erscheint, sobald Google sie bestätigt.</string>
-    <string name="dictate__cloud_notice_not_redeemed">Die Zahlung ging durch, aber das Guthaben konnte nicht abgeholt werden. Nichts ist verloren — öffne diesen Bildschirm einfach noch einmal, dann wird es gutgeschrieben.</string>
-    <string name="dictate__cloud_notice_needs_recovery">Dieser Kauf gehört zu einem anderen Guthabenkonto. Nutze dessen Wiederherstellungscode, um das Guthaben auf dieses Gerät zu holen.</string>
-    <string name="dictate__cloud_notice_failed">Der Kauf konnte nicht abgeschlossen werden.</string>
-    <string name="dictate__cloud_notice_deleted">Dein Guthabenkonto wurde gelöscht.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Dein Guthabenkonto gibt es nicht mehr — es wurde auf der Website oder auf einem anderen Gerät gelöscht. Jetzt ist es auch von diesem Handy verschwunden.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Dieses Gerät wurde von deinem Guthabenkonto abgemeldet. Konto und Guthaben bleiben unberührt — melde dich unten mit deinem Wiederherstellungscode wieder an.</string>
-    <string name="dictate__cloud_delete_title">Guthabenkonto löschen</string>
-    <string name="dictate__cloud_delete_explain">Löscht dein Guthabenkonto und alles, was dazu gespeichert ist. Restguthaben verfällt — es wird nicht erstattet. Falls du die App nicht mehr hast, geht das auch auf api.dictatekeyboard.com/delete.</string>
-    <string name="dictate__cloud_delete_btn">Konto löschen</string>
-    <string name="dictate__cloud_delete_dialog_title">Konto wirklich löschen?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Du hast noch {minutes} Minuten Guthaben. Beim Löschen verschwinden dein Konto, dein Wiederherstellungscode und alle angemeldeten Geräte.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">Dieses Guthaben verfällt und lässt sich nicht wiederherstellen — auch nicht von uns.</string>
-    <string name="dictate__cloud_delete_dialog_records">Deine Kaufbelege bleiben zehn Jahre erhalten, wie es das Steuerrecht verlangt. Sie enthalten Bestellnummer und Betrag, nichts, was zu dir zurückführt.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Endgültig löschen</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Konto behalten</string>
-    <string name="dictate__cloud_notice_dismiss">OK</string>
-    <string name="dictate__cloud_recovery_title">Wiederherstellungscode</string>
-    <string name="dictate__cloud_recovery_explain">Schreib dir diesen Code auf. Google stellt verbrauchtes Guthaben nach einer Neuinstallation nicht wieder her — dieser Code ist der einzige Weg, deine restlichen Minuten auf ein neues Handy zu holen. Er erlaubt dir außerdem, dasselbe Guthaben auf einem zweiten Gerät zu nutzen.</string>
-    <string name="dictate__cloud_recovery_copy">Wiederherstellungscode kopieren</string>
-    <string name="dictate__cloud_recovery_copied">Wiederherstellungscode kopiert</string>
-    <string name="dictate__cloud_recovery_restore_btn">Guthaben wiederherstellen</string>
-    <string name="dictate__cloud_recovery_dialog_body">Gib den Wiederherstellungscode eines bestehenden Guthabenkontos ein. Das Gerät, auf dem du es bisher genutzt hast, funktioniert weiter.</string>
-    <string name="dictate__cloud_recovery_field">Wiederherstellungscode</string>
-    <string name="dictate__cloud_recovery_confirm">Wiederherstellen</string>
-    <string name="dictate__cloud_recovery_not_found">Zu diesem Code wurde kein Guthaben gefunden.</string>
-    <string name="dictate__error_cloud_no_account">Kein Guthabenkonto auf diesem Gerät</string>
-    <string name="dictate__cloud_devices_full_title">Zu viele Geräte</string>
-    <string name="dictate__cloud_devices_full_body">Dein Guthaben wird bereits auf {count} Geräten genutzt — mehr gehen nicht gleichzeitig. Melde eines ab, um es hier zu nutzen; das Guthaben selbst bleibt unberührt.</string>
-    <string name="dictate__cloud_devices_sign_out">Abmelden</string>
-    <string name="dictate__cloud_devices_unnamed">Gerät ohne Namen</string>
-    <string name="dictate__cloud_devices_last_used">Zuletzt genutzt {time}</string>
-    <string name="dictate__cloud_devices_never_used">Noch nie genutzt</string>
-    <string name="dictate__cloud_recovery_error">Der Server war nicht erreichbar. Prüf deine Verbindung und versuch es noch einmal.</string>
-    <string name="dictate__cloud_limits_title">Was Dictate Cloud nicht kann</string>
-    <string name="dictate__cloud_limits_body">Live-Transkription während des Sprechens gibt es mit Guthaben nicht — sie kostet je Minute etwa das Vierfache, und die Erkennung auf dem Gerät macht das offline und kostenlos. Das KI-Modell und wie lange es nachdenkt gibt der Server vor, deshalb bleiben Modellauswahl, Denkaufwand und eigene Endpunkte aus. Alles andere ist unverändert: Prompts, Verlauf, der schwebende Knopf, Langform-Diktat und die Uhr.</string>
-    <string name="dictate__cloud_privacy_title">Was gespeichert wird</string>
-    <string name="dictate__cloud_privacy_body">Deine Aufnahmen und Texte werden durchgereicht und nie auf die Festplatte geschrieben. Gespeichert werden nur Zahlen: welches Konto, wann, wie lange und ob es geklappt hat. Hinter einem Guthabenkonto steht kein Name, keine E-Mail-Adresse und kein Google-Konto — nur eine zufällige Kennung.</string>
-    <string name="dictate__cloud_other_way_title">Dein eigener Anbieter bleibt möglich</string>
-    <string name="dictate__cloud_other_way_body">Du kannst jederzeit auf deinen eigenen API-Schlüssel wechseln und wieder zurück. Dein Guthaben bleibt, wo es ist.</string>
 
     <string name="dictate__providers_network_group">Netzwerk</string>
     <string name="dictate__request_timeout_title">Zeitlimit für Anfragen</string>
@@ -1654,16 +1561,8 @@
     <string name="dictate__prompt_library_added">Hinzugefügt</string>
     <string name="dictate__prompt_library_add_again">Erneut hinzufügen</string>
     <string name="dictate__prompt_library_empty">Keine Prompts passen zu deiner Suche.</string>
-    <string name="dictate__prompt_library_error">Die Community-Bibliothek konnte nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
-    <string name="dictate__prompt_library_retry">Erneut versuchen</string>
     <string name="dictate__prompt_library_close">Schließen</string>
     <string name="dictate__prompt_library_author">von {author}</string>
-    <string name="dictate__prompt_share_title">Mit der Community teilen</string>
-    <string name="dictate__prompt_share_message">Dadurch wird GitHub in deinem Browser geöffnet, wobei dein Prompt bereits als Einreichung ausgefüllt ist. Melde dich an und bestätige, um einen Pull Request zu öffnen, der ihn zur Community-Bibliothek hinzufügt. Ein kostenloses GitHub-Konto ist erforderlich; es wird nichts hochgeladen, bis du auf GitHub bestätigst.</string>
-    <string name="dictate__prompt_share_continue">GitHub öffnen</string>
-    <string name="dictate__prompt_share_category">Kategorie (optional)</string>
-    <string name="dictate__prompt_share_description">Beschreibung (optional)</string>
-    <string name="dictate__prompt_share_description_placeholder">z. B. Bereinigt die Grammatik, ohne die Bedeutung zu ändern</string>
     <string name="dictate__file_preparing">Datei wird vorbereitet…</string>
     <string name="dictate__file_too_large">Datei ist zu groß – der Anbieter akzeptiert höchstens 25 MB.</string>
     <string name="dictate__file_read_error">Die ausgewählte Datei konnte nicht gelesen werden.</string>
@@ -1701,10 +1600,8 @@
     <string name="setup__grant_mic_permission__description">Dictate benötigt Mikrofonzugriff, um deine Stimme für die Transkription aufzunehmen.</string>
     <string name="setup__grant_mic_permission__btn">Mikrofonberechtigung erteilen</string>
     <string name="changelog__dialog_title">Was ist neu</string>
-    <string name="changelog__view_all">Alle Änderungen ansehen</string>
     <string name="changelog__intro">Dictate wurde aktualisiert. Das ist neu:</string>
     <string name="changelog__version_header">Version {version}</string>
-    <string name="changelog__donate">Gefällt dir Dictate? Tippe hier, um die Entwicklung zu unterstützen ♥</string>
     <string name="changelog__current">• Brandneue Tastatur: Dictate gibt es jetzt als vollwertige, mehrsprachige Layout-Tastatur mit eigener Mikrofontaste, die das Sprachpanel öffnet.\n• Eigene KI nutzen: Wähle einen beliebigen OpenAI-kompatiblen Anbieter und gib deinen API-Schlüssel unter Einstellungen → Dictate ein.\n• Intelligente Formatierung und Umformulierung mit dem von dir gewählten Modell.\n• Deine Einstellungen aus der vorherigen Dictate-App werden automatisch importiert.</string>
     <string name="changelog__v4_1_0">• Neu: Emojis direkt über die Tastatur suchen.\n• Neuer Transkriptions-Anbieter: Soniox.\n• Letzte Diktat-Eingabe erneut einfügen und Aufnahmen wiederherstellen, die beim Schließen der Tastatur unterbrochen wurden.\n• Die Prompt-Leiste aktualisiert sich jetzt live – lange auf einen Prompt tippen, um ihn zu bearbeiten.\n• Die Anbieter-Übersicht zeigt jetzt sowohl den aktiven Transkriptions- als auch den Umformulierungs-Anbieter.\n• Größerer, leichter treffbarer Aufnahme-Button.\n• Fixes: Ein Unterstützungs-Hinweis konnte hängenbleiben und die Leiste blockieren; Backup schlägt mit ausgewählten Prompts, Tastatur oder Theme nicht mehr fehl; gespeicherte API-Schlüssel bleiben beim Upgrade erhalten.</string>
     <string name="changelog__v4_2_0">• NEU: Floating-Diktat-Button — diktiere direkt in jede App, auch wenn eine andere Tastatur aktiv ist. Wähle aus drei Stilen (Pille, Ring, Kugel), sieh beim Sprechen eine Live-Wellenform, zieh ihn überallhin mit Kanten-Andocken, lege Farbe und Größe fest und halte ihn gedrückt zum Umformulieren. Aktiviere ihn unter Einstellungen ▸ Dictate ▸ Floating Button.\n• NEU: Google Gemini — nutze deinen eigenen AI-Studio-API-Schlüssel für Transkription und Umformulierung.\n• Prompts erscheinen jetzt standardmäßig in einer dauerhaften Zeile über den Tasten.\n• Zuverlässigeres Einfügen von Text über Apps hinweg, auch in Browsern und mit anderen Tastaturen.</string>
@@ -1797,8 +1694,6 @@
     <string name="dictate__providers_rewording_single_call_note">Wird gerade nicht genutzt – dein Transkriptions-Anbieter übernimmt die Umformulierung in seinem Single-Call.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Optionen fürs Diktieren von einer gekoppelten Uhr</string>
-    <string name="dictate__wear_install_title">Dictate auf deiner Uhr installieren</string>
-    <string name="dictate__wear_install_summary">Öffnet den Play Store — wähle auf einer gekoppelten Wear OS 3+ Uhr deine Uhr als Ziel aus.</string>
     <string name="dictate__wear_auto_rewording_title">Watch-Diktate automatisch umformulieren</string>
     <string name="dictate__wear_auto_rewording_summary">Watch-Diktate umformulieren, wie am Handy.</string>
     <string name="quick_action__system_prev_input_method">Tastatur wechseln</string>
@@ -1989,7 +1884,6 @@
     <string name="apptour__legacy_cta">Layout wählen</string>
     <string name="apptour__library_eyebrow">Community</string>
     <string name="apptour__library_title">Prompt-Bibliothek</string>
-    <string name="apptour__library_body">Durchstöbere Umformulierungs-Prompts der Community und installiere sie mit einem Tipp — oder veröffentliche deine eigenen für andere.</string>
     <string name="apptour__library_cta">Bibliothek öffnen</string>
     <string name="apptour__stats_eyebrow">Einblicke</string>
     <string name="apptour__stats_title">Deine Diktier-Statistik</string>
@@ -2030,7 +1924,7 @@
     <string name="apptour51__more_body">Auch viele kleinere Upgrades: wähle die aktive Transkriptionssprache in den Einstellungen, der Stopp-Knopf bricht eine laufende Anfrage jetzt wirklich ab, ein Ein-/Ausblenden-Schalter für API-Schlüssel und mehrsprachiges Tippen ohne sprachübergreifende Autokorrektur — dazu viele Fehlerbehebungen im klassischen Layout, im Ziffernblock und darüber hinaus.</string>
     <string name="apptour51__outro_eyebrow">Das ist 5.1</string>
     <string name="apptour51__outro_title">Viel Freude mit dem Update</string>
-    <string name="apptour51__outro_body">Danke, dass du Dictate nutzt! Wenn es dir jeden Tag hilft, hält eine kleine Spende das Projekt am Laufen. Du kannst jede dieser Touren jederzeit unter Einstellungen › Über besuchen.</string>
+    <string name="apptour51__outro_body">Danke, dass du Dictate nutzt! Du kannst jede dieser Touren jederzeit unter Einstellungen › Über besuchen.</string>
     <string name="apptour52__cta_try">Ausprobieren</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Überall diktieren</string>
@@ -2089,14 +1983,8 @@
     <string name="apptour53__outro_body">Dazu viele Kleinigkeiten: Jeder Anbieter trägt sein eigenes Logo, die Aufnahmeanzeige kann still, pulsierend oder pegelreaktiv sein, die Prompt-Ausgabe kann das Originaltranskript daneben behalten, und Absätze brechen nicht mehr nach Abkürzungen. Alle Touren findest du erneut unter Einstellungen › Über.</string>
 
     <string name="apptour60__cta_try">Ausprobieren</string>
-    <string name="apptour60__art_minutes">Minuten</string>
     <string name="apptour60__art_speed">1,5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Guthaben, Chinesisch, günstigere Diktate</string>
-    <string name="apptour60__intro_body">Diese Version bringt einen zweiten Weg hinein — Guthaben kaufen statt eigenem API-Schlüssel —, dazu Pinyin für Chinesisch, sieben Sprachen mit neuen Wörterbüchern und Aufnahmen, die weniger kosten.</string>
-    <string name="apptour60__cloud_eyebrow">Neu: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Minuten kaufen statt Schlüssel besorgen</string>
-    <string name="apptour60__cloud_body">Wer keinen Anbieter-Account anlegen möchte, kauft jetzt einfach Guthaben. Ja, das läuft über unseren Server — aber weder deine Aufnahmen noch deine Texte werden dort gespeichert, sie gehen direkt weiter. Der gesamte Servercode ist offen und nachlesbar. Dein eigener Schlüssel funktioniert unverändert weiter.</string>
     <string name="apptour60__speedup_eyebrow">API-Kosten sparen</string>
     <string name="apptour60__speedup_title">Dieselben Worte, weniger Minuten</string>
     <string name="apptour60__speedup_body">Aufnahmen lassen sich vor dem Hochladen stauchen, ohne dass die Stimme höher klingt. Die meisten Anbieter rechnen nach Audiodauer ab — eine um ein Drittel kürzere Aufnahme kostet dann auch ein Drittel weniger. Lange Diktate werden außerdem gepackt, statt abgewiesen zu werden.</string>
@@ -2114,7 +2002,6 @@
     <string name="apptour60__more_body">Stopp gedrückt halten bricht eine hängende Transkription ab. Der schwebende Knopf meldet keinen Erfolg mehr, den er nicht prüfen konnte, und geht mit dem Bildschirm aus. Glide-Tippen kennt jetzt deine eigenen Wörter. Und der Absturz direkt nach dem Update ist behoben.</string>
     <string name="apptour60__outro_eyebrow">Das war 6.0</string>
     <string name="apptour60__outro_title">Viel Freude damit</string>
-    <string name="apptour60__outro_body">Egal wie du Dictate benutzt — eigener Schlüssel, eigener Server, ein Modell auf dem Gerät oder Guthaben: an den jeweils anderen Wegen hat sich nichts geändert. Alle Touren findest du erneut unter Einstellungen › Über.</string>
     <string name="apptour61__cta_try">Ausprobieren</string>
     <string name="apptour61__art_folder">Sticker</string>
     <string name="apptour61__art_share">Teilen mit</string>
@@ -2229,7 +2116,6 @@
     <string name="apptour64__command_body">Wähle unter Umformulierung ein Wort, etwa „Jarvis“. Ein Diktat, das damit beginnt, läuft als Live-Prompt: auf dem markierten Text, oder als Frage, wenn nichts markiert ist. Es zählt nur das erste Wort, ein Satz, der es bloß erwähnt, wird also ganz normal geschrieben. Und automatische Prompts tun jetzt, was sie sollen: Sie bekommen immer das Diktat, auf dem sie laufen, und einer, der nur aus [Text in Klammern] besteht, wird unverändert ans Ende gehängt, statt ans Modell zu gehen.</string>
     <string name="apptour64__privacy_eyebrow">Datenschutz und Sicherheit</string>
     <string name="apptour64__privacy_title">Die ganze App, geprüft</string>
-    <string name="apptour64__privacy_body">Jeder Teil von Dictate wurde auf Datenschutz und Sicherheit durchgesehen, und was dabei auffiel, ist behoben. Ein Diktat in ein Passwort- oder PIN-Feld bleibt aus dem Verlauf, jetzt auch über den schwebenden Knopf. Androids Cloud-Backup nimmt deine API-Schlüssel nur noch Ende-zu-Ende-verschlüsselt mit. Und „Nutzer-Zertifikaten vertrauen“ stellst du jetzt pro Anbieterkonto ein statt für alle auf einmal.</string>
     <string name="apptour64__more_eyebrow">Außerdem</string>
     <string name="apptour64__more_title">Alles andere in 6.4</string>
     <string name="apptour64__more_body">Die kleineren Änderungen, für alle, die es genau wissen wollen. Wer nicht, blättert einfach weiter.</string>
@@ -2314,11 +2200,6 @@
     <string name="dictate__legacy_prompt_rows_title">Prompt-Reihen</string>
     <string name="dictate__legacy_prompt_rows_one">Eine Reihe</string>
     <string name="dictate__legacy_prompt_rows_two">Zwei Reihen</string>
-    <string name="about__website__title">Website</string>
-    <string name="dictate__error_out_of_credit">Guthaben aufgebraucht</string>
-    <string name="dictate__action_top_up">Guthaben aufladen</string>
-    <string name="dictate__promo_low_credit_message">Guthaben fast leer.</string>
-    <string name="dictate__promo_low_credit_action">Aufladen</string>
     <string name="prefs__media__sticker__title">Sticker</string>
     <string name="prefs__media__sticker_folder__title">Sticker-Ordner</string>
     <string name="prefs__media__sticker_folder__summary_unset">Ordner mit eigenen Bildern auswählen</string>

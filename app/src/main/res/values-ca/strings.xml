@@ -531,7 +531,6 @@
     <string name="about__title" comment="Title of About activity">Quant a</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona de l\'aplicació de {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Llicències de codi obert</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicències de codi obert</string>
     <string name="about__data_attributions__title">Llicències de dades i models</string>
@@ -539,12 +538,6 @@
     <string name="about__version__title" comment="Preference title">Versió</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versió copiada al porta-retalls</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Alguna cosa ha anat malament: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Registre de canvis</string>
-    <string name="about__changelog__summary" comment="Preference summary">Novetats</string>
-    <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Codi font, debats, incidències i informació</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Política de privacitat</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacitat per a aquest projecte</string>
     <string name="about__project_license__title" comment="Preference title">Llicència del projecte</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name} està sota la llicència de {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: No s\'ha pogut carregar la llicència.\n-&gt; Motiu: {error_message}</string>
@@ -554,8 +547,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Benvinguts!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Gràcies per usar {app_name}! Aquesta configuració ràpida t\'acompanyarà en els passos necessaris per poder usar {app_name} al teu dispositiu.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacitat</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repositori</string>
     <string name="setup__enable_ime__title">Habilita {app_name}</string>
     <string name="setup__enable_ime__description">Android requereix que cada teclat personalitzat s\'habiliti per separat abans de poder usar-lo. Obre els paràmetres de <i>Idioma i entrada</i> a Sistema i allà habilita \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Obre els paràmetres del sistema</string>
@@ -584,8 +575,6 @@
     <string name="backup_and_restore__back_up__files">Tria de què fer còpia de seguretat</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferències</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">Claus API i contrasenyes</string>
-    <string name="backup_and_restore__back_up__credentials_warning">Aquest arxiu conté les teves claus API i contrasenyes en text net, juntament amb el teu crèdit de Dictate Cloud: qui el rebi pot dictar a càrrec teu. No el comparteixis i, si ja ho has fet, canvia la clau al teu proveïdor. Tota la resta que estigui marcada a sota hi viatja, inclòs l’historial de transcripcions i el porta-retalls.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">Aquest arxiu no conté claus API, contrasenyes ni crèdit de Dictate Cloud, així que es pot compartir, però tampoc no restaurarà les teves. Tota la resta que estigui marcada a sota hi continua, inclòs l’historial de transcripcions i el porta-retalls.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Aquest arxiu no conté claus API ni contrasenyes, però sí tot el que estigui marcat a sota: l’historial de transcripcions amb els enregistraments conservats, el porta-retalls, els teus prompts i les paraules que el teclat ha après de tu.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensions del teclat</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensions de correcció ortogràfica / diccionaris</string>
@@ -602,7 +591,6 @@
     <string name="backup_and_restore__restore__metadata">Fitxer de còpia de seguretat seleccionat</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Aquest fitxer de còpia de seguretat ha estat generat per una versió diferent a l\'actual que, en general, hauria de ser compatible. Tingues present que hi pot haver algunes petites incidències o que algunes preferències poden no ser transferides correctament a conseqüència de diferències en les característiques.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Aquest fitxer de còpia de seguretat ha estat generat per una aplicació de tercers que, en general, no és compatible. Hi pot haver una pèrdua de dades, si ho restaures serà sota la teva responsabilitat!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">Aquesta còpia de seguretat no conté claus API ni contrasenyes. Tota la resta es restaura. La fusió manté les claus que ja hi ha en aquest dispositiu; la sobreescriptura les elimina, inclòs un codi de recuperació de Dictate Cloud, que no es pot tornar a escriure.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Aquest fitxer de còpia de seguretat conté metadades no vàlides. O està corromput o ha estat mal modificat. No es pot fer una restauració des d\'aquest fitxer, tria\'n un altre.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Aquest fitxer de còpia de seguretat no conté res per restaurar, tria\'n un altre.</string>
     <string name="backup_and_restore__restore__mode">Mode de restauració</string>
@@ -613,11 +601,9 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe d\'errors de Dictate</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Disculpa les molèsties, però Dictate ha fallat a conseqüència d\'un error inesperat.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vols informar d\'aquest error, mira\'t primer si ja s\'ha informat al rastrejador d\'incidències de GitHub.\nSi no, copia el registre de l\'error i obre una incidència nova. Usa la plantilla %s i emplena-la amb la descripció, els passos per reproduir-lo i enganxa el registre d\'error generat al final. Això ens ajuda a millorar Dictate i fer-lo més estable per a tothom. Gràcies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">S\'ha copiat al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No es pot copiar al porta-retalls del sistema: No s\'ha trobat la instància d\'administració del porta-retalls</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Obre el rastrejador d\'incidències (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tanca</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes d\'error de Dictate</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate ha deixat de funcionar…</string>
@@ -797,16 +783,11 @@
     <string name="ext__validation__enter_percent_size">Introdueix un percentatge</string>
     <string name="ext__validation__enter_number_between_0_100">Introdueix un nombre positiu entre 0 i 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Qualsevol valor superior al 50% es comportarà com si fos el 50%, considera de disminuir-ne el percentatge</string>
-    <string name="ext__update_box__internet_permission_hint">Com que aquesta aplicació no té permisos per accedir a internet, les actualitzacions de les extensions instal·lades s\'han de comprovar manualment.</string>
-    <string name="ext__update_box__search_for_updates">Cerca actualitzacions</string>
     <string name="ext__addon_management_box__managing_placeholder">Gestionant {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Totes les tasques referides a la importació, exportació, creació, personalització i supressió d\'extensions es poden gestionar a través de l\'administrador de complements centralitzat.</string>
     <string name="ext__addon_management_box__go_to_page">Ves a {ext_home_title}</string>
-    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de Dictate o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
-    <string name="ext__home__visit_store">Visita la botiga de complements</string>
     <string name="ext__home__manage_extensions">Administra les extensions instal·lades</string>
     <string name="ext__list__view_details">Visualitza els detalls</string>
-    <string name="ext__check_updates__title">Comprova les actualitzacions</string>
     <!-- Action strings -->
     <string name="action__add">Afegeix</string>
     <string name="action__apply">Aplica</string>
@@ -1057,15 +1038,7 @@
     <string name="about__based_on_floris__title">Basat en FlorisBoard</string>
     <string name="about__based_on_floris__summary">Una bifurcació de FlorisBoard de Patrick Goldinger i col·laboradors, Apache 2.0. Toca per obrir-lo.</string>
     <string name="about__made_by">Fet amb ❤️ per DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Comentaris i assistència</string>
-    <string name="about__feedback__summary">Envia un correu amb preguntes, errors o idees</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Tria com transcriu el Dictate</string>
-    <string name="setup__provider__choose_intro">El Dictate converteix la teva veu en text amb un servei d\'IA. A la majoria de gent li va bé una d\'aquestes dues maneres, i si prefereixes no fer servir cap servei al núvol, a sota en tens dues més.</string>
-    <string name="setup__provider__choice_cloud_title">Comprar saldo a l\'aplicació</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: cap compte enlloc, cap clau API. Compres minuts de dictat a través de Google Play i no caduquen mai. La via còmoda, i una mica més cara que anar directament a un proveïdor.</string>
-    <string name="setup__provider__choice_cloud_btn">Mostra els paquets de saldo</string>
     <string name="setup__provider__choice_own_title">Utilitzar el teu propi proveïdor d\'IA</string>
     <string name="setup__provider__choice_own_body">Crea una clau al proveïdor que vulguis: Groq és gratuït per al dictat del dia a dia. Conserves el teu compte i pagues directament al proveïdor als seus preus. Es triga uns dos minuts.</string>
     <string name="setup__provider__choice_own_btn">Configura la meva clau</string>
@@ -1097,7 +1070,6 @@
     <string name="setup__provider__other_provider">Usa un altre proveïdor d\'IA</string>
     <string name="setup__provider__other_provider_hint">Avançat: tria un altre servei en lloc de Groq. Necessitaràs una clau d\'API d\'aquest proveïdor.</string>
     <string name="setup__finish_up__add_key_hint">Consell: encara no has afegit cap clau d\'IA. Afegeix-ne una quan vulguis a Configuració → Dictate → Proveïdors d\'IA per començar a dictar.</string>
-    <string name="crash_dialog__bug_report_template">Informe de fallada</string>
     <string name="enum__swipe_action__toggle_compact_layout">Commuta la disposició compacta</string>
     <string name="unit__hours__symbol">{v} h</string>
     <string name="unit__minutes__symbol">{v} min</string>
@@ -1246,10 +1218,6 @@
     <string name="dictate__action_dismiss">Descarta</string>
     <string name="dictate__action_yes">Sí</string>
     <string name="dictate__action_no">No, gràcies</string>
-    <string name="dictate__promo_rate_message">T\'agrada el Dictate?</string>
-    <string name="dictate__promo_donate_message">Vols donar suport al Dictate?</string>
-    <string name="dictate__promo_rate_action">Valora</string>
-    <string name="dictate__promo_donate_action">Fes un donatiu</string>
     <string name="dictate__promo_changelog_message">El Dictate s\'ha actualitzat</string>
     <string name="dictate__promo_changelog_action">Detalls</string>
     <string name="dictate__title">Dictate</string>
@@ -1555,16 +1523,8 @@
     <string name="dictate__prompt_library_added">Afegit</string>
     <string name="dictate__prompt_library_add_again">Torna a afegir</string>
     <string name="dictate__prompt_library_empty">Cap prompt coincideix amb la teva cerca.</string>
-    <string name="dictate__prompt_library_error">No s\'ha pogut carregar la biblioteca de la comunitat. Comprova la connexió i torna-ho a provar.</string>
-    <string name="dictate__prompt_library_retry">Torna-ho a provar</string>
     <string name="dictate__prompt_library_close">Tanca</string>
     <string name="dictate__prompt_library_author">de {author}</string>
-    <string name="dictate__prompt_share_title">Comparteix amb la comunitat</string>
-    <string name="dictate__prompt_share_message">Això obre GitHub al teu navegador amb el teu prompt emplenat prèviament com a proposta. Inicia la sessió i confirma per obrir una pull request que l\'afegeix a la biblioteca de la comunitat. Cal un compte gratuït de GitHub; no es puja res fins que no ho confirmes a GitHub.</string>
-    <string name="dictate__prompt_share_continue">Obre GitHub</string>
-    <string name="dictate__prompt_share_category">Categoria (opcional)</string>
-    <string name="dictate__prompt_share_description">Descripció (opcional)</string>
-    <string name="dictate__prompt_share_description_placeholder">p. ex. Neteja la gramàtica sense canviar-ne el significat</string>
     <string name="dictate__file_preparing">Preparant el fitxer…</string>
     <string name="dictate__file_too_large">El fitxer és massa gran – el proveïdor accepta com a màxim 25 MB.</string>
     <string name="dictate__file_read_error">No s\'ha pogut llegir el fitxer seleccionat.</string>
@@ -1602,10 +1562,8 @@
     <string name="setup__grant_mic_permission__description">El Dictate necessita accés al micròfon per gravar la teva veu per transcriure-la.</string>
     <string name="setup__grant_mic_permission__btn">Concedeix el permís del micròfon</string>
     <string name="changelog__dialog_title">Novetats</string>
-    <string name="changelog__view_all">Mostra tots els canvis</string>
     <string name="changelog__intro">El Dictate s\'ha actualitzat. Aquestes són les novetats:</string>
     <string name="changelog__version_header">Versió {version}</string>
-    <string name="changelog__donate">T\'agrada el Dictate? Toca aquí per donar suport al desenvolupament ♥</string>
     <string name="changelog__current">• Teclat totalment nou: el Dictate ara és un teclat amb disposició completa i multilingüe, amb una tecla de micròfon dedicada que obre el tauler de veu.\n• Usa la teva pròpia IA: tria qualsevol proveïdor compatible amb OpenAI i introdueix la teva clau d\'API a Configuració → Dictate.\n• Formatació i reformulació intel·ligents amb el model que triïs.\n• La configuració de l\'app Dictate anterior s\'importa automàticament.</string>
     <string name="changelog__v4_1_0">• Nou: cerca emojis directament des del teclat.\n• Nou proveïdor de transcripció: Soniox.\n• Torna a inserir l\'últim dictat i recupera els enregistraments interromputs en tancar-se el teclat.\n• La barra de prompts ara s\'actualitza en directe: mantén premut un prompt per editar-lo.\n• La pantalla de proveïdors d\'IA ara mostra tant el proveïdor de transcripció com el de reformulació actius.\n• Botó d\'enregistrament més gran i més fàcil de prémer.\n• Correccions: un avís de suport es podia quedar encallat i tapar la barra en alguns idiomes; la còpia de seguretat ja no falla quan hi ha prompts, teclat o tema seleccionats; les claus d\'API desades es conserven en actualitzar.</string>
     <string name="changelog__v4_1_1">• Correcció: el color d\'accent podia aparèixer verd en alguns dispositius; les tecles i els botons tornen a ser del blau de Dictate.</string>
@@ -1696,8 +1654,6 @@
     <string name="dictate__providers_rewording_single_call_note">Ara mateix no s\'utilitza — el teu proveïdor de transcripció fa la reformulació en la seva crida única.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Opcions per dictar des d\'un rellotge vinculat</string>
-    <string name="dictate__wear_install_title">Instal\'la Dictate al teu rellotge</string>
-    <string name="dictate__wear_install_summary">Obre la Play Store — en un rellotge Wear OS 3+ vinculat, tria el teu rellotge com a destinació.</string>
     <string name="dictate__wear_auto_rewording_title">Reformula automàticament els dictats del rellotge</string>
     <string name="dictate__wear_auto_rewording_summary">Reformula els dictats fets des del rellotge, com al telèfon.</string>
     <string name="quick_action__system_prev_input_method">Canvia el teclat</string>
@@ -1888,7 +1844,6 @@
     <string name="apptour__legacy_cta">Tria una disposició</string>
     <string name="apptour__library_eyebrow">Comunitat</string>
     <string name="apptour__library_title">Biblioteca d’indicacions</string>
-    <string name="apptour__library_body">Explora indicacions de reformulació compartides per la comunitat i instal·la-les amb un toc — o publica les teves perquè altres les facin servir.</string>
     <string name="apptour__library_cta">Obre la biblioteca</string>
     <string name="apptour__stats_eyebrow">Estadístiques</string>
     <string name="apptour__stats_title">Les teves estadístiques de dictat</string>
@@ -1929,7 +1884,7 @@
     <string name="apptour51__more_body">També hi ha moltes millores més petites: tria l’idioma de transcripció actiu a la configuració, ara el botó d’aturada cancel·la de debò una petició en curs, un interruptor per mostrar o amagar les claus API i l’escriptura multilingüe sense correcció automàtica entre idiomes — a més de moltes correccions a la disposició clàssica, el teclat numèric i més enllà.</string>
     <string name="apptour51__outro_eyebrow">Això és la 5.1</string>
     <string name="apptour51__outro_title">Gaudeix de l’actualització</string>
-    <string name="apptour51__outro_body">Gràcies per fer servir Dictate! Si t’ajuda cada dia, una petita donació manté el projecte en marxa. Pots tornar a veure qualsevol d’aquests recorreguts quan vulguis a Configuració › Quant a.</string>
+    <string name="apptour51__outro_body">Gràcies per fer servir Dictate! Pots tornar a veure qualsevol d’aquests recorreguts quan vulguis a Configuració › Quant a.</string>
     <string name="apptour52__cta_try">Prova-ho</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Dicta a tot arreu</string>
@@ -1988,14 +1943,8 @@
     <string name="apptour53__outro_body">A més, moltes coses petites: cada proveïdor porta el seu logotip, l\'indicador de gravació pot estar quiet, pulsant o reaccionant a la veu, la sortida dels prompts pot conservar al costat la transcripció original, i els paràgrafs ja no es trenquen després d\'abreviatures. Pots tornar a veure qualsevol visita a Configuració › Quant a.</string>
 
     <string name="apptour60__cta_try">Provar-ho</string>
-    <string name="apptour60__art_minutes">minuts</string>
     <string name="apptour60__art_speed">1,5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Saldo, xinès i dictat més barat</string>
-    <string name="apptour60__intro_body">Aquesta versió afegeix una segona porta d\'entrada — comprar saldo en lloc de portar la teva pròpia clau d\'API —, a més de pinyin per al xinès, set llengües amb diccionari nou i enregistraments que costen menys.</string>
-    <string name="apptour60__cloud_eyebrow">Nou: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Compra minuts en comptes de buscar una clau</string>
-    <string name="apptour60__cloud_body">Si prefereixes no obrir un compte amb un proveïdor, ara pots comprar saldo i prou. Sí, això passa pel nostre servidor — però ni els teus enregistraments ni els teus textos s\'hi desen, es transmeten directament. Tot el codi del servidor és públic i es pot llegir. La teva pròpia clau continua funcionant igual que abans.</string>
     <string name="apptour60__speedup_eyebrow">Gastar menys en API</string>
     <string name="apptour60__speedup_title">Les mateixes paraules, menys minuts</string>
     <string name="apptour60__speedup_body">Els enregistraments es poden accelerar abans de pujar-los, sense que la veu soni més aguda. La majoria de proveïdors cobren per durada: un enregistrament un terç més curt costa un terç menys. Els dictats llargs, a més, es comprimeixen en lloc de ser rebutjats.</string>
@@ -2013,7 +1962,6 @@
     <string name="apptour60__more_body">Mantenir premut el botó d\'aturada recupera una transcripció encallada. El botó flotant ja no anuncia un èxit que no ha pogut verificar i s\'apaga amb la pantalla. L\'escriptura lliscant ara coneix les paraules que has afegit. I la fallada just després d\'actualitzar està resolta.</string>
     <string name="apptour60__outro_eyebrow">Això és la 6.0</string>
     <string name="apptour60__outro_title">Que la gaudeixis</string>
-    <string name="apptour60__outro_body">Facis servir el Dictate com el facis servir — clau pròpia, servidor propi, un model al dispositiu o saldo —, res no ha canviat en els altres camins. Pots tornar a veure qualsevol visita a Configuració › Quant a.</string>
     <string name="apptour61__cta_try">Prova-ho</string>
     <string name="apptour61__art_folder">Adhesius</string>
     <string name="apptour61__art_share">Comparteix amb</string>
@@ -2128,7 +2076,6 @@
     <string name="apptour64__command_body">Tria una paraula a Reformulació, per exemple «Jarvis». Un dictat que comenci amb aquesta paraula s’executa com una instrucció en directe: sobre el text seleccionat, o com una pregunta si no hi ha res seleccionat. Només compta la primera paraula, així que una frase que simplement la mencioni s’escriu com sempre. Els prompts automàtics també funcionen ara com cal: sempre reben el dictat sobre el qual actuen, i un que només contingui [text entre claudàtors] s’afegeix al final tal qual en lloc d’anar al model.</string>
     <string name="apptour64__privacy_eyebrow">Privacitat i seguretat</string>
     <string name="apptour64__privacy_title">Tota l’aplicació, revisada</string>
-    <string name="apptour64__privacy_body">S’ha revisat cada part del Dictate pel que fa a la privacitat i la seguretat, i el que ha sortit s’ha corregit. Un dictat en un camp de contrasenya o PIN es queda fora de l’historial, ara també amb el botó flotant. La còpia de seguretat al núvol d’Android només s’emporta les teves claus d’API xifrades d’extrem a extrem. I «Confia en els certificats d’usuari» ara es configura per a cada compte de proveïdor en lloc de per a tots alhora.</string>
     <string name="apptour64__more_eyebrow">A més</string>
     <string name="apptour64__more_title">Tota la resta de la 6.4</string>
     <string name="apptour64__more_body">Els canvis més petits, per a qui vulgui els detalls. Si no t’interessen, passa endavant.</string>
@@ -2213,72 +2160,6 @@
     <string name="dictate__legacy_prompt_rows_title">Files d\'indicacions</string>
     <string name="dictate__legacy_prompt_rows_one">Una fila</string>
     <string name="dictate__legacy_prompt_rows_two">Dues files</string>
-    <string name="about__website__title">Lloc web</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">Compra saldo de dictat, sense clau API</string>
-    <string name="dictate__cloud_row_summary_balance">Queden {minutes} minuts de saldo</string>
-    <string name="dictate__cloud_intro_title">Dictar sense clau API</string>
-    <string name="dictate__cloud_intro_body">Compra saldo de dictat aquí mateix, a l\'aplicació. Cap compte amb un proveïdor d\'IA, cap clau API, cap subscripció. El saldo no caduca i només es gasta quan el fas servir de debò: un minut de dictat costa un minut, i una reformulació uns dos segons.</string>
-    <string name="dictate__cloud_intro_alternative">És totalment opcional. El Dictate funciona igual de bé amb la teva pròpia clau del proveïdor que vulguis —n\'hi ha uns quants de gratuïts— i així conserves el teu compte i pagues directament al proveïdor als seus preus.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Millor el meu propi proveïdor</string>
-    <string name="dictate__cloud_balance_label">Saldo restant</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} min</string>
-    <string name="dictate__cloud_balance_rewords">o unes {count} reformulacions</string>
-    <string name="dictate__cloud_balance_checked">Actualitzat {time}</string>
-    <string name="dictate__cloud_balance_refresh">Actualitza el saldo</string>
-    <string name="dictate__cloud_packs_title">Paquets de saldo</string>
-    <string name="dictate__cloud_topup_title">Recarrega</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} minuts de dictat</string>
-    <string name="dictate__cloud_pack_savings">{percent}% més barat</string>
-    <string name="dictate__cloud_shop_unavailable">Aquí no es poden mostrar els paquets de saldo. Normalment vol dir que l\'aplicació no s\'ha instal·lat des de Google Play, o que en aquest dispositiu no hi ha cap compte de Play iniciat. La teva clau API funciona en tots dos casos.</string>
-    <string name="dictate__cloud_activate_title">El saldo és a punt</string>
-    <string name="dictate__cloud_activate_body">Tens saldo, però el dictat passa ara mateix per un altre proveïdor. Canvia quan vulguis: sense tu no canvia res.</string>
-    <string name="dictate__cloud_activate_btn">Dicta amb el Dictate Cloud</string>
-    <string name="dictate__cloud_notice_purchased">S\'han afegit {minutes} minuts al teu saldo.</string>
-    <string name="dictate__cloud_notice_pending">El pagament encara no s\'ha completat. El saldo apareixerà tan bon punt Google el confirmi.</string>
-    <string name="dictate__cloud_notice_not_redeemed">El pagament ha passat, però no s\'ha pogut obtenir el saldo. No s\'ha perdut res: torna a obrir aquesta pantalla i s\'hi afegirà.</string>
-    <string name="dictate__cloud_notice_needs_recovery">Aquesta compra pertany a un altre compte de saldo. Fes servir el seu codi de recuperació per portar el saldo a aquest dispositiu.</string>
-    <string name="dictate__cloud_notice_failed">No s\'ha pogut completar la compra.</string>
-    <string name="dictate__cloud_notice_deleted">S\'ha eliminat el teu compte de crèdit.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">El teu compte de crèdit ja no existeix: es va eliminar al lloc web o en un altre dispositiu. Ara també s\'ha tret d\'aquest telèfon.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">S\'ha tancat la sessió d\'aquest dispositiu al teu compte de crèdit. El compte i el crèdit no s\'han tocat: introdueix a sota el codi de recuperació per tornar a iniciar la sessió.</string>
-    <string name="dictate__cloud_delete_title">Elimina el compte de crèdit</string>
-    <string name="dictate__cloud_delete_explain">Elimina el teu compte de crèdit i tot el que s\'hi ha desat. El crèdit restant es perd i no es reemborsa. Si ja no tens l\'aplicació, també ho pots fer a api.dictatekeyboard.com/delete.</string>
-    <string name="dictate__cloud_delete_btn">Elimina el compte</string>
-    <string name="dictate__cloud_delete_dialog_title">Vols eliminar el compte?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Encara tens {minutes} minuts de crèdit. En eliminar-lo desapareixen el compte, el codi de recuperació i tots els dispositius connectats.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">Aquest crèdit es perd i no es pot recuperar, ni tan sols per nosaltres.</string>
-    <string name="dictate__cloud_delete_dialog_records">Els comprovants de compra es conserven deu anys, tal com exigeix la llei fiscal. Contenen número de comanda i import, res que porti fins a tu.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Elimina definitivament</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Conserva el compte</string>
-    <string name="dictate__cloud_notice_dismiss">D\'acord</string>
-    <string name="dictate__cloud_recovery_title">Codi de recuperació</string>
-    <string name="dictate__cloud_recovery_explain">Apunta\'t aquest codi. Google no restaura el saldo ja gastat després d\'una reinstal·lació, així que aquest codi és l\'única manera de portar els minuts que et queden a un telèfon nou. També et permet fer servir el mateix saldo en un segon dispositiu.</string>
-    <string name="dictate__cloud_recovery_copy">Copia el codi de recuperació</string>
-    <string name="dictate__cloud_recovery_copied">Codi de recuperació copiat</string>
-    <string name="dictate__cloud_recovery_restore_btn">Restaura el saldo</string>
-    <string name="dictate__cloud_recovery_dialog_body">Introdueix el codi de recuperació d\'un compte de saldo existent. El dispositiu on el feies servir continua funcionant.</string>
-    <string name="dictate__cloud_recovery_field">Codi de recuperació</string>
-    <string name="dictate__cloud_recovery_confirm">Restaura</string>
-    <string name="dictate__cloud_recovery_not_found">No s\'ha trobat cap saldo per a aquest codi.</string>
-    <string name="dictate__error_cloud_no_account">Cap compte de crèdit en aquest dispositiu</string>
-    <string name="dictate__cloud_devices_full_title">Massa dispositius</string>
-    <string name="dictate__cloud_devices_full_body">El teu saldo ja s\'utilitza en {count} dispositius, el màxim permès alhora. Tanca la sessió d\'un per fer-lo servir aquí: el saldo no es toca.</string>
-    <string name="dictate__cloud_devices_sign_out">Tanca la sessió</string>
-    <string name="dictate__cloud_devices_unnamed">Dispositiu sense nom</string>
-    <string name="dictate__cloud_devices_last_used">Últim ús {time}</string>
-    <string name="dictate__cloud_devices_never_used">Encara no s\'ha fet servir</string>
-    <string name="dictate__cloud_recovery_error">No s\'ha pogut contactar amb el servidor. Comprova la connexió i torna-ho a provar.</string>
-    <string name="dictate__cloud_limits_title">Què no fa el Dictate Cloud</string>
-    <string name="dictate__cloud_limits_body">La transcripció en directe mentre parles no està disponible amb saldo: costa unes quatre vegades més per minut, i el motor del dispositiu ho fa fora de línia i de franc. El model d\'IA i quant raona els fixa el servidor, així que la tria de model, l\'esforç de raonament i els extrems propis queden desactivats. Tota la resta és igual: indicacions, historial, botó flotant, dictat llarg i el rellotge.</string>
-    <string name="dictate__cloud_privacy_title">Què es desa</string>
-    <string name="dictate__cloud_privacy_body">Els teus enregistraments i textos només es reenvien i mai no s\'escriuen al disc. Només es desen xifres: quin compte, quan, quanta estona i si ha funcionat. Darrere d\'un compte de saldo no hi ha cap nom, cap adreça electrònica ni cap compte de Google, només un identificador aleatori.</string>
-    <string name="dictate__cloud_other_way_title">El teu proveïdor continua disponible</string>
-    <string name="dictate__cloud_other_way_body">Pots passar a la teva pròpia clau API quan vulguis, i tornar enrere. El teu saldo es queda on és.</string>
-    <string name="dictate__error_out_of_credit">Saldo esgotat</string>
-    <string name="dictate__action_top_up">Recarrega el saldo</string>
-    <string name="dictate__promo_low_credit_message">Saldo gairebé esgotat.</string>
-    <string name="dictate__promo_low_credit_action">Recarrega</string>
     <string name="prefs__media__sticker__title">Adhesius</string>
     <string name="prefs__media__sticker_folder__title">Carpeta d\'adhesius</string>
     <string name="prefs__media__sticker_folder__summary_unset">Trieu una carpeta amb imatges vostres</string>

@@ -92,16 +92,3 @@ tools/glide-dict/dist/
 # Demo recording for the README/store listings — kept locally, too large to version
 /img/dictate_demo.mp4
 
-# Dictate Cloud (cloud/) — the credit server. Its source is written to be published; its
-# configuration is not. wrangler.jsonc holds the private address the alerts go to, the database id
-# and every one of the watchdog's thresholds. The file sits here as a symlink to
-# private/dictate-cloud/wrangler.jsonc, so wrangler finds it where it expects it without it ever
-# being published. wrangler.example.jsonc is the template.
-cloud/wrangler.jsonc
-cloud/node_modules/
-cloud/.wrangler/
-# Same again: run from the wrong directory, wrangler drops its cache — account id included — in the
-# repository root.
-.wrangler/
-cloud/.dev.vars
-cloud/dist/

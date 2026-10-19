@@ -220,18 +220,11 @@
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">مجوزهای منبع باز</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سیاست حفظ حریم خصوصی</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">کد منبع</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مجوزهای متن باز</string>
     <string name="about__version__title" comment="Preference title">نسخه</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">نسخه در کلیپ‌بورد کپی شد</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">اوه! مشکلی پیش آمد: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">لیست تغییرات</string>
-    <string name="about__changelog__summary" comment="Preference summary">تغییرات جدید</string>
-    <string name="about__repository__title" comment="Preference title">رپو (گیت هاب)</string>
-    <string name="about__repository__summary" comment="Preference summary">کد منبع، مباحثه ها، مشکلات و اطلاعات</string>
-    <string name="about__privacy_policy__title" comment="Preference title">سیاست حریم خصوصی</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">سیاست حریم خصوصی برای این پروژه</string>
     <string name="about__project_license__title" comment="Preference title">گواهی های پروژه</string>
     <string name="about__project_license__summary" comment="Preference summary">فلوریس بورد زیر نظر {license_name} دارای گواهی می باشد</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطا: ناتوانی در بارگذاری متن گواهی.\n-&gt; دلیل: {error_message}</string>
@@ -239,17 +232,14 @@
     <string name="about__third_party_licenses__summary" comment="Preference summary">گواهی های استفاده از کتابخانه های شخص ثالث استفاده شده در این برنامه</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">خوش آمدید!</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سیاست حفظ حریم خصوصی</string>
     <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">اگر شما دوست دارید که این خطا را گزارش کنید، لطفا اول به صفحه ایرادات ردیابی شده را در گیت هاب ما سری بزنید و از اینکه این گزارش از قبل ارائه نشده مطمعن شوید.\nاگر که گزارشی نبود، لاگ تولید شده پس از متوقف شدن را کپی کنید و یک گزارش ایراد جدید را بسازید. از نمونه \"%s\" استفاده کنید و توضیحات، مراحل بازتولید، و لاگ تولید شده پس از متوقف شدن را در نهایت درج کنید. این به فلوریس بورد کمک شایانی در بهتر شدن و پایدار تر شدن آن برای همه می کند. بسیار از شما متشکریم!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی به کلیپبورد سیستم</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">به کلیپبورد سیستم کپی شد</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">نمی توان به کلیپبورد سیستم کپی کرد: نمایه مدیرت کلیپبورد یافت نشد</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">بازکردن ایرادات ردیابی شده (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">فلوریس بورد کار خود را متوقف کرده است…</string>

@@ -625,7 +625,6 @@
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">{app_name} uygulama simgesi</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Açık kaynak lisansları</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
     <string name="about__data_attributions__title">Veri ve model lisansları</string>
@@ -633,12 +632,6 @@
     <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Bir şeyler ters gitti: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Değişiklik günlüğü</string>
-    <string name="about__changelog__summary" comment="Preference summary">Yenilikler</string>
-    <string name="about__repository__title" comment="Preference title">Depo (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Kaynak kodu, tartışmalar, sorunlar ve bilgiler</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Gizlilik politikası</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Bu projenin gizlilik politikası</string>
     <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
     <string name="about__project_license__summary" comment="Preference summary">{app_name}, {license_name} altında lisanslanmıştır</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata: Lisans metni yüklenemedi.\n-&gt; Neden: {error_message}</string>
@@ -648,8 +641,6 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hoş geldiniz!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} kullandığınız için teşekkürler! Bu hızlı kurulum, cihazınızda {app_name} kullanmak için gerekli adımlarda size rehberlik eder.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Gizlilik politikası</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
     <string name="setup__enable_ime__title">{app_name} uygulamasını etkinleştirin</string>
     <string name="setup__enable_ime__description">Android, kullanabilmeniz için her özel klavyenin ayrı ayrı etkinleştirilmesini gerektirir. Sistem <i>Dil ve Giriş</i> Ayarlarını açın, orada \"{app_name}\" öğesini etkinleştirin.</string>
     <string name="setup__enable_ime__open_settings_btn">Sistem Ayarlarını Aç</string>
@@ -680,8 +671,6 @@
     <string name="backup_and_restore__back_up__files">Nelerin yedekleneceğini seç</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Tercihler</string>
     <string name="backup_and_restore__back_up__files_provider_credentials">API anahtarları ve şifreler</string>
-    <string name="backup_and_restore__back_up__credentials_warning">Bu arşiv API anahtarlarınızı ve şifrelerinizi düz metin olarak, Dictate Cloud bakiyenizle birlikte içerir — onu alan herkes sizin hesabınıza dikte edebilir. Başkasına vermeyin; verdiyseniz sağlayıcınızdaki anahtarı değiştirin. Aşağıda işaretli olan her şey onunla birlikte gider, dikte geçmişiniz ve panonuz da dahil.</string>
-    <string name="backup_and_restore__back_up__credentials_excluded_note">Bu arşivde API anahtarı, şifre veya Dictate Cloud bakiyesi yok, bu yüzden paylaşılabilir; ama sizinkileri de geri yüklemez. Aşağıda işaretli olan her şey hâlâ içindedir, dikte geçmişiniz ve panonuz da dahil.</string>
     <string name="backup_and_restore__back_up__personal_content_note">Bu arşivde API anahtarı ve şifre yok, ama aşağıda işaretli olan her şey var: saklanan kayıtlarla birlikte dikte geçmişiniz, panonuz, istemleriniz ve klavyenin sizden öğrendiği kelimeler.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Klavye eklentileri</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Yazım denetimi eklentileri / sözlükler</string>
@@ -698,7 +687,6 @@
     <string name="backup_and_restore__restore__metadata">Seçilen yedek arşivi</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Bu yedek arşivi mevcut sürümden farklı bir sürümde oluşturulmuştur, bu genellikle desteklenir. Ancak küçük sorunların ortaya çıkabileceğini veya özellik farklılıkları nedeniyle bazı tercihlerin düzgün aktarılamayabileceğini unutmayın.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Bu yedek arşivi üçüncü taraf bir uygulamada oluşturulmuştur, bu genellikle desteklenmez. Veri kayıpları meydana gelebilir, riski size ait olmak üzere geri yükleyin!</string>
-    <string name="backup_and_restore__restore__metadata_note_no_credentials">Bu yedek arşivinde API anahtarı ve şifre yok. Diğer her şey geri yüklenir. Birleştirme bu cihazdaki anahtarları korur; üzerine yazma ise onları siler — yeniden yazılamayan Dictate Cloud kurtarma kodu da dahil.</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Bu yedek arşivi geçersiz meta veriler içeriyor. Ya bozulmuş ya da kötü bir şekilde değiştirilmiş. Bu arşivden geri yükleme yapmak mümkün değil, lütfen başka bir tane seçin.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Bu yedek arşivi geri yüklenecek herhangi bir dosya içermiyor, lütfen başka bir tane seçin.</string>
     <string name="backup_and_restore__restore__mode">Geri yükleme modu</string>
@@ -709,11 +697,9 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Dictate hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Verdiğimiz rahatsızlıktan dolayı özür dileriz, ancak Dictate beklenmedik bir hata nedeniyle çöktü.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Bu hatayı bildirmek isterseniz, önce GitHub\'daki sorun izleyiciyi kontrol ederek çökmenizin daha önce bildirilip bildirilmediğini kontrol edin.\nBildirilmediyse, oluşturulan çökme günlüğünü kopyalayın ve yeni bir sorun açın. \"%s\" şablonunu kullanın ve açıklamayı, yeniden oluşturma adımlarını doldurun ve oluşturulan çökme günlüğünü sonuna yapıştırın. Bu, Dictate\'un herkes için daha iyi ve daha kararlı hale gelmesine yardımcı olur. Teşekkür ederiz!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Sistem panosuna kopyala</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Sistem panosuna kopyalandı</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Sistem panosuna kopyalanamıyor: Pano yöneticisi örneği bulunamadı</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Sorun izleyiciyi aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Dictate hata raporları</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Dictate çalışmayı durdurdu…</string>
@@ -898,16 +884,11 @@
     <string name="ext__validation__enter_percent_size">Lütfen bir yüzde boyutu girin</string>
     <string name="ext__validation__enter_number_between_0_100">Lütfen 0 ile 100 arasında pozitif bir sayı girin</string>
     <string name="ext__validation__hint_value_above_50_percent">%50\'nin üzerindeki herhangi bir değer %50 olarak ayarlanmış gibi davranacaktır, yüzde boyutunuzu düşürmeyi düşünün</string>
-    <string name="ext__update_box__internet_permission_hint">Bu uygulama İnternet iznine sahip olmadığı için, yüklü eklentilerin güncellemeleri manuel olarak kontrol edilmelidir.</string>
-    <string name="ext__update_box__search_for_updates">Güncellemeleri Ara</string>
     <string name="ext__addon_management_box__managing_placeholder">{extensions} Yönetiliyor</string>
     <string name="ext__addon_management_box__addon_manager_info">Eklentileri içe aktarma, dışa aktarma, oluşturma, özelleştirme ve kaldırma ile ilgili tüm görevler merkezi eklenti yöneticisi aracılığıyla halledilebilir.</string>
     <string name="ext__addon_management_box__go_to_page">{ext_home_title} sayfasına git</string>
-    <string name="ext__home__info">Dictate Eklenti Mağazası\'ndan eklentiler indirebilir ve yükleyebilir veya internetten indirdiğiniz herhangi bir eklenti dosyasını içe aktarabilirsiniz.</string>
-    <string name="ext__home__visit_store">Eklenti Mağazasını Ziyaret Et</string>
     <string name="ext__home__manage_extensions">Yüklü eklentileri yönet</string>
     <string name="ext__list__view_details">Ayrıntıları görüntüle</string>
-    <string name="ext__check_updates__title">Güncellemeleri Kontrol Et</string>
     <!-- Action strings -->
     <string name="action__add">Ekle</string>
     <string name="action__apply">Uygula</string>
@@ -1166,15 +1147,7 @@
     <string name="about__based_on_floris__title">FlorisBoard tabanlıdır</string>
     <string name="about__based_on_floris__summary">Patrick Goldinger ve katkıda bulunanların FlorisBoard çatalı, Apache 2.0. Açmak için dokunun.</string>
     <string name="about__made_by">❤️ ile yapan: DevEmperor\nSoli deo gloria ✝️</string>
-    <string name="about__feedback__title">Geri bildirim ve destek</string>
-    <string name="about__feedback__summary">Sorular, hatalar veya fikirlerle bir e-posta gönderin</string>
-    <string name="about__feedback__email">contact@devemperor.net</string>
-    <string name="about__feedback__subject">Dictate Feedback</string>
     <string name="setup__provider__title">Dictate\'in nasıl yazıya dökeceğini seçin</string>
-    <string name="setup__provider__choose_intro">Dictate, konuşmanızı bir yapay zekâ hizmetiyle metne dönüştürür. Çoğu kişiye yukarıdaki iki yoldan biri uyar — hiç bulut hizmeti kullanmak istemiyorsanız aşağıda iki yol daha var.</string>
-    <string name="setup__provider__choice_cloud_title">Uygulamada kontör satın alın</string>
-    <string name="setup__provider__choice_cloud_body">Dictate Cloud: hiçbir yerde hesap yok, API anahtarı yok. Dikte dakikalarını Google Play üzerinden satın alırsınız ve süreleri hiç dolmaz. Rahat yol — ve doğrudan bir sağlayıcıya gitmekten biraz daha pahalı.</string>
-    <string name="setup__provider__choice_cloud_btn">Kontör paketlerini göster</string>
     <string name="setup__provider__choice_own_title">Kendi yapay zekâ sağlayıcınızı kullanın</string>
     <string name="setup__provider__choice_own_body">Seçtiğiniz sağlayıcıda bir anahtar oluşturun — Groq günlük dikte için ücretsiz. Kendi hesabınızı korur ve sağlayıcıya doğrudan kendi fiyatlarından ödersiniz. Yaklaşık iki dakika sürer.</string>
     <string name="setup__provider__choice_own_btn">Kendi anahtarımı kur</string>
@@ -1206,7 +1179,6 @@
     <string name="setup__provider__other_provider">Farklı bir yapay zekâ sağlayıcısı kullan</string>
     <string name="setup__provider__other_provider_hint">Gelişmiş: Groq yerine başka bir hizmet seçin. Bu sağlayıcıdan bir API anahtarına ihtiyacınız olacak.</string>
     <string name="setup__finish_up__add_key_hint">İpucu: Henüz bir yapay zekâ anahtarı eklemediniz. Dikte etmeye başlamak için Ayarlar → Dictate → Yapay zekâ sağlayıcıları bölümünden istediğiniz zaman bir tane ekleyebilirsiniz.</string>
-    <string name="crash_dialog__bug_report_template">Çökme raporu</string>
     <string name="enum__swipe_action__toggle_compact_layout">Kompakt düzeni aç/kapat</string>
     <string name="unit__hours__symbol">{v} sa</string>
     <string name="unit__minutes__symbol">{v} dk</string>
@@ -1355,10 +1327,6 @@
     <string name="dictate__action_dismiss">Kapat</string>
     <string name="dictate__action_yes">Evet</string>
     <string name="dictate__action_no">Hayır, teşekkürler</string>
-    <string name="dictate__promo_rate_message">Dictate\'ten memnun musunuz?</string>
-    <string name="dictate__promo_donate_message">Dictate\'i destekleyin mi?</string>
-    <string name="dictate__promo_rate_action">Puan ver</string>
-    <string name="dictate__promo_donate_action">Bağış yap</string>
     <string name="dictate__promo_changelog_message">Dictate güncellendi</string>
     <string name="dictate__promo_changelog_action">Ayrıntılar</string>
     <string name="dictate__title">Dictate</string>
@@ -1664,16 +1632,8 @@
     <string name="dictate__prompt_library_added">Eklendi</string>
     <string name="dictate__prompt_library_add_again">Tekrar ekle</string>
     <string name="dictate__prompt_library_empty">Aramanızla eşleşen komut yok.</string>
-    <string name="dictate__prompt_library_error">Topluluk kütüphanesi yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
-    <string name="dictate__prompt_library_retry">Yeniden dene</string>
     <string name="dictate__prompt_library_close">Kapat</string>
     <string name="dictate__prompt_library_author">{author} tarafından</string>
-    <string name="dictate__prompt_share_title">Toplulukla paylaş</string>
-    <string name="dictate__prompt_share_message">Bu, komutunuz gönderim olarak önceden doldurulmuş şekilde tarayıcınızda GitHub\'ı açar. Onu topluluk kütüphanesine ekleyen bir çekme isteği (pull request) açmak için oturum açıp onaylayın. Ücretsiz bir GitHub hesabı gereklidir; GitHub\'da onaylayana kadar hiçbir şey yüklenmez.</string>
-    <string name="dictate__prompt_share_continue">GitHub\'ı aç</string>
-    <string name="dictate__prompt_share_category">Kategori (isteğe bağlı)</string>
-    <string name="dictate__prompt_share_description">Açıklama (isteğe bağlı)</string>
-    <string name="dictate__prompt_share_description_placeholder">örn. Anlamı değiştirmeden dil bilgisini düzeltir</string>
     <string name="dictate__file_preparing">Dosya hazırlanıyor…</string>
     <string name="dictate__file_too_large">Dosya çok büyük – sağlayıcı en fazla 25 MB kabul eder.</string>
     <string name="dictate__file_read_error">Seçilen dosya okunamadı.</string>
@@ -1711,10 +1671,8 @@
     <string name="setup__grant_mic_permission__description">Dictate, sesinizi yazıya dökmek üzere kaydetmek için mikrofon erişimine ihtiyaç duyar.</string>
     <string name="setup__grant_mic_permission__btn">Mikrofon iznini ver</string>
     <string name="changelog__dialog_title">Yenilikler</string>
-    <string name="changelog__view_all">Tüm değişiklikleri görüntüle</string>
     <string name="changelog__intro">Dictate güncellendi. İşte yenilikler:</string>
     <string name="changelog__version_header">Sürüm {version}</string>
-    <string name="changelog__donate">Dictate\'ten memnun musunuz? Geliştirmeyi desteklemek için buraya dokunun ♥</string>
     <string name="changelog__current">• Yepyeni bir klavye: Dictate artık, ses panelini açan özel bir mikrofon tuşuna sahip, tam donanımlı çok dilli bir düzen klavyesi olarak geliyor.\n• Kendi yapay zekânızı getirin: OpenAI uyumlu herhangi bir sağlayıcı seçin ve API anahtarınızı Ayarlar → Dictate altında girin.\n• Seçtiğiniz modelle desteklenen akıllı biçimlendirme ve yeniden ifade etme.\n• Önceki Dictate uygulamasındaki ayarlarınız otomatik olarak içe aktarılır.</string>
     <string name="changelog__v4_1_0">• Yeni: doğrudan klavyeden emoji arayın.\n• Yeni transkripsiyon sağlayıcısı: Soniox.\n• Son dikte ettiğinizi yeniden ekleyin ve klavye kapandığında kesilen kayıtları geri getirin.\n• İstem çubuğu artık canlı olarak yenileniyor: düzenlemek için bir isteme uzun basın.\n• Yapay zekâ sağlayıcıları ekranı artık hem etkin transkripsiyon hem de yeniden ifade sağlayıcınızı gösteriyor.\n• Daha büyük, daha kolay dokunulan kayıt düğmesi.\n• Düzeltmeler: bir destek bildirimi bazı dillerde takılıp çubuğu kapatabiliyordu; istemler, klavye veya tema seçiliyken yedekleme artık başarısız olmuyor; kaydedilen API anahtarları güncellemede korunuyor.</string>
     <string name="changelog__v4_1_1">• Düzeltme: vurgu rengi bazı cihazlarda yeşil görünebiliyordu; tuşlar ve düğmeler yeniden Dictate mavisinde.</string>
@@ -1805,8 +1763,6 @@
     <string name="dictate__providers_rewording_single_call_note">Şu anda kullanılmıyor — yazıya dökme sağlayıcınız yeniden ifadeyi tek çağrısında yapıyor.</string>
     <string name="dictate__wear_title">Wear OS</string>
     <string name="dictate__wear_summary">Eşleştirilmiş saatten dikte seçenekleri</string>
-    <string name="dictate__wear_install_title">Dictate\'i saatinize yükleyin</string>
-    <string name="dictate__wear_install_summary">Play Store\'u açar — eşleşmiş Wear OS 3+ saatte saatinizi hedef olarak seçin.</string>
     <string name="dictate__wear_auto_rewording_title">Saat diktelerini otomatik yeniden ifade et</string>
     <string name="dictate__wear_auto_rewording_summary">Saat diktelerini telefondaki gibi yeniden ifade et.</string>
     <string name="quick_action__system_prev_input_method">Klavye değiştir</string>
@@ -1997,7 +1953,6 @@
     <string name="apptour__legacy_cta">Bir düzen seç</string>
     <string name="apptour__library_eyebrow">Topluluk</string>
     <string name="apptour__library_title">İstem kütüphanesi</string>
-    <string name="apptour__library_body">Toplulukça paylaşılan yeniden ifade komutlarına göz at ve tek dokunuşla kur — ya da kendi komutlarını başkaları kullansın diye yayımla.</string>
     <string name="apptour__library_cta">Kütüphaneyi aç</string>
     <string name="apptour__stats_eyebrow">İçgörüler</string>
     <string name="apptour__stats_title">Dikte istatistikleriniz</string>
@@ -2038,7 +1993,7 @@
     <string name="apptour51__more_body">Birçok küçük yükseltme de var: ayarlardan etkin transkripsiyon dilini seç, durdurma düğmesi artık çalışan bir isteği gerçekten iptal eder, API anahtarları için bir göster/gizle geçişi ve diller arası otomatik düzeltme olmadan çok dilli yazım — ayrıca klasik düzen, sayı tuş takımı ve ötesinde birçok düzeltme.</string>
     <string name="apptour51__outro_eyebrow">İşte 5.1</string>
     <string name="apptour51__outro_title">Güncellemenin keyfini çıkar</string>
-    <string name="apptour51__outro_body">Dictate’i kullandığın için teşekkürler! Her gün işine yarıyorsa, küçük bir bağış projeyi ayakta tutar. Bu turların herhangi birine istediğin zaman Ayarlar › Hakkında altından yeniden göz atabilirsin.</string>
+    <string name="apptour51__outro_body">Dictate’i kullandığın için teşekkürler! Bu turların herhangi birine istediğin zaman Ayarlar › Hakkında altından yeniden göz atabilirsin.</string>
     <string name="apptour52__cta_try">Dene</string>
     <string name="apptour52__intro_eyebrow">Dictate 5.2</string>
     <string name="apptour52__intro_title">Her yerde dikte et</string>
@@ -2097,14 +2052,8 @@
     <string name="apptour53__outro_body">Ayrıca bir sürü küçük şey: her sağlayıcı kendi logosunu taşıyor, kayıt göstergesi sabit, nabız gibi ya da sese tepkili olabiliyor, komut çıktısı orijinal metni yanında tutabiliyor ve paragraflar kısaltmalardan sonra artık bölünmüyor. Tüm turları Ayarlar › Hakkında altında yeniden izleyebilirsin.</string>
 
     <string name="apptour60__cta_try">Deneyin</string>
-    <string name="apptour60__art_minutes">dakika</string>
     <string name="apptour60__art_speed">1,5×</string>
     <string name="apptour60__intro_eyebrow">Dictate 6.0</string>
-    <string name="apptour60__intro_title">Kredi, Çince ve daha ucuz dikte</string>
-    <string name="apptour60__intro_body">Bu sürüm ikinci bir giriş yolu ekliyor — kendi API anahtarınızı getirmek yerine kredi satın almak —, ayrıca Çince için pinyin, sözlük kazanan yedi dil ve daha az maliyetli kayıtlar.</string>
-    <string name="apptour60__cloud_eyebrow">Yeni: Dictate Cloud</string>
-    <string name="apptour60__cloud_title">Anahtar aramak yerine dakika satın alın</string>
-    <string name="apptour60__cloud_body">Bir sağlayıcıda hesap açmak istemiyorsanız artık doğrudan kredi satın alabilirsiniz. Evet, bu bizim sunucumuzdan geçiyor — ama ne kayıtlarınız ne de metinleriniz orada saklanıyor, doğrudan iletiliyor. Sunucunun tüm kaynak kodu açık ve okunabilir. Kendi anahtarınız eskisi gibi çalışmayı sürdürüyor.</string>
     <string name="apptour60__speedup_eyebrow">API maliyetinden tasarruf</string>
     <string name="apptour60__speedup_title">Aynı sözler, daha az dakika</string>
     <string name="apptour60__speedup_body">Kayıtlar yüklenmeden önce hızlandırılabilir, sesiniz tizleşmeden. Çoğu sağlayıcı ses süresine göre ücretlendirir: üçte bir kısalan bir kayıt üçte bir daha ucuza gelir. Uzun diktelerse reddedilmek yerine paketleniyor.</string>
@@ -2122,7 +2071,6 @@
     <string name="apptour60__more_body">Durdurma düğmesini basılı tutmak takılıp kalan bir dökümü geri alır. Yüzen düğme artık doğrulayamadığı bir başarıyı bildirmiyor ve ekranla birlikte sönüyor. Kaydırarak yazma artık kendi eklediğiniz sözcükleri tanıyor. Güncellemenin hemen ardından yaşanan çökme de giderildi.</string>
     <string name="apptour60__outro_eyebrow">İşte 6.0</string>
     <string name="apptour60__outro_title">İyi kullanımlar</string>
-    <string name="apptour60__outro_body">Dictate\'i nasıl kullanırsanız kullanın — kendi anahtarınız, kendi sunucunuz, cihazdaki bir model ya da kredi —, diğer yollarda hiçbir şey değişmedi. Tüm turları Ayarlar › Hakkında altında yeniden izleyebilirsiniz.</string>
     <string name="apptour61__cta_try">Dene</string>
     <string name="apptour61__art_folder">Çıkartmalar</string>
     <string name="apptour61__art_share">Şununla paylaş</string>
@@ -2237,7 +2185,6 @@
     <string name="apptour64__command_body">Yeniden ifade etme bölümünde bir kelime seç — örneğin “Jarvis”. Onunla başlayan bir dikte canlı komut olarak çalışır: seçili metin üzerinde ya da hiçbir şey seçili değilse bir soru olarak. Yalnızca ilk kelime sayılır; o kelimeden sadece bahseden bir cümle her zamanki gibi yazılır. Otomatik komutlar da artık amaçlandığı gibi çalışıyor: her zaman üzerinde çalıştıkları dikteyi alıyorlar ve yalnızca [köşeli parantez içinde metin] olan bir komut, modele gitmek yerine olduğu gibi sona ekleniyor.</string>
     <string name="apptour64__privacy_eyebrow">Gizlilik ve güvenlik</string>
     <string name="apptour64__privacy_title">Uygulamanın tamamı denetlendi</string>
-    <string name="apptour64__privacy_body">Dictate’in her parçası gizlilik ve güvenlik açısından gözden geçirildi ve bulunan her şey düzeltildi. Parola ya da PIN alanına yapılan bir dikte geçmişe girmiyor — artık yüzen düğme üzerinden yapıldığında da. Android’in bulut yedeklemesi API anahtarlarını artık yalnızca uçtan uca şifrelenmiş olarak alıyor. Ve “Kullanıcı sertifikalarına güven” artık hepsi için birden değil, her sağlayıcı hesabı için ayrı ayarlanıyor.</string>
     <string name="apptour64__more_eyebrow">Ayrıca</string>
     <string name="apptour64__more_title">6.4’teki diğer her şey</string>
     <string name="apptour64__more_body">Ayrıntıları merak edenler için küçük değişiklikler. İstemiyorsan atlayıp geçebilirsin.</string>
@@ -2322,72 +2269,6 @@
     <string name="dictate__legacy_prompt_rows_title">İstem satırları</string>
     <string name="dictate__legacy_prompt_rows_one">Tek satır</string>
     <string name="dictate__legacy_prompt_rows_two">İki satır</string>
-    <string name="about__website__title">Web sitesi</string>
-    <string name="dictate__cloud_title">Dictate Cloud</string>
-    <string name="dictate__cloud_row_summary_none">Dikte kontörü satın alın — API anahtarı gerekmez</string>
-    <string name="dictate__cloud_row_summary_balance">{minutes} dakika kontör kaldı</string>
-    <string name="dictate__cloud_intro_title">API anahtarı olmadan dikte</string>
-    <string name="dictate__cloud_intro_body">Dikte kontörünü doğrudan burada, uygulamada satın alın. Yapay zekâ sağlayıcısında hesap yok, API anahtarı yok, abonelik yok. Kontörün süresi dolmaz ve yalnızca gerçekten kullandığınızda harcanır: bir dakika dikte bir dakikaya, bir yeniden ifade yaklaşık iki saniyeye mal olur.</string>
-    <string name="dictate__cloud_intro_alternative">Bu tamamen isteğe bağlı. Dictate, seçtiğiniz bir sağlayıcıdaki kendi anahtarınızla da aynı derecede iyi çalışır — birkaçı ücretsizdir — ve o zaman kendi hesabınızı korur, sağlayıcıya doğrudan kendi fiyatlarından ödersiniz.</string>
-    <string name="dictate__cloud_use_own_provider_btn">Kendi sağlayıcımı kullanayım</string>
-    <string name="dictate__cloud_balance_label">Kalan kontör</string>
-    <string name="dictate__cloud_balance_minutes">{minutes} dk</string>
-    <string name="dictate__cloud_balance_rewords">ya da yaklaşık {count} yeniden ifade</string>
-    <string name="dictate__cloud_balance_checked">Güncellendi: {time}</string>
-    <string name="dictate__cloud_balance_refresh">Kontörü yenile</string>
-    <string name="dictate__cloud_packs_title">Kontör paketleri</string>
-    <string name="dictate__cloud_topup_title">Yükle</string>
-    <string name="dictate__cloud_pack_minutes">{minutes} dakika dikte</string>
-    <string name="dictate__cloud_pack_savings">%{percent} daha ucuz</string>
-    <string name="dictate__cloud_shop_unavailable">Kontör paketleri burada gösterilemiyor. Bu genellikle uygulamanın Google Play üzerinden kurulmadığı ya da bu cihazda oturum açmış bir Play hesabı olmadığı anlamına gelir. Kendi API anahtarınız her iki durumda da çalışır.</string>
-    <string name="dictate__cloud_activate_title">Kontör hazır</string>
-    <string name="dictate__cloud_activate_body">Kontörünüz var ama dikte şu anda başka bir sağlayıcı üzerinden gidiyor. İstediğiniz zaman geçin — siz yapmadan hiçbir şey değişmez.</string>
-    <string name="dictate__cloud_activate_btn">Dictate Cloud ile dikte et</string>
-    <string name="dictate__cloud_notice_purchased">Kontörünüze {minutes} dakika eklendi.</string>
-    <string name="dictate__cloud_notice_pending">Ödemeniz henüz tamamlanmadı. Google onayladığı anda kontör görünecek.</string>
-    <string name="dictate__cloud_notice_not_redeemed">Ödeme geçti ama kontör alınamadı. Hiçbir şey kaybolmadı — bu ekranı yeniden açın, eklenecek.</string>
-    <string name="dictate__cloud_notice_needs_recovery">Bu satın alma başka bir kontör hesabına ait. Kontörü bu cihaza getirmek için onun kurtarma kodunu kullanın.</string>
-    <string name="dictate__cloud_notice_failed">Satın alma tamamlanamadı.</string>
-    <string name="dictate__cloud_notice_deleted">Kredi hesabınız silindi.</string>
-    <string name="dictate__cloud_notice_gone_deleted" comment="Shown when the app finds out that the credit account was deleted elsewhere">Kredi hesabınız artık yok — web sitesinde ya da başka bir cihazda silinmiş. Şimdi bu telefondan da kayboldu.</string>
-    <string name="dictate__cloud_notice_gone_signed_out" comment="Shown when this device was signed out of the credit account, which still exists">Bu cihazın kredi hesabınızdaki oturumu kapatıldı. Hesabınız ve krediniz olduğu gibi duruyor — yeniden giriş yapmak için aşağıya kurtarma kodunuzu girin.</string>
-    <string name="dictate__cloud_delete_title">Kredi hesabını sil</string>
-    <string name="dictate__cloud_delete_explain">Kredi hesabınızı ve onunla ilgili kayıtlı her şeyi siler. Kalan kredi yanar ve iade edilmez. Uygulama artık sizde değilse bunu api.dictatekeyboard.com/delete adresinden de yapabilirsiniz.</string>
-    <string name="dictate__cloud_delete_btn">Hesabı sil</string>
-    <string name="dictate__cloud_delete_dialog_title">Hesabınız silinsin mi?</string>
-    <string name="dictate__cloud_delete_dialog_body" comment="{minutes} is a number">Hâlâ {minutes} dakika krediniz var. Silme işlemi hesabınızı, kurtarma kodunuzu ve giriş yapılmış tüm cihazları kaldırır.</string>
-    <string name="dictate__cloud_delete_dialog_forfeit">Bu kredi yanar ve geri getirilemez — bizim tarafımızdan bile.</string>
-    <string name="dictate__cloud_delete_dialog_records">Satın alma kayıtlarınız vergi mevzuatı gereği on yıl saklanır. İçinde sipariş numarası ve tutar vardır, size ulaştıracak bir şey yoktur.</string>
-    <string name="dictate__cloud_delete_dialog_confirm">Kalıcı olarak sil</string>
-    <string name="dictate__cloud_delete_dialog_cancel">Hesabı koru</string>
-    <string name="dictate__cloud_notice_dismiss">Tamam</string>
-    <string name="dictate__cloud_recovery_title">Kurtarma kodu</string>
-    <string name="dictate__cloud_recovery_explain">Bu kodu bir yere yazın. Google, yeniden kurulumdan sonra harcanmış kontörü geri getirmez; kalan dakikalarınızı yeni bir telefona taşımanın tek yolu bu koddur. Aynı kontörü ikinci bir cihazda kullanmanızı da sağlar.</string>
-    <string name="dictate__cloud_recovery_copy">Kurtarma kodunu kopyala</string>
-    <string name="dictate__cloud_recovery_copied">Kurtarma kodu kopyalandı</string>
-    <string name="dictate__cloud_recovery_restore_btn">Kontörü geri yükle</string>
-    <string name="dictate__cloud_recovery_dialog_body">Mevcut bir kontör hesabının kurtarma kodunu girin. Onu kullandığınız cihaz çalışmaya devam eder.</string>
-    <string name="dictate__cloud_recovery_field">Kurtarma kodu</string>
-    <string name="dictate__cloud_recovery_confirm">Geri yükle</string>
-    <string name="dictate__cloud_recovery_not_found">Bu koda ait kontör bulunamadı.</string>
-    <string name="dictate__error_cloud_no_account">Bu cihazda kredi hesabı yok</string>
-    <string name="dictate__cloud_devices_full_title">Çok fazla cihaz</string>
-    <string name="dictate__cloud_devices_full_body">Kontörünüz zaten {count} cihazda kullanılıyor; aynı anda daha fazlası olamaz. Burada kullanmak için birinin oturumunu kapatın — kontörün kendisi etkilenmez.</string>
-    <string name="dictate__cloud_devices_sign_out">Oturumu kapat</string>
-    <string name="dictate__cloud_devices_unnamed">Adsız cihaz</string>
-    <string name="dictate__cloud_devices_last_used">Son kullanım {time}</string>
-    <string name="dictate__cloud_devices_never_used">Henüz kullanılmadı</string>
-    <string name="dictate__cloud_recovery_error">Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.</string>
-    <string name="dictate__cloud_limits_title">Dictate Cloud\'un yapmadıkları</string>
-    <string name="dictate__cloud_limits_body">Siz konuşurken canlı yazıya dökme kontörle yoktur — dakika başına yaklaşık dört katı tutar ve cihaz üzerindeki motor bunu çevrimdışı ve ücretsiz yapar. Yapay zekâ modelini ve ne kadar düşüneceğini sunucu belirler, bu yüzden model seçimi, akıl yürütme düzeyi ve kendi uç noktalarınız kapalı kalır. Geri kalan her şey aynı: istemler, geçmiş, yüzen düğme, uzun dikte ve saat.</string>
-    <string name="dictate__cloud_privacy_title">Neler saklanıyor</string>
-    <string name="dictate__cloud_privacy_body">Kayıtlarınız ve metinleriniz doğrudan iletilir, hiçbir zaman diske yazılmaz. Yalnızca sayılar saklanır: hangi hesap, ne zaman, ne kadar süre ve işe yarayıp yaramadığı. Bir kontör hesabının arkasında ad, e-posta veya Google hesabı yoktur — yalnızca rastgele bir kimlik.</string>
-    <string name="dictate__cloud_other_way_title">Kendi sağlayıcınız açık kalır</string>
-    <string name="dictate__cloud_other_way_body">İstediğiniz zaman kendi API anahtarınıza geçebilir, sonra geri dönebilirsiniz. Kontörünüz olduğu yerde kalır.</string>
-    <string name="dictate__error_out_of_credit">Kontör bitti</string>
-    <string name="dictate__action_top_up">Kontör yükle</string>
-    <string name="dictate__promo_low_credit_message">Kontör bitmek üzere.</string>
-    <string name="dictate__promo_low_credit_action">Yükle</string>
     <string name="prefs__media__sticker__title">Çıkartmalar</string>
     <string name="prefs__media__sticker_folder__title">Çıkartma klasörü</string>
     <string name="prefs__media__sticker_folder__summary_unset">Kendi görsellerinizin bulunduğu bir klasör seçin</string>

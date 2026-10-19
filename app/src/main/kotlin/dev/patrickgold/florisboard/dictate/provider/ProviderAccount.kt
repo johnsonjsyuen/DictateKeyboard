@@ -90,34 +90,10 @@ data class ProviderAccount(
      * switch was on were moved over with it on.
      */
     val trustUserCerts: Boolean = false,
-    /**
-     * Dictate Cloud only — the credit account this device talks to. The wallet's bearer token is not
-     * stored here but in [apiKey]: it is what the server authenticates, so putting it anywhere else
-     * would mean teaching every call site about a second kind of credential.
-     *
-     * [walletRecoveryCode] is kept because the server hands it out exactly once, when the account is
-     * created, and only ever stores its hash. If it is not written down here at that moment it
-     * cannot be recovered later — and it is the only thing standing between a factory reset and
-     * lost credit, since Google does not restore a consumed one-time product.
-     */
-    val walletId: String = "",
-    val walletRecoveryCode: String = "",
-    /**
-     * Last balance the server reported, in seconds and included rewordings; -1 means never fetched.
-     * A cache for display only — every request is metered server-side, so this may lag behind and
-     * nothing is ever decided from it.
-     */
-    val balanceSeconds: Int = -1,
-    val balanceRewords: Int = -1,
-    val balanceCheckedAt: Long = 0L,
 ) {
     /** True once the user has supplied a usable key (or this is a keyless endpoint like Ollama). */
     val hasKey: Boolean
         get() = apiKey.isNotBlank()
-
-    /** True once a Dictate Cloud credit account exists on this device (see [walletId]). */
-    val hasWallet: Boolean
-        get() = walletId.isNotBlank() && apiKey.isNotBlank()
 
     /** True for user-defined endpoints (the legacy singular "custom" id or a "custom:<uuid>" one). */
     val isCustom: Boolean
@@ -127,9 +103,7 @@ data class ProviderAccount(
      * Whether this account needs a credential before it can be used at all.
      *
      * A server of the user's own does not, and neither do Ollama or the on-device engine — the
-     * `Authorization` header is simply left off. Dictate Cloud has to be named separately: it has no key
-     * page, so its `apiKeyUrl` is null and it looks exactly like a keyless endpoint, but its credential
-     * is the wallet token and without one there is nothing to dictate with.
+     * `Authorization` header is simply left off.
      *
      * One rule for one question (issue #273). The setup wizard used to derive its own by resolving the
      * provider through [ProviderRegistry.byId], which returns null for a `custom:<uuid>` id — so a
@@ -137,9 +111,7 @@ data class ProviderAccount(
      * dictated through it.
      */
     val requiresCredential: Boolean
-        get() = !isCustom &&
-            (ProviderRegistry.byId(providerId)?.apiKeyUrl != null ||
-                providerId == ProviderRegistry.CLOUD.id)
+        get() = !isCustom && ProviderRegistry.byId(providerId)?.apiKeyUrl != null
 
     companion object {
         const val CUSTOM_PREFIX = "custom:"
@@ -156,22 +128,12 @@ data class ProviderAccount(
  * This account with every secret stripped out, the rest left exactly as it was (issue #367).
  *
  * What survives is configuration: which provider, which models, which endpoint. What goes is everything
- * that authenticates — the key, and for Dictate Cloud the wallet it belongs to, because the token lives in
- * [ProviderAccount.apiKey] and handing someone a wallet id without its token leaves a half-account that
- * can only confuse. The balance cache goes back to never-fetched for the same reason: it describes credit
- * that is no longer reachable from this record.
+ * that authenticates — the key.
  *
  * An account that comes out of here reads as "provider chosen, not set up yet", which is a state the app
  * has always had to handle — see [ProviderAccount.requiresCredential].
  */
-fun ProviderAccount.withoutSecrets(): ProviderAccount = copy(
-    apiKey = "",
-    walletId = "",
-    walletRecoveryCode = "",
-    balanceSeconds = -1,
-    balanceRewords = -1,
-    balanceCheckedAt = 0L,
-)
+fun ProviderAccount.withoutSecrets(): ProviderAccount = copy(apiKey = "")
 
 /** [withoutSecrets] across the whole keyring. */
 fun ProviderAccounts.withoutSecrets(): ProviderAccounts =
@@ -183,32 +145,21 @@ fun ProviderAccounts.withoutSecrets(): ProviderAccounts =
  * The repair for restoring a credential-free backup in Merge mode: the whole keyring is a single
  * preference, so an incoming blob with blanked keys would otherwise replace real keys with nothing.
  *
- * An account's credential is taken **whole or not at all**. The key, the wallet it belongs to and that
- * wallet's recovery code are one thing — filling them in field by field could pair one device's wallet id
- * with another's token, which is a state no part of the app expects — so an account that brings any of
- * the three keeps all three and one that brings none takes all three, balance cache included, since that
- * cache describes the credit the wallet reaches. An account the archive carries that [local] has never
- * seen is left as it is; there is nothing to fill it from. And the archive always wins where it has
- * something, so a restore can still bring a newer key.
+ * An account that brings a key keeps it, and one that brings none takes the local one. An account the
+ * archive carries that [local] has never seen is left as it is; there is nothing to fill it from. And the
+ * archive always wins where it has something, so a restore can still bring a newer key.
  */
 fun ProviderAccounts.withSecretsFrom(local: ProviderAccounts): ProviderAccounts = copy(
     accounts = accounts.mapValues { (providerId, account) ->
         if (account.hasAnySecret) return@mapValues account
         val mine = local[providerId] ?: return@mapValues account
-        account.copy(
-            apiKey = mine.apiKey,
-            walletId = mine.walletId,
-            walletRecoveryCode = mine.walletRecoveryCode,
-            balanceSeconds = mine.balanceSeconds,
-            balanceRewords = mine.balanceRewords,
-            balanceCheckedAt = mine.balanceCheckedAt,
-        )
+        account.copy(apiKey = mine.apiKey)
     }
 )
 
 /** Whether this account carries any credential at all — the unit [withSecretsFrom] works in. */
 private val ProviderAccount.hasAnySecret: Boolean
-    get() = apiKey.isNotBlank() || walletId.isNotBlank() || walletRecoveryCode.isNotBlank()
+    get() = apiKey.isNotBlank()
 
 /**
  * Whether this keyring has accounts but not one credential among them — i.e. it came out of
@@ -316,6 +267,18 @@ data class ProviderAccounts(
     fun edit(providerId: String, block: (ProviderAccount) -> ProviderAccount): ProviderAccounts =
         put(block(getOrEmpty(providerId)))
 
+    /** Whether this keyring still holds an account of a provider that no longer exists. */
+    val hasRemovedProviders: Boolean
+        get() = accounts.any { (id, account) -> isRemoved(id, account) }
+
+    /** This keyring without the accounts of [REMOVED_PROVIDER_IDS]; `this` when it holds none. */
+    fun withoutRemovedProviders(): ProviderAccounts = if (!hasRemovedProviders) this else copy(
+        accounts = accounts.filterNot { (id, account) -> isRemoved(id, account) },
+    )
+
+    private fun isRemoved(id: String, account: ProviderAccount): Boolean =
+        id in REMOVED_PROVIDER_IDS || account.providerId in REMOVED_PROVIDER_IDS
+
     object Serializer : PreferenceSerializer<ProviderAccounts> {
         private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
@@ -333,8 +296,29 @@ data class ProviderAccounts(
          * must be able to tell "no accounts" from "could not read this", because writing `Empty` back over
          * an unreadable blob would destroy every key it failed to parse. Same parser, same config, so the
          * two can never drift apart.
+         *
+         * Accounts of a removed provider ([REMOVED_PROVIDER_IDS]) never come out of here. Every reader of
+         * the keyring goes through this function — the live preference, the backup redaction and the
+         * restore merge — so a stored or restored "cloud" account cannot reach any of them.
          */
-        fun deserializeOrNull(value: String): ProviderAccounts? = try {
+        fun deserializeOrNull(value: String): ProviderAccounts? = decodeOrNull(value)?.withoutRemovedProviders()
+
+        /**
+         * [value] re-encoded without the accounts of [REMOVED_PROVIDER_IDS], or null when there is nothing
+         * to remove (or it is not a keyring at all, which is left to [deserialize]).
+         *
+         * For the preference migration (`FlorisPreferenceModel.migrate`), which runs on every load and
+         * every backup import, so the stored line itself — the account's token included — is replaced
+         * rather than merely filtered on its way into memory. Fields this version no longer declares (the
+         * old wallet and balance fields) are dropped by the same re-encoding.
+         */
+        fun withoutRemovedProvidersOrNull(value: String): String? {
+            val stored = decodeOrNull(value) ?: return null
+            if (!stored.hasRemovedProviders) return null
+            return serialize(stored.withoutRemovedProviders())
+        }
+
+        private fun decodeOrNull(value: String): ProviderAccounts? = try {
             json.decodeFromString<ProviderAccounts>(value)
         } catch (e: Exception) {
             flogError { "Failed to deserialize ProviderAccounts: $e" }
@@ -344,5 +328,12 @@ data class ProviderAccounts(
 
     companion object {
         val Empty = ProviderAccounts(emptyMap())
+
+        /**
+         * Providers that were removed from the app, whose stored accounts are dropped wherever a keyring
+         * is read. "cloud" is Dictate Cloud, the in-app credit store: its account held the wallet's bearer
+         * token in [ProviderAccount.apiKey], plus a wallet id, recovery code and balance cache.
+         */
+        val REMOVED_PROVIDER_IDS: Set<String> = setOf("cloud")
     }
 }

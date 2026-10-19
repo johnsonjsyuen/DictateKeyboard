@@ -33,8 +33,8 @@ class ProviderListingTest {
             .map { it.id }
 
     @Test
-    fun `a fresh install lists the two pinned providers and nothing else`() {
-        assertEquals(listOf(ProviderRegistry.CLOUD.id, ProviderRegistry.LOCAL.id), listed(accountsOf()))
+    fun `a fresh install lists the pinned provider and nothing else`() {
+        assertEquals(listOf(ProviderRegistry.LOCAL.id), listed(accountsOf()))
     }
 
     @Test
@@ -81,16 +81,6 @@ class ProviderListingTest {
         assertTrue(ProviderListing.isPickable(groq, accounts, selectedId = "", nothingInstalled))
         assertFalse(ProviderListing.isPickable(openai, accounts, selectedId = groq.id, nothingInstalled))
         assertTrue(ProviderListing.isPickable(openai, accounts, selectedId = openai.id, nothingInstalled))
-    }
-
-    // Pinned is about the providers screen: a picker still offers Dictate Cloud only once there is credit.
-    @Test
-    fun `Dictate Cloud is always listed but only pickable with a wallet`() {
-        val cloud = ProviderRegistry.CLOUD
-        assertTrue(ProviderListing.isListed(cloud, accountsOf(), emptySet(), nothingInstalled))
-        assertFalse(ProviderListing.isPickable(cloud, accountsOf(), selectedId = "", nothingInstalled))
-        val funded = accountsOf(ProviderAccount(providerId = cloud.id, apiKey = "wallet-token"))
-        assertTrue(ProviderListing.isPickable(cloud, funded, selectedId = "", nothingInstalled))
     }
 
     // Issue #431: the keyboard's picker and the settings dialog offer one and the same list.

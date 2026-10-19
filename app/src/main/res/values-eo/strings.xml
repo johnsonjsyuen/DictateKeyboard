@@ -354,26 +354,17 @@
     <string name="about__title" comment="Title of About activity">Pri</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Aplikaĵo bildeto de {app_name}</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Malfermitkodaj permesiloj</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privateca politiko</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Fontkodo</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Malfermitkodaj permesiloj</string>
     <string name="about__version__title" comment="Preference title">Versio</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versio kopiita al tondujo</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Io misis: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Ŝanĝojn registro</string>
-    <string name="about__changelog__summary" comment="Preference summary">Kio estas nova</string>
-    <string name="about__repository__title" comment="Preference title">Deponejo (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">Fontkodo, diskutoj, problemoj kaj informoj</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Privateca politiko</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">La privateca politiko de tiu ĉi projekto</string>
     <string name="about__project_license__title" comment="Preference title">Projekton permesilo</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Eraro: Fiaskis elŝuti la permesilan tekston.\n-&gt; Kaŭzo: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Tria-partaj permesiloj</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Permesiloj de la tria-partaj bibliotekoj enhavata en tiu ĉi apo</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bonvenon!</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privateca politiko</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Deponejo</string>
     <string name="setup__enable_ime__open_settings_btn">Malfermi sistemajn agordojn</string>
     <string name="setup__select_ime__switch_keyboard_btn">Ŝanĝi klavaron</string>
     <string name="setup__grant_notification_permission__title">Permesi kraŝajn raportajn sciigojn</string>
@@ -550,16 +541,11 @@
     <string name="ext__validation__enter_positive_number">Bonvolu enigi pozitivan nombron (&gt;=0)</string>
     <string name="ext__validation__enter_percent_size">Bonvolu enigi grandon je %</string>
     <string name="ext__validation__enter_number_between_0_100">Bonvolu enigi pozitivan nombron inter 0 kaj 100</string>
-    <string name="ext__update_box__internet_permission_hint">Tiu apo ne havas retpermeson, do instalitajn etendaĵojn ĝisdatigoj endas esti serĉataj mane.</string>
-    <string name="ext__update_box__search_for_updates">Serĉi ĝisdatigojn</string>
     <string name="ext__addon_management_box__managing_placeholder">Administri la {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Ĉiuj taskoj rilataj al importado, eksportado, kreado, personecigo, kaj forigo etendaĵojn povas esti mastrumata per la centralizita etendaĵa mastrumilo.</string>
     <string name="ext__addon_management_box__go_to_page">Iri al {ext_home_title}</string>
-    <string name="ext__home__info">Vi povas elŝuti kaj instali etendaĵojn el la Dictate Aldonaĵejo aŭ enporti iun ajn etendaĵan dosieron ke vi elŝutis el la interreto.</string>
-    <string name="ext__home__visit_store">Viziti Aldonaĵejon</string>
     <string name="ext__home__manage_extensions">Administri instalitajn etendaĵojn</string>
     <string name="ext__list__view_details">Vidi detalojn</string>
-    <string name="ext__check_updates__title">Serĉi ĝisdatigojn</string>
     <!-- Action strings -->
     <string name="action__add">Aldoni</string>
     <string name="action__apply">Apliki</string>
