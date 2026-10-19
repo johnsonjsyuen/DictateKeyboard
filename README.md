@@ -35,6 +35,47 @@ more speech engines, in the cloud or on your phone.
 
 ---
 
+## 🍴 About this fork
+
+This is [johnsonjsyuen/DictateKeyboard](https://github.com/johnsonjsyuen/DictateKeyboard), a fork of
+[DevEmperor/DictateKeyboard](https://github.com/DevEmperor/DictateKeyboard). It tracks upstream
+(currently v6.4.0), so everything below about Dictate still applies. What is different for you as a user:
+
+- **More on-device (offline) speech models.** Under **Settings → AI providers → On-device (offline)**
+  you can download, in addition to everything upstream offers:
+  - **Granite Speech 4.1 2B** (IBM, ~2.3 GB): the most accurate English model here, also French,
+    German, Spanish, Portuguese and Japanese, with punctuation.
+  - **Cohere Transcribe** (~1.3 GB): very accurate in 14 languages, but it cannot detect the
+    language. Set your input language, or it assumes English.
+  - **Qwen3-ASR 1.7B** in two sizes (Q4_K ~1.5 GB, Q5_K ~1.7 GB, slightly more accurate) and
+    **Qwen3-ASR 0.6B** (~0.6 GB, faster): 30 languages, detected automatically.
+  - **Parakeet Unified English** (NVIDIA, ~0.7 GB): near-top English accuracy at Parakeet speed.
+  - **Moonshine Medium** (~0.2 GB): a small, fast English model.
+  - **Nemotron 3.5 Streaming** (NVIDIA, ~0.7 GB): **live** transcription while you speak, in 28 languages.
+- **Most of the new models need a 64-bit ARM phone.** Granite, Cohere, Qwen3 and Moonshine run on a
+  separate native engine that only exists for ARM64. They are hidden on other devices. Parakeet
+  Unified and Nemotron run everywhere upstream's models do.
+- **Faster on recent phones.** That engine automatically uses a faster build on processors with
+  ARMv8.2 dot-product support (most phones from about 2018 on) and falls back to a compatible one
+  on older chips.
+- **Newer speech runtime.** sherpa-onnx 1.13.8 instead of upstream's 1.13.3. Among other fixes, it
+  repairs live decoding for NVIDIA's streaming models.
+- **Big downloads, more memory.** These models are 0.2–2.3 GB each and need at least that much free
+  RAM while transcribing. Speed depends heavily on the phone, so try a smaller one first if a large
+  one feels slow.
+- **Downloads come from Hugging Face.** The new models are fetched from their Hugging Face
+  repositories (pinned versions, checked by size and SHA-256), not from upstream's GitHub mirror.
+  Upstream's privacy policy does not mention this. As with every on-device model, your audio never
+  leaves the phone.
+- **Installable test builds, not the Play Store.** This fork is not on Google Play. Every update to
+  `main` publishes a debug APK on the [Releases page](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
+  It installs as a separate app (`net.devemperor.dictate.debug`) next to the official one, so the
+  two don't share settings or history. These are development builds signed with a public test key.
+
+Build instructions and technical details are in [Fork details](#fork-details-on-device-models-and-builds) at the end.
+
+---
+
 > [!NOTE]
 > This is a complete rebuild of Dictate as a full, standalone keyboard on top of
 > [**FlorisBoard**](https://github.com/florisboard/florisboard), replacing the original Java
@@ -337,7 +378,7 @@ or [donating via PayPal](https://paypal.me/DevEmperor). Every bit helps — than
 <!-- SPONSORS:END -->
 
 
-### Qwen3-ASR-1.7B Q4_K (local build)
+## Fork details: on-device models and builds
 
 **Download an APK:** [main debug builds](https://github.com/johnsonjsyuen/DictateKeyboard/releases).
 Each successful push to `main` publishes a separate prerelease with
